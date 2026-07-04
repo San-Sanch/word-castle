@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "tsc -p tsconfig.test.json && node --test .test-build/",
     "data": "npm run test -- --test-name-pattern=__none__ && node scripts/convert-data.mjs",
-    "check": "tsc -b && npm test"
+    "check": "tsc -b && npm test",
+    "deploy": "vite build && cd dist && git init -q && git checkout -q -b gh-pages && git add -A && git commit -q -m Deploy && git push -f https://github.com/San-Sanch/word-castle.git gh-pages && cd .. && rm -rf dist/.git"
   },
   "dependencies": {
     "react": "18.3.1",
