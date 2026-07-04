@@ -25,9 +25,23 @@ test('ttsNormalize: ambiguous words get vowelized so the voice reads them right'
 })
 
 test('ttsNormalize: tokens with trailing punctuation still get vocalized', () => {
-  loadVocalized({ full: {}, tokens: { 'איזו': 'אֵיזוֹ' } })
-  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה, אֵיזוֹ, אֵיְלוּ?')
+  loadVocalized({ full: {}, tokens: { 'איזו': 'אֵיזוֹ', 'אילו': 'אֵילוּ' } })
+  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה, אֵיְזוֹ, אֵיְלוּ?')
   loadVocalized({ full: {}, tokens: {} })
+})
+
+test('ttsNormalize: tsere-yud gets the glide shva everywhere', () => {
+  loadVocalized({ full: {}, tokens: { 'ביצה': 'בֵּיצָה', 'בית': 'בַּיִת' } })
+  // bei-tza: the bare yud after tsere gains a shva glide
+  assert.match(ttsNormalize('ביצה'), /\u05D9\u05B0/)
+  // ba-yit: yud with its own vowel stays untouched
+  assert.doesNotMatch(ttsNormalize('בית'), /\u05D9\u05B0/)
+  loadVocalized({ full: {}, tokens: {} })
+})
+
+test('ttsNormalize: manual corrections for wrong engine choices', () => {
+  assert.equal(ttsNormalize('מכתב'), 'מִכְתָּב') // mikhtav, not machtev
+  assert.equal(ttsNormalize('מים'), 'מַֽיִם') // stressed MA-im
 })
 
 test('ttsNormalize: generated vocalization applies (full phrase first, tokens as fallback)', () => {

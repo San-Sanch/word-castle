@@ -25,12 +25,24 @@ export function canSpeakHebrew(): boolean {
  * reading. Manual overrides are the final authority — they win over the
  * generated vocalization data. Extend as more misreadings are found.
  */
-const PRONUNCIATION_OVERRIDES: Record<string, string> = {
+export const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'דוד': 'דּוֹד', // uncle (dod) — otherwise read as the name David
   'דודה': 'דּוֹדָה', // aunt (doda)
-  // the voice flattens tsere-yud to plain 'e'; an explicit shva on the yud
-  // makes it a closing glide: ei-lu (double-yud read as an extra syllable)
-  'אילו': 'אֵיְלוּ', // which (pl.) — ei-lu, not e-lu / e-ai-lu
+  'מכתב': 'מִכְתָּב', // letter (mikhtav) — Dicta picked מַכְתֵּב (dictation machine)
+  'מים': 'מַֽיִם', // water — meteg marks the stress: MA-im, not ma-IM
+}
+
+/**
+ * The voice flattens tsere-yud (אֵי) into plain 'e'. An explicit shva on the
+ * bare yud turns it into a closing glide: בֵּיצָה -> בֵּיְצָה (bei-tza),
+ * אֵילוּ -> אֵיְלוּ (ei-lu). Applied to every vocalized word.
+ */
+export function forceEiGlide(text: string): string {
+  // tsere (other marks of the same letter may follow it) + bare yud -> add shva
+  return text.replace(
+    /\u05B5([\u05B0-\u05BC\u05C1\u05C2\u05C7]*)\u05D9(?![\u05B0-\u05BC\u05C1\u05C2\u05C7])/g,
+    '\u05B5$1\u05D9\u05B0',
+  )
 }
 
 export interface VocalizedMap {
@@ -68,8 +80,8 @@ export function ttsNormalize(text: string): string {
     return word + m[2]
   }
   const hasManualOverride = cleaned.split(/[\s,]+/).some((t) => PRONUNCIATION_OVERRIDES[t])
-  if (!hasManualOverride && vocalized.full[cleaned]) return vocalized.full[cleaned]
-  return cleaned.split(' ').map(vocalizeToken).join(' ')
+  if (!hasManualOverride && vocalized.full[cleaned]) return forceEiGlide(vocalized.full[cleaned])
+  return forceEiGlide(cleaned.split(' ').map(vocalizeToken).join(' '))
 }
 
 export function speakHebrew(text: string): boolean {

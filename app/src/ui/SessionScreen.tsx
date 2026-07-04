@@ -27,7 +27,11 @@ interface QueueItem {
   wordId: string
   direction: Direction
   firstTry: boolean
+  /** filler rep outside the schedule: counts as effort, does not touch SRS */
+  practice?: boolean
 }
+
+const MATCH_GROUP = 10
 
 type Step = { kind: 'card'; item: QueueItem } | { kind: 'group'; items: QueueItem[] }
 
@@ -99,7 +103,7 @@ export default function SessionScreen(props: {
 
   const buildSteps = (queue: QueueItem[]): Step[] => {
     if (studyMode !== 'matching') return queue.map((item) => ({ kind: 'card', item }))
-    // matching: groups of up to 5 with unique words; leftovers become cards
+    // matching: groups of MATCH_GROUP unique words; leftovers become cards
     const steps: Step[] = []
     let group: QueueItem[] = []
     const leftovers: QueueItem[] = []
@@ -109,15 +113,15 @@ export default function SessionScreen(props: {
         continue
       }
       group.push(item)
-      if (group.length === 5) {
+      if (group.length === MATCH_GROUP) {
         steps.push({ kind: 'group', items: group })
         group = []
       }
     }
     const rest = [...group, ...leftovers]
     if (rest.length >= 3) {
-      steps.push({ kind: 'group', items: rest.slice(0, 5) })
-      for (const item of rest.slice(5)) steps.push({ kind: 'card', item })
+      steps.push({ kind: 'group', items: rest.slice(0, MATCH_GROUP) })
+      for (const item of rest.slice(MATCH_GROUP)) steps.push({ kind: 'card', item })
     } else {
       for (const item of rest) steps.push({ kind: 'card', item })
     }
@@ -127,6 +131,34 @@ export default function SessionScreen(props: {
   const [steps, setSteps] = useState<Step[]>(() => {
     // no introduction cards: words go straight into exercises (Sanch knows most
     // of them; unknown ones have the on-demand reveal)
+    if (studyMode === 'sentences' && mode !== 'practice') {
+      // only words that actually have sentences; top up with off-schedule
+      // practice reps so the session is never just two cards
+      const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
+      const eligible = (id: string) => sentencesByWord.has(id) && (!inTopic || inTopic.has(id))
+      const due: QueueItem[] = state.reviews
+        .filter((r) => r.dueAt <= today && eligible(r.wordId))
+        .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true }))
+      const known = new Set(state.reviews.map((r) => r.wordId))
+      const allowance = mode === 'more-new'
+        ? Infinity
+        : Math.max(0, state.settings.newWordsPerDay - introducedTodayCount(state, today))
+      const fresh: QueueItem[] = words
+        .filter((w) => eligible(w.id) && !known.has(w.id))
+        .slice(0, Math.min(allowance, state.settings.sessionSize))
+        .map((w) => ({ wordId: w.id, direction: 'recognition' as const, firstTry: true }))
+      let queue = shuffle([...due, ...fresh], rng).slice(0, state.settings.sessionSize)
+      if (queue.length < state.settings.sessionSize) {
+        const used = new Set(queue.map((q) => `${q.wordId}|${q.direction}`))
+        const fill: QueueItem[] = state.reviews
+          .filter((r) => eligible(r.wordId) && !used.has(`${r.wordId}|${r.direction}`))
+          .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
+          .slice(0, state.settings.sessionSize - queue.length)
+          .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true, practice: true }))
+        queue = [...queue, ...shuffle(fill, rng)]
+      }
+      return buildSteps(queue)
+    }
     if (mode === 'practice') {
       const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
       const queue = state.reviews
@@ -291,7 +323,7 @@ export default function SessionScreen(props: {
   }, [phase, ex])
 
   const dispatchAnswer = (item: QueueItem, correct: boolean, rewardKind: 'choice' | 'blank' | 'sound') => {
-    if (mode === 'practice') {
+    if (mode === 'practice' || item.practice) {
       dispatch({ type: 'practiceAnswer', correct, today })
     } else {
       dispatch({
@@ -325,8 +357,8 @@ export default function SessionScreen(props: {
   const enterBonusOrSummary = (after: 'steps' | 'match-bonus') => {
     if (after === 'steps' && studyMode === 'mixed' && state.settings.exercises.match) {
       const pool = [...new Set(answeredWordIds)]
-      if (pool.length >= 5) {
-        const chosen = pool.sort(() => rng() - 0.5).slice(0, 5).map((id) => wordById.get(id)!)
+      if (pool.length >= MATCH_GROUP) {
+        const chosen = pool.sort(() => rng() - 0.5).slice(0, MATCH_GROUP).map((id) => wordById.get(id)!)
         setBonusMatch(makeMatch(chosen, rng))
         setMatchSel(null)
         setMatchDone([])
@@ -393,6 +425,7 @@ export default function SessionScreen(props: {
   const clickGroupMatch = (side: 'l' | 'r', pair: number) => {
     touch()
     if (!groupEx || matchDone.includes(pair)) return
+    if (side === 'l') speakHebrew(groupEx.pairs[pair].hebrew)
     if (!matchSel || matchSel.side === side) {
       setMatchSel({ side, pair })
       return
@@ -423,6 +456,7 @@ export default function SessionScreen(props: {
   const clickBonusMatch = (side: 'l' | 'r', pair: number) => {
     touch()
     if (!bonusMatch || matchDone.includes(pair)) return
+    if (side === 'l') speakHebrew(bonusMatch.pairs[pair].hebrew)
     if (!matchSel || matchSel.side === side) {
       setMatchSel({ side, pair })
       return

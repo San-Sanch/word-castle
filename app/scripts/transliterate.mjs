@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseCsv } from '../.test-build/dataParse.js'
 import { hebrewToLatin } from '../.test-build/translit.js'
+import { PRONUNCIATION_OVERRIDES } from '../.test-build/speech.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const dataDir = join(here, '..', 'src', 'data')
@@ -36,7 +37,8 @@ const vocalize = (text) => {
     .split(' ')
     .map((tok) => {
       const m = tok.match(/^(.*?)([,?.!:;]*)$/)
-      return (vocalized.tokens[m[1]] ?? m[1]) + m[2]
+      // manual pronunciation corrections are the same authority the voice uses
+      return (PRONUNCIATION_OVERRIDES[m[1]] ?? vocalized.tokens[m[1]] ?? m[1]) + m[2]
     })
     .join(' ')
 }
