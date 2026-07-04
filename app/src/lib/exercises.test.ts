@@ -13,17 +13,25 @@ const pool = [
   W('6', { category: 'Verbs' }), W('7', { translationLang: 'en' }),
 ]
 
-test('makeChoice recognition: hebrew prompt, translation options, correct present once', () => {
+test('makeChoice recognition: hebrew prompt, up to 8 options, correct present once', () => {
   const rng = mulberry32(42)
   const ex = makeChoice(pool[0], 'recognition', pool, rng)
   assert.equal(ex.kind, 'choice')
   assert.equal(ex.prompt, 'h1')
-  assert.equal(ex.options.length, 4)
+  assert.equal(ex.options.length, 7) // whole pool fits under the 8 cap
   assert.equal(ex.options.filter((o) => o === 't1').length, 1)
   assert.equal(ex.options[ex.correctIndex], 't1')
-  // distractors share the translation language (no en options among ua)
-  for (const o of ex.options) assert.match(o, /^t/)
-  assert.ok(!ex.options.includes('t7'))
+})
+
+test('makeChoice: same-language distractors preferred when the pool is big enough', () => {
+  const big = [
+    W('1'),
+    ...Array.from({ length: 12 }, (_, i) => W(`ua${i}`)),
+    W('en1', { translationLang: 'en' }),
+  ]
+  const ex = makeChoice(big[0], 'recognition', big, mulberry32(6))
+  assert.equal(ex.options.length, 8)
+  assert.ok(!ex.options.includes('ten1'), 'english distractor leaked into a ua word')
 })
 
 test('makeChoice recall: translation prompt, hebrew options', () => {
@@ -56,6 +64,8 @@ test('makeChoice: single-word answers never get phrase distractors', () => {
   ]
   const singles = [W('s1', { translation: 'aunt' }), W('s2', { translation: 'cousin' }), W('s3', { translation: 'nephew' })]
   const ex = makeChoice(target, 'recognition', [target, ...phrases, ...singles], mulberry32(2))
+  // rather 4 clean options than 8 with conspicuous sentences
+  assert.equal(ex.options.length, 4)
   for (const o of ex.options) {
     assert.equal(o.trim().split(/\s+/).length, 1, `phrase leaked into options: "${o}"`)
   }

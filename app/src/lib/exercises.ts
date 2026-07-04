@@ -42,13 +42,17 @@ function shapeCompatible(answer: string, candidate: string): boolean {
   return a === 1 ? c === 1 : Math.abs(a - c) <= 1
 }
 
-/** Distractor preference: same category + shape, then same shape, then anything. */
+/**
+ * Distractor preference: same category + shape, then same shape, then anything.
+ * Better fewer options than conspicuous ones: shape is only broken when there
+ * are not even 3 believable distractors.
+ */
 export function makeChoice(
   word: Word,
   direction: Direction,
   pool: Word[],
   rng: () => number,
-  count = 4,
+  count = 8,
 ): ChoiceExercise {
   const answer = direction === 'recognition' ? word.translation : word.hebrew
   const textOf = (w: Word) => (direction === 'recognition' ? w.translation : w.hebrew)
@@ -58,7 +62,6 @@ export function makeChoice(
     inShape.filter((w) => w.category === word.category && w.translationLang === word.translationLang),
     inShape.filter((w) => w.translationLang === word.translationLang),
     inShape,
-    candidates, // last resort: tiny pools may have to break shape
   ]
   const picked: string[] = []
   for (const tier of tiers) {
@@ -68,6 +71,14 @@ export function makeChoice(
       if (!picked.includes(text)) picked.push(text)
     }
     if (picked.length >= count - 1) break
+  }
+  // shape may be broken only to guarantee a minimally viable question
+  if (picked.length < 3) {
+    for (const w of shuffle(candidates, rng)) {
+      const text = textOf(w)
+      if (picked.length >= 3) break
+      if (!picked.includes(text)) picked.push(text)
+    }
   }
   const options = shuffle([answer, ...picked], rng)
   return {
@@ -96,6 +107,7 @@ export function makeBlank(
   match: { tokenIndex: number; wordId: string },
   words: Word[],
   rng: () => number,
+  count = 8,
 ): BlankExercise {
   const target = words.find((w) => w.id === match.wordId)
   if (!target) throw new Error(`word ${match.wordId} not in pool`)
@@ -104,9 +116,12 @@ export function makeBlank(
   )
   const sameCat = distractors.filter((w) => w.category === target.category)
   const picked: string[] = []
-  for (const w of shuffle(sameCat.length >= 3 ? sameCat : distractors, rng)) {
-    if (picked.length >= 3) break
-    if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+  for (const tier of [sameCat, distractors]) {
+    for (const w of shuffle(tier, rng)) {
+      if (picked.length >= count - 1) break
+      if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+    }
+    if (picked.length >= count - 1) break
   }
   const options = shuffle([target.hebrew, ...picked], rng)
   return {
