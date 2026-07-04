@@ -41,23 +41,35 @@ const vocalize = (text) => {
     .join(' ')
 }
 
+// a romanization without vowels means the source had no nikud: garbage like
+// "vvyr" — better to show nothing
+const usable = (tr) => tr && /[aeiou]/i.test(tr)
+
 const out = {}
 let fromManual = 0
 let generated = 0
+let dropped = 0
 for (const w of words) {
   const key = clean(w.hebrew)
   let tr = manual.get(key)
   if (tr) fromManual++
   else {
     tr = hebrewToLatin(vocalize(w.hebrew))
-    generated++
+    if (usable(tr)) generated++
+    else {
+      dropped++
+      tr = null
+    }
   }
+  if (!tr) continue
   const entry = { he: tr }
   if (w.plural) {
-    entry.plural = manual.get(clean(w.plural)) ?? hebrewToLatin(vocalize(w.plural))
+    const p = manual.get(clean(w.plural)) ?? hebrewToLatin(vocalize(w.plural))
+    if (usable(p)) entry.plural = p
   }
-  if (entry.he) out[w.id] = entry
+  out[w.id] = entry
 }
+console.log(`dropped (no nikud available): ${dropped}`)
 
 writeFileSync(join(dataDir, 'translit.json'), JSON.stringify(out, null, 1))
 console.log(`translit.json: ${Object.keys(out).length} entries (${fromManual} hand-written, ${generated} generated)`)

@@ -22,12 +22,13 @@ import LearnScreen from './ui/LearnScreen'
 import SessionScreen, { type SessionMode } from './ui/SessionScreen'
 import SpeedScreen from './ui/SpeedScreen'
 import StatsScreen from './ui/StatsScreen'
+import VocabularyScreen from './ui/VocabularyScreen'
 import SettingsScreen from './ui/SettingsScreen'
 
 export const WORDS = wordsJson as Word[]
 export const SENTENCES = sentencesJson as Sentence[]
 
-export type Screen = 'learn' | 'session' | 'speed' | 'stats' | 'settings'
+export type Screen = 'learn' | 'session' | 'speed' | 'vocabulary' | 'stats' | 'settings'
 
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, newPlayerState)
@@ -160,6 +161,7 @@ export default function App() {
         />
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={WORDS} onExit={() => setScreen('learn')} />}
+      {screen === 'vocabulary' && <VocabularyScreen state={state} words={WORDS} />}
       {screen === 'stats' && <StatsScreen state={state} words={WORDS} today={today} />}
       {screen === 'settings' && (
         <SettingsScreen
@@ -179,6 +181,7 @@ export default function App() {
           {(
             [
               ['learn', '📚', 'Learn'],
+              ['vocabulary', '📖', 'Vocabulary'],
               ['stats', '📊', 'Stats'],
               ['settings', '⚙️', 'Settings'],
             ] as Array<[Screen, string, string]>
