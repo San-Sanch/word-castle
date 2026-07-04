@@ -266,6 +266,7 @@ button.primary.big { font-size: 19px; padding: 15px 34px; margin-bottom: 10px; }
 }
 .hint-btn:hover { color: var(--text); }
 .hint-panel { margin: 10px 0; }
+.translit { direction: ltr; font-style: italic; color: var(--blue); font-size: 17px; margin: 2px 0 6px; }
 button.ghost.knew { border: 1px solid var(--green); color: var(--green); padding: 12px 22px; font-size: 16px; }
 button.ghost.missed { border: 1px solid var(--red); color: var(--red); padding: 12px 22px; font-size: 16px; }
 

@@ -30,7 +30,8 @@ export default function SpeedScreen(props: {
 
   const next = () => {
     const w = pool[Math.floor(rng() * pool.length)]
-    setEx(makeChoice(w, rng() < 0.5 ? 'recognition' : 'recall', words, rng))
+    // same rules as listening: 8 options, shape-matched distractors
+    setEx(makeChoice(w, rng() < 0.5 ? 'recognition' : 'recall', words, rng, 8))
   }
   useEffect(() => {
     next()

@@ -19,6 +19,9 @@ import {
 } from '../lib/exercises'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
+import translitJson from '../data/translit.json'
+
+const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
 
 interface QueueItem {
   wordId: string
@@ -459,26 +462,31 @@ export default function SessionScreen(props: {
 
   const log = todayLog(state, today)
 
-  const WordInfo = ({ word }: { word: Word }) => (
-    <div className="hint-panel">
-      <div className="prompt he">
-        {word.hebrew} <SpeakButton text={word.hebrew} />
-      </div>
-      {(word.gender || word.plural) && (
-        <div className="sub">
-          {word.gender === 'm' && 'masculine (ז׳)'}
-          {word.gender === 'f' && 'feminine (נ׳)'}
-          {word.plural && (
-            <>
-              {' '}· plural: <span className="he">{word.plural}</span>
-            </>
-          )}
+  const WordInfo = ({ word }: { word: Word }) => {
+    const tr = TRANSLIT[word.id]
+    return (
+      <div className="hint-panel">
+        <div className="prompt he">
+          {word.hebrew} <SpeakButton text={word.hebrew} />
         </div>
-      )}
-      <div className="prompt small">{word.translation}</div>
-      <div className="sub">{word.category}</div>
-    </div>
-  )
+        {tr && <div className="translit">{tr.he}</div>}
+        {(word.gender || word.plural) && (
+          <div className="sub">
+            {word.gender === 'm' && 'masculine (ז׳)'}
+            {word.gender === 'f' && 'feminine (נ׳)'}
+            {word.plural && (
+              <>
+                {' '}· plural: <span className="he">{word.plural}</span>
+                {tr?.plural && <> ({tr.plural})</>}
+              </>
+            )}
+          </div>
+        )}
+        <div className="prompt small">{word.translation}</div>
+        <div className="sub">{word.category}</div>
+      </div>
+    )
+  }
 
   // ---------- render ----------
 
