@@ -96,6 +96,8 @@ export type StudyMode =
   | 'blanks'
   | 'crossword'
   | 'memory'
+  | 'builder'
+  | 'story'
 
 export interface Settings {
   newWordsPerDay: number

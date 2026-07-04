@@ -1,0 +1,104 @@
+[
+ {
+  "id": "family",
+  "title_he": "המשפחה שלי",
+  "title_en": "My family",
+  "sentences": [
+   { "he": "אני גר בתל אביב עם המשפחה שלי.", "en": "I live in Tel Aviv with my family." },
+   { "he": "יש לי אימא, אבא ואחות קטנה.", "en": "I have a mom, a dad and a little sister." },
+   { "he": "אימא שלי מורה בבית ספר.", "en": "My mom is a teacher at a school." },
+   { "he": "אבא שלי עובד בבנק.", "en": "My dad works at a bank." },
+   { "he": "אחות שלי אוהבת גלידה.", "en": "My sister loves ice cream." }
+  ],
+  "questions": [
+   { "he": "איפה גרה המשפחה?", "en": "Where does the family live?", "options": ["בתל אביב", "בירושלים", "בחיפה", "באוקראינה"], "correct": 0 },
+   { "he": "מה עושה אימא?", "en": "What does mom do?", "options": ["היא שרה", "היא מורה", "היא עובדת בבנק", "היא לומדת עברית"], "correct": 1 },
+   { "he": "מה אוהבת האחות?", "en": "What does the sister love?", "options": ["לחם", "קפה", "גלידה", "מים"], "correct": 2 }
+  ]
+ },
+ {
+  "id": "morning",
+  "title_he": "בוקר בבית",
+  "title_en": "Morning at home",
+  "sentences": [
+   { "he": "בבוקר אני שותה קפה עם חלב.", "en": "In the morning I drink coffee with milk." },
+   { "he": "אני אוכל לחם עם גבינה וביצה.", "en": "I eat bread with cheese and an egg." },
+   { "he": "אני הולך לעבודה באוטובוס.", "en": "I go to work by bus." },
+   { "he": "בערב אני אוכל ארוחת ערב עם המשפחה.", "en": "In the evening I eat dinner with the family." },
+   { "he": "אנחנו שותים תה ומדברים.", "en": "We drink tea and talk." }
+  ],
+  "questions": [
+   { "he": "מה אני שותה בבוקר?", "en": "What do I drink in the morning?", "options": ["תה", "מיץ", "יין", "קפה עם חלב"], "correct": 3 },
+   { "he": "מה אני אוכל בבוקר?", "en": "What do I eat in the morning?", "options": ["לחם עם גבינה וביצה", "סלט", "בשר", "דג"], "correct": 0 },
+   { "he": "מה אנחנו עושים בערב?", "en": "What do we do in the evening?", "options": ["רצים בפארק", "שותים תה ומדברים", "לומדים באולפן", "הולכים לים"], "correct": 1 }
+  ]
+ },
+ {
+  "id": "market",
+  "title_he": "בשוק",
+  "title_en": "At the market",
+  "sentences": [
+   { "he": "היום אני הולך לשוק.", "en": "Today I go to the market." },
+   { "he": "אני קונה תפוח, לימון ועגבנייה.", "en": "I buy an apple, a lemon and a tomato." },
+   { "he": "הבננה עולה חמש שקל.", "en": "The banana costs five shekels." },
+   { "he": "זה לא יקר, זה זול.", "en": "It is not expensive, it is cheap." },
+   { "he": "אני נותן כסף ואומר תודה.", "en": "I give money and say thank you." }
+  ],
+  "questions": [
+   { "he": "לאן אני הולך היום?", "en": "Where do I go today?", "options": ["לשוק", "לבנק", "לבית ספר", "למסעדה"], "correct": 0 },
+   { "he": "מה אני קונה?", "en": "What do I buy?", "options": ["לחם וחלב", "תפוח, לימון ועגבנייה", "בשר ודג", "קפה ותה"], "correct": 1 },
+   { "he": "השוק יקר או זול?", "en": "Is the market expensive or cheap?", "options": ["יקר מאוד", "לא יודע", "זול", "סגור"], "correct": 2 }
+  ]
+ },
+ {
+  "id": "weather",
+  "title_he": "מזג האוויר",
+  "title_en": "The weather",
+  "sentences": [
+   { "he": "היום יש שמש ואין גשם.", "en": "Today there is sun and no rain." },
+   { "he": "חם מאוד בתל אביב.", "en": "It is very hot in Tel Aviv." },
+   { "he": "אני שותה הרבה מים.", "en": "I drink a lot of water." },
+   { "he": "בערב יש רוח קלה.", "en": "In the evening there is a light wind." },
+   { "he": "מחר יורד גשם, אז אני נשאר בבית.", "en": "Tomorrow it rains, so I stay at home." }
+  ],
+  "questions": [
+   { "he": "מה יש היום?", "en": "What is there today?", "options": ["גשם", "שלג", "שמש", "סערה"], "correct": 2 },
+   { "he": "מה אני שותה כי חם?", "en": "What do I drink because it is hot?", "options": ["הרבה מים", "קפה חם", "תה", "יין"], "correct": 0 },
+   { "he": "מה אני עושה מחר?", "en": "What do I do tomorrow?", "options": ["הולך לים", "נשאר בבית", "רץ בפארק", "נוסע לחיפה"], "correct": 1 }
+  ]
+ },
+ {
+  "id": "ulpan",
+  "title_he": "באולפן",
+  "title_en": "At the ulpan",
+  "sentences": [
+   { "he": "אני לומד עברית באולפן.", "en": "I study Hebrew at the ulpan." },
+   { "he": "המורה שלי טובה מאוד.", "en": "My teacher is very good." },
+   { "he": "יש לי מחברת, עט וספר.", "en": "I have a notebook, a pen and a book." },
+   { "he": "אני קורא, כותב ומדבר עברית.", "en": "I read, write and speak Hebrew." },
+   { "he": "אחרי ההפסקה אנחנו שרים שיר.", "en": "After the break we sing a song." }
+  ],
+  "questions": [
+   { "he": "מה אני לומד?", "en": "What do I study?", "options": ["עברית", "ספורט", "מוזיקה", "אנגלית"], "correct": 0 },
+   { "he": "מה יש לי?", "en": "What do I have?", "options": ["טלפון ומחשב", "מחברת, עט וספר", "תיק וכלב", "שולחן וכיסא"], "correct": 1 },
+   { "he": "מה אנחנו עושים אחרי ההפסקה?", "en": "What do we do after the break?", "options": ["הולכים הביתה", "אוכלים ארוחת בוקר", "שרים שיר", "כותבים מכתב"], "correct": 2 }
+  ]
+ },
+ {
+  "id": "sea",
+  "title_he": "יום בים",
+  "title_en": "A day at the sea",
+  "sentences": [
+   { "he": "ביום שישי אני נוסע לים.", "en": "On Friday I travel to the sea." },
+   { "he": "אני בא עם חבר טוב.", "en": "I come with a good friend." },
+   { "he": "המים בים קרים אבל נעימים.", "en": "The water in the sea is cold but pleasant." },
+   { "he": "אנחנו נחים ורואים את השמש.", "en": "We rest and see the sun." },
+   { "he": "זה יום נהדר!", "en": "It is a wonderful day!" }
+  ],
+  "questions": [
+   { "he": "מתי אני נוסע לים?", "en": "When do I travel to the sea?", "options": ["ביום שני", "ביום שישי", "בשבת", "היום"], "correct": 1 },
+   { "he": "עם מי אני בא?", "en": "With whom do I come?", "options": ["עם אימא", "עם המורה", "עם חבר טוב", "עם הבוס"], "correct": 2 },
+   { "he": "איך המים בים?", "en": "How is the water in the sea?", "options": ["קרים אבל נעימים", "חמים מאוד", "לא טובים", "אין מים"], "correct": 0 }
+  ]
+ }
+]

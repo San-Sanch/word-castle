@@ -174,6 +174,15 @@ test('practiceAnswer: counts toward day stats without touching SRS', () => {
   assert.equal(s.tick, 0) // practice does not tick the (dormant) world either
 })
 
+test('storyResult keeps the best score per story', () => {
+  let s = initialGameState()
+  s = gameReducer(s, { type: 'storyResult', storyId: 'family', correct: 2 })
+  s = gameReducer(s, { type: 'storyResult', storyId: 'family', correct: 1 })
+  assert.equal(s.storyScores['family'], 2)
+  s = gameReducer(s, { type: 'storyResult', storyId: 'family', correct: 3 })
+  assert.equal(s.storyScores['family'], 3)
+})
+
 test('coins never go negative', () => {
   let s = { ...initialGameState(), wallet: { coins: 10, bricks: 0, wood: 0, stone: 0, food: 0 } }
   s = gameReducer(s, { type: 'applyAttack', kind: 'session', severity: 5, defense: 0, result: 'coin-loss', coinsDelta: -50, ruin: false, today: T })

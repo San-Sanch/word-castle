@@ -23,8 +23,18 @@ import { generateCrossword, type Crossword } from '../lib/crossword'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import translitJson from '../data/translit.json'
+import storiesJson from '../data/stories.json'
 
 const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
+
+export interface Story {
+  id: string
+  title_he: string
+  title_en: string
+  sentences: Array<{ he: string; en: string }>
+  questions: Array<{ he: string; en: string; options: string[]; correct: number }>
+}
+const STORIES = storiesJson as Story[]
 
 interface QueueItem {
   wordId: string
@@ -44,6 +54,9 @@ type Step =
   | { kind: 'sent'; sentence: Sentence }
   | { kind: 'crossword'; items: QueueItem[]; puzzle: Crossword }
   | { kind: 'memory'; items: QueueItem[] }
+  | { kind: 'build'; sentence: Sentence }
+  | { kind: 'story-read'; story: Story }
+  | { kind: 'story-q'; story: Story; qIdx: number }
 
 type CurrentEx =
   | (ChoiceExercise & { audioOnly?: boolean })
@@ -66,6 +79,8 @@ const MODE_LABEL: Record<StudyMode, string> = {
   blanks: '📝 Missing word',
   crossword: '🔠 Crossword',
   memory: '🎴 Memory',
+  builder: '🏗️ Builder',
+  story: '📚 Story',
 }
 
 function SpeakButton(props: { text: string }) {
@@ -179,6 +194,24 @@ export default function SessionScreen(props: {
       return pool.map((sentence) => ({ kind: 'sent', sentence }))
     }
 
+    if (studyMode === 'builder') {
+      // arrange word tiles into your real sentences (3-10 tokens)
+      const pool = shuffle(sentences.filter((s) => s.tokens.length >= 3 && s.tokens.length <= 10), rng)
+        .slice(0, Math.min(state.settings.sessionSize, 12))
+      return pool.map((sentence) => ({ kind: 'build', sentence }))
+    }
+
+    if (studyMode === 'story') {
+      // next unfinished story, otherwise a random reread
+      const story =
+        STORIES.find((s) => (state.storyScores[s.id] ?? -1) < s.questions.length) ??
+        STORIES[Math.floor(rng() * STORIES.length)]
+      return [
+        { kind: 'story-read', story },
+        ...story.questions.map((_, qIdx) => ({ kind: 'story-q' as const, story, qIdx })),
+      ]
+    }
+
     const needsSentence = studyMode === 'blanks'
     const eligible = (id: string) => topicOk(id) && (!needsSentence || sentencesByWord.has(id))
 
@@ -247,6 +280,18 @@ export default function SessionScreen(props: {
   const [memOpen, setMemOpen] = useState<number[]>([])
   const [memSolved, setMemSolved] = useState<string[]>([])
   const memMissed = useRef(new Set<string>())
+
+  // --- sentence builder state ---
+  interface Tile { id: number; text: string; used: boolean }
+  const [buildTiles, setBuildTiles] = useState<Tile[]>([])
+  const [buildProgress, setBuildProgress] = useState(0)
+  const [buildTokens, setBuildTokens] = useState<string[]>([])
+  const [buildFlash, setBuildFlash] = useState<number | null>(null)
+  const buildMissed = useRef(false)
+
+  // --- story state ---
+  const [revealedSentences, setRevealedSentences] = useState<number[]>([])
+  const storyCorrect = useRef(0)
 
   // --- end-of-session bonus (mixed only) ---
   const [bonusMatch, setBonusMatch] = useState<MatchExercise | null>(null)
@@ -359,6 +404,18 @@ export default function SessionScreen(props: {
       setCwPicked(null)
       setCwActive(null)
       setCwOptions([])
+    } else if (currentStep.kind === 'build') {
+      const toks = reverse
+        ? currentStep.sentence.translation.replace(/[.?!]/g, '').split(/\s+/).filter(Boolean)
+        : currentStep.sentence.tokens
+      setBuildTokens(toks)
+      setBuildTiles(shuffle(toks.map((text, i) => ({ id: i, text, used: false })), rng))
+      setBuildProgress(0)
+      buildMissed.current = false
+      if (!reverse && canSpeakHebrew()) speakHebrew(currentStep.sentence.hebrew)
+    } else if (currentStep.kind === 'story-read') {
+      setRevealedSentences([])
+      if (idx === 0) storyCorrect.current = 0
     } else if (currentStep.kind === 'memory') {
       for (const item of currentStep.items) ensureIntroduced(item.wordId)
       memMissed.current = new Set()
@@ -592,6 +649,50 @@ export default function SessionScreen(props: {
     } else {
       window.setTimeout(() => setCwPicked(null), 600) // try again
     }
+  }
+
+  // --- sentence builder interactions ---
+  const clickTile = (tileIdx: number) => {
+    touch()
+    const step = steps[idx]
+    if (step.kind !== 'build') return
+    const tile = buildTiles[tileIdx]
+    if (!tile || tile.used) return
+    const expected = buildTokens[buildProgress]
+    if (tile.text === expected) {
+      setBuildTiles((ts) => ts.map((t, i) => (i === tileIdx ? { ...t, used: true } : t)))
+      const next = buildProgress + 1
+      setBuildProgress(next)
+      if (next === buildTokens.length) {
+        if (canSpeakHebrew()) speakHebrew(step.sentence.hebrew)
+        dispatch({ type: 'practiceAnswer', correct: !buildMissed.current, today })
+        setSessionAnswered((n) => n + 1)
+        if (!buildMissed.current) setSessionCorrect((n) => n + 1)
+        window.setTimeout(() => advance(steps), 1200)
+      }
+    } else {
+      buildMissed.current = true
+      setBuildFlash(tileIdx)
+      window.setTimeout(() => setBuildFlash(null), 400)
+    }
+  }
+
+  // --- story interactions ---
+  const answerStoryQuestion = (i: number) => {
+    touch()
+    const step = steps[idx]
+    if (step.kind !== 'story-q' || picked !== null) return
+    setPicked(i)
+    const q = step.story.questions[step.qIdx]
+    const correct = i === q.correct
+    if (correct) storyCorrect.current += 1
+    dispatch({ type: 'practiceAnswer', correct, today })
+    setSessionAnswered((n) => n + 1)
+    if (correct) setSessionCorrect((n) => n + 1)
+    if (canSpeakHebrew()) speakHebrew(q.options[q.correct])
+    const last = step.qIdx === step.story.questions.length - 1
+    if (last) dispatch({ type: 'storyResult', storyId: step.story.id, correct: storyCorrect.current })
+    window.setTimeout(() => advance(steps), correct ? 900 : 2000)
   }
 
   // --- memory interactions ---
@@ -956,6 +1057,95 @@ export default function SessionScreen(props: {
               </div>
             </div>
           )}
+        </div>
+      </>
+    )
+  }
+
+  if (step.kind === 'build') {
+    const done = buildProgress === buildTokens.length && buildTokens.length > 0
+    return (
+      <>
+        {header}
+        <div className="panel card">
+          <span className="badge">🏗️ Build the sentence</span>
+          <div className={`prompt small ${reverse ? 'he' : ''}`} style={{ marginTop: 10 }}>
+            {reverse ? step.sentence.hebrew : step.sentence.translation}
+            {reverse && <SpeakButton text={step.sentence.hebrew} />}
+          </div>
+          <div className={`build-answer ${reverse ? '' : 'he'} ${done ? 'done' : ''}`}>
+            {buildTokens.slice(0, buildProgress).map((t, i) => (
+              <span key={i} className="build-word">{t}</span>
+            ))}
+            {!done && <span className="build-cursor">▁</span>}
+            {done && !reverse && <SpeakButton text={step.sentence.hebrew} />}
+          </div>
+          <div className="build-tiles">
+            {buildTiles.map((tile, i) => (
+              <button
+                key={tile.id}
+                className={`build-tile ${reverse ? '' : 'he'} ${tile.used ? 'used' : ''} ${buildFlash === i ? 'flash-tile' : ''}`}
+                disabled={tile.used || done}
+                onClick={() => clickTile(i)}
+              >
+                {tile.text}
+              </button>
+            ))}
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  if (step.kind === 'story-read') {
+    return (
+      <>
+        {header}
+        <div className="panel card story-card">
+          <div className="prompt he">{step.story.title_he}</div>
+          <div className="sub">{step.story.title_en} · tap a line to see its translation</div>
+          <div className="story-lines">
+            {step.story.sentences.map((s, i) => (
+              <div key={i} className="story-line" onClick={() => { touch(); setRevealedSentences((r) => (r.includes(i) ? r.filter((x) => x !== i) : [...r, i])) }}>
+                <SpeakButton text={s.he} />
+                <div>
+                  <div className="he story-he">{s.he}</div>
+                  {revealedSentences.includes(i) && <div className="muted">{s.en}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+          <button className="primary" style={{ marginTop: 16 }} onClick={() => { touch(); advance(steps) }}>
+            To the questions →
+          </button>
+        </div>
+      </>
+    )
+  }
+
+  if (step.kind === 'story-q') {
+    const q = step.story.questions[step.qIdx]
+    return (
+      <>
+        {header}
+        <div className="panel card">
+          <span className="badge">📚 {step.story.title_he} · question {step.qIdx + 1}/{step.story.questions.length}</span>
+          <div className="prompt small he" style={{ marginTop: 12 }}>
+            {q.he} <SpeakButton text={q.he} />
+          </div>
+          <div className="sub">{q.en}</div>
+          <div className="options sentence-options">
+            {q.options.map((o, i) => (
+              <button
+                key={i}
+                className={`he ${picked !== null && i === q.correct ? 'correct' : picked === i ? 'wrong' : ''}`}
+                disabled={picked !== null}
+                onClick={() => answerStoryQuestion(i)}
+              >
+                {o}
+              </button>
+            ))}
+          </div>
         </div>
       </>
     )

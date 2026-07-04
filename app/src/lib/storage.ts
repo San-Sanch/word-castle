@@ -38,6 +38,7 @@ export function deserializeState(json: string): GameState {
     chestsCollected: raw.chestsCollected ?? [],
     letters: raw.letters ?? [],
     unlockedCategories: raw.unlockedCategories ?? null,
+    storyScores: raw.storyScores ?? {},
   } as GameState
 }
 

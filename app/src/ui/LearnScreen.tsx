@@ -12,6 +12,8 @@ const MODES: Array<[StudyMode, string, string]> = [
   ['blanks', '📝', 'Missing word'],
   ['crossword', '🔠', 'Crossword'],
   ['memory', '🎴', 'Memory'],
+  ['builder', '🏗️', 'Builder'],
+  ['story', '📚', 'Story'],
 ]
 
 const TOPIC_EMOJI: Record<string, string> = {

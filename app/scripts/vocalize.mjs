@@ -13,6 +13,7 @@ const repoRoot = join(here, '..', '..', '..')
 
 const words = JSON.parse(readFileSync(join(dataDir, 'words.json'), 'utf8'))
 const sentences = JSON.parse(readFileSync(join(dataDir, 'sentences.json'), 'utf8'))
+const stories = JSON.parse(readFileSync(join(dataDir, 'stories.json'), 'utf8'))
 
 const NIKUD = /[֑-ׇ]/g
 const strip = (s) => s.replace(NIKUD, '')
@@ -34,6 +35,14 @@ for (const w of words) {
   if (w.plural) units.add(clean(w.plural))
 }
 for (const s of sentences) units.add(clean(s.hebrew))
+for (const st of stories) {
+  units.add(clean(st.title_he))
+  for (const s of st.sentences) units.add(clean(s.he))
+  for (const q of st.questions) {
+    units.add(clean(q.he))
+    for (const o of q.options) units.add(clean(o))
+  }
+}
 const list = [...units].filter((u) => u && HEBREW.test(u))
 console.log('speakable units:', list.length)
 

@@ -57,6 +57,8 @@ export interface GameState {
   letters: string[] // collected alef-bet letters
   /** null = every word category available; the cities feature will constrain this */
   unlockedCategories: string[] | null
+  /** best comprehension score per story id */
+  storyScores: Record<string, number>
 }
 
 export function initialGameState(): GameState {
@@ -76,6 +78,7 @@ export function initialGameState(): GameState {
     chestsCollected: [],
     letters: [],
     unlockedCategories: null,
+    storyScores: {},
   }
 }
 
@@ -139,6 +142,7 @@ export type GameAction =
       today: string
     }
   | { type: 'practiceAnswer'; correct: boolean; today: string }
+  | { type: 'storyResult'; storyId: string; correct: number }
   | { type: 'bonusCoins'; amount: number; today: string }
   | { type: 'activeTime'; seconds: number; today: string }
   | { type: 'build'; itemType: CastleItemType; x: number; y: number; nowIso: string }
@@ -234,6 +238,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         correct: log.correct + (action.correct ? 1 : 0),
         mistakes: log.mistakes + (action.correct ? 0 : 1),
       })
+    }
+
+    case 'storyResult': {
+      const best = Math.max(state.storyScores[action.storyId] ?? 0, action.correct)
+      return { ...state, storyScores: { ...state.storyScores, [action.storyId]: best } }
     }
 
     case 'bonusCoins': {
