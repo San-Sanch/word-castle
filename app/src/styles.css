@@ -1,0 +1,153 @@
+:root {
+  --bg: #131a26;
+  --panel: #1c2534;
+  --panel-2: #232f42;
+  --text: #e8e6df;
+  --muted: #8b95a7;
+  --gold: #d4a843;
+  --blue: #5b8def;
+  --green: #4caf7d;
+  --red: #e05d5d;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans Hebrew", Arial, sans-serif;
+}
+
+#root { max-width: 900px; margin: 0 auto; padding: 12px 16px 90px; }
+
+.he { direction: rtl; unicode-bidi: isolate; }
+
+/* Header */
+.header {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px 14px; background: var(--panel); border-radius: var(--radius);
+  margin-bottom: 14px;
+}
+.header .title { font-weight: 700; font-size: 18px; margin-right: auto; }
+.stat { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+.goalbar { flex-basis: 100%; height: 8px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
+.goalbar > div { height: 100%; background: var(--gold); transition: width 0.4s; }
+.goalbar > div.done { background: var(--green); }
+.goal-label { font-size: 12px; color: var(--muted); }
+
+/* Nav */
+.nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 4px;
+  background: var(--panel); padding: 8px; border-top: 1px solid #0009;
+  z-index: 10;
+}
+.nav button {
+  background: none; border: none; color: var(--muted); font-size: 13px;
+  padding: 8px 14px; border-radius: 8px; cursor: pointer;
+}
+.nav button.active { background: var(--panel-2); color: var(--text); }
+.nav button .ico { display: block; font-size: 20px; }
+
+/* Panels */
+.panel { background: var(--panel); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
+.panel h2 { margin: 0 0 12px; font-size: 16px; }
+.muted { color: var(--muted); font-size: 13px; }
+
+button.primary {
+  background: var(--gold); color: #1a1408; font-weight: 700; font-size: 16px;
+  border: none; border-radius: 10px; padding: 12px 22px; cursor: pointer;
+}
+button.primary:disabled { opacity: 0.4; cursor: default; }
+button.ghost {
+  background: var(--panel-2); color: var(--text); border: none; border-radius: 8px;
+  padding: 8px 14px; cursor: pointer;
+}
+
+/* Castle grid */
+.grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+.cell {
+  aspect-ratio: 1; border-radius: 6px; background: #182131;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(16px, 4vw, 30px); cursor: pointer; position: relative;
+  border: 1px solid #0006;
+}
+.cell.land { background: #2c4a33; }
+.cell.placeable { outline: 2px dashed var(--gold); }
+.cell .ruin { filter: grayscale(1); opacity: 0.6; }
+.cell .flame { position: absolute; top: 0; right: 2px; font-size: 12px; }
+
+.shop-row {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+  border-radius: 8px; background: var(--panel-2); margin-bottom: 6px;
+}
+.shop-row .label { flex: 1; }
+.shop-row .price { color: var(--gold); font-weight: 600; font-size: 14px; }
+.shop-row button { min-width: 64px; }
+.shop-row.selected { outline: 2px solid var(--gold); }
+
+.notice { padding: 10px 14px; border-radius: 10px; margin-bottom: 10px; font-size: 14px; }
+.notice.bad { background: #3a2027; border: 1px solid var(--red); }
+.notice.good { background: #1f3a2a; border: 1px solid var(--green); }
+
+/* Session */
+.card { text-align: center; padding: 28px 16px; }
+.prompt { font-size: 40px; font-weight: 700; margin: 10px 0 4px; }
+.prompt.small { font-size: 26px; }
+.sub { color: var(--muted); margin-bottom: 20px; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 520px; margin: 0 auto; }
+.options button {
+  padding: 16px 10px; font-size: 20px; border-radius: 10px; border: 2px solid transparent;
+  background: var(--panel-2); color: var(--text); cursor: pointer;
+}
+.options button.correct { border-color: var(--green); background: #1f3a2a; }
+.options button.wrong { border-color: var(--red); background: #3a2027; }
+.options button:disabled { cursor: default; }
+
+.sentence { font-size: 28px; line-height: 1.7; }
+.blank { display: inline-block; min-width: 70px; border-bottom: 3px solid var(--gold); margin: 0 6px; }
+
+.progress { font-size: 13px; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+
+.match-cols { display: flex; gap: 14px; justify-content: center; }
+.match-cols .col { display: flex; flex-direction: column; gap: 8px; flex: 1; max-width: 250px; }
+.match-cols button {
+  padding: 12px 8px; font-size: 18px; border-radius: 10px; background: var(--panel-2);
+  color: var(--text); border: 2px solid transparent; cursor: pointer;
+}
+.match-cols button.sel { border-color: var(--blue); }
+.match-cols button.done { opacity: 0.35; border-color: var(--green); cursor: default; }
+.match-cols button.flash { border-color: var(--red); }
+
+.newword { border: 1px solid var(--blue); }
+.badge {
+  display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px;
+  background: var(--panel-2); color: var(--muted); margin-bottom: 8px;
+}
+.badge.new { background: #1d3050; color: var(--blue); }
+.badge.attack { background: #3a2027; color: var(--red); }
+
+.lightning-timer { font-size: 30px; font-weight: 800; color: var(--gold); }
+.combo { color: var(--blue); font-weight: 700; }
+
+/* Stats */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid #2a3547; }
+th { color: var(--muted); font-weight: 600; }
+.boxbar { display: flex; gap: 3px; align-items: flex-end; height: 90px; margin-top: 8px; }
+.boxbar .b { flex: 1; background: var(--blue); border-radius: 4px 4px 0 0; min-height: 2px; position: relative; }
+.boxbar .b.recall { background: var(--gold); }
+.boxbar .b span { position: absolute; top: -18px; width: 100%; text-align: center; font-size: 11px; color: var(--muted); }
+
+/* Settings */
+.field { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.field input[type="number"] {
+  width: 90px; padding: 8px; border-radius: 8px;
+  border: 1px solid #3a4666; background: var(--panel-2); color: var(--text); font-size: 15px;
+}
+.row-gap { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.summary-num { font-size: 34px; font-weight: 800; color: var(--gold); }
+.center { text-align: center; }
