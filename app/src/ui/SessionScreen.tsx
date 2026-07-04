@@ -1344,7 +1344,12 @@ export default function SessionScreen(props: {
               <span key={i}> {t} </span>
             ),
           )}
-          {picked !== null && <SpeakButton text={ex.tokens.map((t, i) => (i === ex.blankIndex ? ex.options[ex.correctIndex] : t)).join(' ')} />}
+          {/* before answering: speak the sentence with a pause at the gap; after: the full sentence */}
+          <SpeakButton
+            text={ex.tokens
+              .map((t, i) => (i === ex.blankIndex ? (picked !== null ? ex.options[ex.correctIndex] : ',') : t))
+              .join(' ')}
+          />
         </div>
         <div className="sub">{ex.translation}</div>
         <div className="options">
