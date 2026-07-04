@@ -1,12 +1,23 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type { Dispatch } from 'react'
 import type { GameState, GameAction } from '../lib/game'
-import { serializeState, deserializeState } from '../lib/storage'
+import { serializeState, deserializeState, type ProfileMeta } from '../lib/storage'
+import { canSpeakHebrew } from '../lib/speech'
 
-export default function SettingsScreen(props: { state: GameState; dispatch: Dispatch<GameAction> }) {
-  const { state, dispatch } = props
+export default function SettingsScreen(props: {
+  state: GameState
+  dispatch: Dispatch<GameAction>
+  profiles: ProfileMeta[]
+  activeProfile: string
+  activeProfileMeta: ProfileMeta | undefined
+  onSwitchProfile: (id: string) => void
+  onCreateProfile: (name: string, test: boolean) => void
+  onDeleteProfile: (id: string) => void
+}) {
+  const { state, dispatch, profiles, activeProfile, onSwitchProfile, onCreateProfile, onDeleteProfile } = props
   const s = state.settings
   const fileRef = useRef<HTMLInputElement>(null)
+  const [newName, setNewName] = useState('')
 
   const setNum = (key: 'newWordsPerDay' | 'dailyGoalMinutes' | 'sessionSize' | 'attackChancePct') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +56,55 @@ export default function SettingsScreen(props: { state: GameState; dispatch: Disp
     })
   }
 
+  const createProfile = (test: boolean) => {
+    const name = newName.trim() || (test ? 'Test' : 'Player')
+    onCreateProfile(name, test)
+    setNewName('')
+  }
+
   return (
     <>
+      <div className="panel">
+        <h2>👥 Profiles</h2>
+        {profiles.map((p) => (
+          <div key={p.id} className="shop-row">
+            <span>{p.test ? '🧪' : '👤'}</span>
+            <span className="label">
+              {p.name}
+              {p.id === activeProfile && <span className="muted"> · active</span>}
+              {p.test && <span className="muted"> · test resources</span>}
+            </span>
+            {p.id !== activeProfile && (
+              <button className="ghost" onClick={() => onSwitchProfile(p.id)}>Switch</button>
+            )}
+            {profiles.length > 1 && (
+              <button
+                className="ghost"
+                style={{ color: 'var(--red)' }}
+                onClick={() => {
+                  if (window.confirm(`Delete profile "${p.name}" and all its progress?`)) onDeleteProfile(p.id)
+                }}
+              >
+                🗑
+              </button>
+            )}
+          </div>
+        ))}
+        <div className="row-gap" style={{ marginTop: 10 }}>
+          <input
+            placeholder="New profile name"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+          <button className="ghost" onClick={() => createProfile(false)}>➕ New player</button>
+          <button className="ghost" onClick={() => createProfile(true)}>🧪 Test profile (100k 🪙, 1k 🧱)</button>
+        </div>
+        <p className="muted">
+          Each profile has separate progress, castle and settings. A test profile starts loaded with
+          resources for trying out building and buying.
+        </p>
+      </div>
+
       <div className="panel">
         <h2>⚙️ Learning</h2>
         <div className="field">
@@ -75,6 +133,7 @@ export default function SettingsScreen(props: { state: GameState; dispatch: Disp
             ['blank', 'Fill the blank'],
             ['match', 'Match pairs (bonus round)'],
             ['lightning', 'Lightning round (attacks)'],
+            ['sound', 'Sound match (bonus round, hear the word)'],
           ] as Array<[keyof typeof s.exercises, string]>
         ).map(([key, label]) => (
           <div className="field" key={key}>
@@ -82,6 +141,12 @@ export default function SettingsScreen(props: { state: GameState; dispatch: Disp
             <input type="checkbox" checked={s.exercises[key]} onChange={toggle(key)} />
           </div>
         ))}
+        {!canSpeakHebrew() && (
+          <p className="muted">
+            ⚠️ No Hebrew voice found in this browser, so pronunciation and the sound round are unavailable.
+            On macOS: System Settings → Accessibility → Spoken Content → System voice → add a Hebrew voice (e.g. Carmit).
+          </p>
+        )}
       </div>
 
       <div className="panel">

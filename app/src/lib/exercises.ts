@@ -114,6 +114,54 @@ export function makeMatch(words: Word[], rng: () => number): MatchExercise {
   return { kind: 'match', pairs, leftOrder: shuffle(idx, rng), rightOrder: shuffle(idx, rng) }
 }
 
+export interface SoundExercise {
+  kind: 'sound'
+  wordId: string
+  hebrew: string
+  options: string[]
+  correctIndex: number
+}
+
+/** Rough phonetic-ish similarity for Hebrew strings: shared prefix, length, letter-bigram overlap. */
+export function hebrewSimilarity(a: string, b: string): number {
+  let prefix = 0
+  while (prefix < Math.min(a.length, b.length) && a[prefix] === b[prefix]) prefix++
+  const bigrams = (s: string) => {
+    const set = new Set<string>()
+    for (let i = 0; i < s.length - 1; i++) set.add(s.slice(i, i + 2))
+    return set
+  }
+  const ba = bigrams(a)
+  const bb = bigrams(b)
+  let shared = 0
+  for (const g of ba) if (bb.has(g)) shared++
+  const overlap = shared / Math.max(1, Math.max(ba.size, bb.size))
+  const lengthCloseness = 1 - Math.min(1, Math.abs(a.length - b.length) / Math.max(a.length, b.length))
+  return prefix * 2 + overlap * 3 + lengthCloseness
+}
+
+/** Hear the word, pick it among 6 similar-looking/sounding Hebrew words. */
+export function makeSoundMatch(word: Word, pool: Word[], rng: () => number): SoundExercise {
+  const candidates = pool
+    .filter((w) => w.id !== word.id && w.hebrew !== word.hebrew)
+    .map((w) => ({ w, score: hebrewSimilarity(word.hebrew, w.hebrew) }))
+    .sort((a, b) => b.score - a.score)
+  const topPool = candidates.slice(0, 12)
+  const picked: string[] = []
+  for (const { w } of shuffle(topPool, rng)) {
+    if (picked.length >= 5) break
+    if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+  }
+  const options = shuffle([word.hebrew, ...picked], rng)
+  return {
+    kind: 'sound',
+    wordId: word.id,
+    hebrew: word.hebrew,
+    options,
+    correctIndex: options.indexOf(word.hebrew),
+  }
+}
+
 export type ExerciseKind = 'choice' | 'blank'
 
 /** Blank appears for somewhat-known words (box>=2) with a sentence, ~40% of the time. */

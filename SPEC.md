@@ -152,3 +152,24 @@ Visuals: simple and clean, emoji/flat-SVG sprites for MVP. Dark theme, consisten
 1. Sentences: English translations used as-is in fill-the-blank.
 2. Daily goal: 20 minutes minimum of active practice, extra time gives extra coin bonuses.
 3. Name: Word Castle, confirmed.
+4. Translations: all English. The 413 Ukrainian CSV entries are overridden app-side via
+   `app/src/data/translation-overrides.json`, translated from the Hebrew column
+   (this also corrects a one-row translation shift in the Food & Drinks block of the
+   source CSV, rows ~72-105; the CSV itself is untouched and still needs fixing).
+
+## 13. Post-MVP additions (2026-07-04, second iteration)
+
+- **Full-width layout**: app uses the whole screen; castle grid + shop side by side on desktop.
+- **Nature castle view**: the 8x8 board renders wilderness (trees, rocks, flowers) on
+  unclaimed cells; buying a plot clears it for building ("Buy plot" in the shop).
+- **Hebrew pronunciation (TTS)**: Web Speech API with a system Hebrew voice. Auto-plays on
+  new-word intros and after answering; 🔊 buttons on Hebrew prompts. If no Hebrew voice is
+  installed, buttons hide and Settings shows how to add one (macOS: Spoken Content → Carmit).
+- **Sound match bonus round**: after the match round, up to 5 questions: hear a word, pick it
+  among 6 similar-looking Hebrew words (similarity = shared prefix + bigram overlap + length).
+  2 coins per correct, no SRS effect. Toggle in Settings.
+- **Profiles**: header dropdown + Settings management. Each profile has its own IndexedDB
+  save (`game:<id>`), the pre-profiles save migrates to profile `main`. "Test profile" button
+  seeds 100,000 coins + 1,000 bricks for trying building/buying. New player profile starts fresh.
+- **Parser**: gender markers now handle the CSV's sloppy variants: (ז), (זי), (ז'(, and the
+  combined (ז'/נ') for both-gender nouns.

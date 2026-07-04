@@ -40,10 +40,15 @@ export function parseCsv(text: string): string[][] {
   return rows
 }
 
-/** Extracts base word, gender and plural from entries like "אימא (נ') אימהות". */
+/**
+ * Extracts base word, gender and plural from entries like "אימא (נ') אימהות".
+ * The source CSV writes the marker in several sloppy variants: (ז') (נ") (ז) (זי),
+ * a mistyped closing paren (ז'( and a combined (ז'/נ') for both-gender nouns.
+ */
 export function parseHebrewEntry(raw: string): { hebrew: string; gender: Gender; plural: string | null } {
-  // gender marker: (ז') / (נ') with geresh, gershayim or plain apostrophe/quote
-  const m = raw.match(/\((ז|נ)['"׳״]\)/)
+  const both = raw.match(/\(ז['"׳״י]?\/נ['"׳״י]?\)/)
+  const single = both ? null : raw.match(/\((ז|נ)['"׳״י]?[)(]/)
+  const m = both ?? single
   if (!m || m.index === undefined) {
     return { hebrew: raw.trim(), gender: null, plural: null }
   }
@@ -51,7 +56,7 @@ export function parseHebrewEntry(raw: string): { hebrew: string; gender: Gender;
   const after = raw.slice(m.index + m[0].length).trim()
   return {
     hebrew,
-    gender: m[1] === 'ז' ? 'm' : 'f',
+    gender: both ? null : single![1] === 'ז' ? 'm' : 'f',
     plural: after || null,
   }
 }

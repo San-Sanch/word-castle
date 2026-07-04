@@ -21,11 +21,82 @@ export function deserializeState(json: string): GameState {
     ...defaults,
     ...raw,
     version: 1,
+    settings: {
+      ...defaults.settings,
+      ...raw.settings,
+      exercises: { ...defaults.settings.exercises, ...raw.settings?.exercises },
+    },
     graduatedIds: raw.graduatedIds ?? [],
     guardian: raw.guardian ?? null,
     attacks: raw.attacks ?? [],
     lastRaidCheck: raw.lastRaidCheck ?? null,
   } as GameState
+}
+
+// ---------- profiles ----------
+
+export interface ProfileMeta {
+  id: string
+  name: string
+  test?: boolean
+  createdAt: string
+}
+
+const PROFILES_KEY = 'wc-profiles'
+const ACTIVE_KEY = 'wc-active-profile'
+export const DEFAULT_PROFILE: ProfileMeta = { id: 'main', name: 'Sanch', createdAt: '2026-07-04' }
+
+export function listProfiles(): ProfileMeta[] {
+  try {
+    const raw = localStorage.getItem(PROFILES_KEY)
+    if (raw) {
+      const list = JSON.parse(raw) as ProfileMeta[]
+      if (Array.isArray(list) && list.length > 0) return list
+    }
+  } catch {
+    // fall through to default
+  }
+  localStorage.setItem(PROFILES_KEY, JSON.stringify([DEFAULT_PROFILE]))
+  return [DEFAULT_PROFILE]
+}
+
+export function activeProfileId(): string {
+  const id = localStorage.getItem(ACTIVE_KEY)
+  const profiles = listProfiles()
+  if (id && profiles.some((p) => p.id === id)) return id
+  return profiles[0].id
+}
+
+export function setActiveProfile(id: string): void {
+  localStorage.setItem(ACTIVE_KEY, id)
+}
+
+export function createProfile(name: string, test = false): ProfileMeta {
+  const profiles = listProfiles()
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'player'
+  let id = slug
+  let n = 2
+  while (profiles.some((p) => p.id === id)) id = `${slug}-${n++}`
+  const meta: ProfileMeta = { id, name, test: test || undefined, createdAt: new Date().toISOString().slice(0, 10) }
+  localStorage.setItem(PROFILES_KEY, JSON.stringify([...profiles, meta]))
+  return meta
+}
+
+export async function deleteProfile(id: string): Promise<void> {
+  const remaining = listProfiles().filter((p) => p.id !== id)
+  localStorage.setItem(PROFILES_KEY, JSON.stringify(remaining.length ? remaining : [DEFAULT_PROFILE]))
+  if (activeProfileId() === id) setActiveProfile(remaining[0]?.id ?? DEFAULT_PROFILE.id)
+  const db = await openDb()
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite')
+      tx.objectStore(STORE).delete(`${KEY}:${id}`)
+      tx.oncomplete = () => resolve()
+      tx.onerror = () => reject(tx.error)
+    })
+  } finally {
+    db.close()
+  }
 }
 
 function openDb(): Promise<IDBDatabase> {
@@ -39,30 +110,46 @@ function openDb(): Promise<IDBDatabase> {
   })
 }
 
-export async function loadState(): Promise<GameState | null> {
+async function idbGet(db: IDBDatabase, key: string): Promise<string | undefined> {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readonly')
+    const req = tx.objectStore(STORE).get(key)
+    req.onsuccess = () => resolve(req.result as string | undefined)
+    req.onerror = () => reject(req.error)
+  })
+}
+
+async function idbPut(db: IDBDatabase, key: string, value: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite')
+    tx.objectStore(STORE).put(value, key)
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+  })
+}
+
+export async function loadState(profileId: string): Promise<GameState | null> {
   const db = await openDb()
   try {
-    const json = await new Promise<string | undefined>((resolve, reject) => {
-      const tx = db.transaction(STORE, 'readonly')
-      const req = tx.objectStore(STORE).get(KEY)
-      req.onsuccess = () => resolve(req.result as string | undefined)
-      req.onerror = () => reject(req.error)
-    })
+    let json = await idbGet(db, `${KEY}:${profileId}`)
+    if (!json && profileId === DEFAULT_PROFILE.id) {
+      // migrate the pre-profiles save
+      const legacy = await idbGet(db, KEY)
+      if (legacy) {
+        await idbPut(db, `${KEY}:${profileId}`, legacy)
+        json = legacy
+      }
+    }
     return json ? deserializeState(json) : null
   } finally {
     db.close()
   }
 }
 
-export async function saveState(state: GameState): Promise<void> {
+export async function saveState(profileId: string, state: GameState): Promise<void> {
   const db = await openDb()
   try {
-    await new Promise<void>((resolve, reject) => {
-      const tx = db.transaction(STORE, 'readwrite')
-      tx.objectStore(STORE).put(serializeState(state), KEY)
-      tx.oncomplete = () => resolve()
-      tx.onerror = () => reject(tx.error)
-    })
+    await idbPut(db, `${KEY}:${profileId}`, serializeState(state))
   } finally {
     db.close()
   }

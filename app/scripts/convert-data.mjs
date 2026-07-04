@@ -14,6 +14,22 @@ const sentencesCsv = readFileSync(join(repoRoot, 'source-data', 'hebrew_sentence
 
 const { words, sentenceRows } = buildWords(parseCsv(wordsCsv))
 
+// English overrides for rows whose CSV translation is Ukrainian (translated from
+// the Hebrew side, which also corrects the one-row translation shift in the
+// Food & Drinks block of the source CSV). CSV itself stays untouched.
+const overrides = JSON.parse(readFileSync(join(here, '..', 'src', 'data', 'translation-overrides.json'), 'utf8'))
+let overridden = 0
+for (const w of words) {
+  const en = overrides[w.id]
+  if (en) {
+    w.translationUa = w.translation
+    w.translation = en
+    w.translationLang = 'en'
+    overridden++
+  }
+}
+const remainingUa = words.filter((w) => w.translationLang === 'ua').length
+
 // hebrew_sentences.csv: Date,Hebrew,English Translation
 const extraRows = parseCsv(sentencesCsv)
   .slice(1)
@@ -29,6 +45,7 @@ writeFileSync(join(outDir, 'sentences.json'), JSON.stringify(sentences, null, 1)
 
 const matched = sentences.filter((s) => s.matches.length > 0).length
 console.log(`words: ${words.length}`)
+console.log(`english overrides applied: ${overridden}, words still ua: ${remainingUa}`)
 console.log(`sentences kept: ${sentences.length} (of ${sentenceRows.length + extraRows.length} candidates)`)
 console.log(`sentences with >=1 matched word: ${matched}`)
 console.log(`categories: ${new Set(words.map((w) => w.category)).size}`)

@@ -7,6 +7,12 @@ import { castleDefense } from '../lib/attack'
 
 const GRID = 8
 
+// deterministic wilderness decoration for unclaimed cells
+const NATURE = ['🌲', '🌳', '🌿', '🌾', '🪨', '🌼', '', '', '', '']
+function natureFor(x: number, y: number): string {
+  return NATURE[(x * 7 + y * 13 + ((x * y) % 5)) % NATURE.length]
+}
+
 export default function CastleScreen(props: {
   state: GameState
   dispatch: Dispatch<GameAction>
@@ -56,72 +62,79 @@ export default function CastleScreen(props: {
         </div>
       ))}
 
-      <div className="panel center">
-        <button className="primary" onClick={onStartSession}>
-          ▶ Start session
-        </button>
-        <div className="muted" style={{ marginTop: 8 }}>
-          Defense: 🛡️ {defense} {state.guardian ? `(guardian L${state.guardian.level})` : '(no guardian yet)'}
-        </div>
-      </div>
+      <div className="castle-layout">
+        <div>
+          <div className="panel center">
+            <button className="primary" onClick={onStartSession}>
+              ▶ Start session
+            </button>
+            <div className="muted" style={{ marginTop: 8 }}>
+              Defense: 🛡️ {defense} {state.guardian ? `(guardian L${state.guardian.level})` : '(no guardian yet)'}
+            </div>
+          </div>
 
-      <div className="panel">
-        <h2>Your castle</h2>
-        <div className="grid">
-          {Array.from({ length: GRID * GRID }, (_, i) => {
-            const x = i % GRID
-            const y = Math.floor(i / GRID)
-            const { building, land } = cellContent(x, y)
-            const placeable = placing ? canBuild(placing, state.wallet, state.castle, x, y).ok : false
+          <div className="panel">
+            <h2>Your castle</h2>
+            <div className="grid">
+              {Array.from({ length: GRID * GRID }, (_, i) => {
+                const x = i % GRID
+                const y = Math.floor(i / GRID)
+                const { building, land } = cellContent(x, y)
+                const placeable = placing ? canBuild(placing, state.wallet, state.castle, x, y).ok : false
+                return (
+                  <div
+                    key={i}
+                    className={`cell ${land ? 'land' : 'wild'} ${placeable ? 'placeable' : ''}`}
+                    onClick={() => clickCell(x, y)}
+                  >
+                    {building ? (
+                      <span className={building.status === 'ruin' ? 'ruin' : ''}>
+                        {SHOP[building.type].emoji}
+                      </span>
+                    ) : land ? null : (
+                      <span className="nature">{natureFor(x, y)}</span>
+                    )}
+                    {building?.status === 'ruin' && <span className="flame">🔥</span>}
+                  </div>
+                )
+              })}
+            </div>
+            {placing && (
+              <p className="muted">
+                Placing {SHOP[placing].emoji} {SHOP[placing].label} — tap a highlighted cell, or{' '}
+                <button className="ghost" onClick={() => setPlacing(null)}>cancel</button>
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="panel">
+          <h2>Shop</h2>
+          {(Object.keys(SHOP) as CastleItemType[]).map((type) => {
+            const e = SHOP[type]
+            const affordable = canAfford(type, state.wallet)
             return (
-              <div
-                key={i}
-                className={`cell ${land ? 'land' : ''} ${placeable ? 'placeable' : ''}`}
-                onClick={() => clickCell(x, y)}
-              >
-                {building && (
-                  <span className={building.status === 'ruin' ? 'ruin' : ''}>
-                    {SHOP[building.type].emoji}
-                  </span>
-                )}
-                {building?.status === 'ruin' && <span className="flame">🔥</span>}
+              <div key={type} className={`shop-row ${placing === type ? 'selected' : ''}`}>
+                <span>{e.emoji}</span>
+                <span className="label">
+                  {type === 'land' ? 'Buy plot' : e.label}
+                  {e.defense > 0 && <span className="muted"> · +{e.defense} defense</span>}
+                </span>
+                <span className="price">
+                  🪙{e.coins}
+                  {e.bricks > 0 && <> 🧱{e.bricks}</>}
+                </span>
+                <button className="ghost" disabled={!affordable} onClick={() => setPlacing(placing === type ? null : type)}>
+                  {placing === type ? 'Cancel' : 'Place'}
+                </button>
               </div>
             )
           })}
-        </div>
-        {placing && (
           <p className="muted">
-            Placing {SHOP[placing].emoji} {SHOP[placing].label} — tap a highlighted cell, or{' '}
-            <button className="ghost" onClick={() => setPlacing(null)}>cancel</button>
+            Buy a plot to clear the wilderness, then build on it. Bricks come from graduated words:
+            learn a word in both directions and it becomes building material.
           </p>
-        )}
-      </div>
-
-      <div className="panel">
-        <h2>Shop</h2>
-        {(Object.keys(SHOP) as CastleItemType[]).map((type) => {
-          const e = SHOP[type]
-          const affordable = canAfford(type, state.wallet)
-          return (
-            <div key={type} className={`shop-row ${placing === type ? 'selected' : ''}`}>
-              <span>{e.emoji}</span>
-              <span className="label">
-                {e.label}
-                {e.defense > 0 && <span className="muted"> · +{e.defense} defense</span>}
-              </span>
-              <span className="price">
-                🪙{e.coins}
-                {e.bricks > 0 && <> 🧱{e.bricks}</>}
-              </span>
-              <button className="ghost" disabled={!affordable} onClick={() => setPlacing(placing === type ? null : type)}>
-                {placing === type ? 'Cancel' : 'Place'}
-              </button>
-            </div>
-          )
-        })}
-        <p className="muted">
-          Bricks come from graduated words: learn a word in both directions and it becomes building material.
-        </p>
+        </div>
       </div>
     </>
   )

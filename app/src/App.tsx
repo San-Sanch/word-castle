@@ -1,8 +1,18 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import type { Sentence, Word } from './lib/types'
 import { gameReducer, initialGameState, todayLog, type GameState } from './lib/game'
-import { loadState, saveState } from './lib/storage'
+import {
+  activeProfileId,
+  createProfile,
+  deleteProfile,
+  listProfiles,
+  loadState,
+  saveState,
+  setActiveProfile,
+  type ProfileMeta,
+} from './lib/storage'
 import { todayISO, computeStreak } from './lib/time'
+import { initSpeech } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import CastleScreen from './ui/CastleScreen'
@@ -16,34 +26,75 @@ export const SENTENCES = sentencesJson as Sentence[]
 
 export type Screen = 'castle' | 'learn' | 'guardian' | 'stats' | 'settings'
 
+const TEST_PROFILE_WALLET = { coins: 100000, bricks: 1000 }
+
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, initialGameState)
+  const [profiles, setProfiles] = useState<ProfileMeta[]>(() => listProfiles())
+  const [profile, setProfile] = useState<string>(() => activeProfileId())
   const [loaded, setLoaded] = useState(false)
   const [screen, setScreen] = useState<Screen>('castle')
   const [training, setTraining] = useState(false)
   const [sessionNonce, setSessionNonce] = useState(0)
   const saveTimer = useRef<number | null>(null)
+  const stateRef = useRef(state)
+  stateRef.current = state
 
   useEffect(() => {
-    loadState()
+    initSpeech()
+  }, [])
+
+  useEffect(() => {
+    setLoaded(false)
+    loadState(profile)
       .then((saved) => {
-        if (saved) dispatch({ type: 'import', state: saved })
+        dispatch({ type: 'import', state: saved ?? initialGameState() })
         dispatch({ type: 'raidCheck', today: todayISO() })
         setLoaded(true)
       })
       .catch((e) => {
         console.error('load failed', e)
+        dispatch({ type: 'import', state: initialGameState() })
         setLoaded(true)
       })
-  }, [])
+  }, [profile])
 
   useEffect(() => {
     if (!loaded) return
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
     saveTimer.current = window.setTimeout(() => {
-      saveState(state).catch((e) => console.error('save failed', e))
+      saveState(profile, stateRef.current).catch((e) => console.error('save failed', e))
     }, 400)
-  }, [state, loaded])
+  }, [state, loaded, profile])
+
+  const switchProfile = (id: string) => {
+    if (id === profile) return
+    if (saveTimer.current) window.clearTimeout(saveTimer.current)
+    if (loaded) saveState(profile, stateRef.current).catch((e) => console.error('save failed', e))
+    setActiveProfile(id)
+    setScreen('castle')
+    setTraining(false)
+    setProfile(id)
+  }
+
+  const handleCreateProfile = async (name: string, test: boolean) => {
+    const meta = createProfile(name, test)
+    if (test) {
+      await saveState(meta.id, { ...initialGameState(), wallet: { ...TEST_PROFILE_WALLET } })
+    }
+    setProfiles(listProfiles())
+    switchProfile(meta.id)
+  }
+
+  const handleDeleteProfile = async (id: string) => {
+    await deleteProfile(id)
+    const remaining = listProfiles()
+    setProfiles(remaining)
+    if (id === profile) {
+      setScreen('castle')
+      setProfile(activeProfileId())
+    }
+  }
 
   if (!loaded) return <div className="panel">Loading…</div>
 
@@ -52,6 +103,7 @@ export default function App() {
   const goalSec = state.settings.dailyGoalMinutes * 60
   const goalPct = Math.min(100, Math.round((log.activeSeconds / goalSec) * 100))
   const streak = computeStreak(state.dayLogs, today)
+  const profileMeta = profiles.find((p) => p.id === profile)
 
   const startLearning = () => {
     setTraining(false)
@@ -69,6 +121,19 @@ export default function App() {
     <>
       <div className="header">
         <span className="title">🏰 Word Castle</span>
+        <select
+          className="profile-select"
+          value={profile}
+          onChange={(e) => switchProfile(e.target.value)}
+          title="Player profile"
+        >
+          {profiles.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.test ? '🧪 ' : '👤 '}
+              {p.name}
+            </option>
+          ))}
+        </select>
         <span className="stat">🪙 {state.wallet.coins}</span>
         <span className="stat">🧱 {state.wallet.bricks}</span>
         <span className="stat">🔥 {streak}</span>
@@ -86,7 +151,7 @@ export default function App() {
       )}
       {screen === 'learn' && (
         <SessionScreen
-          key={`${training}-${sessionNonce}`}
+          key={`${profile}-${training}-${sessionNonce}`}
           state={state}
           dispatch={dispatch}
           words={WORDS}
@@ -99,7 +164,18 @@ export default function App() {
         <GuardianScreen state={state} dispatch={dispatch} words={WORDS} onTrain={startTraining} />
       )}
       {screen === 'stats' && <StatsScreen state={state} words={WORDS} today={today} />}
-      {screen === 'settings' && <SettingsScreen state={state} dispatch={dispatch} />}
+      {screen === 'settings' && (
+        <SettingsScreen
+          state={state}
+          dispatch={dispatch}
+          profiles={profiles}
+          activeProfile={profile}
+          activeProfileMeta={profileMeta}
+          onSwitchProfile={switchProfile}
+          onCreateProfile={handleCreateProfile}
+          onDeleteProfile={handleDeleteProfile}
+        />
+      )}
 
       {screen !== 'learn' && (
         <nav className="nav">

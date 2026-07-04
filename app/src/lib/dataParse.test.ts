@@ -49,6 +49,22 @@ test('parseHebrewEntry: marker without plural', () => {
   assert.deepEqual(parseHebrewEntry("יין (ז')"), { hebrew: 'יין', gender: 'm', plural: null })
 })
 
+test('parseHebrewEntry: marker without geresh', () => {
+  assert.deepEqual(parseHebrewEntry('בן (ז) בנים'), { hebrew: 'בן', gender: 'm', plural: 'בנים' })
+  assert.deepEqual(parseHebrewEntry('שלג (ז)'), { hebrew: 'שלג', gender: 'm', plural: null })
+})
+
+test('parseHebrewEntry: sloppy markers (זי) and (ז\'( variants', () => {
+  assert.deepEqual(parseHebrewEntry('בית (זי)בתים'), { hebrew: 'בית', gender: 'm', plural: 'בתים' })
+  assert.deepEqual(parseHebrewEntry("פלפל (ז'( פלפלים"), { hebrew: 'פלפל', gender: 'm', plural: 'פלפלים' })
+})
+
+test('parseHebrewEntry: combined m/f marker', () => {
+  assert.deepEqual(parseHebrewEntry("מורה (ז'/נ') מורים/מורות"), {
+    hebrew: 'מורה', gender: null, plural: 'מורים/מורות',
+  })
+})
+
 // --- Word building from CSV rows ---
 
 test('buildWords: detects translation language, skips Sentences category', () => {

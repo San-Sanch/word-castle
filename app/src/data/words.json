@@ -5,9 +5,10 @@
   "hebrewFull": "אימא (נ') אימהות",
   "gender": "f",
   "plural": "אימהות",
-  "translation": "мати",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "mother",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "мати"
  },
  {
   "id": "1ri423m",
@@ -15,9 +16,10 @@
   "hebrewFull": "אבא (ז')אבות",
   "gender": "m",
   "plural": "אבות",
-  "translation": "тато",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "dad",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "тато"
  },
  {
   "id": "ph427j",
@@ -25,9 +27,10 @@
   "hebrewFull": "סבא (ז')סבים",
   "gender": "m",
   "plural": "סבים",
-  "translation": "дідусь",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "grandfather",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "дідусь"
  },
  {
   "id": "1uzs17r",
@@ -35,19 +38,21 @@
   "hebrewFull": "סבתא (נ')סבתות",
   "gender": "f",
   "plural": "סבתות",
-  "translation": "бабуся",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "grandmother",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "бабуся"
  },
  {
   "id": "4o33cr",
-  "hebrew": "בן (ז) בנים",
+  "hebrew": "בן",
   "hebrewFull": "בן (ז) בנים",
-  "gender": null,
-  "plural": null,
-  "translation": "син",
-  "translationLang": "ua",
-  "category": "Family"
+  "gender": "m",
+  "plural": "בנים",
+  "translation": "son",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "син"
  },
  {
   "id": "otw0pz",
@@ -55,9 +60,10 @@
   "hebrewFull": "בת (נ')בנות",
   "gender": "f",
   "plural": "בנות",
-  "translation": "дочка",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "daughter",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "дочка"
  },
  {
   "id": "rs9pml",
@@ -65,9 +71,10 @@
   "hebrewFull": "ילד (ז')ילדים",
   "gender": "m",
   "plural": "ילדים",
-  "translation": "хлопчик",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "boy",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "хлопчик"
  },
  {
   "id": "11qxt1i",
@@ -75,9 +82,10 @@
   "hebrewFull": "ילדה (נ')ילדות",
   "gender": "f",
   "plural": "ילדות",
-  "translation": "дівчинка",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "girl",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "дівчинка"
  },
  {
   "id": "16n8xc4",
@@ -85,9 +93,10 @@
   "hebrewFull": "אח (ז')אחים",
   "gender": "m",
   "plural": "אחים",
-  "translation": "брат",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "brother",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "брат"
  },
  {
   "id": "ggdq4r",
@@ -95,9 +104,10 @@
   "hebrewFull": "אחות (נ')אחיות",
   "gender": "f",
   "plural": "אחיות",
-  "translation": "сестра",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "sister",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "сестра"
  },
  {
   "id": "1uh7ach",
@@ -105,9 +115,10 @@
   "hebrewFull": "אחיין (ז')אחיינים",
   "gender": "m",
   "plural": "אחיינים",
-  "translation": "племінник",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "nephew",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "племінник"
  },
  {
   "id": "1kqr4ve",
@@ -115,9 +126,10 @@
   "hebrewFull": "אחיינית (נ') אחייניות",
   "gender": "f",
   "plural": "אחייניות",
-  "translation": "племінниця",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "niece",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "племінниця"
  },
  {
   "id": "1j9z8kn",
@@ -125,9 +137,10 @@
   "hebrewFull": "דוד (ז')דודים",
   "gender": "m",
   "plural": "דודים",
-  "translation": "дядя",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "uncle",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "дядя"
  },
  {
   "id": "z85kyr",
@@ -135,9 +148,10 @@
   "hebrewFull": "דודה (נ')דודות",
   "gender": "f",
   "plural": "דודות",
-  "translation": "тьотя",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "aunt",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "тьотя"
  },
  {
   "id": "112q919",
@@ -145,9 +159,10 @@
   "hebrewFull": "נכד(ז')נכדים",
   "gender": "m",
   "plural": "נכדים",
-  "translation": "онук",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "grandson",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "онук"
  },
  {
   "id": "3quhtg",
@@ -155,9 +170,10 @@
   "hebrewFull": "נכדה (נ') נכדות",
   "gender": "f",
   "plural": "נכדות",
-  "translation": "онука",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "granddaughter",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "онука"
  },
  {
   "id": "s3139j",
@@ -165,9 +181,10 @@
   "hebrewFull": "בן משפחה (ז')(בני משפחה)",
   "gender": "m",
   "plural": "(בני משפחה)",
-  "translation": "член родини",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "family member",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "член родини"
  },
  {
   "id": "lh7ryq",
@@ -175,9 +192,10 @@
   "hebrewFull": "קרוב משפחה (ז') קרובי משפחה (נ')משפחות",
   "gender": "m",
   "plural": "קרובי משפחה (נ')משפחות",
-  "translation": "родич",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "relative",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "родич"
  },
  {
   "id": "8yxa3o",
@@ -185,9 +203,10 @@
   "hebrewFull": "משפחה (נ\") משפחות",
   "gender": "f",
   "plural": "משפחות",
-  "translation": "родина",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "family",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "родина"
  },
  {
   "id": "4n89lp",
@@ -195,9 +214,10 @@
   "hebrewFull": "איש  (ז')(אנשים)",
   "gender": "m",
   "plural": "(אנשים)",
-  "translation": "чоловік",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "man / person",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "чоловік"
  },
  {
   "id": "15fi8cu",
@@ -205,9 +225,10 @@
   "hebrewFull": "אישה (נ') (נשים)",
   "gender": "f",
   "plural": "(נשים)",
-  "translation": "жінка дружина",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "woman / wife",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "жінка дружина"
  },
  {
   "id": "fimfwz",
@@ -215,9 +236,10 @@
   "hebrewFull": "בעל (ז')בעלים",
   "gender": "m",
   "plural": "בעלים",
-  "translation": "чоловік чи господар",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "husband / owner",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "чоловік чи господар"
  },
  {
   "id": "1dlb9qm",
@@ -225,9 +247,10 @@
   "hebrewFull": "גבר (ז')גברים",
   "gender": "m",
   "plural": "גברים",
-  "translation": "чоловік",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "man",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "чоловік"
  },
  {
   "id": "ejja5o",
@@ -235,9 +258,10 @@
   "hebrewFull": "תלמיד(ז') תלמידים",
   "gender": "m",
   "plural": "תלמידים",
-  "translation": "учень",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "student (m.)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "учень"
  },
  {
   "id": "pizl9k",
@@ -245,19 +269,21 @@
   "hebrewFull": "תלמידה(נ')תלמידות",
   "gender": "f",
   "plural": "תלמידות",
-  "translation": "учениця",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "student (f.)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "учениця"
  },
  {
   "id": "xy6epi",
-  "hebrew": "מורה (ז'/נ') מורים/מורות",
+  "hebrew": "מורה",
   "hebrewFull": "מורה (ז'/נ') מורים/מורות",
   "gender": null,
-  "plural": null,
-  "translation": "вчитель чи вчителька",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "plural": "מורים/מורות",
+  "translation": "teacher",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "вчитель чи вчителька"
  },
  {
   "id": "1wvagw5",
@@ -265,29 +291,32 @@
   "hebrewFull": "כיתה (נ') כיתות",
   "gender": "f",
   "plural": "כיתות",
-  "translation": "клас",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "class / classroom",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "клас"
  },
  {
   "id": "14glcyd",
-  "hebrew": "בית (זי)בתים",
+  "hebrew": "בית",
   "hebrewFull": "בית (זי)בתים",
-  "gender": null,
-  "plural": null,
-  "translation": "дім",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "gender": "m",
+  "plural": "בתים",
+  "translation": "house / home",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "дім"
  },
  {
   "id": "ponlns",
-  "hebrew": "בית ספר (ז)בתי ספר",
+  "hebrew": "בית ספר",
   "hebrewFull": "בית ספר (ז)בתי ספר",
-  "gender": null,
-  "plural": null,
-  "translation": "школа",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "gender": "m",
+  "plural": "בתי ספר",
+  "translation": "school",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "школа"
  },
  {
   "id": "16539c3",
@@ -295,9 +324,10 @@
   "hebrewFull": "חדר (ז')חדרים",
   "gender": "m",
   "plural": "חדרים",
-  "translation": "кімната",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "room",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "кімната"
  },
  {
   "id": "1pq5tky",
@@ -305,9 +335,10 @@
   "hebrewFull": "עט (ז')עטים",
   "gender": "m",
   "plural": "עטים",
-  "translation": "ручка",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "pen",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "ручка"
  },
  {
   "id": "19wo98v",
@@ -315,9 +346,10 @@
   "hebrewFull": "איפרון (ז')אפרונות",
   "gender": "m",
   "plural": "אפרונות",
-  "translation": "олівець",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "pencil",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "олівець"
  },
  {
   "id": "ictwsw",
@@ -325,9 +357,10 @@
   "hebrewFull": "מחברת (נ')מחברות",
   "gender": "f",
   "plural": "מחברות",
-  "translation": "зошит",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "notebook",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "зошит"
  },
  {
   "id": "1rgy2n1",
@@ -335,9 +368,10 @@
   "hebrewFull": "תיק (ז')תיקים",
   "gender": "m",
   "plural": "תיקים",
-  "translation": "сумка чи папка",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "bag / folder",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "сумка чи папка"
  },
  {
   "id": "k95cue",
@@ -345,9 +379,10 @@
   "hebrewFull": "שולחן (ז') שולחנות",
   "gender": "m",
   "plural": "שולחנות",
-  "translation": "стіл",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "table / desk",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "стіл"
  },
  {
   "id": "1iycbxx",
@@ -355,9 +390,10 @@
   "hebrewFull": "מחשב (ז')מחשבים",
   "gender": "m",
   "plural": "מחשבים",
-  "translation": "комп'ютер",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "computer",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "комп'ютер"
  },
  {
   "id": "en58s",
@@ -365,9 +401,10 @@
   "hebrewFull": "מכתב (ז')מכתבים",
   "gender": "m",
   "plural": "מכתבים",
-  "translation": "лист",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "letter (mail)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "лист"
  },
  {
   "id": "1u6zwly",
@@ -375,9 +412,10 @@
   "hebrewFull": "שיר (ז')שירים",
   "gender": "m",
   "plural": "שירים",
-  "translation": "пісня",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "song",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "пісня"
  },
  {
   "id": "12nxxc1",
@@ -385,9 +423,10 @@
   "hebrewFull": "הפסקה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "перерва",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "break (recess)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "перерва"
  },
  {
   "id": "1g56tle",
@@ -395,9 +434,10 @@
   "hebrewFull": "מספיק",
   "gender": null,
   "plural": null,
-  "translation": "досить/достатньо",
-  "translationLang": "ua",
-  "category": "Adjectives"
+  "translation": "enough",
+  "translationLang": "en",
+  "category": "Adjectives",
+  "translationUa": "досить/достатньо"
  },
  {
   "id": "1x50222",
@@ -405,9 +445,10 @@
   "hebrewFull": "מים (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "вода",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "water",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "вода"
  },
  {
   "id": "1q12nn5",
@@ -415,9 +456,10 @@
   "hebrewFull": "יין (ז')יינות",
   "gender": "m",
   "plural": "יינות",
-  "translation": "вино",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "wine",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "вино"
  },
  {
   "id": "pbvz6a",
@@ -425,9 +467,10 @@
   "hebrewFull": "מיץ (ז')מיצים",
   "gender": "m",
   "plural": "מיצים",
-  "translation": "сік",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "juice",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "сік"
  },
  {
   "id": "ou759k",
@@ -435,9 +478,10 @@
   "hebrewFull": "תה (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "чай",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "tea",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "чай"
  },
  {
   "id": "g3nex3",
@@ -445,9 +489,10 @@
   "hebrewFull": "קפה (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "кава",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "coffee",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "кава"
  },
  {
   "id": "18gtlko",
@@ -455,9 +500,10 @@
   "hebrewFull": "חלה (נ')חלות",
   "gender": "f",
   "plural": "חלות",
-  "translation": "булка Хала",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "challah (bread)",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "булка Хала"
  },
  {
   "id": "96rayu",
@@ -465,9 +511,10 @@
   "hebrewFull": "לחם (ז')לחמים",
   "gender": "m",
   "plural": "לחמים",
-  "translation": "хліб",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "bread",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "хліб"
  },
  {
   "id": "1abevxp",
@@ -475,9 +522,10 @@
   "hebrewFull": "מלח (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "сіль",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "salt",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "сіль"
  },
  {
   "id": "17j715q",
@@ -485,9 +533,10 @@
   "hebrewFull": "סוכר (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "цукор",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "sugar",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "цукор"
  },
  {
   "id": "1nwmo05",
@@ -495,9 +544,10 @@
   "hebrewFull": "מרגרינה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "маргарин",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "margarine",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "маргарин"
  },
  {
   "id": "1hfrift",
@@ -505,9 +555,10 @@
   "hebrewFull": "זית (ז')זיתים",
   "gender": "m",
   "plural": "זיתים",
-  "translation": "оливка",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "olive",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "оливка"
  },
  {
   "id": "1qi03gf",
@@ -515,9 +566,10 @@
   "hebrewFull": "תמר (ז')תמרים",
   "gender": "m",
   "plural": "תמרים",
-  "translation": "фінік",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "date (fruit)",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "фінік"
  },
  {
   "id": "uqonw1",
@@ -525,9 +577,10 @@
   "hebrewFull": "פלאפל (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "фалафель",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "falafel",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "фалафель"
  },
  {
   "id": "1y5nniy",
@@ -535,9 +588,10 @@
   "hebrewFull": "גלידה (נ')גלידות",
   "gender": "f",
   "plural": "גלידות",
-  "translation": "морозиво",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "ice cream",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "морозиво"
  },
  {
   "id": "65ypcx",
@@ -545,9 +599,10 @@
   "hebrewFull": "חלב (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "молоко",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "milk",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "молоко"
  },
  {
   "id": "tz8j6r",
@@ -555,9 +610,10 @@
   "hebrewFull": "בשר (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "м'ясо",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "meat",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "м'ясо"
  },
  {
   "id": "1uyml6s",
@@ -565,9 +621,10 @@
   "hebrewFull": "דג (ז') (דגים)",
   "gender": "m",
   "plural": "(דגים)",
-  "translation": "риба",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "fish",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "риба"
  },
  {
   "id": "1birolb",
@@ -575,9 +632,10 @@
   "hebrewFull": "ארוחה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "трапеза",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "meal",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "трапеза"
  },
  {
   "id": "12o9sh0",
@@ -585,9 +643,10 @@
   "hebrewFull": "ארוחת בוקר",
   "gender": null,
   "plural": null,
-  "translation": "сніданок",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "breakfast",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "сніданок"
  },
  {
   "id": "vhyyvm",
@@ -595,9 +654,10 @@
   "hebrewFull": "ארוחת צוהוריים",
   "gender": null,
   "plural": null,
-  "translation": "обід",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "lunch",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "обід"
  },
  {
   "id": "19s11fd",
@@ -605,9 +665,10 @@
   "hebrewFull": "ארוחת ערב",
   "gender": null,
   "plural": null,
-  "translation": "вечеря",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "dinner",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "вечеря"
  },
  {
   "id": "awc5q3",
@@ -615,9 +676,10 @@
   "hebrewFull": "ביצה (נ')ביצים",
   "gender": "f",
   "plural": "ביצים",
-  "translation": "яйце",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "egg",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "яйце"
  },
  {
   "id": "89o5q9",
@@ -625,9 +687,10 @@
   "hebrewFull": "חביתה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "омлет",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "omelet",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "омлет"
  },
  {
   "id": "uhcorz",
@@ -635,9 +698,10 @@
   "hebrewFull": "קוואקר (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "вівсянка",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "oatmeal",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "вівсянка"
  },
  {
   "id": "1q0yk8s",
@@ -645,9 +709,10 @@
   "hebrewFull": "כוסמת (נ')נקבה",
   "gender": "f",
   "plural": "נקבה",
-  "translation": "гречка",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "buckwheat",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "гречка"
  },
  {
   "id": "pbl1rb",
@@ -655,9 +720,10 @@
   "hebrewFull": "חמאה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "масло вершкове",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "butter",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "масло вершкове"
  },
  {
   "id": "8t66mu",
@@ -665,9 +731,10 @@
   "hebrewFull": "יוגורט (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "йогурт",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "yogurt",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "йогурт"
  },
  {
   "id": "1eequza",
@@ -675,9 +742,10 @@
   "hebrewFull": "מעדן (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "пудинг",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "pudding / dessert",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "пудинг"
  },
  {
   "id": "rshutj",
@@ -685,9 +753,10 @@
   "hebrewFull": "נקניק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "ковбаса",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "sausage",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "ковбаса"
  },
  {
   "id": "je122h",
@@ -695,9 +764,10 @@
   "hebrewFull": "גבינה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "сир",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cheese",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "сир"
  },
  {
   "id": "4tragf",
@@ -705,9 +775,10 @@
   "hebrewFull": "תבלין (ז') תבלינים",
   "gender": "m",
   "plural": "תבלינים",
-  "translation": "спеції",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "spice",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "спеції"
  },
  {
   "id": "1m91qng",
@@ -715,9 +786,10 @@
   "hebrewFull": "מבחר מטבלים (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "мілко подрібнений салат",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "assortment of dips",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "мілко подрібнений салат"
  },
  {
   "id": "px8z7",
@@ -725,9 +797,10 @@
   "hebrewFull": "סלט קצוץ דק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Зерновий хліб",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "finely chopped salad",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Зерновий хліб"
  },
  {
   "id": "10k65xa",
@@ -735,9 +808,10 @@
   "hebrewFull": "לחם דגנים",
   "gender": null,
   "plural": null,
-  "translation": "Яйце",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "grain bread",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Яйце"
  },
  {
   "id": "t3l88z",
@@ -745,9 +819,10 @@
   "hebrewFull": "ביצה (נ') ביצים",
   "gender": "f",
   "plural": "ביצים",
-  "translation": "Скрамбл",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "egg",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Скрамбл"
  },
  {
   "id": "1r87c2g",
@@ -755,9 +830,10 @@
   "hebrewFull": "ביצה מקושקשת",
   "gender": null,
   "plural": null,
-  "translation": "Яйце круте",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "scrambled egg",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Яйце круте"
  },
  {
   "id": "o2rovc",
@@ -765,9 +841,10 @@
   "hebrewFull": "ביצה קשה",
   "gender": null,
   "plural": null,
-  "translation": "Яйце некруто зварене",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "hard-boiled egg",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Яйце некруто зварене"
  },
  {
   "id": "ip2ps1",
@@ -775,9 +852,10 @@
   "hebrewFull": "רכה",
   "gender": null,
   "plural": null,
-  "translation": "Яєчня",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "soft-boiled",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Яєчня"
  },
  {
   "id": "1hsuo2z",
@@ -785,9 +863,10 @@
   "hebrewFull": "ביצת עין",
   "gender": null,
   "plural": null,
-  "translation": "Тунець",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "fried egg",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Тунець"
  },
  {
   "id": "b5jgsp",
@@ -795,9 +874,10 @@
   "hebrewFull": "טונה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Маринований лосось",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "tuna",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Маринований лосось"
  },
  {
   "id": "1q4cj39",
@@ -805,9 +885,10 @@
   "hebrewFull": "סלמון (ז') כבוש",
   "gender": "m",
   "plural": "כבוש",
-  "translation": "Вижатий сік",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "salmon",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Вижатий сік"
  },
  {
   "id": "zhxjfh",
@@ -815,9 +896,10 @@
   "hebrewFull": "מיץ סחוט",
   "gender": null,
   "plural": null,
-  "translation": "Листя шпинату",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "freshly squeezed juice",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Листя шпинату"
  },
  {
   "id": "10jswkr",
@@ -825,9 +907,10 @@
   "hebrewFull": "עלי תרד",
   "gender": null,
   "plural": null,
-  "translation": "овоч",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "spinach leaves",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "овоч"
  },
  {
   "id": "1az03yz",
@@ -835,9 +918,10 @@
   "hebrewFull": "ירק (ירקות)(ז')",
   "gender": "m",
   "plural": null,
-  "translation": "картопля",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "vegetable(s)",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "картопля"
  },
  {
   "id": "1khmwia",
@@ -845,9 +929,10 @@
   "hebrewFull": "תפוח אדמה (ז')(תפוחי אדמה)",
   "gender": "m",
   "plural": "(תפוחי אדמה)",
-  "translation": "томат",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "potato",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "томат"
  },
  {
   "id": "1yuhd77",
@@ -855,9 +940,10 @@
   "hebrewFull": "עגבנייה (נ')(עגבניות)",
   "gender": "f",
   "plural": "(עגבניות)",
-  "translation": "томати чері",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "tomato",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "томати чері"
  },
  {
   "id": "qqxevc",
@@ -865,9 +951,10 @@
   "hebrewFull": "עגבניות שרי",
   "gender": null,
   "plural": null,
-  "translation": "огірок",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cherry tomatoes",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "огірок"
  },
  {
   "id": "v5mxpt",
@@ -875,9 +962,10 @@
   "hebrewFull": "מלפפון (ז')(מלפפונים",
   "gender": "m",
   "plural": "(מלפפונים",
-  "translation": "морква",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cucumber",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "морква"
  },
  {
   "id": "1wdz333",
@@ -885,9 +973,10 @@
   "hebrewFull": "גזר(ז')",
   "gender": "m",
   "plural": null,
-  "translation": "баклажан",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "carrot",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "баклажан"
  },
  {
   "id": "cefex1",
@@ -895,9 +984,10 @@
   "hebrewFull": "חציל (ז') (חצילים)",
   "gender": "m",
   "plural": "(חצילים)",
-  "translation": "цибуля",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "eggplant",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "цибуля"
  },
  {
   "id": "1ln6ity",
@@ -905,9 +995,10 @@
   "hebrewFull": "בצל (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "капуста",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "onion",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "капуста"
  },
  {
   "id": "84vibb",
@@ -915,9 +1006,10 @@
   "hebrewFull": "כרוב (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "салат",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cabbage",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "салат"
  },
  {
   "id": "1ua21kp",
@@ -925,19 +1017,21 @@
   "hebrewFull": "חסה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "перець",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "lettuce",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "перець"
  },
  {
   "id": "1t6jfu5",
-  "hebrew": "פלפל (ז'( פלפלים",
+  "hebrew": "פלפל",
   "hebrewFull": "פלפל (ז'( פלפלים",
-  "gender": null,
-  "plural": null,
-  "translation": "кукурудза",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "gender": "m",
+  "plural": "פלפלים",
+  "translation": "pepper",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "кукурудза"
  },
  {
   "id": "qq9lgd",
@@ -945,9 +1039,10 @@
   "hebrewFull": "תירס (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "фрукт",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "corn",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "фрукт"
  },
  {
   "id": "1fffa90",
@@ -955,9 +1050,10 @@
   "hebrewFull": "פרי (ז') (פירות)",
   "gender": "m",
   "plural": "(פירות)",
-  "translation": "яблуко",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "fruit",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "яблуко"
  },
  {
   "id": "14yhgc5",
@@ -965,9 +1061,10 @@
   "hebrewFull": "תפוח (ז') תפוחים",
   "gender": "m",
   "plural": "תפוחים",
-  "translation": "апельсин",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "apple",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "апельсин"
  },
  {
   "id": "jq039c",
@@ -975,9 +1072,10 @@
   "hebrewFull": "תפוז (ז') תפוזים",
   "gender": "m",
   "plural": "תפוזים",
-  "translation": "лимон",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "orange",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "лимон"
  },
  {
   "id": "3hi41r",
@@ -985,9 +1083,10 @@
   "hebrewFull": "לימון (ז') לימונים",
   "gender": "m",
   "plural": "לימונים",
-  "translation": "манго",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "lemon",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "манго"
  },
  {
   "id": "12e6gu7",
@@ -995,9 +1094,10 @@
   "hebrewFull": "מנגו (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "виноград",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "mango",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "виноград"
  },
  {
   "id": "16kunp6",
@@ -1005,9 +1105,10 @@
   "hebrewFull": "ענבים (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "полуниця",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "grapes",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "полуниця"
  },
  {
   "id": "pxp2p1",
@@ -1015,9 +1116,10 @@
   "hebrewFull": "תות שדה (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "кавун",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "strawberry",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "кавун"
  },
  {
   "id": "1hlukq4",
@@ -1025,9 +1127,10 @@
   "hebrewFull": "אבטיח (ז') אבטיחים",
   "gender": "m",
   "plural": "אבטיחים",
-  "translation": "Вишня",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "watermelon",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Вишня"
  },
  {
   "id": "18840tb",
@@ -1035,9 +1138,10 @@
   "hebrewFull": "דובדבן (ז') דובדבנים",
   "gender": "m",
   "plural": "דובדבנים",
-  "translation": "Авокадо",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cherry",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "Авокадо"
  },
  {
   "id": "vunquc",
@@ -1045,9 +1149,10 @@
   "hebrewFull": "אבוקדו (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "персик",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "avocado",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "персик"
  },
  {
   "id": "1le3vud",
@@ -1055,9 +1160,10 @@
   "hebrewFull": "אפרסק (ז') אפרסקים",
   "gender": "m",
   "plural": "אפרסקים",
-  "translation": "персик",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "peach",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "персик"
  },
  {
   "id": "1m98s6s",
@@ -1065,9 +1171,10 @@
   "hebrewFull": "שמש (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "сонце",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "sun",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "сонце"
  },
  {
   "id": "14whv55",
@@ -1075,19 +1182,21 @@
   "hebrewFull": "גשם (ז') גשמים",
   "gender": "m",
   "plural": "גשמים",
-  "translation": "дощ",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "rain",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "дощ"
  },
  {
   "id": "yyooac",
-  "hebrew": "שלג (ז)",
+  "hebrew": "שלג",
   "hebrewFull": "שלג (ז)",
-  "gender": null,
+  "gender": "m",
   "plural": null,
-  "translation": "сніг",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "snow",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "сніг"
  },
  {
   "id": "15fn9la",
@@ -1095,9 +1204,10 @@
   "hebrewFull": "ענן  (ז')(עננים)",
   "gender": "m",
   "plural": "(עננים)",
-  "translation": "хмара",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "cloud",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "хмара"
  },
  {
   "id": "1y8mn41",
@@ -1105,9 +1215,10 @@
   "hebrewFull": "מעונן",
   "gender": null,
   "plural": null,
-  "translation": "хмарно",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "cloudy",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "хмарно"
  },
  {
   "id": "1ihjct7",
@@ -1115,9 +1226,10 @@
   "hebrewFull": "גשום",
   "gender": null,
   "plural": null,
-  "translation": "дощить",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "rainy",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "дощить"
  },
  {
   "id": "1c5lqoq",
@@ -1125,9 +1237,10 @@
   "hebrewFull": "שמשי",
   "gender": null,
   "plural": null,
-  "translation": "сонячний чи сонячно",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "sunny",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "сонячний чи сонячно"
  },
  {
   "id": "dy06we",
@@ -1135,9 +1248,10 @@
   "hebrewFull": "רוח קלה (ז') רוחות",
   "gender": "m",
   "plural": "רוחות",
-  "translation": "слабкий вітер",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "light wind",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "слабкий вітер"
  },
  {
   "id": "1yir49w",
@@ -1145,9 +1259,10 @@
   "hebrewFull": "רוח חזקה",
   "gender": null,
   "plural": null,
-  "translation": "сильний вітер",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "strong wind",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "сильний вітер"
  },
  {
   "id": "1p81wa2",
@@ -1155,9 +1270,10 @@
   "hebrewFull": "מעלה/מעלות (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "градус",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "degree(s)",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "градус"
  },
  {
   "id": "hta8lu",
@@ -1165,9 +1281,10 @@
   "hebrewFull": "קר",
   "gender": null,
   "plural": null,
-  "translation": "холодно чи холодний",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "cold",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "холодно чи холодний"
  },
  {
   "id": "19tenm3",
@@ -1175,9 +1292,10 @@
   "hebrewFull": "קריר",
   "gender": null,
   "plural": null,
-  "translation": "прохолодно",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "cool / chilly",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "прохолодно"
  },
  {
   "id": "1s7ubrx",
@@ -1185,9 +1303,10 @@
   "hebrewFull": "קור (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "холод",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "cold (noun)",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "холод"
  },
  {
   "id": "ur6bxk",
@@ -1195,9 +1314,10 @@
   "hebrewFull": "חם",
   "gender": null,
   "plural": null,
-  "translation": "теплий чи теплий",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "hot / warm",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "теплий чи теплий"
  },
  {
   "id": "1qb2cq7",
@@ -1205,9 +1325,10 @@
   "hebrewFull": "חום(ז')",
   "gender": "m",
   "plural": null,
-  "translation": "жара тепло жар",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "heat / warmth",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "жара тепло жар"
  },
  {
   "id": "14wi33c",
@@ -1215,9 +1336,10 @@
   "hebrewFull": "עיר (נ')(ערים)",
   "gender": "f",
   "plural": "(ערים)",
-  "translation": "місто",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "city",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "місто"
  },
  {
   "id": "13k2ot7",
@@ -1225,9 +1347,10 @@
   "hebrewFull": "ארץ(נ') (ארצות)",
   "gender": "f",
   "plural": "(ארצות)",
-  "translation": "країна чи земля",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "country / land",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "країна чи земля"
  },
  {
   "id": "1anl4xr",
@@ -1235,9 +1358,10 @@
   "hebrewFull": "דגל (ז') דגלים",
   "gender": "m",
   "plural": "דגלים",
-  "translation": "прапор",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "flag",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "прапор"
  },
  {
   "id": "1i7m0z4",
@@ -1245,9 +1369,10 @@
   "hebrewFull": "ישראל",
   "gender": null,
   "plural": null,
-  "translation": "Ізраїль",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Israel",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Ізраїль"
  },
  {
   "id": "nyaq8x",
@@ -1255,9 +1380,10 @@
   "hebrewFull": "אוקראינה",
   "gender": null,
   "plural": null,
-  "translation": "Україна",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Ukraine",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Україна"
  },
  {
   "id": "1un6byi",
@@ -1265,9 +1391,10 @@
   "hebrewFull": "אנגליה",
   "gender": null,
   "plural": null,
-  "translation": "Англія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "England",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Англія"
  },
  {
   "id": "1d5dra3",
@@ -1275,9 +1402,10 @@
   "hebrewFull": "גרמניה",
   "gender": null,
   "plural": null,
-  "translation": "Німеччина",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Germany",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Німеччина"
  },
  {
   "id": "6x4w8m",
@@ -1285,9 +1413,10 @@
   "hebrewFull": "אירלנד",
   "gender": null,
   "plural": null,
-  "translation": "Ірландія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Ireland",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Ірландія"
  },
  {
   "id": "1ikievv",
@@ -1295,9 +1424,10 @@
   "hebrewFull": "דניה",
   "gender": null,
   "plural": null,
-  "translation": "Данія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Denmark",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Данія"
  },
  {
   "id": "du8h4v",
@@ -1305,9 +1435,10 @@
   "hebrewFull": "ירדן",
   "gender": null,
   "plural": null,
-  "translation": "Йорданія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Jordan",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Йорданія"
  },
  {
   "id": "podz9r",
@@ -1315,9 +1446,10 @@
   "hebrewFull": "תימן",
   "gender": null,
   "plural": null,
-  "translation": "Йемен",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Yemen",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Йемен"
  },
  {
   "id": "1np0b3n",
@@ -1325,9 +1457,10 @@
   "hebrewFull": "צרפת",
   "gender": null,
   "plural": null,
-  "translation": "Франція",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "France",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Франція"
  },
  {
   "id": "9arth3",
@@ -1335,9 +1468,10 @@
   "hebrewFull": "ספרד",
   "gender": null,
   "plural": null,
-  "translation": "Іспанія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Spain",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Іспанія"
  },
  {
   "id": "1h1vqjx",
@@ -1345,9 +1479,10 @@
   "hebrewFull": "יפן",
   "gender": null,
   "plural": null,
-  "translation": "Японія",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "Japan",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Японія"
  },
  {
   "id": "wbtfaj",
@@ -1355,9 +1490,10 @@
   "hebrewFull": "סין",
   "gender": null,
   "plural": null,
-  "translation": "Китай",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "China",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Китай"
  },
  {
   "id": "1ltneud",
@@ -1365,9 +1501,10 @@
   "hebrewFull": "שקל (ז')שקלים/ש''ח",
   "gender": "m",
   "plural": "שקלים/ש''ח",
-  "translation": "Шекель шкалим )шах)",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "shekel",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Шекель шкалим )шах)"
  },
  {
   "id": "10rwj5r",
@@ -1375,9 +1512,10 @@
   "hebrewFull": "כסף (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Гроші",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "money",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Гроші"
  },
  {
   "id": "1o5cp3d",
@@ -1385,9 +1523,10 @@
   "hebrewFull": "כסף מזומן/מזומנים",
   "gender": null,
   "plural": null,
-  "translation": "Готівка",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "cash",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Готівка"
  },
  {
   "id": "1yd06b4",
@@ -1395,9 +1534,10 @@
   "hebrewFull": "כרטיס (ז') אשראי",
   "gender": "m",
   "plural": "אשראי",
-  "translation": "Кредитна картка",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "credit card",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "Кредитна картка"
  },
  {
   "id": "1sskmok",
@@ -1405,9 +1545,10 @@
   "hebrewFull": "מה?",
   "gender": null,
   "plural": null,
-  "translation": "Що",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "What?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Що"
  },
  {
   "id": "q6kmv",
@@ -1415,9 +1556,10 @@
   "hebrewFull": "מי?",
   "gender": null,
   "plural": null,
-  "translation": "Хто",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Who?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Хто"
  },
  {
   "id": "1ux47c4",
@@ -1425,9 +1567,10 @@
   "hebrewFull": "מאין?",
   "gender": null,
   "plural": null,
-  "translation": "Звідки",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Where from?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Звідки"
  },
  {
   "id": "xk9rr7",
@@ -1435,9 +1578,10 @@
   "hebrewFull": "מתי?",
   "gender": null,
   "plural": null,
-  "translation": "Коли",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "When?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Коли"
  },
  {
   "id": "emg0pd",
@@ -1445,9 +1589,10 @@
   "hebrewFull": "איפה?",
   "gender": null,
   "plural": null,
-  "translation": "Де",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Where?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Де"
  },
  {
   "id": "gvc1lm",
@@ -1455,9 +1600,10 @@
   "hebrewFull": "איזה/איזו/אילו?",
   "gender": null,
   "plural": null,
-  "translation": "Який яка які",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Which?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Який яка які"
  },
  {
   "id": "xwf6lr",
@@ -1465,9 +1611,10 @@
   "hebrewFull": "לאן?",
   "gender": null,
   "plural": null,
-  "translation": "Куди",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Where to?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Куди"
  },
  {
   "id": "1iec2ew",
@@ -1475,9 +1622,10 @@
   "hebrewFull": "עם מי?",
   "gender": null,
   "plural": null,
-  "translation": "З ким",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "With whom?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "З ким"
  },
  {
   "id": "1jldmqg",
@@ -1485,9 +1633,10 @@
   "hebrewFull": "על מי?",
   "gender": null,
   "plural": null,
-  "translation": "Про кого",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "About whom?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Про кого"
  },
  {
   "id": "tbjcej",
@@ -1495,9 +1644,10 @@
   "hebrewFull": "על מה?",
   "gender": null,
   "plural": null,
-  "translation": "Про що",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "About what?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Про що"
  },
  {
   "id": "j4qc5h",
@@ -1505,9 +1655,10 @@
   "hebrewFull": "של מי?",
   "gender": null,
   "plural": null,
-  "translation": "Чий чия чиї",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "Whose?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Чий чия чиї"
  },
  {
   "id": "5lmzbn",
@@ -1515,9 +1666,10 @@
   "hebrewFull": "שלום",
   "gender": null,
   "plural": null,
-  "translation": "Здрастуй мир гармонія",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "hello / peace (shalom)",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Здрастуй мир гармонія"
  },
  {
   "id": "tarkr4",
@@ -1525,9 +1677,10 @@
   "hebrewFull": "היי",
   "gender": null,
   "plural": null,
-  "translation": "Привіт",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "hi",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Привіт"
  },
  {
   "id": "1vgt9b8",
@@ -1535,9 +1688,10 @@
   "hebrewFull": "תודה (נ') תודות",
   "gender": "f",
   "plural": "תודות",
-  "translation": "Дякую",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "thank you",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Дякую"
  },
  {
   "id": "9audes",
@@ -1545,9 +1699,10 @@
   "hebrewFull": "סליחה(נ') סליחות",
   "gender": "f",
   "plural": "סליחות",
-  "translation": "Вибач",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "sorry / excuse me",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Вибач"
  },
  {
   "id": "1k82tw5",
@@ -1555,9 +1710,10 @@
   "hebrewFull": "בבקשה",
   "gender": null,
   "plural": null,
-  "translation": "Будь ласка",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "please / you're welcome",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Будь ласка"
  },
  {
   "id": "1ewyisz",
@@ -1565,9 +1721,10 @@
   "hebrewFull": "אין דבר",
   "gender": null,
   "plural": null,
-  "translation": "Нічого страшного",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "no problem / never mind",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Нічого страшного"
  },
  {
   "id": "1ahmn5j",
@@ -1575,9 +1732,10 @@
   "hebrewFull": "להתראות",
   "gender": null,
   "plural": null,
-  "translation": "До побачення",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "goodbye",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "До побачення"
  },
  {
   "id": "qppqbh",
@@ -1585,9 +1743,10 @@
   "hebrewFull": "ביי",
   "gender": null,
   "plural": null,
-  "translation": "Бувай",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "bye",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Бувай"
  },
  {
   "id": "5i6pm4",
@@ -1595,9 +1754,10 @@
   "hebrewFull": "מה נשמע?",
   "gender": null,
   "plural": null,
-  "translation": "Що чути",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "What's up?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Що чути"
  },
  {
   "id": "cueajr",
@@ -1605,9 +1765,10 @@
   "hebrewFull": "מה עניינים?",
   "gender": null,
   "plural": null,
-  "translation": "Як справи",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "How are things?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Як справи"
  },
  {
   "id": "1kunb22",
@@ -1615,9 +1776,10 @@
   "hebrewFull": "מה הולך?",
   "gender": null,
   "plural": null,
-  "translation": "Як йде",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "How's it going?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Як йде"
  },
  {
   "id": "d917us",
@@ -1625,9 +1787,10 @@
   "hebrewFull": "מה מצב?",
   "gender": null,
   "plural": null,
-  "translation": "Як положення",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "How's the situation?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Як положення"
  },
  {
   "id": "sxpf5n",
@@ -1635,9 +1798,10 @@
   "hebrewFull": "מה שלומך?",
   "gender": null,
   "plural": null,
-  "translation": "Як ти",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "How are you?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Як ти"
  },
  {
   "id": "8tx6p4",
@@ -1645,9 +1809,10 @@
   "hebrewFull": "מה חדש?",
   "gender": null,
   "plural": null,
-  "translation": "Що нового",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "What's new?",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Що нового"
  },
  {
   "id": "2agam7",
@@ -1655,9 +1820,10 @@
   "hebrewFull": "בסדר",
   "gender": null,
   "plural": null,
-  "translation": "В порядку",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "okay / fine",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "В порядку"
  },
  {
   "id": "1mhsb8m",
@@ -1665,9 +1831,10 @@
   "hebrewFull": "יופי (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Прекрасно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "great / lovely",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Прекрасно"
  },
  {
   "id": "1t3rkv8",
@@ -1675,9 +1842,10 @@
   "hebrewFull": "טוב(מאוד)",
   "gender": null,
   "plural": null,
-  "translation": "Добре дуже добре",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "good (very good)",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Добре дуже добре"
  },
  {
   "id": "1214hd8",
@@ -1685,9 +1853,10 @@
   "hebrewFull": "מצוין",
   "gender": null,
   "plural": null,
-  "translation": "Прекрасно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "excellent",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Прекрасно"
  },
  {
   "id": "v7h3gv",
@@ -1695,9 +1864,10 @@
   "hebrewFull": "נפלא",
   "gender": null,
   "plural": null,
-  "translation": "Чудово",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "wonderful",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Чудово"
  },
  {
   "id": "2jpsll",
@@ -1705,9 +1875,10 @@
   "hebrewFull": "מקסים",
   "gender": null,
   "plural": null,
-  "translation": "Чарівно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "charming / lovely",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Чарівно"
  },
  {
   "id": "a47rba",
@@ -1715,9 +1886,10 @@
   "hebrewFull": "מעולה",
   "gender": null,
   "plural": null,
-  "translation": "На рівні",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "superb",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "На рівні"
  },
  {
   "id": "bm0fvo",
@@ -1725,9 +1897,10 @@
   "hebrewFull": "נהדר",
   "gender": null,
   "plural": null,
-  "translation": "Розкішно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "fantastic",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Розкішно"
  },
  {
   "id": "v7enkl",
@@ -1735,9 +1908,10 @@
   "hebrewFull": "ככה ככה",
   "gender": null,
   "plural": null,
-  "translation": "Так собі",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "so-so",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Так собі"
  },
  {
   "id": "170h89a",
@@ -1745,9 +1919,10 @@
   "hebrewFull": "על הפנים",
   "gender": null,
   "plural": null,
-  "translation": "Погано",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "terrible / awful",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Погано"
  },
  {
   "id": "19dcfda",
@@ -1755,9 +1930,10 @@
   "hebrewFull": "נכון/לא נכון",
   "gender": null,
   "plural": null,
-  "translation": "Вірно     не вірно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "right / wrong",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Вірно     не вірно"
  },
  {
   "id": "29ayvb",
@@ -1765,9 +1941,10 @@
   "hebrewFull": "ממש",
   "gender": null,
   "plural": null,
-  "translation": "Суттєво реально",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "really / truly",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Суттєво реально"
  },
  {
   "id": "1rrndg0",
@@ -1775,9 +1952,10 @@
   "hebrewFull": "אתה צודק/את צודקת",
   "gender": null,
   "plural": null,
-  "translation": "Ти маєш рацію",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "you're right",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Ти маєш рацію"
  },
  {
   "id": "11xni03",
@@ -1785,9 +1963,10 @@
   "hebrewFull": "אני עושה חיים",
   "gender": null,
   "plural": null,
-  "translation": "Я гарно проводжу час (роблю життя)",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "I'm having a great time",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Я гарно проводжу час (роблю життя)"
  },
  {
   "id": "1ureyz9",
@@ -1795,9 +1974,10 @@
   "hebrewFull": "בתאבון",
   "gender": null,
   "plural": null,
-  "translation": "Приємного апетиту",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "bon appetit",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Приємного апетиту"
  },
  {
   "id": "wi93nz",
@@ -1805,9 +1985,10 @@
   "hebrewFull": "חשבון (ז')  בבקשה",
   "gender": "m",
   "plural": "בבקשה",
-  "translation": "Рахунок будь ласка",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "the bill, please",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Рахунок будь ласка"
  },
  {
   "id": "4h8vtg",
@@ -1815,9 +1996,10 @@
   "hebrewFull": "זאת בחירה (נ') מצוינת/טובה",
   "gender": "f",
   "plural": "מצוינת/טובה",
-  "translation": "Це гарний вибір",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "that's a good choice",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Це гарний вибір"
  },
  {
   "id": "7iblny",
@@ -1825,9 +2007,10 @@
   "hebrewFull": "אני רוצה תפריט (ז')  בבקשה",
   "gender": "m",
   "plural": "בבקשה",
-  "translation": "Я хочу меню будь ласка",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "I'd like a menu, please",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "Я хочу меню будь ласка"
  },
  {
   "id": "s4mtzo",
@@ -1835,9 +2018,10 @@
   "hebrewFull": "מ",
   "gender": null,
   "plural": null,
-  "translation": "Із з",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "from",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Із з"
  },
  {
   "id": "1sxpwt9",
@@ -1845,9 +2029,10 @@
   "hebrewFull": "ל...",
   "gender": null,
   "plural": null,
-  "translation": "В (як напрямок)",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "to (direction)",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "В (як напрямок)"
  },
  {
   "id": "17o85n1",
@@ -1855,9 +2040,10 @@
   "hebrewFull": "ב...",
   "gender": null,
   "plural": null,
-  "translation": "В (в місті)",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "in / at",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "В (в місті)"
  },
  {
   "id": "tlp1oj",
@@ -1865,9 +2051,10 @@
   "hebrewFull": "ו...",
   "gender": null,
   "plural": null,
-  "translation": "І  та",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "and",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "І  та"
  },
  {
   "id": "1fhpid8",
@@ -1875,9 +2062,10 @@
   "hebrewFull": "ש...",
   "gender": null,
   "plural": null,
-  "translation": "Що",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "that (conjunction)",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Що"
  },
  {
   "id": "9stygy",
@@ -1885,9 +2073,10 @@
   "hebrewFull": "ה...",
   "gender": null,
   "plural": null,
-  "translation": "Зазначений артикль",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "the (definite article)",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Зазначений артикль"
  },
  {
   "id": "jh456s",
@@ -1895,9 +2084,10 @@
   "hebrewFull": "עם",
   "gender": null,
   "plural": null,
-  "translation": "З",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "with",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "З"
  },
  {
   "id": "6v31cu",
@@ -1905,9 +2095,10 @@
   "hebrewFull": "על",
   "gender": null,
   "plural": null,
-  "translation": "На про",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "on / about",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "На про"
  },
  {
   "id": "87txgy",
@@ -1915,9 +2106,10 @@
   "hebrewFull": "על יד/ליד",
   "gender": null,
   "plural": null,
-  "translation": "Біля",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "next to / near",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Біля"
  },
  {
   "id": "1o19guj",
@@ -1925,9 +2117,10 @@
   "hebrewFull": "של",
   "gender": null,
   "plural": null,
-  "translation": "Присвійний займенник",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "of (possessive)",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Присвійний займенник"
  },
  {
   "id": "18sbzpy",
@@ -1935,9 +2128,10 @@
   "hebrewFull": "או",
   "gender": null,
   "plural": null,
-  "translation": "Чи",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "or",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Чи"
  },
  {
   "id": "1daisca",
@@ -1945,9 +2139,10 @@
   "hebrewFull": "כי",
   "gender": null,
   "plural": null,
-  "translation": "Тому що",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "because",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Тому що"
  },
  {
   "id": "ogtweq",
@@ -1955,9 +2150,10 @@
   "hebrewFull": "מפני ש",
   "gender": null,
   "plural": null,
-  "translation": "Тому що",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "because",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "Тому що"
  },
  {
   "id": "1i5e6j4",
@@ -1965,9 +2161,10 @@
   "hebrewFull": "שלי",
   "gender": null,
   "plural": null,
-  "translation": "Мій моя моє мої",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "my / mine",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Мій моя моє мої"
  },
  {
   "id": "2wj3xf",
@@ -1975,9 +2172,10 @@
   "hebrewFull": "שלך",
   "gender": null,
   "plural": null,
-  "translation": "Твій до чоловіка чи до жінки",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "your / yours (sing.)",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Твій до чоловіка чи до жінки"
  },
  {
   "id": "16jdu17",
@@ -1985,9 +2183,10 @@
   "hebrewFull": "שלו",
   "gender": null,
   "plural": null,
-  "translation": "Його",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "his",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Його"
  },
  {
   "id": "1f7tkvk",
@@ -1995,9 +2194,10 @@
   "hebrewFull": "שלה",
   "gender": null,
   "plural": null,
-  "translation": "Її",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "her / hers",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Її"
  },
  {
   "id": "1mhcwz6",
@@ -2005,9 +2205,10 @@
   "hebrewFull": "שלנו",
   "gender": null,
   "plural": null,
-  "translation": "Наш наше наша наші",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "our / ours",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Наш наше наша наші"
  },
  {
   "id": "mrv6km",
@@ -2015,9 +2216,10 @@
   "hebrewFull": "שלכם/שלכן",
   "gender": null,
   "plural": null,
-  "translation": "Ваш",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "your / yours (pl.)",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "Ваш"
  },
  {
   "id": "1c0pzem",
@@ -2025,9 +2227,10 @@
   "hebrewFull": "שלהם/שלהן",
   "gender": null,
   "plural": null,
-  "translation": "їх",
-  "translationLang": "ua",
-  "category": "Possessive Pronouns"
+  "translation": "their / theirs",
+  "translationLang": "en",
+  "category": "Possessive Pronouns",
+  "translationUa": "їх"
  },
  {
   "id": "mrdfw7",
@@ -2035,9 +2238,10 @@
   "hebrewFull": "יש לי/אין לי",
   "gender": null,
   "plural": null,
-  "translation": "є у мене чи немає",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "I have / I don't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у мене чи немає"
  },
  {
   "id": "78vc5m",
@@ -2045,9 +2249,10 @@
   "hebrewFull": "יש לך/אין לך",
   "gender": null,
   "plural": null,
-  "translation": "є у тебе",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "you have / you don't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у тебе"
  },
  {
   "id": "jfixq3",
@@ -2055,9 +2260,10 @@
   "hebrewFull": "יש לו/אין לו",
   "gender": null,
   "plural": null,
-  "translation": "є у нього",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "he has / he doesn't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у нього"
  },
  {
   "id": "1wvxngm",
@@ -2065,9 +2271,10 @@
   "hebrewFull": "יש לה/אין לה",
   "gender": null,
   "plural": null,
-  "translation": "є у неї",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "she has / she doesn't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у неї"
  },
  {
   "id": "ir5dg5",
@@ -2075,9 +2282,10 @@
   "hebrewFull": "יש לנו/אין לנו",
   "gender": null,
   "plural": null,
-  "translation": "є у нас",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "we have / we don't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у нас"
  },
  {
   "id": "18td80q",
@@ -2085,9 +2293,10 @@
   "hebrewFull": "יש לכם/אין לכם",
   "gender": null,
   "plural": null,
-  "translation": "є у вас",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "you (pl.) have / don't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у вас"
  },
  {
   "id": "1r0ms7v",
@@ -2095,9 +2304,10 @@
   "hebrewFull": "יש להם/אין להן",
   "gender": null,
   "plural": null,
-  "translation": "є у них",
-  "translationLang": "ua",
-  "category": "Preposition ל"
+  "translation": "they have / don't have",
+  "translationLang": "en",
+  "category": "Preposition ל",
+  "translationUa": "є у них"
  },
  {
   "id": "jud9x8",
@@ -2105,9 +2315,10 @@
   "hebrewFull": "זה/זאת/אלה",
   "gender": null,
   "plural": null,
-  "translation": "Це",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "this / these",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "Це"
  },
  {
   "id": "1jtubsv",
@@ -2115,9 +2326,10 @@
   "hebrewFull": "אני",
   "gender": null,
   "plural": null,
-  "translation": "я",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "I",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "я"
  },
  {
   "id": "18tqnn9",
@@ -2125,9 +2337,10 @@
   "hebrewFull": "אתה",
   "gender": null,
   "plural": null,
-  "translation": "ти до чоловіка",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "you (m.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "ти до чоловіка"
  },
  {
   "id": "fxl94c",
@@ -2135,9 +2348,10 @@
   "hebrewFull": "את",
   "gender": null,
   "plural": null,
-  "translation": "ти до жінки",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "you (f.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "ти до жінки"
  },
  {
   "id": "meg0xd",
@@ -2145,9 +2359,10 @@
   "hebrewFull": "הוא",
   "gender": null,
   "plural": null,
-  "translation": "він",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "he",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "він"
  },
  {
   "id": "189ungl",
@@ -2155,9 +2370,10 @@
   "hebrewFull": "היא",
   "gender": null,
   "plural": null,
-  "translation": "вона",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "she",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "вона"
  },
  {
   "id": "imaru7",
@@ -2165,9 +2381,10 @@
   "hebrewFull": "אנחנו",
   "gender": null,
   "plural": null,
-  "translation": "ми",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "we",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "ми"
  },
  {
   "id": "1izjkmw",
@@ -2175,9 +2392,10 @@
   "hebrewFull": "אתם",
   "gender": null,
   "plural": null,
-  "translation": "ви до чоловіків",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "you (m. pl.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "ви до чоловіків"
  },
  {
   "id": "1trfu1x",
@@ -2185,9 +2403,10 @@
   "hebrewFull": "אתן",
   "gender": null,
   "plural": null,
-  "translation": "ви до жінок",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "you (f. pl.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "ви до жінок"
  },
  {
   "id": "rwcc1h",
@@ -2195,9 +2414,10 @@
   "hebrewFull": "הם",
   "gender": null,
   "plural": null,
-  "translation": "вони до чоловіків",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "they (m.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "вони до чоловіків"
  },
  {
   "id": "mmlg3l",
@@ -2205,9 +2425,10 @@
   "hebrewFull": "הן",
   "gender": null,
   "plural": null,
-  "translation": "до жінок",
-  "translationLang": "ua",
-  "category": "Personal Pronouns"
+  "translation": "they (f.)",
+  "translationLang": "en",
+  "category": "Personal Pronouns",
+  "translationUa": "до жінок"
  },
  {
   "id": "to2q0a",
@@ -2215,9 +2436,10 @@
   "hebrewFull": "קטן",
   "gender": null,
   "plural": null,
-  "translation": "маленький",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "small",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "маленький"
  },
  {
   "id": "78lx91",
@@ -2225,9 +2447,10 @@
   "hebrewFull": "גדול",
   "gender": null,
   "plural": null,
-  "translation": "великий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "big",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "великий"
  },
  {
   "id": "tch75x",
@@ -2235,9 +2458,10 @@
   "hebrewFull": "צעיר",
   "gender": null,
   "plural": null,
-  "translation": "молодий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "young",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "молодий"
  },
  {
   "id": "urvpmt",
@@ -2245,9 +2469,10 @@
   "hebrewFull": "זקן",
   "gender": null,
   "plural": null,
-  "translation": "похилого віку",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "old (person)",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "похилого віку"
  },
  {
   "id": "5o94rd",
@@ -2255,9 +2480,10 @@
   "hebrewFull": "מבוגר",
   "gender": null,
   "plural": null,
-  "translation": "зрілий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "adult / mature",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "зрілий"
  },
  {
   "id": "17s79fj",
@@ -2265,9 +2491,10 @@
   "hebrewFull": "חדש",
   "gender": null,
   "plural": null,
-  "translation": "новий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "new",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "новий"
  },
  {
   "id": "15g76qr",
@@ -2275,9 +2502,10 @@
   "hebrewFull": "מודרני",
   "gender": null,
   "plural": null,
-  "translation": "сучасний",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "modern",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "сучасний"
  },
  {
   "id": "yqrpeg",
@@ -2285,9 +2513,10 @@
   "hebrewFull": "עתיק",
   "gender": null,
   "plural": null,
-  "translation": "античний",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "ancient",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "античний"
  },
  {
   "id": "1mzja73",
@@ -2295,9 +2524,10 @@
   "hebrewFull": "ישן",
   "gender": null,
   "plural": null,
-  "translation": "старий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "old (thing)",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "старий"
  },
  {
   "id": "87olsp",
@@ -2305,9 +2535,10 @@
   "hebrewFull": "טרי",
   "gender": null,
   "plural": null,
-  "translation": "свіжий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "fresh",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "свіжий"
  },
  {
   "id": "ozbk1m",
@@ -2315,9 +2546,10 @@
   "hebrewFull": "ראשון",
   "gender": null,
   "plural": null,
-  "translation": "перший",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "first",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "перший"
  },
  {
   "id": "1vhobxh",
@@ -2325,9 +2557,10 @@
   "hebrewFull": "אחרון",
   "gender": null,
   "plural": null,
-  "translation": "останній",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "last",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "останній"
  },
  {
   "id": "1kenczf",
@@ -2335,9 +2568,10 @@
   "hebrewFull": "מאוחר",
   "gender": null,
   "plural": null,
-  "translation": "пізно",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "late",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "пізно"
  },
  {
   "id": "15a40er",
@@ -2345,9 +2579,10 @@
   "hebrewFull": "מוקדם",
   "gender": null,
   "plural": null,
-  "translation": "рано",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "early",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "рано"
  },
  {
   "id": "1ewnjmd",
@@ -2355,9 +2590,10 @@
   "hebrewFull": "סגור",
   "gender": null,
   "plural": null,
-  "translation": "закрито",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "closed",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "закрито"
  },
  {
   "id": "94xtsw",
@@ -2365,9 +2601,10 @@
   "hebrewFull": "פתוח",
   "gender": null,
   "plural": null,
-  "translation": "відкрито",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "open",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "відкрито"
  },
  {
   "id": "2a761f",
@@ -2375,9 +2612,10 @@
   "hebrewFull": "אסור",
   "gender": null,
   "plural": null,
-  "translation": "заборонено",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "forbidden",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "заборонено"
  },
  {
   "id": "16qr9zr",
@@ -2385,9 +2623,10 @@
   "hebrewFull": "מותר",
   "gender": null,
   "plural": null,
-  "translation": "дозволено",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "allowed",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "дозволено"
  },
  {
   "id": "1d9uy3u",
@@ -2395,9 +2634,10 @@
   "hebrewFull": "נשוי/נשואה",
   "gender": null,
   "plural": null,
-  "translation": "заміжній( ня)",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "married",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "заміжній( ня)"
  },
  {
   "id": "1kf4pez",
@@ -2405,9 +2645,10 @@
   "hebrewFull": "רווק/רווקה",
   "gender": null,
   "plural": null,
-  "translation": "неодружений (на)",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "single (unmarried)",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "неодружений (на)"
  },
  {
   "id": "1ayvvnh",
@@ -2415,9 +2656,10 @@
   "hebrewFull": "בדרך כלל",
   "gender": null,
   "plural": null,
-  "translation": "зазвичай",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "usually",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "зазвичай"
  },
  {
   "id": "1grzsr9",
@@ -2425,9 +2667,10 @@
   "hebrewFull": "לפעמים",
   "gender": null,
   "plural": null,
-  "translation": "іноді",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "sometimes",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "іноді"
  },
  {
   "id": "160mw4z",
@@ -2435,9 +2678,10 @@
   "hebrewFull": "תמיד",
   "gender": null,
   "plural": null,
-  "translation": "завжди",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "always",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "завжди"
  },
  {
   "id": "1x0bxmu",
@@ -2445,9 +2689,10 @@
   "hebrewFull": "אף פעם",
   "gender": null,
   "plural": null,
-  "translation": "ніколи",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "never",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "ніколи"
  },
  {
   "id": "tyt0iz",
@@ -2455,9 +2700,10 @@
   "hebrewFull": "ביחד",
   "gender": null,
   "plural": null,
-  "translation": "разом",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "together",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "разом"
  },
  {
   "id": "yy3y7r",
@@ -2465,9 +2711,10 @@
   "hebrewFull": "מספר (ז') מספרים",
   "gender": "m",
   "plural": "מספרים",
-  "translation": "число числівник",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "number",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "число числівник"
  },
  {
   "id": "ghxpff",
@@ -2475,9 +2722,10 @@
   "hebrewFull": "זמן(ז') זמנים",
   "gender": "m",
   "plural": "זמנים",
-  "translation": "час",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "time",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "час"
  },
  {
   "id": "ya9b1e",
@@ -2485,9 +2733,10 @@
   "hebrewFull": "מה השעה?",
   "gender": null,
   "plural": null,
-  "translation": "котра година",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "What time is it?",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "котра година"
  },
  {
   "id": "6hzix9",
@@ -2495,9 +2744,10 @@
   "hebrewFull": "חצי",
   "gender": null,
   "plural": null,
-  "translation": "половина",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "half",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "половина"
  },
  {
   "id": "16mrl3n",
@@ -2505,9 +2755,10 @@
   "hebrewFull": "רבע",
   "gender": null,
   "plural": null,
-  "translation": "чверть",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "quarter",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "чверть"
  },
  {
   "id": "hs8aze",
@@ -2515,9 +2766,10 @@
   "hebrewFull": "אפס",
   "gender": null,
   "plural": null,
-  "translation": "нуль",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "zero",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "нуль"
  },
  {
   "id": "1blo4ec",
@@ -2525,9 +2777,10 @@
   "hebrewFull": "אחת",
   "gender": null,
   "plural": null,
-  "translation": "один",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "one",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "один"
  },
  {
   "id": "dlwmxa",
@@ -2535,9 +2788,10 @@
   "hebrewFull": "שתיים",
   "gender": null,
   "plural": null,
-  "translation": "два",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "two",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "два"
  },
  {
   "id": "5jfbhx",
@@ -2545,9 +2799,10 @@
   "hebrewFull": "שלוש",
   "gender": null,
   "plural": null,
-  "translation": "три",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "three",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "три"
  },
  {
   "id": "1ipw5xy",
@@ -2555,9 +2810,10 @@
   "hebrewFull": "ארבע",
   "gender": null,
   "plural": null,
-  "translation": "чотири",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "four",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "чотири"
  },
  {
   "id": "ece24f",
@@ -2565,9 +2821,10 @@
   "hebrewFull": "חמש",
   "gender": null,
   "plural": null,
-  "translation": "п'ять",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "five",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "п'ять"
  },
  {
   "id": "bvjyuv",
@@ -2575,9 +2832,10 @@
   "hebrewFull": "שש",
   "gender": null,
   "plural": null,
-  "translation": "шість",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "six",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "шість"
  },
  {
   "id": "1b0ehiv",
@@ -2585,9 +2843,10 @@
   "hebrewFull": "שבע",
   "gender": null,
   "plural": null,
-  "translation": "сім",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "seven",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "сім"
  },
  {
   "id": "s1sdhb",
@@ -2595,9 +2854,10 @@
   "hebrewFull": "שמונה",
   "gender": null,
   "plural": null,
-  "translation": "вісім",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "eight",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "вісім"
  },
  {
   "id": "1elyouq",
@@ -2605,9 +2865,10 @@
   "hebrewFull": "תשע",
   "gender": null,
   "plural": null,
-  "translation": "дев'ять",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "nine",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "дев'ять"
  },
  {
   "id": "1nsoalg",
@@ -2615,9 +2876,10 @@
   "hebrewFull": "עשר",
   "gender": null,
   "plural": null,
-  "translation": "десять",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "ten",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "десять"
  },
  {
   "id": "1b88f5c",
@@ -2625,9 +2887,10 @@
   "hebrewFull": "אחת עשרה",
   "gender": null,
   "plural": null,
-  "translation": "одинадцять",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "eleven",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "одинадцять"
  },
  {
   "id": "5urnku",
@@ -2635,9 +2898,10 @@
   "hebrewFull": "שתים עשרה",
   "gender": null,
   "plural": null,
-  "translation": "дванадцять",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "twelve",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "дванадцять"
  },
  {
   "id": "huugs4",
@@ -2645,9 +2909,10 @@
   "hebrewFull": "יום (ז')ימים",
   "gender": "m",
   "plural": "ימים",
-  "translation": "день",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "day",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "день"
  },
  {
   "id": "ded8iq",
@@ -2655,9 +2920,10 @@
   "hebrewFull": "היום",
   "gender": null,
   "plural": null,
-  "translation": "сьогодні",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "today",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "сьогодні"
  },
  {
   "id": "1nyvgy8",
@@ -2665,9 +2931,10 @@
   "hebrewFull": "אתמול",
   "gender": null,
   "plural": null,
-  "translation": "вчора",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "yesterday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "вчора"
  },
  {
   "id": "o5n4sv",
@@ -2675,9 +2942,10 @@
   "hebrewFull": "שלשום",
   "gender": null,
   "plural": null,
-  "translation": "позавчора",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "the day before yesterday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "позавчора"
  },
  {
   "id": "71bf4w",
@@ -2685,9 +2953,10 @@
   "hebrewFull": "מחר",
   "gender": null,
   "plural": null,
-  "translation": "завтра",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "tomorrow",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "завтра"
  },
  {
   "id": "1qxa38r",
@@ -2695,9 +2964,10 @@
   "hebrewFull": "מחרתיים",
   "gender": null,
   "plural": null,
-  "translation": "післязавтра",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "the day after tomorrow",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "післязавтра"
  },
  {
   "id": "ezh2f0",
@@ -2705,9 +2975,10 @@
   "hebrewFull": "חודש (ז')חודשים",
   "gender": "m",
   "plural": "חודשים",
-  "translation": "місяць",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "month",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "місяць"
  },
  {
   "id": "pdd2rg",
@@ -2715,9 +2986,10 @@
   "hebrewFull": "שנה (נ')שנים",
   "gender": "f",
   "plural": "שנים",
-  "translation": "рік",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "year",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "рік"
  },
  {
   "id": "1q8yzn9",
@@ -2725,9 +2997,10 @@
   "hebrewFull": "שבוע (ז')שבועות",
   "gender": "m",
   "plural": "שבועות",
-  "translation": "тиждень",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "week",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "тиждень"
  },
  {
   "id": "abccwm",
@@ -2735,9 +3008,10 @@
   "hebrewFull": "ימי שבוע",
   "gender": null,
   "plural": null,
-  "translation": "дні тижня",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "days of the week",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "дні тижня"
  },
  {
   "id": "1idpwnm",
@@ -2745,9 +3019,10 @@
   "hebrewFull": "יום ראשון",
   "gender": null,
   "plural": null,
-  "translation": "неділя",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Sunday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "неділя"
  },
  {
   "id": "1c1r34j",
@@ -2755,9 +3030,10 @@
   "hebrewFull": "יום שני",
   "gender": null,
   "plural": null,
-  "translation": "понеділок",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Monday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "понеділок"
  },
  {
   "id": "1qyveud",
@@ -2765,9 +3041,10 @@
   "hebrewFull": "יום שלישי",
   "gender": null,
   "plural": null,
-  "translation": "вівторок",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Tuesday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "вівторок"
  },
  {
   "id": "1rj1qyx",
@@ -2775,9 +3052,10 @@
   "hebrewFull": "יום רביעי",
   "gender": null,
   "plural": null,
-  "translation": "середа",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Wednesday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "середа"
  },
  {
   "id": "cjx600",
@@ -2785,9 +3063,10 @@
   "hebrewFull": "יום חמישי",
   "gender": null,
   "plural": null,
-  "translation": "четвер",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Thursday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "четвер"
  },
  {
   "id": "1gsrc8e",
@@ -2795,9 +3074,10 @@
   "hebrewFull": "יום שישי",
   "gender": null,
   "plural": null,
-  "translation": "п'ятниця",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Friday",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "п'ятниця"
  },
  {
   "id": "27w217",
@@ -2805,9 +3085,10 @@
   "hebrewFull": "שבת",
   "gender": null,
   "plural": null,
-  "translation": "субота",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "Saturday (Shabbat)",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "субота"
  },
  {
   "id": "10npc0p",
@@ -2815,9 +3096,10 @@
   "hebrewFull": "בדרך כלל",
   "gender": null,
   "plural": null,
-  "translation": "зазвичай",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "usually",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "зазвичай"
  },
  {
   "id": "yw229",
@@ -2825,9 +3107,10 @@
   "hebrewFull": "לפעמים",
   "gender": null,
   "plural": null,
-  "translation": "іноді",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "sometimes",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "іноді"
  },
  {
   "id": "1ac1y3b",
@@ -2835,9 +3118,10 @@
   "hebrewFull": "תמיד",
   "gender": null,
   "plural": null,
-  "translation": "завжди",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "always",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "завжди"
  },
  {
   "id": "1f3u0bm",
@@ -2845,9 +3129,10 @@
   "hebrewFull": "אף פעם",
   "gender": null,
   "plural": null,
-  "translation": "ніколи",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "never",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "ніколи"
  },
  {
   "id": "2awz56",
@@ -2855,9 +3140,10 @@
   "hebrewFull": "דירה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Квартира",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "apartment",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Квартира"
  },
  {
   "id": "u6s523",
@@ -2865,9 +3151,10 @@
   "hebrewFull": "חדר (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Кімната",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "room",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Кімната"
  },
  {
   "id": "1ihdvgx",
@@ -2875,9 +3162,10 @@
   "hebrewFull": "סלון (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Гостьова",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "living room",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Гостьова"
  },
  {
   "id": "184cv5i",
@@ -2885,9 +3173,10 @@
   "hebrewFull": "מטבח (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Кухня",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "kitchen",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Кухня"
  },
  {
   "id": "1kcvfii",
@@ -2895,9 +3184,10 @@
   "hebrewFull": "מקלחת (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Душова душ",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "shower",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Душова душ"
  },
  {
   "id": "lmrmq7",
@@ -2905,9 +3195,10 @@
   "hebrewFull": "פרוזדור (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Коридор",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "hallway / corridor",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Коридор"
  },
  {
   "id": "1xrmlvk",
@@ -2915,9 +3206,10 @@
   "hebrewFull": "חדר ילדים",
   "gender": null,
   "plural": null,
-  "translation": "Дитяча",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "children's room",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Дитяча"
  },
  {
   "id": "5yplb6",
@@ -2925,9 +3217,10 @@
   "hebrewFull": "חדר עבודה",
   "gender": null,
   "plural": null,
-  "translation": "Кабінет",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "study (room)",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Кабінет"
  },
  {
   "id": "12pxyrv",
@@ -2935,9 +3228,10 @@
   "hebrewFull": "חדר שינה",
   "gender": null,
   "plural": null,
-  "translation": "Спальня",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "bedroom",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Спальня"
  },
  {
   "id": "13v3n45",
@@ -2945,9 +3239,10 @@
   "hebrewFull": "חדר אמבטייה",
   "gender": null,
   "plural": null,
-  "translation": "Ванна",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "bathroom",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "Ванна"
  },
  {
   "id": "ri2p11",
@@ -2955,19 +3250,21 @@
   "hebrewFull": "שירותים (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "вбиральня",
-  "translationLang": "ua",
-  "category": "Home & Apartment"
+  "translation": "toilet / restroom",
+  "translationLang": "en",
+  "category": "Home & Apartment",
+  "translationUa": "вбиральня"
  },
  {
   "id": "o6323c",
-  "hebrew": "בית (ז) בתים",
+  "hebrew": "בית",
   "hebrewFull": "בית (ז) בתים",
-  "gender": null,
-  "plural": null,
-  "translation": "Дім",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "gender": "m",
+  "plural": "בתים",
+  "translation": "house / home",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Дім"
  },
  {
   "id": "8hrkp0",
@@ -2975,9 +3272,10 @@
   "hebrewFull": "בית ספר",
   "gender": null,
   "plural": null,
-  "translation": "Школа",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "school",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Школа"
  },
  {
   "id": "h6ggpt",
@@ -2985,9 +3283,10 @@
   "hebrewFull": "בית חולים",
   "gender": null,
   "plural": null,
-  "translation": "Лікарня",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "hospital",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Лікарня"
  },
  {
   "id": "jkl8de",
@@ -2995,9 +3294,10 @@
   "hebrewFull": "בית קפה",
   "gender": null,
   "plural": null,
-  "translation": "Кафе",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "cafe",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Кафе"
  },
  {
   "id": "oyn87i",
@@ -3005,9 +3305,10 @@
   "hebrewFull": "דירה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "квартира",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "apartment",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "квартира"
  },
  {
   "id": "qga61i",
@@ -3015,9 +3316,10 @@
   "hebrewFull": "קפטרייה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Кафе",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "cafeteria",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Кафе"
  },
  {
   "id": "1jzerv9",
@@ -3025,9 +3327,10 @@
   "hebrewFull": "מסעדה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Ресторан",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "restaurant",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Ресторан"
  },
  {
   "id": "1vr1xsk",
@@ -3035,9 +3338,10 @@
   "hebrewFull": "קופת חולים (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Лікарняна каса(поліклініка)",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "health clinic",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Лікарняна каса(поліклініка)"
  },
  {
   "id": "d3240c",
@@ -3045,9 +3349,10 @@
   "hebrewFull": "בנק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Банк",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "bank",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Банк"
  },
  {
   "id": "1wis6an",
@@ -3055,9 +3360,10 @@
   "hebrewFull": "חנות (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "Магазин",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "shop / store",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Магазин"
  },
  {
   "id": "1rblu92",
@@ -3065,9 +3371,10 @@
   "hebrewFull": "שוק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Ринок",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "market",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Ринок"
  },
  {
   "id": "np7ju7",
@@ -3075,9 +3382,10 @@
   "hebrewFull": "סימטק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Кінотеатр",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "cinema",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Кінотеатр"
  },
  {
   "id": "zvtg0v",
@@ -3085,9 +3393,10 @@
   "hebrewFull": "מוזאון (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "Музей",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "museum",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "Музей"
  },
  {
   "id": "yfiha1",
@@ -3095,9 +3404,10 @@
   "hebrewFull": "תאטרון (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "театр",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "theater",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "театр"
  },
  {
   "id": "3fmfag",
@@ -3105,9 +3415,10 @@
   "hebrewFull": "לומד/לומדת",
   "gender": null,
   "plural": null,
-  "translation": "вчуся",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "study / learn",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "вчуся"
  },
  {
   "id": "prhn2h",
@@ -3115,9 +3426,10 @@
   "hebrewFull": "עובד/עובדת (ב)",
   "gender": null,
   "plural": null,
-  "translation": "працюю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "work",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "працюю"
  },
  {
   "id": "1naurmi",
@@ -3125,9 +3437,10 @@
   "hebrewFull": "אוהב/אוהבת (את)",
   "gender": null,
   "plural": null,
-  "translation": "люблю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "love",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "люблю"
  },
  {
   "id": "13z7ymr",
@@ -3135,9 +3448,10 @@
   "hebrewFull": "קורא/קוראת",
   "gender": null,
   "plural": null,
-  "translation": "читаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "read",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "читаю"
  },
  {
   "id": "vnljdo",
@@ -3145,9 +3459,10 @@
   "hebrewFull": "כותב/כותבת",
   "gender": null,
   "plural": null,
-  "translation": "пишу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "write",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "пишу"
  },
  {
   "id": "1khhw5v",
@@ -3155,9 +3470,10 @@
   "hebrewFull": "הולך/הולכת (ל/מ)",
   "gender": null,
   "plural": null,
-  "translation": "йду",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "walk / go",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "йду"
  },
  {
   "id": "ktyhks",
@@ -3165,9 +3481,10 @@
   "hebrewFull": "נוסע/נוסעת (ל/מ)",
   "gender": null,
   "plural": null,
-  "translation": "їду",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "ride / travel",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "їду"
  },
  {
   "id": "17l2fd3",
@@ -3175,9 +3492,10 @@
   "hebrewFull": "עוזר/עוזרת (ל)",
   "gender": null,
   "plural": null,
-  "translation": "допомагаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "help",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "допомагаю"
  },
  {
   "id": "17b87yz",
@@ -3185,9 +3503,10 @@
   "hebrewFull": "אוכל/אוכלת",
   "gender": null,
   "plural": null,
-  "translation": "їм",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "eat",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "їм"
  },
  {
   "id": "qogd8a",
@@ -3195,9 +3514,10 @@
   "hebrewFull": "שומע/שומעת",
   "gender": null,
   "plural": null,
-  "translation": "чую",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "hear",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "чую"
  },
  {
   "id": "1yyhgen",
@@ -3205,9 +3525,10 @@
   "hebrewFull": "אומר/אומרת",
   "gender": null,
   "plural": null,
-  "translation": "кажу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "say",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "кажу"
  },
  {
   "id": "1vbn0sh",
@@ -3215,9 +3536,10 @@
   "hebrewFull": "גר/גרה (ב)",
   "gender": null,
   "plural": null,
-  "translation": "живу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "live (reside)",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "живу"
  },
  {
   "id": "1lhfhhm",
@@ -3225,9 +3547,10 @@
   "hebrewFull": "שר/שרה",
   "gender": null,
   "plural": null,
-  "translation": "співаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "sing",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "співаю"
  },
  {
   "id": "1saq3qz",
@@ -3235,9 +3558,10 @@
   "hebrewFull": "בא/באה (ל/מ)",
   "gender": null,
   "plural": null,
-  "translation": "прибуваю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "come",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "прибуваю"
  },
  {
   "id": "1m08rvw",
@@ -3245,9 +3569,10 @@
   "hebrewFull": "נח/נחה",
   "gender": null,
   "plural": null,
-  "translation": "відпочиваю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "rest",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "відпочиваю"
  },
  {
   "id": "1wru1yl",
@@ -3255,9 +3580,10 @@
   "hebrewFull": "רב/רבה",
   "gender": null,
   "plural": null,
-  "translation": "сварюся",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "quarrel / fight",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "сварюся"
  },
  {
   "id": "day5mn",
@@ -3265,9 +3591,10 @@
   "hebrewFull": "רץ/רצה",
   "gender": null,
   "plural": null,
-  "translation": "біжу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "run",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "біжу"
  },
  {
   "id": "vttcde",
@@ -3275,9 +3602,10 @@
   "hebrewFull": "רצים",
   "gender": null,
   "plural": null,
-  "translation": "біжать (м.мн)",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "run (m. pl.)",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "біжать (м.мн)"
  },
  {
   "id": "zpecat",
@@ -3285,9 +3613,10 @@
   "hebrewFull": "עושה",
   "gender": null,
   "plural": null,
-  "translation": "роблю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "do / make",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "роблю"
  },
  {
   "id": "t80b0l",
@@ -3295,9 +3624,10 @@
   "hebrewFull": "רוצה",
   "gender": null,
   "plural": null,
-  "translation": "хочу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "want",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "хочу"
  },
  {
   "id": "12tzfj5",
@@ -3305,9 +3635,10 @@
   "hebrewFull": "שותה",
   "gender": null,
   "plural": null,
-  "translation": "п'ю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "drink",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "п'ю"
  },
  {
   "id": "hqa3q3",
@@ -3315,9 +3646,10 @@
   "hebrewFull": "רואה (את)",
   "gender": null,
   "plural": null,
-  "translation": "дивлюсь/бачу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "see / look",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "дивлюсь/бачу"
  },
  {
   "id": "198rsx1",
@@ -3325,9 +3657,10 @@
   "hebrewFull": "עונה (על/ל)",
   "gender": null,
   "plural": null,
-  "translation": "відповідаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "answer",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "відповідаю"
  },
  {
   "id": "jz6ye0",
@@ -3335,9 +3668,10 @@
   "hebrewFull": "קונה",
   "gender": null,
   "plural": null,
-  "translation": "купую",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "buy",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "купую"
  },
  {
   "id": "6x0rhy",
@@ -3345,9 +3679,10 @@
   "hebrewFull": "עולה",
   "gender": null,
   "plural": null,
-  "translation": "коштує/підіймається",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "cost / go up",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "коштує/підіймається"
  },
  {
   "id": "w2g0h1",
@@ -3355,9 +3690,10 @@
   "hebrewFull": "יורד/יורדת",
   "gender": null,
   "plural": null,
-  "translation": "спускаюсь",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "go down",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "спускаюсь"
  },
  {
   "id": "1k1efbx",
@@ -3365,9 +3701,10 @@
   "hebrewFull": "יודע/יודעת",
   "gender": null,
   "plural": null,
-  "translation": "знаю/вмію",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "know",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "знаю/вмію"
  },
  {
   "id": "4us5he",
@@ -3375,9 +3712,10 @@
   "hebrewFull": "מדבר/מדברת (עם/על/ב)",
   "gender": null,
   "plural": null,
-  "translation": "розмовляю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "speak / talk",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "розмовляю"
  },
  {
   "id": "kjteh7",
@@ -3385,9 +3723,10 @@
   "hebrewFull": "מטייל/מטיילת (ב)",
   "gender": null,
   "plural": null,
-  "translation": "подорожую/гуляю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "travel / stroll",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "подорожую/гуляю"
  },
  {
   "id": "at8w2l",
@@ -3395,9 +3734,10 @@
   "hebrewFull": "משחק/משחקת",
   "gender": null,
   "plural": null,
-  "translation": "граю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "play",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "граю"
  },
  {
   "id": "143ckzs",
@@ -3405,9 +3745,10 @@
   "hebrewFull": "מטפל/מטפלת (ב)",
   "gender": null,
   "plural": null,
-  "translation": "піклуюсь",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "take care (of)",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "піклуюсь"
  },
  {
   "id": "5w1nnp",
@@ -3415,9 +3756,10 @@
   "hebrewFull": "מבקש/מבקשת (מ)",
   "gender": null,
   "plural": null,
-  "translation": "прошу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "ask / request",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "прошу"
  },
  {
   "id": "1ye09ru",
@@ -3425,9 +3767,10 @@
   "hebrewFull": "מספר/מספרת (ל/על)",
   "gender": null,
   "plural": null,
-  "translation": "розповідаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "tell (about)",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "розповідаю"
  },
  {
   "id": "1n6wavz",
@@ -3435,9 +3778,10 @@
   "hebrewFull": "מבין/מבינה",
   "gender": null,
   "plural": null,
-  "translation": "розумію",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "understand",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "розумію"
  },
  {
   "id": "7v1022",
@@ -3445,9 +3789,10 @@
   "hebrewFull": "מזמין/מזמינה",
   "gender": null,
   "plural": null,
-  "translation": "запрошую/заказую",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "invite / order",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "запрошую/заказую"
  },
  {
   "id": "1p6j2x4",
@@ -3455,9 +3800,10 @@
   "hebrewFull": "מכעיס/מכעיסה",
   "gender": null,
   "plural": null,
-  "translation": "злю когось",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "make angry",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "злю когось"
  },
  {
   "id": "1hy5hk5",
@@ -3465,9 +3811,10 @@
   "hebrewFull": "מצטער/מצטערת",
   "gender": null,
   "plural": null,
-  "translation": "шкодую",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "be sorry / regret",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "шкодую"
  },
  {
   "id": "1vw5ig1",
@@ -3475,9 +3822,10 @@
   "hebrewFull": "מתקשר/מתקשרת (ל/עם)",
   "gender": null,
   "plural": null,
-  "translation": "дзвоню",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "call (phone)",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "дзвоню"
  },
  {
   "id": "xk5wy5",
@@ -3485,9 +3833,10 @@
   "hebrewFull": "נמצא/נמצאת (ב)",
   "gender": null,
   "plural": null,
-  "translation": "знаходжусь",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "be located",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "знаходжусь"
  },
  {
   "id": "2vd6gv",
@@ -3495,9 +3844,10 @@
   "hebrewFull": "נשאר/נשארת (ב)",
   "gender": null,
   "plural": null,
-  "translation": "залишаюсь",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "stay / remain",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "залишаюсь"
  },
  {
   "id": "1l0llaf",
@@ -3505,9 +3855,10 @@
   "hebrewFull": "רע/רעה",
   "gender": null,
   "plural": null,
-  "translation": "поганий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "bad",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "поганий"
  },
  {
   "id": "1cyptbv",
@@ -3515,9 +3866,10 @@
   "hebrewFull": "יפה",
   "gender": null,
   "plural": null,
-  "translation": "гарний/красивий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "beautiful / pretty",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "гарний/красивий"
  },
  {
   "id": "19pxl0g",
@@ -3525,9 +3877,10 @@
   "hebrewFull": "קשה",
   "gender": null,
   "plural": null,
-  "translation": "важкий/складний",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "hard / difficult",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "важкий/складний"
  },
  {
   "id": "1o2yu7q",
@@ -3535,9 +3888,10 @@
   "hebrewFull": "כבד/כבדה",
   "gender": null,
   "plural": null,
-  "translation": "важкий (вага)",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "heavy",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "важкий (вага)"
  },
  {
   "id": "1ss6ikd",
@@ -3545,9 +3899,10 @@
   "hebrewFull": "חשוב/חשובה",
   "gender": null,
   "plural": null,
-  "translation": "важливий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "important",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "важливий"
  },
  {
   "id": "1urdlk7",
@@ -3555,9 +3910,10 @@
   "hebrewFull": "עיף/עייפה",
   "gender": null,
   "plural": null,
-  "translation": "втомлений",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "tired",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "втомлений"
  },
  {
   "id": "h9l846",
@@ -3565,9 +3921,10 @@
   "hebrewFull": "עסוק/עסוקה",
   "gender": null,
   "plural": null,
-  "translation": "зайнятий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "busy",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "зайнятий"
  },
  {
   "id": "x71nli",
@@ -3575,9 +3932,10 @@
   "hebrewFull": "זול/זולה",
   "gender": null,
   "plural": null,
-  "translation": "дешевий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "cheap",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "дешевий"
  },
  {
   "id": "uqdtwf",
@@ -3585,9 +3943,10 @@
   "hebrewFull": "יקר/יקרה",
   "gender": null,
   "plural": null,
-  "translation": "дорогий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "expensive / dear",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "дорогий"
  },
  {
   "id": "d0qi3t",
@@ -3595,9 +3954,10 @@
   "hebrewFull": "ירוק/ירוקה",
   "gender": null,
   "plural": null,
-  "translation": "зелений",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "green",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "зелений"
  },
  {
   "id": "fid99o",
@@ -3605,9 +3965,10 @@
   "hebrewFull": "טעים/טעימה",
   "gender": null,
   "plural": null,
-  "translation": "смачний",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "tasty",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "смачний"
  },
  {
   "id": "1pb2sc",
@@ -3615,9 +3976,10 @@
   "hebrewFull": "נורא",
   "gender": null,
   "plural": null,
-  "translation": "жахливий",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "terrible / awful",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "жахливий"
  },
  {
   "id": "hlgg9k",
@@ -3625,9 +3987,10 @@
   "hebrewFull": "בחור (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "хлопець",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "guy / young man",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "хлопець"
  },
  {
   "id": "hvih3s",
@@ -3635,9 +3998,10 @@
   "hebrewFull": "בחורה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "дівчина",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "girl / young woman",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "дівчина"
  },
  {
   "id": "185fb06",
@@ -3645,9 +4009,10 @@
   "hebrewFull": "אדם/בני אדם",
   "gender": null,
   "plural": null,
-  "translation": "людина/люди",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "person / people",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "людина/люди"
  },
  {
   "id": "9ramc6",
@@ -3655,9 +4020,10 @@
   "hebrewFull": "חבר/חברה",
   "gender": null,
   "plural": null,
-  "translation": "друг/подруга",
-  "translationLang": "ua",
-  "category": "Family"
+  "translation": "friend (m./f.)",
+  "translationLang": "en",
+  "category": "Family",
+  "translationUa": "друг/подруга"
  },
  {
   "id": "8bos6p",
@@ -3665,9 +4031,10 @@
   "hebrewFull": "בירה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "пиво",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "beer",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "пиво"
  },
  {
   "id": "12uvdov",
@@ -3675,9 +4042,10 @@
   "hebrewFull": "עוגה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "торт/тістечко",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "cake",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "торт/тістечко"
  },
  {
   "id": "1ul4v8c",
@@ -3685,9 +4053,10 @@
   "hebrewFull": "טלפון (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "телефон",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "phone",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "телефон"
  },
  {
   "id": "ddpvwr",
@@ -3695,9 +4064,10 @@
   "hebrewFull": "בטח",
   "gender": null,
   "plural": null,
-  "translation": "звичайно",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "sure / of course",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "звичайно"
  },
  {
   "id": "1nvrczr",
@@ -3705,9 +4075,10 @@
   "hebrewFull": "סתם",
   "gender": null,
   "plural": null,
-  "translation": "просто так",
-  "translationLang": "ua",
-  "category": "Politeness"
+  "translation": "just / for no reason",
+  "translationLang": "en",
+  "category": "Politeness",
+  "translationUa": "просто так"
  },
  {
   "id": "srindv",
@@ -3715,9 +4086,10 @@
   "hebrewFull": "גם",
   "gender": null,
   "plural": null,
-  "translation": "також",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "also / too",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "також"
  },
  {
   "id": "12eut9w",
@@ -3725,9 +4097,10 @@
   "hebrewFull": "עוד",
   "gender": null,
   "plural": null,
-  "translation": "ще",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "more / another",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "ще"
  },
  {
   "id": "xu3m4m",
@@ -3735,9 +4108,10 @@
   "hebrewFull": "קצת",
   "gender": null,
   "plural": null,
-  "translation": "трохи",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "a little",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "трохи"
  },
  {
   "id": "1jl30tr",
@@ -3745,9 +4119,10 @@
   "hebrewFull": "אבל",
   "gender": null,
   "plural": null,
-  "translation": "але",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "but",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "але"
  },
  {
   "id": "1mfiwdy",
@@ -3755,9 +4130,10 @@
   "hebrewFull": "בגלל ש",
   "gender": null,
   "plural": null,
-  "translation": "через те що",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "because of",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "через те що"
  },
  {
   "id": "1oj51uc",
@@ -3765,9 +4141,10 @@
   "hebrewFull": "בשביל",
   "gender": null,
   "plural": null,
-  "translation": "для/заради",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "for / for the sake of",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "для/заради"
  },
  {
   "id": "qi8um0",
@@ -3775,9 +4152,10 @@
   "hebrewFull": "רחוב (ז') רחובות",
   "gender": "m",
   "plural": "רחובות",
-  "translation": "вулиця",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "street",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "вулиця"
  },
  {
   "id": "19ts1te",
@@ -3785,9 +4163,10 @@
   "hebrewFull": "פארק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "парк",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "park",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "парк"
  },
  {
   "id": "2jydkl",
@@ -3795,9 +4174,10 @@
   "hebrewFull": "הר (ז') הרים",
   "gender": "m",
   "plural": "הרים",
-  "translation": "гора",
-  "translationLang": "ua",
-  "category": "Nature"
+  "translation": "mountain",
+  "translationLang": "en",
+  "category": "Nature",
+  "translationUa": "гора"
  },
  {
   "id": "ez41m6",
@@ -3805,9 +4185,10 @@
   "hebrewFull": "גינה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "сад/садок",
-  "translationLang": "ua",
-  "category": "Nature"
+  "translation": "garden",
+  "translationLang": "en",
+  "category": "Nature",
+  "translationUa": "сад/садок"
  },
  {
   "id": "41d4qy",
@@ -3815,9 +4196,10 @@
   "hebrewFull": "עץ (ז') עצים",
   "gender": "m",
   "plural": "עצים",
-  "translation": "дерево",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "tree",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "дерево"
  },
  {
   "id": "1rdbcna",
@@ -3825,9 +4207,10 @@
   "hebrewFull": "בחוץ",
   "gender": null,
   "plural": null,
-  "translation": "зовні/надворі",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "outside",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "зовні/надворі"
  },
  {
   "id": "3rb0ts",
@@ -3835,9 +4218,10 @@
   "hebrewFull": "איך?",
   "gender": null,
   "plural": null,
-  "translation": "Як?",
-  "translationLang": "ua",
-  "category": "Question Words"
+  "translation": "How?",
+  "translationLang": "en",
+  "category": "Question Words",
+  "translationUa": "Як?"
  },
  {
   "id": "grxxe1",
@@ -3845,9 +4229,10 @@
   "hebrewFull": "לפני",
   "gender": null,
   "plural": null,
-  "translation": "до/перед",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "before",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "до/перед"
  },
  {
   "id": "aa473g",
@@ -3855,9 +4240,10 @@
   "hebrewFull": "אחרי",
   "gender": null,
   "plural": null,
-  "translation": "після",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "after",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "після"
  },
  {
   "id": "nzq38a",
@@ -3865,9 +4251,10 @@
   "hebrewFull": "עכשיו",
   "gender": null,
   "plural": null,
-  "translation": "зараз",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "now",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "зараз"
  },
  {
   "id": "1hc2e3x",
@@ -3875,9 +4262,10 @@
   "hebrewFull": "רגע",
   "gender": null,
   "plural": null,
-  "translation": "момент/хвилинку",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "moment / just a moment",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "момент/хвилинку"
  },
  {
   "id": "1yo5p5h",
@@ -3885,9 +4273,10 @@
   "hebrewFull": "כבר",
   "gender": null,
   "plural": null,
-  "translation": "вже",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "already",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "вже"
  },
  {
   "id": "1i7w9yn",
@@ -3895,9 +4284,10 @@
   "hebrewFull": "סוף (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "кінець",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "end",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "кінець"
  },
  {
   "id": "72tt5u",
@@ -3905,9 +4295,10 @@
   "hebrewFull": "סוף סוף",
   "gender": null,
   "plural": null,
-  "translation": "нарешті",
-  "translationLang": "ua",
-  "category": "Numbers & Time"
+  "translation": "finally",
+  "translationLang": "en",
+  "category": "Numbers & Time",
+  "translationUa": "нарешті"
  },
  {
   "id": "vtrdbc",
@@ -3915,9 +4306,10 @@
   "hebrewFull": "יושב/יושבת",
   "gender": null,
   "plural": null,
-  "translation": "сиджу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "sit",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "сиджу"
  },
  {
   "id": "1vzfp5s",
@@ -3925,9 +4317,10 @@
   "hebrewFull": "יוצא/יוצאת",
   "gender": null,
   "plural": null,
-  "translation": "виходжу",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "go out / exit",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "виходжу"
  },
  {
   "id": "18a7klh",
@@ -3935,9 +4328,10 @@
   "hebrewFull": "חושב/חושבת",
   "gender": null,
   "plural": null,
-  "translation": "думаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "think",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "думаю"
  },
  {
   "id": "z5h0p1",
@@ -3945,9 +4339,10 @@
   "hebrewFull": "מקבל/מקבלת",
   "gender": null,
   "plural": null,
-  "translation": "отримую",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "receive / get",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "отримую"
  },
  {
   "id": "1ungt93",
@@ -3955,9 +4350,10 @@
   "hebrewFull": "מתרגם/מתרגמת",
   "gender": null,
   "plural": null,
-  "translation": "перекладаю",
-  "translationLang": "ua",
-  "category": "Verbs"
+  "translation": "translate",
+  "translationLang": "en",
+  "category": "Verbs",
+  "translationUa": "перекладаю"
  },
  {
   "id": "oya3aq",
@@ -3965,9 +4361,10 @@
   "hebrewFull": "ברק (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "блискавка",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "lightning",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "блискавка"
  },
  {
   "id": "1o7oduh",
@@ -3975,9 +4372,10 @@
   "hebrewFull": "סערה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "буря",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "storm",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "буря"
  },
  {
   "id": "pj7jpi",
@@ -3985,9 +4383,10 @@
   "hebrewFull": "סוער",
   "gender": null,
   "plural": null,
-  "translation": "штормовий",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "stormy",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "штормовий"
  },
  {
   "id": "1i0en49",
@@ -3995,9 +4394,10 @@
   "hebrewFull": "בהיר",
   "gender": null,
   "plural": null,
-  "translation": "ясний/чистий",
-  "translationLang": "ua",
-  "category": "Weather"
+  "translation": "clear (sky)",
+  "translationLang": "en",
+  "category": "Weather",
+  "translationUa": "ясний/чистий"
  },
  {
   "id": "drpe4k",
@@ -4005,9 +4405,10 @@
   "hebrewFull": "עולם (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "світ",
-  "translationLang": "ua",
-  "category": "Places & Countries"
+  "translation": "world",
+  "translationLang": "en",
+  "category": "Places & Countries",
+  "translationUa": "світ"
  },
  {
   "id": "yn0m4u",
@@ -4015,9 +4416,10 @@
   "hebrewFull": "עברית",
   "gender": null,
   "plural": null,
-  "translation": "іврит",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "Hebrew (language)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "іврит"
  },
  {
   "id": "1eyffbz",
@@ -4025,9 +4427,10 @@
   "hebrewFull": "ים (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "море",
-  "translationLang": "ua",
-  "category": "Nature"
+  "translation": "sea",
+  "translationLang": "en",
+  "category": "Nature",
+  "translationUa": "море"
  },
  {
   "id": "e72l9m",
@@ -4035,9 +4438,10 @@
   "hebrewFull": "ספורט (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "спорт",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "sport",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "спорт"
  },
  {
   "id": "ucu663",
@@ -4045,9 +4449,10 @@
   "hebrewFull": "כאן",
   "gender": null,
   "plural": null,
-  "translation": "тут",
-  "translationLang": "ua",
-  "category": "Prepositions & Function"
+  "translation": "here",
+  "translationLang": "en",
+  "category": "Prepositions & Function",
+  "translationUa": "тут"
  },
  {
   "id": "55av0y",
@@ -4055,9 +4460,10 @@
   "hebrewFull": "שפה (נ') שפות",
   "gender": "f",
   "plural": "שפות",
-  "translation": "мова/мови",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "language(s)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "мова/мови"
  },
  {
   "id": "9xyg4k",
@@ -4065,9 +4471,10 @@
   "hebrewFull": "שיחה (נ')",
   "gender": "f",
   "plural": null,
-  "translation": "розмова",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "conversation",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "розмова"
  },
  {
   "id": "1q6pvow",
@@ -4075,9 +4482,10 @@
   "hebrewFull": "אולפן (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "ульпан (курси івриту)",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "ulpan (Hebrew course)",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "ульпан (курси івриту)"
  },
  {
   "id": "1cdh0qs",
@@ -4855,9 +5263,10 @@
   "hebrewFull": "בוס",
   "gender": null,
   "plural": null,
-  "translation": "бос/директор",
-  "translationLang": "ua",
-  "category": "School / Ulpan"
+  "translation": "boss / director",
+  "translationLang": "en",
+  "category": "School / Ulpan",
+  "translationUa": "бос/директор"
  },
  {
   "id": "19mofp4",
@@ -4865,9 +5274,10 @@
   "hebrewFull": "מתכון (ז') מתכונים",
   "gender": "m",
   "plural": "מתכונים",
-  "translation": "рецепт",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "recipe",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "рецепт"
  },
  {
   "id": "1dbugzp",
@@ -4875,9 +5285,10 @@
   "hebrewFull": "סלט (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "салат",
-  "translationLang": "ua",
-  "category": "Food & Drinks"
+  "translation": "salad",
+  "translationLang": "en",
+  "category": "Food & Drinks",
+  "translationUa": "салат"
  },
  {
   "id": "nkw2wf",
@@ -4885,9 +5296,10 @@
   "hebrewFull": "כתוב",
   "gender": null,
   "plural": null,
-  "translation": "написано",
-  "translationLang": "ua",
-  "category": "Adjectives & Adverbs"
+  "translation": "written",
+  "translationLang": "en",
+  "category": "Adjectives & Adverbs",
+  "translationUa": "написано"
  },
  {
   "id": "1we65q2",
@@ -9175,9 +9587,10 @@
   "hebrewFull": "אוטובוס (ז')",
   "gender": "m",
   "plural": null,
-  "translation": "автобус",
-  "translationLang": "ua",
-  "category": "Public Places"
+  "translation": "bus",
+  "translationLang": "en",
+  "category": "Public Places",
+  "translationUa": "автобус"
  },
  {
   "id": "xm90uh",

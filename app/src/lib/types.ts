@@ -10,6 +10,8 @@ export interface Word {
   plural: string | null
   translation: string
   translationLang: TranslationLang
+  /** original Ukrainian translation from the CSV when the shown one is an English override */
+  translationUa?: string
   category: string
 }
 
@@ -68,6 +70,7 @@ export interface Settings {
     blank: boolean
     match: boolean
     lightning: boolean
+    sound: boolean
   }
 }
 
@@ -76,7 +79,7 @@ export const DEFAULT_SETTINGS: Settings = {
   dailyGoalMinutes: 20,
   sessionSize: 25,
   attackChancePct: 15,
-  exercises: { choice: true, blank: true, match: true, lightning: true },
+  exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 
 export interface DayLog {

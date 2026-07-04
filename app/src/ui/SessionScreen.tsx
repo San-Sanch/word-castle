@@ -9,15 +9,18 @@ import {
   makeChoice,
   makeBlank,
   makeMatch,
+  makeSoundMatch,
   mulberry32,
   pickExerciseKind,
   type ChoiceExercise,
   type BlankExercise,
   type MatchExercise,
+  type SoundExercise,
 } from '../lib/exercises'
 import { answerReward } from '../lib/economy'
 import { castleDefense, lightningTarget, resolveSessionAttack, rollSeverity } from '../lib/attack'
 import { todayISO } from '../lib/time'
+import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 
 interface QueueItem {
   wordId: string
@@ -28,9 +31,34 @@ interface QueueItem {
 
 type CurrentEx = { kind: 'intro'; word: Word } | ChoiceExercise | BlankExercise
 
-type Phase = 'cards' | 'attack-intro' | 'lightning' | 'attack-result' | 'match' | 'summary' | 'empty'
+type Phase =
+  | 'cards'
+  | 'attack-intro'
+  | 'lightning'
+  | 'attack-result'
+  | 'match'
+  | 'sound'
+  | 'summary'
+  | 'empty'
 
 const LIGHTNING_SECONDS = 60
+const SOUND_QUESTIONS = 5
+
+function SpeakButton(props: { text: string }) {
+  if (!canSpeakHebrew()) return null
+  return (
+    <button
+      className="speak"
+      title="Play pronunciation"
+      onClick={(e) => {
+        e.stopPropagation()
+        speakHebrew(props.text)
+      }}
+    >
+      🔊
+    </button>
+  )
+}
 
 export default function SessionScreen(props: {
   state: GameState
@@ -114,6 +142,11 @@ export default function SessionScreen(props: {
   const [matchDone, setMatchDone] = useState<number[]>([])
   const [matchFlash, setMatchFlash] = useState<number | null>(null)
 
+  // --- sound round state ---
+  const [soundQs, setSoundQs] = useState<SoundExercise[]>([])
+  const [soundIdx, setSoundIdx] = useState(0)
+  const [soundPicked, setSoundPicked] = useState<number | null>(null)
+
   // --- active time tracking ---
   const lastInteraction = useRef(Date.now())
   useEffect(() => {
@@ -166,6 +199,45 @@ export default function SessionScreen(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, items, phase])
 
+  // pronounce new words when their intro card appears
+  useEffect(() => {
+    if (phase === 'cards' && ex?.kind === 'intro' && canSpeakHebrew()) speakHebrew(ex.word.hebrew)
+  }, [phase, ex])
+
+  const soundRoundPossible = () =>
+    !training &&
+    state.settings.exercises.sound &&
+    canSpeakHebrew() &&
+    [...new Set(answeredWordIds)].length >= 3
+
+  const enterBonusOrSummary = (after: 'cards' | 'match') => {
+    if (after === 'cards' && !training && state.settings.exercises.match) {
+      const pool = [...new Set(answeredWordIds)]
+      if (pool.length >= 5) {
+        const chosen = pool
+          .sort(() => rng() - 0.5)
+          .slice(0, 5)
+          .map((id) => wordById.get(id)!)
+        setMatch(makeMatch(chosen, rng))
+        setPhase('match')
+        return
+      }
+    }
+    if (soundRoundPossible()) {
+      const pool = [...new Set(answeredWordIds)]
+      const chosen = pool
+        .sort(() => rng() - 0.5)
+        .slice(0, SOUND_QUESTIONS)
+        .map((id) => wordById.get(id)!)
+      setSoundQs(chosen.map((w) => makeSoundMatch(w, words, rng)))
+      setSoundIdx(0)
+      setSoundPicked(null)
+      setPhase('sound')
+      return
+    }
+    setPhase('summary')
+  }
+
   const advance = (nextItems: QueueItem[]) => {
     const next = idx + 1
     if (next === attackAt) {
@@ -174,19 +246,7 @@ export default function SessionScreen(props: {
       return
     }
     if (next >= nextItems.length) {
-      if (!training && state.settings.exercises.match && answeredWordIds.length >= 5) {
-        const pool = [...new Set(answeredWordIds)]
-        if (pool.length >= 5) {
-          const chosen = pool
-            .sort(() => rng() - 0.5)
-            .slice(0, 5)
-            .map((id) => wordById.get(id)!)
-          setMatch(makeMatch(chosen, rng))
-          setPhase('match')
-          return
-        }
-      }
-      setPhase('summary')
+      enterBonusOrSummary('cards')
       return
     }
     setIdx(next)
@@ -274,6 +334,8 @@ export default function SessionScreen(props: {
     })
     setSessionAnswered((n) => n + 1)
     setAnsweredWordIds((list) => [...list, item.wordId])
+    const word = wordById.get(item.wordId)
+    if (word && ex.kind === 'choice' && canSpeakHebrew()) speakHebrew(word.hebrew)
     let nextItems = items
     if (!correct) {
       const requeued: QueueItem = { ...item, intro: false, firstTry: false }
@@ -286,15 +348,8 @@ export default function SessionScreen(props: {
 
   const clickMatch = (side: 'l' | 'r', pair: number) => {
     touch()
-    if (!match || matchDone.includes(pair) === true) {
-      // fallthrough: clicking a finished tile does nothing
-    }
     if (!match || matchDone.includes(pair)) return
-    if (!matchSel) {
-      setMatchSel({ side, pair })
-      return
-    }
-    if (matchSel.side === side) {
+    if (!matchSel || matchSel.side === side) {
       setMatchSel({ side, pair })
       return
     }
@@ -303,13 +358,37 @@ export default function SessionScreen(props: {
       setMatchSel(null)
       dispatch({ type: 'bonusCoins', amount: answerReward('match', false), today })
       if (matchDone.length + 1 === match.pairs.length) {
-        window.setTimeout(() => setPhase('summary'), 600)
+        window.setTimeout(() => enterBonusOrSummary('match'), 600)
       }
     } else {
       setMatchFlash(pair)
       window.setTimeout(() => setMatchFlash(null), 400)
       setMatchSel(null)
     }
+  }
+
+  // speak each sound question as it appears
+  useEffect(() => {
+    if (phase === 'sound' && soundQs[soundIdx]) speakHebrew(soundQs[soundIdx].hebrew)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, soundIdx])
+
+  const answerSound = (i: number) => {
+    touch()
+    if (soundPicked !== null) return
+    const q = soundQs[soundIdx]
+    setSoundPicked(i)
+    if (i === q.correctIndex) {
+      dispatch({ type: 'bonusCoins', amount: answerReward('sound', false), today })
+    }
+    window.setTimeout(() => {
+      if (soundIdx + 1 >= soundQs.length) {
+        setPhase('summary')
+      } else {
+        setSoundIdx((n) => n + 1)
+        setSoundPicked(null)
+      }
+    }, i === q.correctIndex ? 700 : 1400)
   }
 
   const log = todayLog(state, today)
@@ -391,7 +470,7 @@ export default function SessionScreen(props: {
             <p>Your latest upgrade is in ruins. Rebuild it from the castle screen at half price.</p>
           </>
         )}
-        <button className="primary" onClick={() => { touch(); idx >= items.length ? setPhase('summary') : setPhase('cards') }}>
+        <button className="primary" onClick={() => { touch(); idx >= items.length ? enterBonusOrSummary('cards') : setPhase('cards') }}>
           Continue
         </button>
       </div>
@@ -425,6 +504,32 @@ export default function SessionScreen(props: {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (phase === 'sound' && soundQs[soundIdx]) {
+    const q = soundQs[soundIdx]
+    return (
+      <div className="panel card">
+        <span className="badge">🎧 Bonus round: pick the word you hear ({soundIdx + 1}/{soundQs.length})</span>
+        <div style={{ margin: '22px 0' }}>
+          <button className="primary" onClick={() => { touch(); speakHebrew(q.hebrew) }}>
+            🔊 Play again
+          </button>
+        </div>
+        <div className="options sound-options">
+          {q.options.map((o, i) => (
+            <button
+              key={i}
+              className={`he ${soundPicked !== null && i === q.correctIndex ? 'correct' : soundPicked === i ? 'wrong' : ''}`}
+              disabled={soundPicked !== null}
+              onClick={() => answerSound(i)}
+            >
+              {o}
+            </button>
+          ))}
         </div>
       </div>
     )
@@ -474,7 +579,9 @@ export default function SessionScreen(props: {
       {ex.kind === 'intro' && (
         <div className="panel card newword">
           <span className="badge new">✨ New word</span>
-          <div className="prompt he">{ex.word.hebrew}</div>
+          <div className="prompt he">
+            {ex.word.hebrew} <SpeakButton text={ex.word.hebrew} />
+          </div>
           {(ex.word.gender || ex.word.plural) && (
             <div className="sub">
               {ex.word.gender === 'm' && 'masculine (ז׳)'}
@@ -503,7 +610,9 @@ export default function SessionScreen(props: {
 
       {ex.kind === 'choice' && (
         <div className="panel card">
-          <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>{ex.prompt}</div>
+          <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>
+            {ex.prompt} {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} />}
+          </div>
           <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the Hebrew word'}</div>
           <div className="options">
             {ex.options.map((o, i) => (
@@ -528,12 +637,13 @@ export default function SessionScreen(props: {
             {ex.tokens.map((t, i) =>
               i === ex.blankIndex ? (
                 <span key={i} className="blank">
-                  {picked !== null ? ex.options[ex.correctIndex] : ' '}
+                  {picked !== null ? ex.options[ex.correctIndex] : ' '}
                 </span>
               ) : (
                 <span key={i}> {t} </span>
               ),
             )}
+            {picked !== null && <SpeakButton text={ex.tokens.map((t, i) => (i === ex.blankIndex ? ex.options[ex.correctIndex] : t)).join(' ')} />}
           </div>
           <div className="sub">{ex.translation}</div>
           <div className="options">

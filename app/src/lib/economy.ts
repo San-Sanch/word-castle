@@ -1,12 +1,13 @@
 import type { CastleItem, CastleItemType, Wallet } from './types.js'
 
-export type RewardKind = 'choice' | 'blank' | 'match' | 'lightning'
+export type RewardKind = 'choice' | 'blank' | 'match' | 'lightning' | 'sound'
 
 const BASE_REWARD: Record<RewardKind, number> = {
   choice: 1,
   blank: 2,
   match: 2, // per matched pair
   lightning: 1, // multiplied by combo
+  sound: 2, // per correct sound-match
 }
 
 export function answerReward(kind: RewardKind, firstTry: boolean, combo = 1): number {
