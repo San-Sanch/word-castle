@@ -542,8 +542,13 @@ export default function SessionScreen(props: {
     dispatch({ type: 'practiceAnswer', correct, today })
     setSessionAnswered((n) => n + 1)
     if (correct) setSessionCorrect((n) => n + 1)
-    if (canSpeakHebrew()) speakHebrew(sentEx.reverse ? sentEx.prompt : sentEx.options[sentEx.correctIndex])
-    window.setTimeout(() => advance(steps), correct ? 900 : 2000)
+    // hold the slide until the sentence finishes speaking
+    const proceed = () => window.setTimeout(() => advance(steps), correct ? 300 : 1200)
+    if (canSpeakHebrew()) {
+      speakHebrew(sentEx.reverse ? sentEx.prompt : sentEx.options[sentEx.correctIndex], proceed)
+    } else {
+      window.setTimeout(() => advance(steps), correct ? 900 : 2000)
+    }
   }
 
   const showHint = () => {
@@ -664,11 +669,15 @@ export default function SessionScreen(props: {
       const next = buildProgress + 1
       setBuildProgress(next)
       if (next === buildTokens.length) {
-        if (canSpeakHebrew()) speakHebrew(step.sentence.hebrew)
         dispatch({ type: 'practiceAnswer', correct: !buildMissed.current, today })
         setSessionAnswered((n) => n + 1)
         if (!buildMissed.current) setSessionCorrect((n) => n + 1)
-        window.setTimeout(() => advance(steps), 1200)
+        // wait for the full sentence to finish speaking before moving on
+        if (canSpeakHebrew()) {
+          speakHebrew(step.sentence.hebrew, () => window.setTimeout(() => advance(steps), 350))
+        } else {
+          window.setTimeout(() => advance(steps), 1200)
+        }
       }
     } else {
       buildMissed.current = true

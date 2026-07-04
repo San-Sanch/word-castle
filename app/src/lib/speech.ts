@@ -29,6 +29,13 @@ export const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'דוד': 'דּוֹד', // uncle (dod) — otherwise read as the name David
   'דודה': 'דּוֹדָה', // aunt (doda)
   'מכתב': 'מִכְתָּב', // letter (mikhtav) — Dicta picked מַכְתֵּב (dictation machine)
+  'סבא': 'סַאבָּא', // grandpa — mater-lectionis aleph pulls the stress to SA-ba (measured)
+  'סבתא': 'סַבְּתָא', // grandma — the only spelling Carmit renders differently (SAV-ta)
+  // bayit family: mater-lectionis aleph forces BA-yit (measured 19/7 head-heavy)
+  'בית': 'בַּאיִת',
+  'הבית': 'הַבַּאיִת',
+  'מהבית': 'מֵהַבַּאיִת',
+  'בבית': 'בַּבַּאיִת',
   'מים': 'מַיְם', // water — closing glide reads as one stressed syllable: MA-im
 }
 
@@ -84,9 +91,24 @@ export function ttsNormalize(text: string): string {
   return forceEiGlide(cleaned.split(' ').map(vocalizeToken).join(' '))
 }
 
-export function speakHebrew(text: string): boolean {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return false
+export function speakHebrew(text: string, onEnd?: () => void): boolean {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    onEnd?.()
+    return false
+  }
   const utterance = new SpeechSynthesisUtterance(ttsNormalize(text))
+  if (onEnd) {
+    let called = false
+    const done = () => {
+      if (!called) {
+        called = true
+        onEnd()
+      }
+    }
+    utterance.onend = done
+    utterance.onerror = done
+    window.setTimeout(done, 12000) // safety: never hang the flow
+  }
   const voice = hebrewVoice()
   if (voice) utterance.voice = voice
   utterance.lang = 'he-IL'
