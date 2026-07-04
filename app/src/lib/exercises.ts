@@ -185,7 +185,8 @@ export function hebrewSimilarity(a: string, b: string): number {
 
 /** Hear the word, pick it among similar-looking/sounding Hebrew words (8 options). */
 export function makeSoundMatch(word: Word, pool: Word[], rng: () => number, count = 8): SoundExercise {
-  const base = pool.filter((w) => w.id !== word.id && w.hebrew !== word.hebrew)
+  // slash entries are dictionary variant lists, not hearable words
+  const base = pool.filter((w) => w.id !== word.id && w.hebrew !== word.hebrew && !w.hebrew.includes('/'))
   const inShape = base.filter((w) => shapeCompatible(word.hebrew, w.hebrew))
   const ranked = (list: Word[]) =>
     list

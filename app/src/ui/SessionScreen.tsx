@@ -344,7 +344,8 @@ export default function SessionScreen(props: {
     const dir = effDirection(item.direction)
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
-      if (dir === 'recall') return makeSoundMatch(word, words, rng)
+      // variant-list entries (אחרון/אחרונה/…) cannot be "the word you hear"
+      if (dir === 'recall' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng)
       return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
     }
     const review = state.reviews.find((r) => r.wordId === item.wordId && r.direction === item.direction)
@@ -360,7 +361,7 @@ export default function SessionScreen(props: {
       if (canSpeakHebrew()) kinds.push('sound', 'audio-choice')
       const kind = kinds[Math.floor(rng() * kinds.length)]
       if (kind === 'flash') return { kind: 'flash', word, direction: dir }
-      if (kind === 'sound') return makeSoundMatch(word, words, rng)
+      if (kind === 'sound' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng)
       if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
       if (kind === 'blank') {
         const pick = withSentence[Math.floor(rng() * withSentence.length)]
@@ -495,7 +496,7 @@ export default function SessionScreen(props: {
       }
     }
     if (soundBonusPossible()) {
-      const pool = [...new Set(answeredWordIds)]
+      const pool = [...new Set(answeredWordIds)].filter((id) => !wordById.get(id)!.hebrew.includes('/'))
       const chosen = pool.sort(() => rng() - 0.5).slice(0, SOUND_QUESTIONS).map((id) => wordById.get(id)!)
       setSoundQs(chosen.map((w) => makeSoundMatch(w, words, rng)))
       setSoundIdx(0)

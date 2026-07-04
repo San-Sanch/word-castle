@@ -158,15 +158,16 @@ button.speak:hover { opacity: 1; }
 /* Session */
 .card { text-align: center; padding: 28px 16px; max-width: 860px; margin-left: auto; margin-right: auto; }
 .progress { max-width: 860px; margin-left: auto; margin-right: auto; }
-.sound-options { grid-template-columns: 1fr 1fr 1fr; }
-@media (max-width: 700px) { .sound-options { grid-template-columns: 1fr 1fr; } }
+.sound-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 700px) { .sound-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .prompt { font-size: 40px; font-weight: 700; margin: 10px 0 4px; }
 .prompt.small { font-size: 26px; }
 .sub { color: var(--muted); margin-bottom: 20px; }
-.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 520px; margin: 0 auto; }
+.options { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; max-width: 520px; margin: 0 auto; }
 .options button {
   padding: 16px 10px; font-size: 20px; border-radius: 10px; border: 2px solid transparent;
   background: var(--panel-2); color: var(--text); cursor: pointer;
+  min-width: 0; overflow-wrap: anywhere;
 }
 .options button.correct { border-color: var(--green); background: #1f3a2a; }
 .options button.wrong { border-color: var(--red); background: #3a2027; }

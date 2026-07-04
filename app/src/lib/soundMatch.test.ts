@@ -41,6 +41,14 @@ test('makeSoundMatch: single-word target excludes phrases', () => {
   }
 })
 
+test('makeSoundMatch: slash-variant dictionary entries never appear as options', () => {
+  const withSlash = [...pool, W('30', 'אחרון/אחרונה/אחרונים/אחרונות'), W('31', 'שלו/שלה')]
+  const ex = makeSoundMatch(pool[0], withSlash, mulberry32(11))
+  for (const o of ex.options) {
+    assert.equal(o.includes('/'), false, `slash entry leaked: "${o}"`)
+  }
+})
+
 test('makeSoundMatch: small pool yields fewer options without crash', () => {
   const ex = makeSoundMatch(pool[0], pool.slice(0, 3), mulberry32(1))
   assert.ok(ex.options.length >= 2 && ex.options.length <= 6)
