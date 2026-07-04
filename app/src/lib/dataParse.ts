@@ -150,15 +150,31 @@ export function buildSentencePool(
   candidates: SentenceRow[],
   words: Array<{ id: string; hebrew: string }>,
 ): Sentence[] {
+  // dictionary-style variant entries ("מה קרה/מה קורה") are two sentences,
+  // not one: split hebrew and translation pairwise when the counts match
+  const expanded: SentenceRow[] = []
+  for (const c of candidates) {
+    if (c.hebrew.includes('/')) {
+      const heParts = c.hebrew.split('/').map((s) => s.trim()).filter(Boolean)
+      const trParts = c.translation.split('/').map((s) => s.trim()).filter(Boolean)
+      if (heParts.length > 1 && heParts.length === trParts.length) {
+        heParts.forEach((he, i) => expanded.push({ hebrew: he, translation: trParts[i] }))
+        continue
+      }
+      continue // unsplittable slash entries are not usable as sentences
+    }
+    expanded.push(c)
+  }
+
   const out: Sentence[] = []
   const seen = new Set<string>()
-  for (const c of candidates) {
+  for (const c of expanded) {
     const hebrew = c.hebrew.trim()
     if (seen.has(hebrew)) continue
     const segments = hebrew.split(',').map((s) => tokenize(s))
     const totalTokens = segments.reduce((n, s) => n + s.length, 0)
     const hasRealSegment = segments.some((s) => s.length >= 2)
-    if (totalTokens < 3 || !hasRealSegment) continue
+    if (totalTokens < 2 || !hasRealSegment) continue
     seen.add(hebrew)
     const { matches, tokens } = matchWordsInSentence(hebrew, words)
     out.push({

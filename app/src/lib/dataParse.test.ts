@@ -111,6 +111,20 @@ test('buildSentencePool: keeps real sentences, drops letter lists and single-wor
   assert.deepEqual(texts, ['אני לומד עברית.', 'זה יין, זה הר, זאת מתנה'])
 })
 
+test('buildSentencePool: slash variants split into separate sentences', () => {
+  const candidates = [
+    { hebrew: 'מה קרה/מה קורה', translation: "What happened/What's happening?" },
+    { hebrew: 'אני גר בעיר/אני גרה בעיר', translation: 'I live in the city (m.)/I live in the city (f.)' },
+  ]
+  const pool = buildSentencePool(candidates, [])
+  const texts = pool.map((s: { hebrew: string }) => s.hebrew)
+  assert.deepEqual(texts, ['מה קרה', 'מה קורה', 'אני גר בעיר', 'אני גרה בעיר'])
+  assert.equal(pool[0].translation, 'What happened')
+  assert.equal(pool[1].translation, "What's happening?")
+  // no token may contain a slash
+  for (const s of pool) for (const t of s.tokens) assert.ok(!t.includes('/'), t)
+})
+
 test('matchWordsInSentence: exact token and prefixed token match single-token words only', () => {
   const words = [
     { id: 'w1', hebrew: 'עברית' },

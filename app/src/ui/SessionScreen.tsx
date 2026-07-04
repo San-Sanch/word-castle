@@ -195,9 +195,11 @@ export default function SessionScreen(props: {
     }
 
     if (studyMode === 'builder') {
-      // arrange word tiles into your real sentences (3-10 tokens)
-      const pool = shuffle(sentences.filter((s) => s.tokens.length >= 3 && s.tokens.length <= 10), rng)
-        .slice(0, Math.min(state.settings.sessionSize, 12))
+      // arrange word tiles into your real sentences (3-10 clean tokens)
+      const buildable = sentences.filter(
+        (s) => s.tokens.length >= 3 && s.tokens.length <= 10 && !s.hebrew.includes('/'),
+      )
+      const pool = shuffle(buildable, rng).slice(0, Math.min(state.settings.sessionSize, 12))
       return pool.map((sentence) => ({ kind: 'build', sentence }))
     }
 

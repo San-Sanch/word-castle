@@ -1,5 +1,54 @@
 [
  {
+  "id": "v6vtw2",
+  "hebrew": "תגיד לי",
+  "translation": "tell me (m.)",
+  "matches": [],
+  "tokens": [
+   "תגיד",
+   "לי"
+  ]
+ },
+ {
+  "id": "z8z617",
+  "hebrew": "תגידי לי",
+  "translation": "tell me (f.)",
+  "matches": [],
+  "tokens": [
+   "תגידי",
+   "לי"
+  ]
+ },
+ {
+  "id": "z8qapz",
+  "hebrew": "תגידו לי",
+  "translation": "tell me (pl.)",
+  "matches": [],
+  "tokens": [
+   "תגידו",
+   "לי"
+  ]
+ },
+ {
+  "id": "1eu47to",
+  "hebrew": "אני מ...",
+  "translation": "I am from...",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "s4mtzo"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מ"
+  ]
+ },
+ {
   "id": "16eh49",
   "hebrew": "אני גר ב...",
   "translation": "I live in... (m.)",
@@ -218,6 +267,16 @@
   ]
  },
  {
+  "id": "fmopp2",
+  "hebrew": "זה נכון",
+  "translation": "this is correct",
+  "matches": [],
+  "tokens": [
+   "זה",
+   "נכון"
+  ]
+ },
+ {
   "id": "1xuy8wq",
   "hebrew": "זה לא נכון",
   "translation": "this is not correct",
@@ -263,6 +322,25 @@
    "מה",
    "את",
    "חושבת"
+  ]
+ },
+ {
+  "id": "82yrmy",
+  "hebrew": "במאה אחוז",
+  "translation": "100 percent",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "12tcy9k"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "12e295l"
+   }
+  ],
+  "tokens": [
+   "במאה",
+   "אחוז"
   ]
  },
  {
@@ -622,6 +700,80 @@
   ]
  },
  {
+  "id": "1p2cxtf",
+  "hebrew": "מי אתה?",
+  "translation": "Who are you? (m.)",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "18tqnn9"
+   }
+  ],
+  "tokens": [
+   "מי",
+   "אתה"
+  ]
+ },
+ {
+  "id": "1nyjhtb",
+  "hebrew": "הי אימא",
+  "translation": "Hi mom",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "1b01m8o"
+   }
+  ],
+  "tokens": [
+   "הי",
+   "אימא"
+  ]
+ },
+ {
+  "id": "5024hr",
+  "hebrew": "היא אימא",
+  "translation": "She is a mother",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "189ungl"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1b01m8o"
+   }
+  ],
+  "tokens": [
+   "היא",
+   "אימא"
+  ]
+ },
+ {
+  "id": "19cpjty",
+  "hebrew": "היא אמא",
+  "translation": "She is a mother",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "189ungl"
+   }
+  ],
+  "tokens": [
+   "היא",
+   "אמא"
+  ]
+ },
+ {
+  "id": "14su8r6",
+  "hebrew": "מה זה?",
+  "translation": "What is this?",
+  "matches": [],
+  "tokens": [
+   "מה",
+   "זה"
+  ]
+ },
+ {
   "id": "1tawoxu",
   "hebrew": "זה הדגל של אוקראינה.",
   "translation": "This is the flag of Ukraine.",
@@ -782,34 +934,42 @@
   ]
  },
  {
-  "id": "1k53h7z",
-  "hebrew": "איזה יום היה אתמול/שלשום?",
-  "translation": "What day was yesterday/day before yesterday?",
+  "id": "1hw5yuj",
+  "hebrew": "איזה יום היה אתמול",
+  "translation": "What day was yesterday",
   "matches": [
    {
     "tokenIndex": 1,
     "wordId": "huugs4"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "1nyvgy8"
    }
   ],
   "tokens": [
    "איזה",
    "יום",
    "היה",
-   "אתמול/שלשום"
+   "אתמול"
   ]
  },
  {
-  "id": "1qq0rbp",
-  "hebrew": "אתמול/שלשום היה יום...",
-  "translation": "Yesterday/day before yesterday was...",
+  "id": "vravh3",
+  "hebrew": "שלשום היה יום...",
+  "translation": "day before yesterday was...",
   "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "o5n4sv"
+   },
    {
     "tokenIndex": 2,
     "wordId": "huugs4"
    }
   ],
   "tokens": [
-   "אתמול/שלשום",
+   "שלשום",
    "היה",
    "יום"
   ]
@@ -1000,53 +1160,6 @@
   ]
  },
  {
-  "id": "11pkub4",
-  "hebrew": "אני מדבר/ת עברית קצת.",
-  "translation": "I speak Hebrew a little.",
-  "matches": [
-   {
-    "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   },
-   {
-    "tokenIndex": 2,
-    "wordId": "yn0m4u"
-   },
-   {
-    "tokenIndex": 3,
-    "wordId": "xu3m4m"
-   }
-  ],
-  "tokens": [
-   "אני",
-   "מדבר/ת",
-   "עברית",
-   "קצת"
-  ]
- },
- {
-  "id": "d2o2mo",
-  "hebrew": "אני אוהב/ת לטייל בכל המקומות.",
-  "translation": "I love to travel in all places.",
-  "matches": [
-   {
-    "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   },
-   {
-    "tokenIndex": 3,
-    "wordId": "q80vwu"
-   }
-  ],
-  "tokens": [
-   "אני",
-   "אוהב/ת",
-   "לטייל",
-   "בכל",
-   "המקומות"
-  ]
- },
- {
   "id": "1s46mfw",
   "hebrew": "אני שותה גם קפה וגם תה.",
   "translation": "I drink both coffee and tea.",
@@ -1086,13 +1199,22 @@
   ]
  },
  {
-  "id": "fsmnxc",
-  "hebrew": "מה קרה/מה קורה?",
-  "translation": "What happened/What's happening?",
+  "id": "14suovo",
+  "hebrew": "מה קרה",
+  "translation": "What happened",
   "matches": [],
   "tokens": [
    "מה",
-   "קרה/מה",
+   "קרה"
+  ]
+ },
+ {
+  "id": "12h3im6",
+  "hebrew": "מה קורה?",
+  "translation": "What's happening?",
+  "matches": [],
+  "tokens": [
+   "מה",
    "קורה"
   ]
  },
@@ -1215,33 +1337,6 @@
    "אתן",
    "אנחנו",
    "בנות"
-  ]
- },
- {
-  "id": "1vkekt8",
-  "hebrew": "אני לא מבין/ה למה זה ככה.",
-  "translation": "I don't understand why it's like this.",
-  "matches": [
-   {
-    "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   },
-   {
-    "tokenIndex": 1,
-    "wordId": "16tulm0"
-   },
-   {
-    "tokenIndex": 5,
-    "wordId": "1lxh4kv"
-   }
-  ],
-  "tokens": [
-   "אני",
-   "לא",
-   "מבין/ה",
-   "למה",
-   "זה",
-   "ככה"
   ]
  },
  {
@@ -1378,23 +1473,6 @@
   ]
  },
  {
-  "id": "ropn4u",
-  "hebrew": "אני יכול/יכולה לשחק שחמט/כדורגל",
-  "translation": "I can play chess/football",
-  "matches": [
-   {
-    "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   }
-  ],
-  "tokens": [
-   "אני",
-   "יכול/יכולה",
-   "לשחק",
-   "שחמט/כדורגל"
-  ]
- },
- {
   "id": "1woew4v",
   "hebrew": "אני יודע לשחק כדורגל",
   "translation": "I know how to play football",
@@ -1432,6 +1510,65 @@
   ]
  },
  {
+  "id": "14lemp3",
+  "hebrew": "מי את?",
+  "translation": "Who are you? (f.)",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "fxl94c"
+   }
+  ],
+  "tokens": [
+   "מי",
+   "את"
+  ]
+ },
+ {
+  "id": "uup683",
+  "hebrew": "ערב טוב!",
+  "translation": "Good evening!",
+  "matches": [],
+  "tokens": [
+   "ערב",
+   "טוב"
+  ]
+ },
+ {
+  "id": "qkbt7",
+  "hebrew": "שבת שלום!",
+  "translation": "Peaceful Sabbath!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "27w217"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "5lmzbn"
+   }
+  ],
+  "tokens": [
+   "שבת",
+   "שלום"
+  ]
+ },
+ {
+  "id": "2fy7gb",
+  "hebrew": "צוהוריים טובים!",
+  "translation": "Good afternoon!",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "vbzjrb"
+   }
+  ],
+  "tokens": [
+   "צוהוריים",
+   "טובים"
+  ]
+ },
+ {
   "id": "464dc5",
   "hebrew": "ערב טוב תלמידים!",
   "translation": "Good evening students!",
@@ -1445,6 +1582,21 @@
    "ערב",
    "טוב",
    "תלמידים"
+  ]
+ },
+ {
+  "id": "zqaznb",
+  "hebrew": "שבוע טוב!",
+  "translation": "Good week!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1q8yzn9"
+   }
+  ],
+  "tokens": [
+   "שבוע",
+   "טוב"
   ]
  },
  {
@@ -1468,6 +1620,21 @@
   ]
  },
  {
+  "id": "1ewwuaw",
+  "hebrew": "של מי?",
+  "translation": "Whose?",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1o19guj"
+   }
+  ],
+  "tokens": [
+   "של",
+   "מי"
+  ]
+ },
+ {
   "id": "179l3ov",
   "hebrew": "אלה הרי קרפטים",
   "translation": "These are the Carpathian Mountains.",
@@ -1476,6 +1643,66 @@
    "אלה",
    "הרי",
    "קרפטים"
+  ]
+ },
+ {
+  "id": "8u6c7i",
+  "hebrew": "אלה אנשים.",
+  "translation": "These are people.",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "f5v810"
+   }
+  ],
+  "tokens": [
+   "אלה",
+   "אנשים"
+  ]
+ },
+ {
+  "id": "19obwfl",
+  "hebrew": "זה ילד",
+  "translation": "This is a boy",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "rs9pml"
+   }
+  ],
+  "tokens": [
+   "זה",
+   "ילד"
+  ]
+ },
+ {
+  "id": "1tj5qff",
+  "hebrew": "זאת ילדה",
+  "translation": "This is a girl",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "11qxt1i"
+   }
+  ],
+  "tokens": [
+   "זאת",
+   "ילדה"
+  ]
+ },
+ {
+  "id": "19oepkf",
+  "hebrew": "אלה ילדים",
+  "translation": "These are children",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "113fxua"
+   }
+  ],
+  "tokens": [
+   "אלה",
+   "ילדים"
   ]
  },
  {
@@ -1550,6 +1777,61 @@
   ]
  },
  {
+  "id": "dd9bwe",
+  "hebrew": "מזג אוויר",
+  "translation": "weather",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "jx5ayu"
+   }
+  ],
+  "tokens": [
+   "מזג",
+   "אוויר"
+  ]
+ },
+ {
+  "id": "1o4bqgw",
+  "hebrew": "ימי השבוע",
+  "translation": "days of the week",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "1q8yzn9"
+   }
+  ],
+  "tokens": [
+   "ימי",
+   "השבוע"
+  ]
+ },
+ {
+  "id": "uw71a0",
+  "hebrew": "ערב נעים",
+  "translation": "Pleasant evening",
+  "matches": [],
+  "tokens": [
+   "ערב",
+   "נעים"
+  ]
+ },
+ {
+  "id": "hgnj44",
+  "hebrew": "אהלן תלמידים",
+  "translation": "Hi students",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "gin58m"
+   }
+  ],
+  "tokens": [
+   "אהלן",
+   "תלמידים"
+  ]
+ },
+ {
   "id": "ebpz73",
   "hebrew": "הינה שיעורי הבית שלכם",
   "translation": "Here is your homework",
@@ -1605,6 +1887,45 @@
   ]
  },
  {
+  "id": "1hu0ey2",
+  "hebrew": "שבת שלום",
+  "translation": "Peaceful Sabbath",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "27w217"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "5lmzbn"
+   }
+  ],
+  "tokens": [
+   "שבת",
+   "שלום"
+  ]
+ },
+ {
+  "id": "1rbakr8",
+  "hebrew": "מה שלומך?",
+  "translation": "How are you?",
+  "matches": [],
+  "tokens": [
+   "מה",
+   "שלומך"
+  ]
+ },
+ {
+  "id": "1vw3725",
+  "hebrew": "מה שמך?",
+  "translation": "What is your name?",
+  "matches": [],
+  "tokens": [
+   "מה",
+   "שמך"
+  ]
+ },
+ {
   "id": "gxkqha",
   "hebrew": "אני לומד עברית.",
   "translation": "I study Hebrew. (m.)",
@@ -1642,6 +1963,103 @@
    "אני",
    "לומדת",
    "עברית"
+  ]
+ },
+ {
+  "id": "12ya2f9",
+  "hebrew": "מה נשמע?",
+  "translation": "What's up?",
+  "matches": [],
+  "tokens": [
+   "מה",
+   "נשמע"
+  ]
+ },
+ {
+  "id": "r77cyf",
+  "hebrew": "בסדר תודה!",
+  "translation": "Okay thanks!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "2agam7"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1vgt9b8"
+   }
+  ],
+  "tokens": [
+   "בסדר",
+   "תודה"
+  ]
+ },
+ {
+  "id": "zgm4bu",
+  "hebrew": "שמי דמיתרי.",
+  "translation": "My name is Dmytro.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "aba1u"
+   }
+  ],
+  "tokens": [
+   "שמי",
+   "דמיתרי"
+  ]
+ },
+ {
+  "id": "r884aw",
+  "hebrew": "מאין את?",
+  "translation": "Where are you from? (f.)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "18kl37k"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "fxl94c"
+   }
+  ],
+  "tokens": [
+   "מאין",
+   "את"
+  ]
+ },
+ {
+  "id": "8xnwgp",
+  "hebrew": "אני מלביב.",
+  "translation": "I am from Lviv.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מלביב"
+  ]
+ },
+ {
+  "id": "b26x2u",
+  "hebrew": "אתה תלמיד?",
+  "translation": "Are you a student? (m.)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "18tqnn9"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "ejja5o"
+   }
+  ],
+  "tokens": [
+   "אתה",
+   "תלמיד"
   ]
  },
  {
@@ -1686,6 +2104,25 @@
    "אני",
    "לומד",
    "עברית"
+  ]
+ },
+ {
+  "id": "vqp7xb",
+  "hebrew": "שלום תלמידים!",
+  "translation": "Hello students!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "5lmzbn"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "gin58m"
+   }
+  ],
+  "tokens": [
+   "שלום",
+   "תלמידים"
   ]
  },
  {
@@ -1780,6 +2217,40 @@
   ]
  },
  {
+  "id": "1eu9j0t",
+  "hebrew": "אני עייף",
+  "translation": "I am tired (m.)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "k89qxb"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "עייף"
+  ]
+ },
+ {
+  "id": "181553y",
+  "hebrew": "אני עייפה",
+  "translation": "I am tired (f.)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "עייפה"
+  ]
+ },
+ {
   "id": "1wpx6dq",
   "hebrew": "חתול חכם חיפש חלום.",
   "translation": "A wise cat searched for a dream.",
@@ -1801,6 +2272,78 @@
    "רץ",
    "רבה",
    "רחל"
+  ]
+ },
+ {
+  "id": "4al9wz",
+  "hebrew": "יום שמשי",
+  "translation": "sunny day",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "huugs4"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1c5lqoq"
+   }
+  ],
+  "tokens": [
+   "יום",
+   "שמשי"
+  ]
+ },
+ {
+  "id": "jqwvj4",
+  "hebrew": "רוח קלה",
+  "translation": "light breeze",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "3nj5ib"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "6i9ebf"
+   }
+  ],
+  "tokens": [
+   "רוח",
+   "קלה"
+  ]
+ },
+ {
+  "id": "cf2yxp",
+  "hebrew": "רוח חזקה",
+  "translation": "strong wind",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "3nj5ib"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1tjujm2"
+   }
+  ],
+  "tokens": [
+   "רוח",
+   "חזקה"
+  ]
+ },
+ {
+  "id": "uvk4kd",
+  "hebrew": "ראש השנה",
+  "translation": "Rosh Hashanah (Jewish New Year)",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "pdd2rg"
+   }
+  ],
+  "tokens": [
+   "ראש",
+   "השנה"
   ]
  },
  {
@@ -1833,6 +2376,36 @@
    "שלום",
    "ערב",
    "טוב"
+  ]
+ },
+ {
+  "id": "14md8pl",
+  "hebrew": "שמי סשה.",
+  "translation": "My name is Sasha.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "aba1u"
+   }
+  ],
+  "tokens": [
+   "שמי",
+   "סשה"
+  ]
+ },
+ {
+  "id": "qfucpb",
+  "hebrew": "אני מדניפרו.",
+  "translation": "I am from Dnipro.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מדניפרו"
   ]
  },
  {
@@ -1911,6 +2484,59 @@
   ]
  },
  {
+  "id": "834l1d",
+  "hebrew": "הרבה אנשים",
+  "translation": "many people",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "k9tj48"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "f5v810"
+   }
+  ],
+  "tokens": [
+   "הרבה",
+   "אנשים"
+  ]
+ },
+ {
+  "id": "ffbvxy",
+  "hebrew": "בלי סוכר",
+  "translation": "without sugar",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1wzd3hw"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "17j715q"
+   }
+  ],
+  "tokens": [
+   "בלי",
+   "סוכר"
+  ]
+ },
+ {
+  "id": "5dkpd8",
+  "hebrew": "מזל טוב!",
+  "translation": "Congratulations!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "s0uw4g"
+   }
+  ],
+  "tokens": [
+   "מזל",
+   "טוב"
+  ]
+ },
+ {
   "id": "m8wh9i",
   "hebrew": "גמר חתימה טובה!",
   "translation": "May you be sealed in the Book of Life!",
@@ -1922,33 +2548,38 @@
   ]
  },
  {
-  "id": "1fv9red",
-  "hebrew": "אני אוהב/ת את המשפחה שלי.",
-  "translation": "I love my family.",
+  "id": "1y941rj",
+  "hebrew": "יום כיפור",
+  "translation": "Yom Kippur",
   "matches": [
    {
     "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   },
-   {
-    "tokenIndex": 2,
-    "wordId": "fxl94c"
-   },
-   {
-    "tokenIndex": 3,
-    "wordId": "8yxa3o"
-   },
-   {
-    "tokenIndex": 4,
-    "wordId": "1i5e6j4"
+    "wordId": "huugs4"
    }
   ],
   "tokens": [
-   "אני",
-   "אוהב/ת",
-   "את",
-   "המשפחה",
-   "שלי"
+   "יום",
+   "כיפור"
+  ]
+ },
+ {
+  "id": "122ocr1",
+  "hebrew": "מה המצב?",
+  "translation": "What's the situation?",
+  "matches": [],
+  "tokens": [
+   "מה",
+   "המצב"
+  ]
+ },
+ {
+  "id": "ognu3",
+  "hebrew": "חברת ויקס",
+  "translation": "Wix company",
+  "matches": [],
+  "tokens": [
+   "חברת",
+   "ויקס"
   ]
  },
  {
@@ -2000,6 +2631,40 @@
   ]
  },
  {
+  "id": "1ck7rph",
+  "hebrew": "סוף סוף",
+  "translation": "finally",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1i7w9yn"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1i7w9yn"
+   }
+  ],
+  "tokens": [
+   "סוף",
+   "סוף"
+  ]
+ },
+ {
+  "id": "1mmkno0",
+  "hebrew": "מספרים נקבה",
+  "translation": "numbers - feminine",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "dv8q3v"
+   }
+  ],
+  "tokens": [
+   "מספרים",
+   "נקבה"
+  ]
+ },
+ {
   "id": "goujrl",
   "hebrew": "מגן דויד אדום",
   "translation": "Magen David Adom (ambulance)",
@@ -2008,6 +2673,26 @@
    "מגן",
    "דויד",
    "אדום"
+  ]
+ },
+ {
+  "id": "i4kilt",
+  "hebrew": "מכבי אש",
+  "translation": "fire department",
+  "matches": [],
+  "tokens": [
+   "מכבי",
+   "אש"
+  ]
+ },
+ {
+  "id": "gfvntv",
+  "hebrew": "קופת חולים",
+  "translation": "health clinic",
+  "matches": [],
+  "tokens": [
+   "קופת",
+   "חולים"
   ]
  },
  {
@@ -2025,6 +2710,16 @@
    "מעלות",
    "יש",
    "היום"
+  ]
+ },
+ {
+  "id": "1byolaa",
+  "hebrew": "גן ציבורי",
+  "translation": "public garden",
+  "matches": [],
+  "tokens": [
+   "גן",
+   "ציבורי"
   ]
  },
  {
@@ -2049,6 +2744,21 @@
    "סוף",
    "שבוע",
    "נפלא"
+  ]
+ },
+ {
+  "id": "1hm7gku",
+  "hebrew": "למה? כי",
+  "translation": "Why? Because",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "1daisca"
+   }
+  ],
+  "tokens": [
+   "למה",
+   "כי"
   ]
  },
  {
@@ -2166,6 +2876,21 @@
   ]
  },
  {
+  "id": "1yhe11g",
+  "hebrew": "מ...עד",
+  "translation": "from...to",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "s4mtzo"
+   }
+  ],
+  "tokens": [
+   "מ",
+   "עד"
+  ]
+ },
+ {
   "id": "jmyyjb",
   "hebrew": "אנחנו עובדים מיום שני עד יום שישי.",
   "translation": "We work from Monday to Friday.",
@@ -2198,25 +2923,43 @@
   ]
  },
  {
-  "id": "24jbt7",
-  "hebrew": "אני יודע/ת שזה נכון בסדר.",
-  "translation": "I know that this is correct okay.",
+  "id": "1rh05g2",
+  "hebrew": "ברוך השם!",
+  "translation": "Thank God!",
   "matches": [
    {
-    "tokenIndex": 0,
-    "wordId": "1jtubsv"
-   },
-   {
-    "tokenIndex": 4,
-    "wordId": "2agam7"
+    "tokenIndex": 1,
+    "wordId": "zuotcm"
    }
   ],
   "tokens": [
-   "אני",
-   "יודע/ת",
-   "שזה",
-   "נכון",
-   "בסדר"
+   "ברוך",
+   "השם"
+  ]
+ },
+ {
+  "id": "1unrhss",
+  "hebrew": "מעלה אחת",
+  "translation": "one degree",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "1blo4ec"
+   }
+  ],
+  "tokens": [
+   "מעלה",
+   "אחת"
+  ]
+ },
+ {
+  "id": "i3apnk",
+  "hebrew": "שתי מעלות",
+  "translation": "two degrees",
+  "matches": [],
+  "tokens": [
+   "שתי",
+   "מעלות"
   ]
  },
  {
@@ -2244,6 +2987,36 @@
    "ההפך",
    "לשם",
    "התואר"
+  ]
+ },
+ {
+  "id": "1mkmax9",
+  "hebrew": "קפה הפוך",
+  "translation": "latte (lit. upside-down coffee)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "g3nex3"
+   }
+  ],
+  "tokens": [
+   "קפה",
+   "הפוך"
+  ]
+ },
+ {
+  "id": "g401qy",
+  "hebrew": "גן ילדים",
+  "translation": "kindergarten",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "113fxua"
+   }
+  ],
+  "tokens": [
+   "גן",
+   "ילדים"
   ]
  },
  {
@@ -2337,9 +3110,34 @@
   ]
  },
  {
-  "id": "1flwq0n",
-  "hebrew": "חדש(מודרני)/ישן(עתיק)",
-  "translation": "new(modern)/old(ancient)",
+  "id": "1b3mhjy",
+  "hebrew": "שם פועל",
+  "translation": "infinitive (verb name)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "zuotcm"
+   }
+  ],
+  "tokens": [
+   "שם",
+   "פועל"
+  ]
+ },
+ {
+  "id": "131rjge",
+  "hebrew": "שמות התואר",
+  "translation": "Adjectives",
+  "matches": [],
+  "tokens": [
+   "שמות",
+   "התואר"
+  ]
+ },
+ {
+  "id": "1vynfa8",
+  "hebrew": "חדש(מודרני)",
+  "translation": "new(modern)",
   "matches": [
    {
     "tokenIndex": 0,
@@ -2348,17 +3146,114 @@
    {
     "tokenIndex": 1,
     "wordId": "15g76qr"
-   },
-   {
-    "tokenIndex": 3,
-    "wordId": "yqrpeg"
    }
   ],
   "tokens": [
    "חדש",
-   "מודרני",
-   "/ישן",
+   "מודרני"
+  ]
+ },
+ {
+  "id": "jeig71",
+  "hebrew": "ישן(עתיק)",
+  "translation": "old(ancient)",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1mzja73"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "yqrpeg"
+   }
+  ],
+  "tokens": [
+   "ישן",
    "עתיק"
+  ]
+ },
+ {
+  "id": "15pp08h",
+  "hebrew": "שעה מוקדמת",
+  "translation": "early hour",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "c8v6vt"
+   }
+  ],
+  "tokens": [
+   "שעה",
+   "מוקדמת"
+  ]
+ },
+ {
+  "id": "1af8ks5",
+  "hebrew": "בן אדם",
+  "translation": "person/human being",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "4o33cr"
+   }
+  ],
+  "tokens": [
+   "בן",
+   "אדם"
+  ]
+ },
+ {
+  "id": "1xosk2b",
+  "hebrew": "בני אדם",
+  "translation": "people/human beings",
+  "matches": [],
+  "tokens": [
+   "בני",
+   "אדם"
+  ]
+ },
+ {
+  "id": "1afy5de",
+  "hebrew": "אל תדאג",
+  "translation": "Don't worry",
+  "matches": [],
+  "tokens": [
+   "אל",
+   "תדאג"
+  ]
+ },
+ {
+  "id": "cbugl1",
+  "hebrew": "תעודת בגרות",
+  "translation": "matriculation certificate",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "1x2xnqr"
+   }
+  ],
+  "tokens": [
+   "תעודת",
+   "בגרות"
+  ]
+ },
+ {
+  "id": "wbclpd",
+  "hebrew": "חצי תפוח",
+  "translation": "half an apple",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "6hzix9"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "14yhgc5"
+   }
+  ],
+  "tokens": [
+   "חצי",
+   "תפוח"
   ]
  },
  {
@@ -2388,14 +3283,57 @@
   ]
  },
  {
-  "id": "195it1x",
-  "hebrew": "מתקשר ל.../עם",
-  "translation": "calling to.../with",
+  "id": "pajs8c",
+  "hebrew": "בית משפט",
+  "translation": "court",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "14glcyd"
+   }
+  ],
+  "tokens": [
+   "בית",
+   "משפט"
+  ]
+ },
+ {
+  "id": "1ybgy3p",
+  "hebrew": "מתקשר ל...",
+  "translation": "calling to...",
   "matches": [],
   "tokens": [
    "מתקשר",
-   "ל",
-   "/עם"
+   "ל"
+  ]
+ },
+ {
+  "id": "1gcfqmd",
+  "hebrew": "לאט לאט",
+  "translation": "slowly slowly",
+  "matches": [],
+  "tokens": [
+   "לאט",
+   "לאט"
+  ]
+ },
+ {
+  "id": "vqp7ww",
+  "hebrew": "שלום תלמידים.",
+  "translation": "Hello students.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "5lmzbn"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "gin58m"
+   }
+  ],
+  "tokens": [
+   "שלום",
+   "תלמידים"
   ]
  }
 ]
