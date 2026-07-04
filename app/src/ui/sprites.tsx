@@ -110,6 +110,204 @@ export function GrassTuft() {
   )
 }
 
+// ---------- terrain tiles ----------
+
+export function RiverTile({ variant = 0 }: { variant?: number }) {
+  return (
+    <g>
+      <path className="tile-top" d={diamond(TILE_W, TILE_H, 0, H2)} fill={variant % 2 ? '#2b5d86' : '#2d628e'} />
+      <g stroke="#7fb2d9" strokeWidth="2" fill="none" opacity="0.7" strokeLinecap="round">
+        <path d={`M -30 ${H2 - 6} q 8 -5 16 0 q 8 5 16 0`} />
+        <path d={`M -14 ${H2 + 10} q 8 -5 16 0 q 8 5 16 0`} />
+      </g>
+      <path d={diamond(TILE_W, TILE_H, 0, H2)} fill="none" stroke="#1d3f5c" strokeWidth="1" opacity="0.7" />
+    </g>
+  )
+}
+
+export function MountainTile() {
+  return (
+    <g>
+      <path className="tile-top" d={diamond(TILE_W, TILE_H, 0, H2)} fill="#57544c" />
+      <polygon points={`-20,${H2 + 12} 0,${H2 - 34} 18,${H2 + 12}`} fill="#7b776c" stroke="#4c463c" strokeWidth="1" />
+      <polygon points={`0,${H2 - 34} 18,${H2 + 12} 6,${H2 + 12}`} fill="#5f5b51" />
+      <polygon points={`-6,${H2 - 20} 0,${H2 - 34} 7,${H2 - 20} 2,${H2 - 15}`} fill="#e8e6df" />
+      <polygon points={`14,${H2 + 4} 28,${H2 - 14} 40,${H2 + 8}`} fill="#6b675d" stroke="#4c463c" strokeWidth="1" />
+      <polygon points={`-38,${H2 + 8} -26,${H2 - 8} -14,${H2 + 10}`} fill="#716d62" stroke="#4c463c" strokeWidth="1" />
+      <path d={diamond(TILE_W, TILE_H, 0, H2)} fill="none" stroke="#38352e" strokeWidth="1" opacity="0.6" />
+    </g>
+  )
+}
+
+/** Fog of war: unexplored darkness. */
+export function FogTile() {
+  return <path d={diamond(TILE_W + 2, TILE_H + 2, 0, H2)} fill="#0c1320" opacity="0.96" />
+}
+
+// ---------- infrastructure ----------
+
+/** Road limbs reach the midpoints of edges shared with connected neighbors. */
+export function RoadSprite({ n, e, s, w }: { n: boolean; e: boolean; s: boolean; w: boolean }) {
+  const cx = 0
+  const cy = H2
+  // edge midpoints toward each neighbor (iso projection)
+  const pts = {
+    e: [W2 / 2, cy + H2 / 2], // (x+1, y)
+    w: [-W2 / 2, cy - H2 / 2], // (x-1, y)
+    s: [-W2 / 2, cy + H2 / 2], // (x, y+1)
+    n: [W2 / 2, cy - H2 / 2], // (x, y-1)
+  }
+  const limbs: Array<[number, number]> = []
+  if (n) limbs.push(pts.n as [number, number])
+  if (e) limbs.push(pts.e as [number, number])
+  if (s) limbs.push(pts.s as [number, number])
+  if (w) limbs.push(pts.w as [number, number])
+  return (
+    <g>
+      {limbs.map(([x, y], i) => (
+        <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="#b6a06b" strokeWidth="16" strokeLinecap="round" />
+      ))}
+      <circle cx={cx} cy={cy} r="9" fill="#b6a06b" />
+      {limbs.map(([x, y], i) => (
+        <line key={`d${i}`} x1={cx} y1={cy} x2={x} y2={y} stroke="#8d7a4e" strokeWidth="2" strokeDasharray="3 6" opacity="0.7" />
+      ))}
+    </g>
+  )
+}
+
+export function BridgeSprite({ axis }: { axis: 'ew' | 'ns' }) {
+  // plank strip along the road axis; ew connects (x-1,y)-(x+1,y)
+  const dir = axis === 'ew' ? [W2 / 2, H2 / 2] : [W2 / 2, -H2 / 2]
+  const [dx, dy] = dir
+  const nx = axis === 'ew' ? [-14 * (H2 / W2), 14 * 0.9] : [14 * (H2 / W2), 14 * 0.9]
+  const cy = H2
+  const corners = [
+    [-dx + nx[0] / 2, cy - dy + nx[1] / 2],
+    [dx + nx[0] / 2, cy + dy + nx[1] / 2],
+    [dx - nx[0] / 2, cy + dy - nx[1] / 2],
+    [-dx - nx[0] / 2, cy - dy - nx[1] / 2],
+  ]
+  const planks = Array.from({ length: 7 }, (_, i) => {
+    const t = -0.9 + (i / 6) * 1.8
+    return [
+      [dx * t + nx[0] / 2, cy + dy * t + nx[1] / 2],
+      [dx * t - nx[0] / 2, cy + dy * t - nx[1] / 2],
+    ]
+  })
+  return (
+    <g>
+      <polygon points={corners.map((p) => p.join(',')).join(' ')} fill="#9c7a44" stroke="#5f4622" strokeWidth="2" />
+      {planks.map(([[x1, y1], [x2, y2]], i) => (
+        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#7a5c30" strokeWidth="1.5" />
+      ))}
+      <line x1={-dx} y1={cy - dy - 8} x2={dx} y2={cy + dy - 8} stroke="#5f4622" strokeWidth="2.5" />
+    </g>
+  )
+}
+
+export function FieldSprite() {
+  return (
+    <g>
+      <path d={diamond(TILE_W * 0.82, TILE_H * 0.82, 0, H2)} fill="#6b4f2a" stroke="#4a3115" strokeWidth="1" />
+      {[-0.5, -0.17, 0.17, 0.5].map((t, i) => (
+        <line
+          key={i}
+          x1={-W2 * 0.7 + W2 * 0.75 * (t + 0.5)} y1={H2 - H2 * 0.62 * (t + 0.5) + H2 * 0.31}
+          x2={W2 * 0.7 * (t + 0.5) - W2 * 0.05} y2={H2 + H2 * 0.66 * (t + 0.5) - H2 * 0.31}
+          stroke="#57401f" strokeWidth="3" opacity="0.9"
+        />
+      ))}
+      <g stroke="#d9b13f" strokeWidth="2" strokeLinecap="round">
+        <path d={`M -20 ${H2 - 2} v -12 M -20 ${H2 - 14} l -4 -5 M -20 ${H2 - 14} l 4 -5`} fill="none" />
+        <path d={`M 4 ${H2 + 8} v -12 M 4 ${H2 - 4} l -4 -5 M 4 ${H2 - 4} l 4 -5`} fill="none" />
+        <path d={`M 24 ${H2 - 4} v -12 M 24 ${H2 - 16} l -4 -5 M 24 ${H2 - 16} l 4 -5`} fill="none" />
+      </g>
+    </g>
+  )
+}
+
+export function WoodcutterSprite() {
+  return (
+    <g>
+      <ellipse cx="0" cy={H2 + 6} rx="34" ry="12" fill="#000" opacity="0.18" />
+      <IsoBox fw={0.5} h={22} top="#8a6a3b" left="#7a5c30" right="#5f4622" stroke="#3f2e14" />
+      {/* roof */}
+      <g stroke="#3f2e14" strokeWidth="1" strokeLinejoin="round">
+        <polygon points={`${-W2 * 0.55},${H2 - 22} 0,${H2 * 1.28 - 22} 0,${H2 - 52}`} fill="#a24d3a" />
+        <polygon points={`${W2 * 0.55},${H2 - 22} 0,${H2 * 1.28 - 22} 0,${H2 - 52}`} fill="#7e3a2c" />
+      </g>
+      {/* log pile */}
+      <g transform={`translate(28 ${H2 + 6})`}>
+        <circle cx="0" cy="0" r="5" fill="#8a6a3b" stroke="#5f4622" />
+        <circle cx="10" cy="0" r="5" fill="#967444" stroke="#5f4622" />
+        <circle cx="5" cy="-7" r="5" fill="#a5824e" stroke="#5f4622" />
+      </g>
+      {/* axe in stump */}
+      <g transform={`translate(-30 ${H2 + 4})`}>
+        <rect x="-4" y="-6" width="8" height="8" fill="#6b4f2a" stroke="#4a3115" />
+        <line x1="0" y1="-6" x2="8" y2="-16" stroke="#5f4622" strokeWidth="2" />
+        <path d="M 6 -18 L 12 -14 L 8 -10 Z" fill="#9aa1ab" />
+      </g>
+    </g>
+  )
+}
+
+export function QuarrySprite() {
+  return (
+    <g>
+      <path d={diamond(TILE_W * 0.8, TILE_H * 0.8, 0, H2)} fill="#4f4b43" stroke="#38352e" strokeWidth="1.5" />
+      <path d={diamond(TILE_W * 0.5, TILE_H * 0.5, 0, H2 + 4)} fill="#3d3a34" />
+      <polygon points={`-14,${H2 - 4} -6,${H2 - 12} 4,${H2 - 4} -4,${H2 + 2}`} fill="#8b8f96" stroke="#5f594d" />
+      <polygon points={`10,${H2 + 6} 18,${H2} 26,${H2 + 6} 18,${H2 + 12}`} fill="#7c8087" stroke="#5f594d" />
+      {/* crane */}
+      <line x1="-26" y1={H2 + 8} x2="-26" y2={H2 - 26} stroke="#5f4622" strokeWidth="3" />
+      <line x1="-26" y1={H2 - 26} x2="0" y2={H2 - 16} stroke="#5f4622" strokeWidth="2.5" />
+      <line x1="0" y1={H2 - 16} x2="0" y2={H2 - 4} stroke="#8d7a4e" strokeWidth="1.5" />
+    </g>
+  )
+}
+
+// ---------- enemies & treasure ----------
+
+export function CampSprite() {
+  return (
+    <g>
+      <ellipse cx="0" cy={H2 + 6} rx="38" ry="13" fill="#000" opacity="0.22" />
+      {/* tents */}
+      <g stroke="#3a1e1a" strokeWidth="1" strokeLinejoin="round">
+        <polygon points={`-30,${H2 + 4} -16,${H2 - 22} -2,${H2 + 4}`} fill="#7e3a34" />
+        <polygon points={`-16,${H2 - 22} -2,${H2 + 4} -9,${H2 + 4}`} fill="#5f2b26" />
+        <polygon points={`8,${H2 + 8} 20,${H2 - 14} 32,${H2 + 8}`} fill="#75403a" />
+        <polygon points={`20,${H2 - 14} 32,${H2 + 8} 26,${H2 + 8}`} fill="#552e29" />
+      </g>
+      {/* campfire */}
+      <g transform={`translate(-2 ${H2 + 10})`}>
+        <line x1="-6" y1="2" x2="6" y2="-2" stroke="#5f4622" strokeWidth="2.5" />
+        <line x1="-6" y1="-2" x2="6" y2="2" stroke="#5f4622" strokeWidth="2.5" />
+        <polygon points="-3,-2 0,-12 3,-2" fill="#e0762e" className="flicker" />
+        <polygon points="-1.5,-2 0,-7 1.5,-2" fill="#f2b23c" className="flicker" />
+      </g>
+      {/* war banner */}
+      <line x1="14" y1={H2 - 12} x2="14" y2={H2 - 38} stroke="#3a1e1a" strokeWidth="2" />
+      <path d={`M 15 ${H2 - 38} L 32 ${H2 - 33} L 15 ${H2 - 28} Z`} fill="#2b2b31" stroke="#111" strokeWidth="0.8" />
+      <circle cx="21" cy={H2 - 33} r="2.2" fill="#e8e6df" />
+    </g>
+  )
+}
+
+export function ChestSprite() {
+  return (
+    <g transform={`translate(0 ${H2})`} className="chest">
+      <ellipse cx="0" cy="7" rx="16" ry="6" fill="#000" opacity="0.25" />
+      <ellipse cx="0" cy="0" rx="20" ry="10" fill="#f2c94c" opacity="0.18" className="chest-glow" />
+      <rect x="-12" y="-10" width="24" height="14" rx="2" fill="#8a5a28" stroke="#4a3115" strokeWidth="1.5" />
+      <path d="M -12 -10 Q 0 -20 12 -10 Z" fill="#a06c33" stroke="#4a3115" strokeWidth="1.5" />
+      <rect x="-2.5" y="-11" width="5" height="8" rx="1" fill="#d9a834" stroke="#8a6a1c" />
+      <line x1="-12" y1="-4" x2="12" y2="-4" stroke="#4a3115" strokeWidth="1" />
+    </g>
+  )
+}
+
 // ---------- building helpers ----------
 
 /**
@@ -348,6 +546,40 @@ export function FlameIcon({ size = 16 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 20 20" className="icon">
       <path d="M10 1 C 11 6 15 7 15 12 A 5 5 0 0 1 5 12 C 5 9 7 8 7 5 C 8.5 6.5 9.5 4 10 1 Z" fill="#e0762e" />
       <path d="M10 8 C 10.5 10.5 12.5 11 12.5 13.5 A 2.6 2.6 0 0 1 7.4 13.5 C 7.4 11.5 9.5 11 10 8 Z" fill="#f2b23c" />
+    </svg>
+  )
+}
+
+export function WoodIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" className="icon">
+      <rect x="2" y="8" width="16" height="6" rx="3" fill="#8a6a3b" stroke="#5f4622" strokeWidth="1.2" transform="rotate(-8 10 11)" />
+      <ellipse cx="17" cy="9.6" rx="2.4" ry="3" fill="#c9a86a" stroke="#5f4622" strokeWidth="1" transform="rotate(-8 17 9.6)" />
+      <ellipse cx="17" cy="9.6" rx="1" ry="1.4" fill="#8a6a3b" transform="rotate(-8 17 9.6)" />
+    </svg>
+  )
+}
+
+export function StoneIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" className="icon">
+      <polygon points="4,16 6,7 13,4 17,9 15,16" fill="#8b8f96" stroke="#5f594d" strokeWidth="1.2" />
+      <polygon points="13,4 17,9 15,16 10,16" fill="#6f737a" />
+      <polygon points="6,7 10,5 11,9 7,10" fill="#a3a7ad" />
+    </svg>
+  )
+}
+
+export function FoodIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" className="icon">
+      <path d="M10 18 V6" stroke="#b8862f" strokeWidth="1.8" />
+      {[0, 1, 2].map((i) => (
+        <g key={i}>
+          <path d={`M10 ${7 + i * 3} L 6 ${4 + i * 3}`} stroke="#d9b13f" strokeWidth="2.2" strokeLinecap="round" />
+          <path d={`M10 ${7 + i * 3} L 14 ${4 + i * 3}`} stroke="#d9b13f" strokeWidth="2.2" strokeLinecap="round" />
+        </g>
+      ))}
     </svg>
   )
 }

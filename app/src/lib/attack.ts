@@ -20,6 +20,8 @@ export interface SessionAttackOutcome {
   result: AttackResult
   coinsDelta: number
   ruin: boolean
+  /** heavy defeat: attackers breach even closed walls */
+  breach: boolean
 }
 
 export function resolveSessionAttack(args: {
@@ -30,12 +32,15 @@ export function resolveSessionAttack(args: {
 }): SessionAttackOutcome {
   const { target, correct, coins, rng } = args
   if (correct >= target) {
-    return { result: 'win', coinsDelta: 20 + Math.floor(rng() * 31), ruin: false }
+    return { result: 'win', coinsDelta: 20 + Math.floor(rng() * 31), ruin: false, breach: false }
   }
   if (correct >= Math.ceil(target / 2)) {
-    return { result: 'coin-loss', coinsDelta: -Math.min(50, Math.floor(coins * 0.1)), ruin: false }
+    return { result: 'coin-loss', coinsDelta: -Math.min(50, Math.floor(coins * 0.1)), ruin: false, breach: false }
   }
-  return { result: 'ruin', coinsDelta: 0, ruin: true }
+  if (correct >= Math.ceil(target / 3)) {
+    return { result: 'ruin', coinsDelta: 0, ruin: true, breach: false }
+  }
+  return { result: 'ruin', coinsDelta: 0, ruin: true, breach: true }
 }
 
 export interface RaidOutcome {

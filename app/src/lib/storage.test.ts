@@ -1,10 +1,10 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { serializeState, deserializeState } from './storage.js'
-import { initialGameState } from './game.js'
+import { initialGameState, newPlayerState } from './game.js'
 
 test('serialize/deserialize round-trip', () => {
-  const s = initialGameState()
+  const s = newPlayerState()
   s.wallet.coins = 42
   const restored = deserializeState(serializeState(s))
   assert.deepEqual(restored, s)

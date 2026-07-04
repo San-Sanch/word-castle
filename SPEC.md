@@ -173,3 +173,38 @@ Visuals: simple and clean, emoji/flat-SVG sprites for MVP. Dark theme, consisten
   seeds 100,000 coins + 1,000 bricks for trying building/buying. New player profile starts fresh.
 - **Parser**: gender markers now handle the CSV's sloppy variants: (ז), (זי), (ז'(, and the
   combined (ז'/נ') for both-gender nouns.
+
+## 14. The living world (2026-07-04, third iteration)
+
+Decisions by Sanch: world ticks on every answered card; demolition refunds nothing;
+food = guardian upkeep and future guardian slots; heavy battle defeats can breach walls.
+
+- **Infinite map**: deterministic procedural terrain (seeded value noise): grassland,
+  forests, winding rivers, mountains. The starting area (homeland) is always grass.
+  Drag to pan; tiles render only inside the viewport.
+- **Fog of war**: you see radius 3 around each building (towers 5, keep 4, roads 2).
+  Everything else is darkness, including approaching enemies.
+- **World tick**: one per answered exercise card. Producers yield on tick cadence:
+  woodcutter +1 wood/15 ticks, quarry +1 stone/18, crop field +1 food/20. Learning is
+  literally the world's clock: nothing moves unless Sanch practices Hebrew.
+- **Resources**: coins (practice), bricks (graduated words), wood, stone, food.
+  Costs are mixes: walls/gates/towers/keep need stone+bricks, bridges need wood.
+  Reaching forests and mountains requires roads -> exploration has a purpose.
+- **Connectivity**: every new construction must touch the existing network (4-adjacency).
+  Woodcutters need an adjacent forest, quarries adjacent mountains, bridges go on rivers,
+  fields on grass. Mountains are unbuildable.
+- **Wall logic (enclosure)**: flood-fill check; a building is protected only when a closed
+  ring of built walls/gates/towers encloses it AND the ring contains >= 1 gate.
+  Raids ruin only unprotected buildings. Battle routs (correct < target/3) breach walls.
+- **Enemy camps**: spawn every ~140 ticks (max 3), march 1 step per 5 ticks toward the
+  nearest building; blocked by mountains and rivers except at bridges. A camp adjacent to
+  your buildings forces a battle early in the next session (severity = camp strength).
+  Win destroys the camp and loots; defeat burns something and the camp stays.
+- **Treasure**: chests hidden in the fog; ~40% hold an alef-bet letter collectible
+  (collection tracked in Stats), the rest coins scaled by distance. Tap to collect.
+- **Demolish mode**: tear anything down, no refund.
+- **Guardian upkeep**: eats 2 food/day (on the daily check); starving guardians lose a
+  level per day. Crop fields keep them fed.
+- **Migration**: old saves get zeroed new resources, tick 0, no camps; empty castles
+  receive the starting plot. `unlockedCategories` field added (null = all) as the hook
+  for the upcoming thematic-cities feature.

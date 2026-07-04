@@ -18,7 +18,8 @@ import {
   type SoundExercise,
 } from '../lib/exercises'
 import { answerReward } from '../lib/economy'
-import { castleDefense, lightningTarget, resolveSessionAttack, rollSeverity } from '../lib/attack'
+import { castleDefense, lightningTarget, resolveSessionAttack } from '../lib/attack'
+import { siegingCamp } from '../lib/world'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 
@@ -114,10 +115,12 @@ export default function SessionScreen(props: {
     return [...due, ...fresh]
   })
 
-  const [attackAt] = useState<number>(() => {
-    if (training || items.length < 6 || !state.settings.exercises.lightning) return -1
-    return rng() * 100 < state.settings.attackChancePct ? Math.floor(items.length / 2) : -1
+  // a camp at the doorstep forces a battle early in the session
+  const [attacker] = useState(() => {
+    if (training || items.length < 3 || !state.settings.exercises.lightning) return null
+    return siegingCamp(state.camps, state.castle)
   })
+  const attackAt = attacker ? Math.min(2, items.length - 1) : -1
 
   const [idx, setIdx] = useState(0)
   const [phase, setPhase] = useState<Phase>(items.length === 0 ? 'empty' : 'cards')
@@ -128,7 +131,7 @@ export default function SessionScreen(props: {
   const trainingReported = useRef(false)
 
   // --- attack state ---
-  const [severity] = useState(() => rollSeverity(rng))
+  const severity = attacker?.strength ?? 1
   const defense = castleDefense(state.castle) + (state.guardian?.level ?? 0)
   const target = lightningTarget(severity, defense)
   const [lightningLeft, setLightningLeft] = useState(LIGHTNING_SECONDS)
@@ -275,6 +278,8 @@ export default function SessionScreen(props: {
         result: outcome.result,
         coinsDelta: outcome.coinsDelta,
         ruin: outcome.ruin,
+        breach: outcome.breach,
+        campId: attacker?.id,
         today,
       })
       setPhase('attack-result')
@@ -411,11 +416,11 @@ export default function SessionScreen(props: {
   if (phase === 'attack-intro') {
     return (
       <div className="panel card">
-        <span className="badge attack">⚔️ ATTACK</span>
-        <p className="prompt small">Raiders at the gate!</p>
+        <span className="badge attack">⚔️ BATTLE</span>
+        <p className="prompt small">The camp at your walls attacks!</p>
         <p>
-          Severity {severity} vs your defense {defense}.<br />
-          Answer <b>{target}</b> questions correctly in {LIGHTNING_SECONDS} seconds to drive them off!
+          Camp strength {severity} vs your defense {defense}.<br />
+          Answer <b>{target}</b> questions correctly in {LIGHTNING_SECONDS} seconds to destroy the camp!
         </p>
         <button className="primary" onClick={() => { touch(); setPhase('lightning') }}>
           ⚡ Defend!
@@ -455,19 +460,25 @@ export default function SessionScreen(props: {
         {attackOutcome.result === 'win' && (
           <>
             <p className="prompt small">🏆 Victory!</p>
-            <p>The raiders flee. You loot 🪙{attackOutcome.coinsDelta}.</p>
+            <p>The camp is destroyed and looted: +🪙{attackOutcome.coinsDelta}.</p>
           </>
         )}
         {attackOutcome.result === 'coin-loss' && (
           <>
             <p className="prompt small">😖 They broke through…</p>
-            <p>The raiders grabbed 🪙{-attackOutcome.coinsDelta} before your guardian pushed them out.</p>
+            <p>The raiders grabbed 🪙{-attackOutcome.coinsDelta}. The camp remains at your walls.</p>
           </>
         )}
-        {attackOutcome.result === 'ruin' && (
+        {attackOutcome.result === 'ruin' && !attackOutcome.breach && (
           <>
-            <p className="prompt small">💥 Disaster!</p>
-            <p>Your latest upgrade is in ruins. Rebuild it from the castle screen at half price.</p>
+            <p className="prompt small">💥 Defeat!</p>
+            <p>They burned something outside your walls. The camp remains: train and fight again.</p>
+          </>
+        )}
+        {attackOutcome.result === 'ruin' && attackOutcome.breach && (
+          <>
+            <p className="prompt small">🔥 Breach!</p>
+            <p>A rout: they broke through your walls and ruined a building inside. The camp remains.</p>
           </>
         )}
         <button className="primary" onClick={() => { touch(); idx >= items.length ? enterBonusOrSummary('cards') : setPhase('cards') }}>

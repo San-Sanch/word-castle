@@ -84,6 +84,10 @@ export default function GuardianScreen(props: {
       <p className="muted">
         A training set is ~20 extra cards from {g.category}. It counts toward your daily time and coins too.
       </p>
+      <p className="muted">
+        🍞 {g.name} eats 2 food per day. Food stock: {state.wallet.food}.
+        {state.wallet.food < 2 && ' Hungry guardians lose a level each day — build crop fields!'}
+      </p>
       <button className="primary" onClick={onTrain}>
         🏋️ Train ({g.category})
       </button>

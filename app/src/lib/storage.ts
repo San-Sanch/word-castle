@@ -1,5 +1,5 @@
 import type { GameState } from './game.js'
-import { initialGameState } from './game.js'
+import { initialGameState, newPlayerState } from './game.js'
 
 const DB_NAME = 'word-castle'
 const STORE = 'state'
@@ -21,15 +21,23 @@ export function deserializeState(json: string): GameState {
     ...defaults,
     ...raw,
     version: 1,
+    wallet: { ...defaults.wallet, ...raw.wallet },
     settings: {
       ...defaults.settings,
       ...raw.settings,
       exercises: { ...defaults.settings.exercises, ...raw.settings?.exercises },
     },
+    // an empty realm has no vision and no build anchor; grant the starting plot
+    castle: raw.castle && raw.castle.length > 0 ? raw.castle : newPlayerState().castle,
     graduatedIds: raw.graduatedIds ?? [],
     guardian: raw.guardian ?? null,
     attacks: raw.attacks ?? [],
     lastRaidCheck: raw.lastRaidCheck ?? null,
+    tick: raw.tick ?? 0,
+    camps: raw.camps ?? [],
+    chestsCollected: raw.chestsCollected ?? [],
+    letters: raw.letters ?? [],
+    unlockedCategories: raw.unlockedCategories ?? null,
   } as GameState
 }
 

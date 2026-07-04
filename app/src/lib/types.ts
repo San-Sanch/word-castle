@@ -37,9 +37,25 @@ export interface ReviewState {
 export interface Wallet {
   coins: number
   bricks: number
+  wood: number
+  stone: number
+  food: number
 }
 
-export type CastleItemType = 'land' | 'wall' | 'gate' | 'tower' | 'banner' | 'keep'
+export type Terrain = 'grass' | 'forest' | 'mountain' | 'river'
+
+export type CastleItemType =
+  | 'land'
+  | 'road'
+  | 'bridge'
+  | 'field'
+  | 'woodcutter'
+  | 'quarry'
+  | 'wall'
+  | 'gate'
+  | 'tower'
+  | 'banner'
+  | 'keep'
 export type CastleItemStatus = 'built' | 'ruin'
 
 export interface CastleItem {
@@ -49,6 +65,16 @@ export interface CastleItem {
   y: number
   status: CastleItemStatus
   builtAt: string // ISO datetime, used for latest-upgrade targeting
+  builtTick?: number // world tick when built, drives resource production cadence
+}
+
+export interface Camp {
+  id: string
+  x: number
+  y: number
+  strength: number // battle severity 1..10
+  spawnedTick: number
+  lastMoveTick: number
 }
 
 export interface Guardian {

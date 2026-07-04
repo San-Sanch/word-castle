@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import type { Sentence, Word } from './lib/types'
-import { gameReducer, initialGameState, todayLog, type GameState } from './lib/game'
+import { gameReducer, initialGameState, newPlayerState, todayLog, type GameState } from './lib/game'
 import {
   activeProfileId,
   createProfile,
@@ -16,7 +16,7 @@ import { initSpeech } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import CastleScreen from './ui/CastleScreen'
-import { CoinIcon, BrickIcon, FlameIcon } from './ui/sprites'
+import { CoinIcon, BrickIcon, FlameIcon, WoodIcon, StoneIcon, FoodIcon } from './ui/sprites'
 import SessionScreen from './ui/SessionScreen'
 import GuardianScreen from './ui/GuardianScreen'
 import StatsScreen from './ui/StatsScreen'
@@ -27,7 +27,7 @@ export const SENTENCES = sentencesJson as Sentence[]
 
 export type Screen = 'castle' | 'learn' | 'guardian' | 'stats' | 'settings'
 
-const TEST_PROFILE_WALLET = { coins: 100000, bricks: 1000 }
+const TEST_PROFILE_WALLET = { coins: 100000, bricks: 1000, wood: 500, stone: 500, food: 200 }
 
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, initialGameState)
@@ -49,13 +49,13 @@ export default function App() {
     setLoaded(false)
     loadState(profile)
       .then((saved) => {
-        dispatch({ type: 'import', state: saved ?? initialGameState() })
+        dispatch({ type: 'import', state: saved ?? newPlayerState() })
         dispatch({ type: 'raidCheck', today: todayISO() })
         setLoaded(true)
       })
       .catch((e) => {
         console.error('load failed', e)
-        dispatch({ type: 'import', state: initialGameState() })
+        dispatch({ type: 'import', state: newPlayerState() })
         setLoaded(true)
       })
   }, [profile])
@@ -81,7 +81,7 @@ export default function App() {
   const handleCreateProfile = async (name: string, test: boolean) => {
     const meta = createProfile(name, test)
     if (test) {
-      await saveState(meta.id, { ...initialGameState(), wallet: { ...TEST_PROFILE_WALLET } })
+      await saveState(meta.id, { ...newPlayerState(), wallet: { ...TEST_PROFILE_WALLET } })
     }
     setProfiles(listProfiles())
     switchProfile(meta.id)
@@ -137,6 +137,9 @@ export default function App() {
         </select>
         <span className="stat"><CoinIcon size={18} /> {state.wallet.coins}</span>
         <span className="stat"><BrickIcon size={18} /> {state.wallet.bricks}</span>
+        <span className="stat"><WoodIcon size={18} /> {state.wallet.wood}</span>
+        <span className="stat"><StoneIcon size={18} /> {state.wallet.stone}</span>
+        <span className="stat"><FoodIcon size={18} /> {state.wallet.food}</span>
         <span className="stat"><FlameIcon size={18} /> {streak}</span>
         <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
           <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />

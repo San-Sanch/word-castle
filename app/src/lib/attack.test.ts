@@ -27,8 +27,12 @@ test('resolveSessionAttack outcomes', () => {
   assert.equal(narrow.coinsDelta, -40) // 10% of 400
   const capped = resolveSessionAttack({ target: 10, correct: 5, coins: 9999, rng })
   assert.equal(capped.coinsDelta, -50) // capped
-  const heavy = resolveSessionAttack({ target: 10, correct: 4, coins: 400, rng })
-  assert.equal(heavy.result, 'ruin')
+  const bad = resolveSessionAttack({ target: 10, correct: 4, coins: 400, rng })
+  assert.equal(bad.result, 'ruin')
+  assert.equal(bad.breach, false)
+  const rout = resolveSessionAttack({ target: 10, correct: 2, coins: 400, rng })
+  assert.equal(rout.result, 'ruin')
+  assert.equal(rout.breach, true) // heavy defeats breach closed walls
 })
 
 test('resolveRaid: coin loss shrinks with guardian level, ruin from 2+ missed days', () => {

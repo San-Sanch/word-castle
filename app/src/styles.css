@@ -104,6 +104,20 @@ button.ghost {
   100% { transform: translate(6px, -14px); opacity: 0; }
 }
 .thumb { flex-shrink: 0; }
+.board.world { cursor: grab; touch-action: none; }
+.board.world:active { cursor: grabbing; }
+.board-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.board-toolbar h2 { margin: 0; }
+.danger-active { outline: 2px solid var(--red); color: var(--red); }
+.shop-row .blurb { font-size: 11px; line-height: 1.3; }
+.chest-glow { animation: placePulse 1.6s ease-in-out infinite; }
+.letters-grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.letter {
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  background: var(--panel-2); border-radius: 8px; font-size: 20px; color: #4a5468;
+  border: 1px solid #2a3547;
+}
+.letter.found { color: var(--gold); border-color: var(--gold); background: #2a2410; }
 .icon { vertical-align: -3px; }
 .stat .icon { vertical-align: -3.5px; }
 .defense-line { margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 5px; }

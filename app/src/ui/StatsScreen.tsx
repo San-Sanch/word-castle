@@ -2,6 +2,7 @@ import type { GameState } from '../lib/game'
 import type { Word } from '../lib/types'
 import { computeStreak } from '../lib/time'
 import { MAX_BOX } from '../lib/srs'
+import { HEBREW_LETTERS } from '../lib/world'
 
 export default function StatsScreen(props: { state: GameState; words: Word[]; today: string }) {
   const { state, words, today } = props
@@ -56,6 +57,21 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
           ))}
         </div>
         <p className="muted">Boxes 0–{MAX_BOX}: review intervals of 0, 1, 2, 4, 8, 16, 32, 64 days.</p>
+      </div>
+
+      <div className="panel">
+        <h2>🗺️ Alef-bet collection</h2>
+        <p className="muted">Letters found in treasure chests across the world. Explore the fog to find them all.</p>
+        <div className="letters-grid">
+          {HEBREW_LETTERS.map((l) => (
+            <span key={l} className={`letter he ${state.letters.includes(l) ? 'found' : ''}`}>
+              {state.letters.includes(l) ? l : '?'}
+            </span>
+          ))}
+        </div>
+        <p className="muted">
+          {state.letters.length}/{HEBREW_LETTERS.length} collected · world day {Math.floor(state.tick / 100)} · tick {state.tick}
+        </p>
       </div>
 
       <div className="panel">
