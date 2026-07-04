@@ -68,6 +68,22 @@ test('buildSessionPlan: due first (oldest), then new words up to daily limit', (
   assert.deepEqual(plan.newWordIds, ['d', 'e'])
 })
 
+test('buildSessionPlan: topic filter narrows due reviews and new words', () => {
+  const words = [W('a', 'Verbs'), W('b', 'Family'), W('c', 'Verbs'), W('d', 'Family')]
+  const states: ReviewState[] = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('b', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+  ]
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 25, newWordsPerDay: 5 },
+    introducedToday: 0,
+    topic: 'Verbs',
+  })
+  assert.deepEqual(plan.dueStates.map((s) => s.wordId), ['a'])
+  assert.deepEqual(plan.newWordIds, ['c'])
+})
+
 test('buildSessionPlan: respects sessionSize and introducedToday', () => {
   const words = [W('a'), W('b'), W('c')]
   const states: ReviewState[] = [

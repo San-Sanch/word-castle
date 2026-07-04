@@ -2,7 +2,7 @@ import type { GameState } from '../lib/game'
 import type { Word } from '../lib/types'
 import { computeStreak } from '../lib/time'
 import { MAX_BOX } from '../lib/srs'
-import { HEBREW_LETTERS } from '../lib/world'
+import { topicInfos } from './LearnScreen'
 
 export default function StatsScreen(props: { state: GameState; words: Word[]; today: string }) {
   const { state, words, today } = props
@@ -17,7 +17,8 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
   const rcCounts = boxCounts(rc)
   const maxCount = Math.max(1, ...recCounts, ...rcCounts)
   const logs = [...state.dayLogs].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 14)
-  const attacks = [...state.attacks].slice(-10).reverse()
+  const topics = topicInfos(words, state, today)
+  const totalMinutes = state.dayLogs.reduce((n, l) => n + l.activeSeconds, 0) / 60
 
   return (
     <>
@@ -25,23 +26,56 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
         <h2>📊 Progress</h2>
         <div className="row-gap" style={{ gap: 26 }}>
           <div>
-            <div className="summary-num">{rec.length}</div>
-            <div className="muted">words started (of {words.length})</div>
+            <div className="summary-num">{state.graduatedIds.length}</div>
+            <div className="muted">words mastered 🎓</div>
           </div>
           <div>
-            <div className="summary-num">{state.graduatedIds.length}</div>
-            <div className="muted">graduated 🧱</div>
+            <div className="summary-num">{rec.length}</div>
+            <div className="muted">started (of {words.length})</div>
           </div>
           <div>
             <div className="summary-num">{computeStreak(state.dayLogs, today)}</div>
             <div className="muted">day streak 🔥</div>
           </div>
+          <div>
+            <div className="summary-num">{Math.round(totalMinutes / 60 * 10) / 10}h</div>
+            <div className="muted">total practice</div>
+          </div>
         </div>
+        <p className="muted" style={{ marginTop: 10 }}>
+          A word counts as <b>mastered</b> when you recognize it AND recall it from the translation
+          across several spaced reviews (recall level 4+).
+        </p>
+      </div>
+
+      <div className="panel">
+        <h2>Topics</h2>
+        <table>
+          <thead>
+            <tr><th>Topic</th><th>Mastered</th><th>Started</th><th>Total</th><th></th></tr>
+          </thead>
+          <tbody>
+            {topics.map((t) => (
+              <tr key={t.name}>
+                <td>{t.name}</td>
+                <td>{t.mastered}</td>
+                <td>{t.started}</td>
+                <td>{t.total}</td>
+                <td style={{ width: '30%' }}>
+                  <div className="topic-bar">
+                    <div className="started" style={{ width: `${t.total ? (t.started / t.total) * 100 : 0}%` }} />
+                    <div className="mastered" style={{ width: `${t.total ? (t.mastered / t.total) * 100 : 0}%` }} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="panel">
         <h2>Words by memory level</h2>
-        <p className="muted">Blue: recognition (He→translation). Gold: recall (translation→He).</p>
+        <p className="muted">Blue: recognition (He→En). Gold: recall (En→He). Boxes are review intervals: 0, 1, 2, 4, 8, 16, 32, 64 days.</p>
         <div className="boxbar">
           {recCounts.map((c, i) => (
             <div key={`r${i}`} className="b" style={{ height: `${(c / maxCount) * 100}%` }}>
@@ -56,29 +90,13 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
             </div>
           ))}
         </div>
-        <p className="muted">Boxes 0–{MAX_BOX}: review intervals of 0, 1, 2, 4, 8, 16, 32, 64 days.</p>
-      </div>
-
-      <div className="panel">
-        <h2>🗺️ Alef-bet collection</h2>
-        <p className="muted">Letters found in treasure chests across the world. Explore the fog to find them all.</p>
-        <div className="letters-grid">
-          {HEBREW_LETTERS.map((l) => (
-            <span key={l} className={`letter he ${state.letters.includes(l) ? 'found' : ''}`}>
-              {state.letters.includes(l) ? l : '?'}
-            </span>
-          ))}
-        </div>
-        <p className="muted">
-          {state.letters.length}/{HEBREW_LETTERS.length} collected · world day {Math.floor(state.tick / 100)} · tick {state.tick}
-        </p>
       </div>
 
       <div className="panel">
         <h2>Last days</h2>
         <table>
           <thead>
-            <tr><th>Date</th><th>Cards</th><th>Correct</th><th>Minutes</th><th>Coins</th><th>Graduated</th></tr>
+            <tr><th>Date</th><th>Cards</th><th>Correct</th><th>Minutes</th><th>Mastered</th></tr>
           </thead>
           <tbody>
             {logs.map((l) => (
@@ -87,34 +105,11 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
                 <td>{l.cardsAnswered}</td>
                 <td>{l.cardsAnswered ? Math.round((l.correct / l.cardsAnswered) * 100) : 0}%</td>
                 <td>{Math.floor(l.activeSeconds / 60)}</td>
-                <td>🪙{l.coinsEarned}</td>
                 <td>{l.graduated || ''}</td>
               </tr>
             ))}
             {logs.length === 0 && (
-              <tr><td colSpan={6} className="muted">No sessions yet.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="panel">
-        <h2>Attack log</h2>
-        <table>
-          <thead>
-            <tr><th>Date</th><th>Type</th><th>Result</th><th>Coins</th></tr>
-          </thead>
-          <tbody>
-            {attacks.map((a) => (
-              <tr key={a.id}>
-                <td>{a.date}</td>
-                <td>{a.kind === 'raid' ? '🌙 raid' : '⚔️ attack'}</td>
-                <td>{a.result}</td>
-                <td>{a.coinsDelta > 0 ? `+${a.coinsDelta}` : a.coinsDelta}</td>
-              </tr>
-            ))}
-            {attacks.length === 0 && (
-              <tr><td colSpan={4} className="muted">Quiet so far…</td></tr>
+              <tr><td colSpan={5} className="muted">No sessions yet.</td></tr>
             )}
           </tbody>
         </table>

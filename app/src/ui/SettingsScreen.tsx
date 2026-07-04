@@ -19,7 +19,7 @@ export default function SettingsScreen(props: {
   const fileRef = useRef<HTMLInputElement>(null)
   const [newName, setNewName] = useState('')
 
-  const setNum = (key: 'newWordsPerDay' | 'dailyGoalMinutes' | 'sessionSize' | 'attackChancePct') =>
+  const setNum = (key: 'newWordsPerDay' | 'dailyGoalMinutes' | 'sessionSize') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const v = Math.max(0, Number(e.target.value) || 0)
       dispatch({ type: 'setSettings', settings: { ...s, [key]: v } })
@@ -97,11 +97,11 @@ export default function SettingsScreen(props: {
             onChange={(e) => setNewName(e.target.value)}
           />
           <button className="ghost" onClick={() => createProfile(false)}>➕ New player</button>
-          <button className="ghost" onClick={() => createProfile(true)}>🧪 Test profile (100k 🪙, 1k 🧱)</button>
+          <button className="ghost" onClick={() => createProfile(true)}>🧪 Test profile</button>
         </div>
         <p className="muted">
-          Each profile has separate progress, castle and settings. A test profile starts loaded with
-          resources for trying out building and buying.
+          Each profile has fully separate learning progress and settings — handy for trying the
+          fresh-player experience or letting a teammate play.
         </p>
       </div>
 
@@ -119,10 +119,6 @@ export default function SettingsScreen(props: {
           <label>Cards per session</label>
           <input type="number" value={s.sessionSize} onChange={setNum('sessionSize')} />
         </div>
-        <div className="field">
-          <label>Attack chance per session (%)</label>
-          <input type="number" value={s.attackChancePct} onChange={setNum('attackChancePct')} />
-        </div>
       </div>
 
       <div className="panel">
@@ -132,7 +128,6 @@ export default function SettingsScreen(props: {
             ['choice', 'Multiple choice'],
             ['blank', 'Fill the blank'],
             ['match', 'Match pairs (bonus round)'],
-            ['lightning', 'Lightning round (attacks)'],
             ['sound', 'Sound match (bonus round, hear the word)'],
           ] as Array<[keyof typeof s.exercises, string]>
         ).map(([key, label]) => (

@@ -46,10 +46,13 @@ export function buildSessionPlan(args: {
   today: string
   settings: { sessionSize: number; newWordsPerDay: number }
   introducedToday: number
+  /** limit the session to one word category */
+  topic?: string | null
 }): SessionPlan {
-  const { words, states, today, settings, introducedToday } = args
+  const { words, states, today, settings, introducedToday, topic } = args
+  const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
   const due = states
-    .filter((s) => s.dueAt <= today)
+    .filter((s) => s.dueAt <= today && (!inTopic || inTopic.has(s.wordId)))
     .sort((a, b) => (a.dueAt === b.dueAt ? a.box - b.box : a.dueAt < b.dueAt ? -1 : 1))
     .slice(0, settings.sessionSize)
 
@@ -57,7 +60,7 @@ export function buildSessionPlan(args: {
   const room = Math.max(0, settings.sessionSize - due.length)
   const newAllowance = Math.max(0, settings.newWordsPerDay - introducedToday)
   const newWordIds = words
-    .filter((w) => !known.has(w.id))
+    .filter((w) => !known.has(w.id) && (!inTopic || inTopic.has(w.id)))
     .slice(0, Math.min(room, newAllowance))
     .map((w) => w.id)
 

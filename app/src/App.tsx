@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import type { Sentence, Word } from './lib/types'
-import { gameReducer, initialGameState, newPlayerState, todayLog, type GameState } from './lib/game'
+import { gameReducer, newPlayerState, todayLog, type GameState } from './lib/game'
 import {
   activeProfileId,
   createProfile,
@@ -15,27 +15,24 @@ import { todayISO, computeStreak } from './lib/time'
 import { initSpeech } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
-import CastleScreen from './ui/CastleScreen'
-import { CoinIcon, BrickIcon, FlameIcon, WoodIcon, StoneIcon, FoodIcon } from './ui/sprites'
+import LearnScreen from './ui/LearnScreen'
 import SessionScreen from './ui/SessionScreen'
-import GuardianScreen from './ui/GuardianScreen'
+import SpeedScreen from './ui/SpeedScreen'
 import StatsScreen from './ui/StatsScreen'
 import SettingsScreen from './ui/SettingsScreen'
 
 export const WORDS = wordsJson as Word[]
 export const SENTENCES = sentencesJson as Sentence[]
 
-export type Screen = 'castle' | 'learn' | 'guardian' | 'stats' | 'settings'
-
-const TEST_PROFILE_WALLET = { coins: 100000, bricks: 1000, wood: 500, stone: 500, food: 200 }
+export type Screen = 'learn' | 'session' | 'speed' | 'stats' | 'settings'
 
 export default function App() {
-  const [state, dispatch] = useReducer(gameReducer, undefined, initialGameState)
+  const [state, dispatch] = useReducer(gameReducer, undefined, newPlayerState)
   const [profiles, setProfiles] = useState<ProfileMeta[]>(() => listProfiles())
   const [profile, setProfile] = useState<string>(() => activeProfileId())
   const [loaded, setLoaded] = useState(false)
-  const [screen, setScreen] = useState<Screen>('castle')
-  const [training, setTraining] = useState(false)
+  const [screen, setScreen] = useState<Screen>('learn')
+  const [topic, setTopic] = useState<string | null>(null)
   const [sessionNonce, setSessionNonce] = useState(0)
   const saveTimer = useRef<number | null>(null)
   const stateRef = useRef(state)
@@ -50,7 +47,6 @@ export default function App() {
     loadState(profile)
       .then((saved) => {
         dispatch({ type: 'import', state: saved ?? newPlayerState() })
-        dispatch({ type: 'raidCheck', today: todayISO() })
         setLoaded(true)
       })
       .catch((e) => {
@@ -73,26 +69,21 @@ export default function App() {
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
     if (loaded) saveState(profile, stateRef.current).catch((e) => console.error('save failed', e))
     setActiveProfile(id)
-    setScreen('castle')
-    setTraining(false)
+    setScreen('learn')
     setProfile(id)
   }
 
   const handleCreateProfile = async (name: string, test: boolean) => {
     const meta = createProfile(name, test)
-    if (test) {
-      await saveState(meta.id, { ...newPlayerState(), wallet: { ...TEST_PROFILE_WALLET } })
-    }
     setProfiles(listProfiles())
     switchProfile(meta.id)
   }
 
   const handleDeleteProfile = async (id: string) => {
     await deleteProfile(id)
-    const remaining = listProfiles()
-    setProfiles(remaining)
+    setProfiles(listProfiles())
     if (id === profile) {
-      setScreen('castle')
+      setScreen('learn')
       setProfile(activeProfileId())
     }
   }
@@ -104,24 +95,17 @@ export default function App() {
   const goalSec = state.settings.dailyGoalMinutes * 60
   const goalPct = Math.min(100, Math.round((log.activeSeconds / goalSec) * 100))
   const streak = computeStreak(state.dayLogs, today)
-  const profileMeta = profiles.find((p) => p.id === profile)
 
-  const startLearning = () => {
-    setTraining(false)
+  const startSession = (t: string | null) => {
+    setTopic(t)
     setSessionNonce((n) => n + 1)
-    setScreen('learn')
+    setScreen('session')
   }
-  const startTraining = () => {
-    setTraining(true)
-    setSessionNonce((n) => n + 1)
-    setScreen('learn')
-  }
-  const endSession = () => setScreen(training ? 'guardian' : 'castle')
 
   return (
     <>
       <div className="header">
-        <span className="title">🏰 Word Castle</span>
+        <span className="title">🇮🇱 Word Castle</span>
         <select
           className="profile-select"
           value={profile}
@@ -135,38 +119,38 @@ export default function App() {
             </option>
           ))}
         </select>
-        <span className="stat"><CoinIcon size={18} /> {state.wallet.coins}</span>
-        <span className="stat"><BrickIcon size={18} /> {state.wallet.bricks}</span>
-        <span className="stat"><WoodIcon size={18} /> {state.wallet.wood}</span>
-        <span className="stat"><StoneIcon size={18} /> {state.wallet.stone}</span>
-        <span className="stat"><FoodIcon size={18} /> {state.wallet.food}</span>
-        <span className="stat"><FlameIcon size={18} /> {streak}</span>
+        <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
+        <span className="stat" title="Day streak">🔥 {streak}</span>
         <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
           <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
         </div>
         <span className="goal-label">
           Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
-          {goalPct >= 100 ? ' ✓ (extra time keeps paying)' : ''}
+          {goalPct >= 100 ? ' ✓' : ''}
         </span>
       </div>
 
-      {screen === 'castle' && (
-        <CastleScreen state={state} dispatch={dispatch} today={today} onStartSession={startLearning} />
-      )}
       {screen === 'learn' && (
+        <LearnScreen
+          state={state}
+          words={WORDS}
+          today={today}
+          onStartSession={startSession}
+          onSpeedRound={() => setScreen('speed')}
+        />
+      )}
+      {screen === 'session' && (
         <SessionScreen
-          key={`${profile}-${training}-${sessionNonce}`}
+          key={`${profile}-${topic ?? 'all'}-${sessionNonce}`}
           state={state}
           dispatch={dispatch}
           words={WORDS}
           sentences={SENTENCES}
-          training={training}
-          onExit={endSession}
+          topic={topic}
+          onExit={() => setScreen('learn')}
         />
       )}
-      {screen === 'guardian' && (
-        <GuardianScreen state={state} dispatch={dispatch} words={WORDS} onTrain={startTraining} />
-      )}
+      {screen === 'speed' && <SpeedScreen state={state} words={WORDS} onExit={() => setScreen('learn')} />}
       {screen === 'stats' && <StatsScreen state={state} words={WORDS} today={today} />}
       {screen === 'settings' && (
         <SettingsScreen
@@ -174,19 +158,18 @@ export default function App() {
           dispatch={dispatch}
           profiles={profiles}
           activeProfile={profile}
-          activeProfileMeta={profileMeta}
+          activeProfileMeta={profiles.find((p) => p.id === profile)}
           onSwitchProfile={switchProfile}
           onCreateProfile={handleCreateProfile}
           onDeleteProfile={handleDeleteProfile}
         />
       )}
 
-      {screen !== 'learn' && (
+      {screen !== 'session' && screen !== 'speed' && (
         <nav className="nav">
           {(
             [
-              ['castle', '🏰', 'Castle'],
-              ['guardian', '🛡️', 'Guardian'],
+              ['learn', '📚', 'Learn'],
               ['stats', '📊', 'Stats'],
               ['settings', '⚙️', 'Settings'],
             ] as Array<[Screen, string, string]>

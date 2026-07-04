@@ -1,4 +1,11 @@
-# Word Castle: Hebrew Vocabulary Game (MVP Spec)
+# Word Castle: Hebrew Vocabulary Trainer
+
+> **PIVOT (2026-07-04, section 15):** the game layer (castle, world, camps, economy) is
+> shelved by Sanch's decision — the app is now a focused learning system. Sections 1-14
+> describe the shelved game and remain valid history; the game code lives in git
+> (tags/commits up to `a5e1685`) and its engines remain in `src/lib` if ever revived.
+
+# Original spec: Hebrew Vocabulary Game (MVP)
 
 Working title: **Word Castle** (מבצר המילים). Rename anytime.
 
@@ -208,3 +215,29 @@ food = guardian upkeep and future guardian slots; heavy battle defeats can breac
 - **Migration**: old saves get zeroed new resources, tick 0, no camps; empty castles
   receive the starting plot. `unlockedCategories` field added (null = all) as the hook
   for the upcoming thematic-cities feature.
+
+## 15. Learning-first pivot (2026-07-04, current)
+
+Sanch: "more game now than learning process… build up from scratch a system to learn
+words. No adventures, no castles." The app is now a clean vocabulary trainer.
+
+**Kept:** the data (968 words, 113 sentences), the SRS engine (8 boxes, recognition ->
+recall -> mastered at recall box 4), all exercises (multiple choice both directions,
+fill-the-blank, match pairs, sound match, speed round), Hebrew TTS, daily time goal
+with streak, profiles, backup, all engine tests.
+
+**Removed from the UI:** castle, world map, resources, camps, attacks, guardian.
+Game engines remain in src/lib (tested, dormant); game UI files deleted (git has them).
+
+**New structure:**
+- **Learn (home):** "Daily session" button (due reviews from all topics + new words),
+  60s speed round, and a topic grid — one card per category with emoji, due badge and a
+  progress bar (blue = started, gold = mastered). Tapping a topic starts a session
+  scoped to it (its due words + its new words, same daily limits).
+- **Session:** same exercise flow; battles removed; summary shows cards, accuracy,
+  minutes today and words mastered this session.
+- **Stats:** mastered/started/streak/total practice hours, per-topic progress table,
+  memory-level (SRS box) charts, day-by-day history.
+- **Settings:** SRS knobs, exercise toggles, profiles, backup. Attack setting removed.
+
+Session planning: `buildSessionPlan` gained a `topic` filter (due + new both scoped).

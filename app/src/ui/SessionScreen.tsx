@@ -4,7 +4,6 @@ import type { GameState, GameAction } from '../lib/game'
 import { introducedTodayCount, todayLog } from '../lib/game'
 import type { Sentence, Word, Direction } from '../lib/types'
 import { buildSessionPlan } from '../lib/srs'
-import { buildTrainingSet } from '../lib/guardian'
 import {
   makeChoice,
   makeBlank,
@@ -17,9 +16,6 @@ import {
   type MatchExercise,
   type SoundExercise,
 } from '../lib/exercises'
-import { answerReward } from '../lib/economy'
-import { castleDefense, lightningTarget, resolveSessionAttack } from '../lib/attack'
-import { siegingCamp } from '../lib/world'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 
@@ -32,17 +28,8 @@ interface QueueItem {
 
 type CurrentEx = { kind: 'intro'; word: Word } | ChoiceExercise | BlankExercise
 
-type Phase =
-  | 'cards'
-  | 'attack-intro'
-  | 'lightning'
-  | 'attack-result'
-  | 'match'
-  | 'sound'
-  | 'summary'
-  | 'empty'
+type Phase = 'cards' | 'match' | 'sound' | 'summary' | 'empty'
 
-const LIGHTNING_SECONDS = 60
 const SOUND_QUESTIONS = 5
 
 function SpeakButton(props: { text: string }) {
@@ -66,10 +53,10 @@ export default function SessionScreen(props: {
   dispatch: Dispatch<GameAction>
   words: Word[]
   sentences: Sentence[]
-  training: boolean
+  topic: string | null
   onExit: () => void
 }) {
-  const { state, dispatch, words, sentences, training, onExit } = props
+  const { state, dispatch, words, sentences, topic, onExit } = props
   const today = todayISO()
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
@@ -86,21 +73,13 @@ export default function SessionScreen(props: {
   }, [sentences])
 
   const [items, setItems] = useState<QueueItem[]>(() => {
-    if (training) {
-      if (!state.guardian) return []
-      return buildTrainingSet(state.reviews, words, state.guardian.category, today).map((s) => ({
-        wordId: s.wordId,
-        direction: s.direction,
-        intro: false,
-        firstTry: true,
-      }))
-    }
     const plan = buildSessionPlan({
       words,
       states: state.reviews,
       today,
       settings: state.settings,
       introducedToday: introducedTodayCount(state, today),
+      topic,
     })
     const due: QueueItem[] = plan.dueStates.map((s) => ({
       wordId: s.wordId,
@@ -115,29 +94,14 @@ export default function SessionScreen(props: {
     return [...due, ...fresh]
   })
 
-  // a camp at the doorstep forces a battle early in the session
-  const [attacker] = useState(() => {
-    if (training || items.length < 3 || !state.settings.exercises.lightning) return null
-    return siegingCamp(state.camps, state.castle)
-  })
-  const attackAt = attacker ? Math.min(2, items.length - 1) : -1
-
   const [idx, setIdx] = useState(0)
   const [phase, setPhase] = useState<Phase>(items.length === 0 ? 'empty' : 'cards')
   const [ex, setEx] = useState<CurrentEx | null>(null)
   const [picked, setPicked] = useState<number | null>(null)
   const [sessionAnswered, setSessionAnswered] = useState(0)
+  const [sessionCorrect, setSessionCorrect] = useState(0)
   const [answeredWordIds, setAnsweredWordIds] = useState<string[]>([])
-  const trainingReported = useRef(false)
-
-  // --- attack state ---
-  const severity = attacker?.strength ?? 1
-  const defense = castleDefense(state.castle) + (state.guardian?.level ?? 0)
-  const target = lightningTarget(severity, defense)
-  const [lightningLeft, setLightningLeft] = useState(LIGHTNING_SECONDS)
-  const [lightningCorrect, setLightningCorrect] = useState(0)
-  const [lightningStreak, setLightningStreak] = useState(0)
-  const [attackOutcome, setAttackOutcome] = useState<ReturnType<typeof resolveSessionAttack> | null>(null)
+  const masteredAtStart = useRef(todayLog(state, today).graduated)
 
   // --- match state ---
   const [match, setMatch] = useState<MatchExercise | null>(null)
@@ -194,7 +158,6 @@ export default function SessionScreen(props: {
     return makeChoice(word, item.direction, words, rng)
   }
 
-  // generate exercise whenever the current card changes
   useEffect(() => {
     if (phase !== 'cards' || idx >= items.length) return
     setEx(genExercise(items[idx]))
@@ -208,13 +171,10 @@ export default function SessionScreen(props: {
   }, [phase, ex])
 
   const soundRoundPossible = () =>
-    !training &&
-    state.settings.exercises.sound &&
-    canSpeakHebrew() &&
-    [...new Set(answeredWordIds)].length >= 3
+    state.settings.exercises.sound && canSpeakHebrew() && [...new Set(answeredWordIds)].length >= 3
 
   const enterBonusOrSummary = (after: 'cards' | 'match') => {
-    if (after === 'cards' && !training && state.settings.exercises.match) {
+    if (after === 'cards' && state.settings.exercises.match) {
       const pool = [...new Set(answeredWordIds)]
       if (pool.length >= 5) {
         const chosen = pool
@@ -243,83 +203,11 @@ export default function SessionScreen(props: {
 
   const advance = (nextItems: QueueItem[]) => {
     const next = idx + 1
-    if (next === attackAt) {
-      setIdx(next)
-      setPhase('attack-intro')
-      return
-    }
     if (next >= nextItems.length) {
       enterBonusOrSummary('cards')
       return
     }
     setIdx(next)
-  }
-
-  // training completion reported once, on reaching the summary
-  useEffect(() => {
-    if (phase === 'summary' && training && !trainingReported.current) {
-      trainingReported.current = true
-      dispatch({ type: 'trainingCompleted' })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, training])
-
-  // lightning countdown
-  useEffect(() => {
-    if (phase !== 'lightning') return
-    if (lightningLeft <= 0) {
-      const outcome = resolveSessionAttack({ target, correct: lightningCorrect, coins: state.wallet.coins, rng })
-      setAttackOutcome(outcome)
-      dispatch({
-        type: 'applyAttack',
-        kind: 'session',
-        severity,
-        defense,
-        result: outcome.result,
-        coinsDelta: outcome.coinsDelta,
-        ruin: outcome.ruin,
-        breach: outcome.breach,
-        campId: attacker?.id,
-        today,
-      })
-      setPhase('attack-result')
-      return
-    }
-    const t = window.setTimeout(() => setLightningLeft((s) => s - 1), 1000)
-    return () => window.clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, lightningLeft])
-
-  // lightning exercise generation
-  const lightningPool = useMemo(() => {
-    const reviewed = state.reviews.map((r) => r.wordId)
-    const unique = [...new Set(reviewed)]
-    return (unique.length >= 8 ? unique : words.slice(0, 50).map((w) => w.id)).map((id) => wordById.get(id)!)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const [lightningEx, setLightningEx] = useState<ChoiceExercise | null>(null)
-  useEffect(() => {
-    if (phase === 'lightning' && !lightningEx) {
-      const w = lightningPool[Math.floor(rng() * lightningPool.length)]
-      setLightningEx(makeChoice(w, rng() < 0.5 ? 'recognition' : 'recall', words, rng))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, lightningEx])
-
-  const combo = Math.min(3, 1 + Math.floor(lightningStreak / 5))
-
-  const answerLightning = (i: number) => {
-    touch()
-    if (!lightningEx) return
-    const correct = i === lightningEx.correctIndex
-    if (correct) {
-      setLightningCorrect((c) => c + 1)
-      setLightningStreak((s) => s + 1)
-      dispatch({ type: 'bonusCoins', amount: answerReward('lightning', false, combo), today })
-    } else {
-      setLightningStreak(0)
-    }
-    setLightningEx(null)
   }
 
   const answerCard = (i: number) => {
@@ -338,6 +226,7 @@ export default function SessionScreen(props: {
       today,
     })
     setSessionAnswered((n) => n + 1)
+    if (correct) setSessionCorrect((n) => n + 1)
     setAnsweredWordIds((list) => [...list, item.wordId])
     const word = wordById.get(item.wordId)
     if (word && ex.kind === 'choice' && canSpeakHebrew()) speakHebrew(word.hebrew)
@@ -361,7 +250,6 @@ export default function SessionScreen(props: {
     if (matchSel.pair === pair) {
       setMatchDone((d) => [...d, pair])
       setMatchSel(null)
-      dispatch({ type: 'bonusCoins', amount: answerReward('match', false), today })
       if (matchDone.length + 1 === match.pairs.length) {
         window.setTimeout(() => enterBonusOrSummary('match'), 600)
       }
@@ -372,7 +260,6 @@ export default function SessionScreen(props: {
     }
   }
 
-  // speak each sound question as it appears
   useEffect(() => {
     if (phase === 'sound' && soundQs[soundIdx]) speakHebrew(soundQs[soundIdx].hebrew)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -383,9 +270,6 @@ export default function SessionScreen(props: {
     if (soundPicked !== null) return
     const q = soundQs[soundIdx]
     setSoundPicked(i)
-    if (i === q.correctIndex) {
-      dispatch({ type: 'bonusCoins', amount: answerReward('sound', false), today })
-    }
     window.setTimeout(() => {
       if (soundIdx + 1 >= soundQs.length) {
         setPhase('summary')
@@ -404,86 +288,11 @@ export default function SessionScreen(props: {
     return (
       <div className="panel card">
         <p>
-          {training
-            ? 'No guardian or no words in the guardian category yet.'
+          {topic
+            ? `Nothing to do in “${topic}” right now: no due reviews and the daily new-word limit is used up.`
             : 'Nothing due and no new words available. Come back tomorrow!'}
         </p>
         <button className="primary" onClick={onExit}>Back</button>
-      </div>
-    )
-  }
-
-  if (phase === 'attack-intro') {
-    return (
-      <div className="panel card">
-        <span className="badge attack">⚔️ BATTLE</span>
-        <p className="prompt small">The camp at your walls attacks!</p>
-        <p>
-          Camp strength {severity} vs your defense {defense}.<br />
-          Answer <b>{target}</b> questions correctly in {LIGHTNING_SECONDS} seconds to destroy the camp!
-        </p>
-        <button className="primary" onClick={() => { touch(); setPhase('lightning') }}>
-          ⚡ Defend!
-        </button>
-      </div>
-    )
-  }
-
-  if (phase === 'lightning') {
-    return (
-      <div className="panel card">
-        <div className="progress">
-          <span className="lightning-timer">⏱ {lightningLeft}s</span>
-          <span>
-            {lightningCorrect}/{target} {combo > 1 && <span className="combo">x{combo}</span>}
-          </span>
-        </div>
-        {lightningEx && (
-          <>
-            <div className={`prompt ${lightningEx.direction === 'recognition' ? 'he' : ''}`}>{lightningEx.prompt}</div>
-            <div className="options">
-              {lightningEx.options.map((o, i) => (
-                <button key={i} className={lightningEx.direction === 'recall' ? 'he' : ''} onClick={() => answerLightning(i)}>
-                  {o}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    )
-  }
-
-  if (phase === 'attack-result' && attackOutcome) {
-    return (
-      <div className="panel card">
-        {attackOutcome.result === 'win' && (
-          <>
-            <p className="prompt small">🏆 Victory!</p>
-            <p>The camp is destroyed and looted: +🪙{attackOutcome.coinsDelta}.</p>
-          </>
-        )}
-        {attackOutcome.result === 'coin-loss' && (
-          <>
-            <p className="prompt small">😖 They broke through…</p>
-            <p>The raiders grabbed 🪙{-attackOutcome.coinsDelta}. The camp remains at your walls.</p>
-          </>
-        )}
-        {attackOutcome.result === 'ruin' && !attackOutcome.breach && (
-          <>
-            <p className="prompt small">💥 Defeat!</p>
-            <p>They burned something outside your walls. The camp remains: train and fight again.</p>
-          </>
-        )}
-        {attackOutcome.result === 'ruin' && attackOutcome.breach && (
-          <>
-            <p className="prompt small">🔥 Breach!</p>
-            <p>A rout: they broke through your walls and ruined a building inside. The camp remains.</p>
-          </>
-        )}
-        <button className="primary" onClick={() => { touch(); idx >= items.length ? enterBonusOrSummary('cards') : setPhase('cards') }}>
-          Continue
-        </button>
       </div>
     )
   }
@@ -547,6 +356,8 @@ export default function SessionScreen(props: {
   }
 
   if (phase === 'summary') {
+    const mastered = log.graduated - masteredAtStart.current
+    const accuracy = sessionAnswered ? Math.round((sessionCorrect / sessionAnswered) * 100) : 0
     return (
       <div className="panel card">
         <p className="prompt small">Session complete 🎉</p>
@@ -556,17 +367,21 @@ export default function SessionScreen(props: {
             <div className="muted">cards</div>
           </div>
           <div>
-            <div className="summary-num">🪙{log.coinsEarned}</div>
-            <div className="muted">today</div>
+            <div className="summary-num">{accuracy}%</div>
+            <div className="muted">correct</div>
           </div>
           <div>
             <div className="summary-num">{Math.floor(log.activeSeconds / 60)}m</div>
-            <div className="muted">active</div>
+            <div className="muted">today</div>
           </div>
         </div>
-        {training && <p>🛡️ Training set completed! Your guardian grows stronger.</p>}
+        {mastered > 0 && (
+          <p style={{ marginTop: 14 }}>
+            🎓 <b>{mastered}</b> {mastered === 1 ? 'word' : 'words'} fully mastered this session!
+          </p>
+        )}
         <button className="primary" style={{ marginTop: 18 }} onClick={onExit}>
-          {training ? 'Back to guardian' : 'Back to castle'}
+          Done
         </button>
       </div>
     )
@@ -580,7 +395,7 @@ export default function SessionScreen(props: {
     <>
       <div className="progress">
         <span>
-          {training ? '🛡️ Training' : 'Session'} · card {Math.min(idx + 1, items.length)}/{items.length}
+          {topic ? `📖 ${topic}` : 'Session'} · card {Math.min(idx + 1, items.length)}/{items.length}
         </span>
         <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
           End session
