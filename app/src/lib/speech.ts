@@ -20,9 +20,23 @@ export function canSpeakHebrew(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window && hebrewVoice() !== null
 }
 
+/**
+ * Prepares dictionary entries for speech: "עובד/עובדת (ב)" is written for the eye,
+ * not the voice. Parenthesized grammar hints are dropped and slash-separated forms
+ * become comma pauses.
+ */
+export function ttsNormalize(text: string): string {
+  return text
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\s*\/\s*/g, ', ')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*,\s*$/g, '')
+    .trim()
+}
+
 export function speakHebrew(text: string): boolean {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return false
-  const utterance = new SpeechSynthesisUtterance(text)
+  const utterance = new SpeechSynthesisUtterance(ttsNormalize(text))
   const voice = hebrewVoice()
   if (voice) utterance.voice = voice
   utterance.lang = 'he-IL'

@@ -37,6 +37,13 @@ test('saves with an empty castle get the starting plot back', () => {
   assert.equal(restored.castle[0].type, 'land')
 })
 
+test('old saves without studyMode default to mixed', () => {
+  const raw = JSON.parse(serializeState(initialGameState()))
+  delete raw.settings.studyMode
+  const restored = deserializeState(JSON.stringify(raw))
+  assert.equal(restored.settings.studyMode, 'mixed')
+})
+
 test('sound reward is 2 coins per correct', () => {
   assert.equal(answerReward('sound', false), 2)
 })

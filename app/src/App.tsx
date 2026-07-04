@@ -139,6 +139,7 @@ export default function App() {
           today={today}
           onStartSession={startSession}
           onSpeedRound={() => setScreen('speed')}
+          onSetStudyMode={(m) => dispatch({ type: 'setSettings', settings: { ...state.settings, studyMode: m } })}
         />
       )}
       {screen === 'session' && (

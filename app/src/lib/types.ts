@@ -86,11 +86,14 @@ export interface Guardian {
   hiredAt: string
 }
 
+export type StudyMode = 'mixed' | 'random' | 'flashcards' | 'listening' | 'matching' | 'sentences'
+
 export interface Settings {
   newWordsPerDay: number
   dailyGoalMinutes: number
   sessionSize: number
   attackChancePct: number
+  studyMode: StudyMode
   exercises: {
     choice: boolean
     blank: boolean
@@ -105,6 +108,7 @@ export const DEFAULT_SETTINGS: Settings = {
   dailyGoalMinutes: 20,
   sessionSize: 25,
   attackChancePct: 15,
+  studyMode: 'mixed',
   exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 

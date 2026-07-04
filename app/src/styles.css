@@ -252,6 +252,23 @@ button.primary.big { font-size: 19px; padding: 15px 34px; margin-bottom: 10px; }
 .topic-bar .mastered { position: absolute; inset: 0 auto 0 0; background: var(--gold); }
 .topic-stats { margin-top: 8px; font-size: 12px; }
 
+.mode-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
+.chip {
+  background: var(--panel-2); color: var(--muted); border: 1px solid #3a4666;
+  border-radius: 18px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+}
+.chip.active { background: #2a2410; color: var(--gold); border-color: var(--gold); }
+.chip:disabled { opacity: 0.35; cursor: default; }
+
+.hint-btn {
+  display: block; margin: 16px auto 0; background: none; border: none;
+  color: var(--muted); font-size: 13px; cursor: pointer; text-decoration: underline dotted;
+}
+.hint-btn:hover { color: var(--text); }
+.hint-panel { margin: 10px 0; }
+button.ghost.knew { border: 1px solid var(--green); color: var(--green); padding: 12px 22px; font-size: 16px; }
+button.ghost.missed { border: 1px solid var(--red); color: var(--red); padding: 12px 22px; font-size: 16px; }
+
 .flash-good { animation: flashGood 0.2s; }
 .flash-bad { animation: flashBad 0.2s; }
 @keyframes flashGood { 50% { box-shadow: inset 0 0 0 3px var(--green); } }

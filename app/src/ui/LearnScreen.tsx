@@ -1,5 +1,15 @@
 import type { GameState } from '../lib/game'
-import type { Word } from '../lib/types'
+import type { StudyMode, Word } from '../lib/types'
+import { canSpeakHebrew } from '../lib/speech'
+
+const MODES: Array<[StudyMode, string, string]> = [
+  ['mixed', '🎯', 'Smart mix'],
+  ['random', '🎲', 'Random'],
+  ['flashcards', '🃏', 'Flashcards'],
+  ['listening', '🎧', 'Listening'],
+  ['matching', '🧩', 'Matching'],
+  ['sentences', '📝', 'Sentences'],
+]
 
 const TOPIC_EMOJI: Record<string, string> = {
   'Family': '👨‍👩‍👧',
@@ -67,8 +77,9 @@ export default function LearnScreen(props: {
   today: string
   onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
+  onSetStudyMode: (mode: StudyMode) => void
 }) {
-  const { state, words, today, onStartSession, onSpeedRound } = props
+  const { state, words, today, onStartSession, onSpeedRound, onSetStudyMode } = props
   const topics = topicInfos(words, state, today)
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
   const startedTotal = topics.reduce((n, t) => n + t.started, 0)
@@ -79,6 +90,22 @@ export default function LearnScreen(props: {
   return (
     <>
       <div className="panel center hero">
+        <div className="mode-chips">
+          {MODES.map(([m, ico, label]) => {
+            const disabled = m === 'listening' && !canSpeakHebrew()
+            return (
+              <button
+                key={m}
+                className={`chip ${state.settings.studyMode === m ? 'active' : ''}`}
+                disabled={disabled}
+                title={disabled ? 'Needs a Hebrew system voice' : ''}
+                onClick={() => onSetStudyMode(m)}
+              >
+                {ico} {label}
+              </button>
+            )
+          })}
+        </div>
         <button className="primary big" onClick={() => onStartSession(null, planDone ? 'more-new' : 'normal')}>
           {planDone ? '➕ Keep learning' : '▶ Daily session'}
         </button>
