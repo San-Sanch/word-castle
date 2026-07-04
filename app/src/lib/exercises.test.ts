@@ -1,7 +1,11 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mulberry32, makeChoice, makeBlank, makeMatch, pickExerciseKind } from './exercises.js'
+import { mulberry32, makeChoice, makeBlank, makeMatch, makeSentenceChoice, pickExerciseKind } from './exercises.js'
 import type { Sentence, Word } from './types.js'
+
+const S = (id: string, hebrew: string, translation: string): Sentence => ({
+  id, hebrew, translation, tokens: hebrew.split(' '), matches: [],
+})
 
 const W = (id: string, opts: Partial<Word> = {}): Word => ({
   id, hebrew: 'h' + id, hebrewFull: 'h' + id, gender: null, plural: null,
@@ -100,6 +104,23 @@ test('makeMatch: 5 pairs, both orders are permutations', () => {
   assert.equal(ex.pairs.length, 5)
   assert.deepEqual([...ex.leftOrder].sort(), [0, 1, 2, 3, 4])
   assert.deepEqual([...ex.rightOrder].sort(), [0, 1, 2, 3, 4])
+})
+
+test('makeSentenceChoice: English prompt, 8 Hebrew sentence options', () => {
+  const pool = Array.from({ length: 12 }, (_, i) => S(`s${i}`, `אני לומד עברית ${i}`, `I study Hebrew ${i}`))
+  const ex = makeSentenceChoice(pool[0], pool, mulberry32(4))
+  assert.equal(ex.kind, 'sentchoice')
+  assert.equal(ex.prompt, 'I study Hebrew 0')
+  assert.equal(ex.options.length, 8)
+  assert.equal(ex.options[ex.correctIndex], 'אני לומד עברית 0')
+  assert.equal(new Set(ex.options).size, 8)
+})
+
+test('makeSentenceChoice reverse: Hebrew prompt, translation options', () => {
+  const pool = Array.from({ length: 10 }, (_, i) => S(`s${i}`, `משפט מספר ${i}`, `sentence number ${i}`))
+  const ex = makeSentenceChoice(pool[2], pool, mulberry32(9), true)
+  assert.equal(ex.prompt, 'משפט מספר 2')
+  assert.equal(ex.options[ex.correctIndex], 'sentence number 2')
 })
 
 test('pickExerciseKind: blank only when enabled, box>=2 and sentence exists', () => {

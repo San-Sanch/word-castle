@@ -144,6 +144,7 @@ export default function App() {
           onStartSession={startSession}
           onSpeedRound={() => setScreen('speed')}
           onSetStudyMode={(m) => dispatch({ type: 'setSettings', settings: { ...state.settings, studyMode: m } })}
+          onToggleReverse={() => dispatch({ type: 'setSettings', settings: { ...state.settings, reverse: !state.settings.reverse } })}
         />
       )}
       {screen === 'session' && (

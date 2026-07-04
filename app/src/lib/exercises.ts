@@ -209,6 +209,50 @@ export function makeSoundMatch(word: Word, pool: Word[], rng: () => number, coun
   }
 }
 
+export interface SentenceChoiceExercise {
+  kind: 'sentchoice'
+  sentenceId: string
+  prompt: string
+  options: string[]
+  correctIndex: number
+  /** true when the prompt is Hebrew and options are translations */
+  reverse: boolean
+}
+
+/** Show a sentence in one language, pick its counterpart among similar-length sentences. */
+export function makeSentenceChoice(
+  sentence: Sentence,
+  pool: Sentence[],
+  rng: () => number,
+  reverse = false,
+  count = 8,
+): SentenceChoiceExercise {
+  const answer = reverse ? sentence.translation : sentence.hebrew
+  const textOf = (s: Sentence) => (reverse ? s.translation : s.hebrew)
+  const answerTokens = sentence.tokens.length
+  const ranked = pool
+    .filter((s) => s.id !== sentence.id && textOf(s) !== answer)
+    .map((s) => ({
+      text: textOf(s),
+      key: Math.abs(s.tokens.length - answerTokens) * 100 + Math.abs(textOf(s).length - answer.length) + rng() * 10,
+    }))
+    .sort((a, b) => a.key - b.key)
+  const picked: string[] = []
+  for (const r of ranked) {
+    if (picked.length >= count - 1) break
+    if (!picked.includes(r.text)) picked.push(r.text)
+  }
+  const options = shuffle([answer, ...picked], rng)
+  return {
+    kind: 'sentchoice',
+    sentenceId: sentence.id,
+    prompt: reverse ? sentence.hebrew : sentence.translation,
+    options,
+    correctIndex: options.indexOf(answer),
+    reverse,
+  }
+}
+
 export type ExerciseKind = 'choice' | 'blank'
 
 /** Blank appears for somewhat-known words (box>=2) with a sentence, ~40% of the time. */

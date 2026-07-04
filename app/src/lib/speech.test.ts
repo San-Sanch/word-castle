@@ -41,7 +41,7 @@ test('ttsNormalize: tsere-yud gets the glide shva everywhere', () => {
 
 test('ttsNormalize: manual corrections for wrong engine choices', () => {
   assert.equal(ttsNormalize('מכתב'), 'מִכְתָּב') // mikhtav, not machtev
-  assert.equal(ttsNormalize('מים'), 'מַֽיִם') // stressed MA-im
+  assert.equal(ttsNormalize('מים'), 'מַיְם') // stressed MA-im (maym glide)
 })
 
 test('ttsNormalize: generated vocalization applies (full phrase first, tokens as fallback)', () => {

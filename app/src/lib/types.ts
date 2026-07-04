@@ -86,7 +86,16 @@ export interface Guardian {
   hiredAt: string
 }
 
-export type StudyMode = 'mixed' | 'random' | 'flashcards' | 'listening' | 'matching' | 'sentences'
+export type StudyMode =
+  | 'mixed'
+  | 'random'
+  | 'flashcards'
+  | 'listening'
+  | 'matching'
+  | 'sentences'
+  | 'blanks'
+  | 'crossword'
+  | 'memory'
 
 export interface Settings {
   newWordsPerDay: number
@@ -94,6 +103,8 @@ export interface Settings {
   sessionSize: number
   attackChancePct: number
   studyMode: StudyMode
+  /** swap directions everywhere: prompts in English, answers in Hebrew */
+  reverse: boolean
   exercises: {
     choice: boolean
     blank: boolean
@@ -109,6 +120,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sessionSize: 25,
   attackChancePct: 15,
   studyMode: 'mixed',
+  reverse: false,
   exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 

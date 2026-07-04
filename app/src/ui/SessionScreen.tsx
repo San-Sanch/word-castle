@@ -9,6 +9,7 @@ import {
   makeBlank,
   makeMatch,
   makeSoundMatch,
+  makeSentenceChoice,
   mulberry32,
   shuffle,
   pickExerciseKind,
@@ -16,7 +17,9 @@ import {
   type BlankExercise,
   type MatchExercise,
   type SoundExercise,
+  type SentenceChoiceExercise,
 } from '../lib/exercises'
+import { generateCrossword, type Crossword } from '../lib/crossword'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import translitJson from '../data/translit.json'
@@ -32,8 +35,15 @@ interface QueueItem {
 }
 
 const MATCH_GROUP = 10
+const MEMORY_WORDS = 4 // 8 cards
+const CROSSWORD_WORDS = 7
 
-type Step = { kind: 'card'; item: QueueItem } | { kind: 'group'; items: QueueItem[] }
+type Step =
+  | { kind: 'card'; item: QueueItem }
+  | { kind: 'group'; items: QueueItem[] }
+  | { kind: 'sent'; sentence: Sentence }
+  | { kind: 'crossword'; items: QueueItem[]; puzzle: Crossword }
+  | { kind: 'memory'; items: QueueItem[] }
 
 type CurrentEx =
   | (ChoiceExercise & { audioOnly?: boolean })
@@ -52,7 +62,10 @@ const MODE_LABEL: Record<StudyMode, string> = {
   flashcards: '🃏 Flashcards',
   listening: '🎧 Listening',
   matching: '🧩 Matching',
-  sentences: '📝 Sentences',
+  sentences: '💬 Sentences',
+  blanks: '📝 Missing word',
+  crossword: '🔠 Crossword',
+  memory: '🎴 Memory',
 }
 
 function SpeakButton(props: { text: string }) {
@@ -88,6 +101,7 @@ export default function SessionScreen(props: {
   const studyMode: StudyMode = canSpeakHebrew() || state.settings.studyMode !== 'listening'
     ? state.settings.studyMode
     : 'mixed'
+  const reverse = state.settings.reverse
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
   const sentencesByWord = useMemo(() => {
     const m = new Map<string, Array<{ sentence: Sentence; tokenIndex: number }>>()
@@ -102,75 +116,84 @@ export default function SessionScreen(props: {
   }, [sentences])
 
   const buildSteps = (queue: QueueItem[]): Step[] => {
-    if (studyMode !== 'matching') return queue.map((item) => ({ kind: 'card', item }))
-    // matching: groups of MATCH_GROUP unique words; leftovers become cards
-    const steps: Step[] = []
-    let group: QueueItem[] = []
-    const leftovers: QueueItem[] = []
-    for (const item of queue) {
-      if (group.some((g) => g.wordId === item.wordId)) {
-        leftovers.push(item)
-        continue
+    const grouped = (size: number, kind: 'group' | 'memory' | 'crossword'): Step[] => {
+      const steps: Step[] = []
+      let group: QueueItem[] = []
+      const leftovers: QueueItem[] = []
+      for (const item of queue) {
+        const word = wordById.get(item.wordId)!
+        if (
+          group.some((g) => g.wordId === item.wordId) ||
+          (kind === 'crossword' && (word.hebrew.includes(' ') || [...word.hebrew].length < 2))
+        ) {
+          leftovers.push(item)
+          continue
+        }
+        group.push(item)
+        if (group.length === size) {
+          steps.push(makeGroupStep(kind, group))
+          group = []
+        }
       }
-      group.push(item)
-      if (group.length === MATCH_GROUP) {
-        steps.push({ kind: 'group', items: group })
-        group = []
+      const rest = [...group]
+      if (rest.length >= 3) steps.push(makeGroupStep(kind, rest))
+      else for (const item of rest) steps.push({ kind: 'card', item })
+      for (const item of leftovers) steps.push({ kind: 'card', item })
+      return steps
+    }
+    const makeGroupStep = (kind: 'group' | 'memory' | 'crossword', items: QueueItem[]): Step => {
+      if (kind === 'crossword') {
+        const puzzle = generateCrossword(items.map((i) => wordById.get(i.wordId)!), rng, items.length)
+        const placedIds = new Set(puzzle.placements.map((p) => p.wordId))
+        // words the generator could not place become plain cards later
+        const placedItems = items.filter((i) => placedIds.has(i.wordId))
+        return { kind: 'crossword', items: placedItems, puzzle }
       }
+      return kind === 'memory' ? { kind: 'memory', items } : { kind: 'group', items }
     }
-    const rest = [...group, ...leftovers]
-    if (rest.length >= 3) {
-      steps.push({ kind: 'group', items: rest.slice(0, MATCH_GROUP) })
-      for (const item of rest.slice(MATCH_GROUP)) steps.push({ kind: 'card', item })
-    } else {
-      for (const item of rest) steps.push({ kind: 'card', item })
-    }
-    return steps
+    if (studyMode === 'matching') return grouped(MATCH_GROUP, 'group')
+    if (studyMode === 'memory') return grouped(MEMORY_WORDS, 'memory')
+    if (studyMode === 'crossword') return grouped(CROSSWORD_WORDS, 'crossword')
+    return queue.map((item) => ({ kind: 'card', item }))
+  }
+
+  /** Sessions are never 2 cards long: pad with weakest-word practice reps. */
+  const padQueue = (queue: QueueItem[], eligible: (wordId: string) => boolean): QueueItem[] => {
+    if (queue.length >= state.settings.sessionSize) return queue.slice(0, state.settings.sessionSize)
+    const used = new Set(queue.map((q) => `${q.wordId}|${q.direction}`))
+    const fill: QueueItem[] = state.reviews
+      .filter((r) => eligible(r.wordId) && !used.has(`${r.wordId}|${r.direction}`))
+      .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
+      .slice(0, state.settings.sessionSize - queue.length)
+      .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true, practice: true }))
+    return [...queue, ...shuffle(fill, rng)]
   }
 
   const [steps, setSteps] = useState<Step[]>(() => {
-    // no introduction cards: words go straight into exercises (Sanch knows most
-    // of them; unknown ones have the on-demand reveal)
-    if (studyMode === 'sentences' && mode !== 'practice') {
-      // only words that actually have sentences; top up with off-schedule
-      // practice reps so the session is never just two cards
-      const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
-      const eligible = (id: string) => sentencesByWord.has(id) && (!inTopic || inTopic.has(id))
-      const due: QueueItem[] = state.reviews
-        .filter((r) => r.dueAt <= today && eligible(r.wordId))
-        .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true }))
-      const known = new Set(state.reviews.map((r) => r.wordId))
-      const allowance = mode === 'more-new'
-        ? Infinity
-        : Math.max(0, state.settings.newWordsPerDay - introducedTodayCount(state, today))
-      const fresh: QueueItem[] = words
-        .filter((w) => eligible(w.id) && !known.has(w.id))
-        .slice(0, Math.min(allowance, state.settings.sessionSize))
-        .map((w) => ({ wordId: w.id, direction: 'recognition' as const, firstTry: true }))
-      let queue = shuffle([...due, ...fresh], rng).slice(0, state.settings.sessionSize)
-      if (queue.length < state.settings.sessionSize) {
-        const used = new Set(queue.map((q) => `${q.wordId}|${q.direction}`))
-        const fill: QueueItem[] = state.reviews
-          .filter((r) => eligible(r.wordId) && !used.has(`${r.wordId}|${r.direction}`))
-          .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
-          .slice(0, state.settings.sessionSize - queue.length)
-          .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true, practice: true }))
-        queue = [...queue, ...shuffle(fill, rng)]
-      }
-      return buildSteps(queue)
+    const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
+    const topicOk = (id: string) => !inTopic || inTopic.has(id)
+
+    if (studyMode === 'sentences') {
+      // whole sentences: see one language, pick the other among 8
+      const pool = shuffle(sentences, rng).slice(0, state.settings.sessionSize)
+      return pool.map((sentence) => ({ kind: 'sent', sentence }))
     }
+
+    const needsSentence = studyMode === 'blanks'
+    const eligible = (id: string) => topicOk(id) && (!needsSentence || sentencesByWord.has(id))
+
     if (mode === 'practice') {
-      const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
       const queue = state.reviews
-        .filter((r) => !inTopic || inTopic.has(r.wordId))
+        .filter((r) => eligible(r.wordId))
         .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
         .slice(0, state.settings.sessionSize)
         .map((s) => ({ wordId: s.wordId, direction: s.direction, firstTry: true }))
       return buildSteps(queue)
     }
+
     const plan = buildSessionPlan({
-      words,
-      states: state.reviews,
+      words: needsSentence ? words.filter((w) => sentencesByWord.has(w.id)) : words,
+      states: needsSentence ? state.reviews.filter((r) => sentencesByWord.has(r.wordId)) : state.reviews,
       today,
       settings: state.settings,
       introducedToday: introducedTodayCount(state, today),
@@ -187,29 +210,45 @@ export default function SessionScreen(props: {
       direction: 'recognition' as const,
       firstTry: true,
     }))
-    // interleave new words among reviews so they do not clump at the end
-    return buildSteps(shuffle([...due, ...fresh], rng))
+    const queue = padQueue(shuffle([...due, ...fresh], rng), eligible)
+    return buildSteps(queue)
   })
 
   const [idx, setIdx] = useState(0)
   const [phase, setPhase] = useState<Phase>(steps.length === 0 ? 'empty' : 'steps')
   const [ex, setEx] = useState<CurrentEx | null>(null)
+  const [sentEx, setSentEx] = useState<SentenceChoiceExercise | null>(null)
   const [picked, setPicked] = useState<number | null>(null)
-  const [revealed, setRevealed] = useState(false) // flashcards: answer shown
-  const [hintWord, setHintWord] = useState<Word | null>(null) // "don't know it" reveal
+  const [revealed, setRevealed] = useState(false)
+  const [hintWord, setHintWord] = useState<Word | null>(null)
   const [sessionAnswered, setSessionAnswered] = useState(0)
   const [sessionCorrect, setSessionCorrect] = useState(0)
   const [answeredWordIds, setAnsweredWordIds] = useState<string[]>([])
   const masteredAtStart = useRef(todayLog(state, today).graduated)
 
-  // --- match group state (matching mode) ---
+  // --- match group state ---
   const [groupEx, setGroupEx] = useState<MatchExercise | null>(null)
   const [matchSel, setMatchSel] = useState<{ side: 'l' | 'r'; pair: number } | null>(null)
   const [matchDone, setMatchDone] = useState<number[]>([])
   const [matchFlash, setMatchFlash] = useState<number | null>(null)
   const mismatched = useRef(new Set<string>())
 
-  // --- end-of-session bonus state (mixed mode only) ---
+  // --- crossword state ---
+  const [cwActive, setCwActive] = useState<string | null>(null) // wordId of the active clue
+  const [cwSolved, setCwSolved] = useState<string[]>([])
+  const [cwOptions, setCwOptions] = useState<string[]>([])
+  const [cwCorrect, setCwCorrect] = useState('')
+  const [cwPicked, setCwPicked] = useState<string | null>(null)
+  const cwDispatched = useRef(new Set<string>())
+
+  // --- memory state ---
+  interface MemoryCard { id: number; wordId: string; text: string; he: boolean }
+  const [memCards, setMemCards] = useState<MemoryCard[]>([])
+  const [memOpen, setMemOpen] = useState<number[]>([])
+  const [memSolved, setMemSolved] = useState<string[]>([])
+  const memMissed = useRef(new Set<string>())
+
+  // --- end-of-session bonus (mixed only) ---
   const [bonusMatch, setBonusMatch] = useState<MatchExercise | null>(null)
   const [soundQs, setSoundQs] = useState<SoundExercise[]>([])
   const [soundIdx, setSoundIdx] = useState(0)
@@ -247,34 +286,37 @@ export default function SessionScreen(props: {
     if (isNewWord(wordId)) dispatch({ type: 'introduce', wordId, today })
   }
 
+  const effDirection = (d: Direction): Direction =>
+    reverse ? (d === 'recognition' ? 'recall' : 'recognition') : d
+
   const genExercise = (item: QueueItem): CurrentEx => {
     const word = wordById.get(item.wordId)!
-    if (studyMode === 'flashcards') return { kind: 'flash', word, direction: item.direction }
+    const dir = effDirection(item.direction)
+    if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
-      if (item.direction === 'recall') return makeSoundMatch(word, words, rng)
+      if (dir === 'recall') return makeSoundMatch(word, words, rng)
       return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
     }
     const review = state.reviews.find((r) => r.wordId === item.wordId && r.direction === item.direction)
     const box = review?.box ?? 0
     const withSentence = sentencesByWord.get(item.wordId) ?? []
+    if (studyMode === 'blanks' && withSentence.length > 0) {
+      const pick = withSentence[Math.floor(rng() * withSentence.length)]
+      return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
+    }
     if (studyMode === 'random') {
-      // any exercise type can come up, per card
       const kinds: Array<'choice' | 'audio-choice' | 'blank' | 'sound' | 'flash'> = ['choice', 'flash']
       if (withSentence.length > 0) kinds.push('blank')
       if (canSpeakHebrew()) kinds.push('sound', 'audio-choice')
       const kind = kinds[Math.floor(rng() * kinds.length)]
-      if (kind === 'flash') return { kind: 'flash', word, direction: item.direction }
+      if (kind === 'flash') return { kind: 'flash', word, direction: dir }
       if (kind === 'sound') return makeSoundMatch(word, words, rng)
       if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
       if (kind === 'blank') {
         const pick = withSentence[Math.floor(rng() * withSentence.length)]
         return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
       }
-      return makeChoice(word, item.direction, words, rng)
-    }
-    if (studyMode === 'sentences' && withSentence.length > 0) {
-      const pick = withSentence[Math.floor(rng() * withSentence.length)]
-      return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
+      return makeChoice(word, dir, words, rng)
     }
     if (studyMode === 'mixed') {
       const kind = pickExerciseKind({
@@ -288,7 +330,7 @@ export default function SessionScreen(props: {
         return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
       }
     }
-    return makeChoice(word, item.direction, words, rng)
+    return makeChoice(word, dir, words, rng)
   }
 
   // prepare the current step; keyed on the step OBJECT so a requeue (which
@@ -302,13 +344,37 @@ export default function SessionScreen(props: {
     if (currentStep.kind === 'card') {
       ensureIntroduced(currentStep.item.wordId)
       setEx(genExercise(currentStep.item))
-    } else {
+    } else if (currentStep.kind === 'sent') {
+      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse))
+    } else if (currentStep.kind === 'group') {
       for (const item of currentStep.items) ensureIntroduced(item.wordId)
       mismatched.current = new Set()
       setMatchSel(null)
       setMatchDone([])
       setGroupEx(makeMatch(currentStep.items.map((i) => wordById.get(i.wordId)!), rng))
-      setEx(null)
+    } else if (currentStep.kind === 'crossword') {
+      for (const item of currentStep.items) ensureIntroduced(item.wordId)
+      cwDispatched.current = new Set()
+      setCwSolved([])
+      setCwPicked(null)
+      setCwActive(null)
+      setCwOptions([])
+    } else if (currentStep.kind === 'memory') {
+      for (const item of currentStep.items) ensureIntroduced(item.wordId)
+      memMissed.current = new Set()
+      setMemSolved([])
+      setMemOpen([])
+      const cards: MemoryCard[] = shuffle(
+        currentStep.items.flatMap((item, i) => {
+          const w = wordById.get(item.wordId)!
+          return [
+            { id: i * 2, wordId: w.id, text: w.hebrew, he: true },
+            { id: i * 2 + 1, wordId: w.id, text: w.translation, he: false },
+          ]
+        }),
+        rng,
+      )
+      setMemCards(cards)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, currentStep, phase])
@@ -410,6 +476,19 @@ export default function SessionScreen(props: {
     advance(nextSteps)
   }
 
+  const answerSentence = (i: number) => {
+    touch()
+    if (picked !== null || !sentEx) return
+    setPicked(i)
+    const correct = i === sentEx.correctIndex
+    // sentence recognition is practice: it trains reading, not the word SRS
+    dispatch({ type: 'practiceAnswer', correct, today })
+    setSessionAnswered((n) => n + 1)
+    if (correct) setSessionCorrect((n) => n + 1)
+    if (canSpeakHebrew()) speakHebrew(sentEx.reverse ? sentEx.prompt : sentEx.options[sentEx.correctIndex])
+    window.setTimeout(() => advance(steps), correct ? 900 : 2000)
+  }
+
   const showHint = () => {
     touch()
     const step = steps[idx]
@@ -443,7 +522,6 @@ export default function SessionScreen(props: {
         window.setTimeout(() => advance(steps), 600)
       }
     } else {
-      // both words involved in the mismatch are marked as misses
       mismatched.current.add(groupEx.pairs[pair].wordId)
       mismatched.current.add(groupEx.pairs[matchSel.pair].wordId)
       setMatchFlash(pair)
@@ -452,7 +530,7 @@ export default function SessionScreen(props: {
     }
   }
 
-  // bonus rounds (mixed mode)
+  // bonus match (mixed mode)
   const clickBonusMatch = (side: 'l' | 'r', pair: number) => {
     touch()
     if (!bonusMatch || matchDone.includes(pair)) return
@@ -471,6 +549,78 @@ export default function SessionScreen(props: {
       setMatchFlash(pair)
       window.setTimeout(() => setMatchFlash(null), 400)
       setMatchSel(null)
+    }
+  }
+
+  // --- crossword interactions ---
+  const openClue = (wordId: string) => {
+    touch()
+    const step = steps[idx]
+    if (step.kind !== 'crossword' || cwSolved.includes(wordId)) return
+    const word = wordById.get(wordId)!
+    setCwActive(wordId)
+    setCwPicked(null)
+    const choice = makeChoice(word, reverse ? 'recognition' : 'recall', words, rng, 8)
+    setCwOptions(choice.options)
+    setCwCorrect(choice.options[choice.correctIndex])
+    if (reverse && canSpeakHebrew()) speakHebrew(word.hebrew)
+  }
+
+  const answerCrossword = (option: string) => {
+    touch()
+    const step = steps[idx]
+    if (step.kind !== 'crossword' || !cwActive) return
+    const correct = option === cwCorrect
+    setCwPicked(option)
+    if (!cwDispatched.current.has(cwActive)) {
+      cwDispatched.current.add(cwActive)
+      const item = step.items.find((i) => i.wordId === cwActive)
+      if (item) dispatchAnswer(item, correct, 'choice')
+    }
+    if (correct) {
+      const word = wordById.get(cwActive)!
+      if (canSpeakHebrew()) speakHebrew(word.hebrew)
+      const solved = [...cwSolved, cwActive]
+      window.setTimeout(() => {
+        setCwSolved(solved)
+        setCwActive(null)
+        setCwPicked(null)
+        if (solved.length === step.puzzle.placements.length) {
+          window.setTimeout(() => advance(steps), 700)
+        }
+      }, 500)
+    } else {
+      window.setTimeout(() => setCwPicked(null), 600) // try again
+    }
+  }
+
+  // --- memory interactions ---
+  const flipMemory = (cardIdx: number) => {
+    touch()
+    const step = steps[idx]
+    if (step.kind !== 'memory') return
+    const card = memCards[cardIdx]
+    if (!card || memSolved.includes(card.wordId) || memOpen.includes(cardIdx) || memOpen.length >= 2) return
+    if (card.he) speakHebrew(card.text)
+    const open = [...memOpen, cardIdx]
+    setMemOpen(open)
+    if (open.length < 2) return
+    const [a, b] = open.map((i) => memCards[i])
+    if (a.wordId === b.wordId) {
+      const solved = [...memSolved, a.wordId]
+      window.setTimeout(() => {
+        setMemSolved(solved)
+        setMemOpen([])
+        const item = step.items.find((i) => i.wordId === a.wordId)
+        if (item) dispatchAnswer(item, !memMissed.current.has(a.wordId), 'choice')
+        if (solved.length === step.items.length) {
+          window.setTimeout(() => advance(steps), 700)
+        }
+      }, 500)
+    } else {
+      memMissed.current.add(a.wordId)
+      memMissed.current.add(b.wordId)
+      window.setTimeout(() => setMemOpen([]), 900)
     }
   }
 
@@ -552,6 +702,20 @@ export default function SessionScreen(props: {
       </div>
     )
   }
+
+  const header = (
+    <div className="progress">
+      <span>
+        {mode === 'practice' ? '🏋️ Practice · ' : ''}
+        {MODE_LABEL[studyMode]}
+        {reverse ? ' ↔' : ''}
+        {topic ? ` · ${topic}` : ''} · {Math.min(idx + 1, steps.length)}/{steps.length}
+      </span>
+      <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
+        End session
+      </button>
+    </div>
+  )
 
   if (phase === 'match-bonus' && bonusMatch) {
     return (
@@ -647,18 +811,31 @@ export default function SessionScreen(props: {
   const step = steps[idx]
   if (!step) return null
 
-  const header = (
-    <div className="progress">
-      <span>
-        {mode === 'practice' ? '🏋️ Practice · ' : ''}
-        {MODE_LABEL[studyMode]}
-        {topic ? ` · ${topic}` : ''} · {Math.min(idx + 1, steps.length)}/{steps.length}
-      </span>
-      <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
-        End session
-      </button>
-    </div>
-  )
+  if (step.kind === 'sent' && sentEx) {
+    return (
+      <>
+        {header}
+        <div className="panel card">
+          <div className={`prompt small ${sentEx.reverse ? 'he' : ''}`}>
+            {sentEx.prompt} {sentEx.reverse && <SpeakButton text={sentEx.prompt} />}
+          </div>
+          <div className="sub">{sentEx.reverse ? 'Pick the translation' : 'Pick the Hebrew sentence'}</div>
+          <div className="options sentence-options">
+            {sentEx.options.map((o, i) => (
+              <button
+                key={i}
+                className={`${sentEx.reverse ? '' : 'he'} ${picked !== null && i === sentEx.correctIndex ? 'correct' : picked === i ? 'wrong' : ''}`}
+                disabled={picked !== null}
+                onClick={() => answerSentence(i)}
+              >
+                {o}
+              </button>
+            ))}
+          </div>
+        </div>
+      </>
+    )
+  }
 
   if (step.kind === 'group' && groupEx) {
     return (
@@ -695,7 +872,121 @@ export default function SessionScreen(props: {
     )
   }
 
-  if (!ex || step.kind !== 'card') return header
+  if (step.kind === 'crossword') {
+    const { puzzle } = step
+    const cellMap = new Map<string, { letter: string; wordIds: string[]; num?: number }>()
+    for (const p of puzzle.placements) {
+      p.letters.forEach((letter, i) => {
+        const r = p.dir === 'h' ? p.row : p.row + i
+        const c = p.dir === 'h' ? p.col + i : p.col
+        const key = `${r},${c}`
+        const cell = cellMap.get(key) ?? { letter, wordIds: [] }
+        cell.wordIds.push(p.wordId)
+        if (i === 0 && cell.num === undefined) cell.num = p.num
+        cellMap.set(key, cell)
+      })
+    }
+    const activeWord = cwActive ? wordById.get(cwActive) : null
+    return (
+      <>
+        {header}
+        <div className="panel card">
+          <span className="badge">🔠 Crossword: solve every word</span>
+          <div className="cw-grid-wrap" dir="rtl">
+            <table className="cw-grid">
+              <tbody>
+                {Array.from({ length: puzzle.rows }, (_, r) => (
+                  <tr key={r}>
+                    {Array.from({ length: puzzle.cols }, (_, c) => {
+                      const cell = cellMap.get(`${r},${c}`)
+                      if (!cell) return <td key={c} className="cw-void" />
+                      const solved = cell.wordIds.some((id) => cwSolved.includes(id))
+                      const active = cwActive && cell.wordIds.includes(cwActive)
+                      return (
+                        <td
+                          key={c}
+                          className={`cw-cell ${solved ? 'solved' : ''} ${active ? 'active' : ''}`}
+                          onClick={() => openClue(cell.wordIds.find((id) => !cwSolved.includes(id)) ?? cell.wordIds[0])}
+                        >
+                          <span className="cw-num">{cell.num ?? ''}</span>
+                          <span className="cw-letter he">{solved ? cell.letter : ''}</span>
+                        </td>
+                      )
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="cw-clues">
+            {puzzle.placements.map((p) => {
+              const w = wordById.get(p.wordId)!
+              const solved = cwSolved.includes(p.wordId)
+              return (
+                <button
+                  key={p.wordId}
+                  className={`cw-clue ${solved ? 'done' : ''} ${cwActive === p.wordId ? 'sel' : ''}`}
+                  onClick={() => openClue(p.wordId)}
+                  disabled={solved}
+                >
+                  {p.num}. {p.dir === 'h' ? '→' : '↓'}{' '}
+                  {reverse ? <span className="he">{w.hebrew}</span> : w.translation}
+                  {solved && ' ✓'}
+                </button>
+              )
+            })}
+          </div>
+          {activeWord && (
+            <div className="cw-answers">
+              <div className="sub">
+                {reverse
+                  ? <>Meaning of <b className="he">{activeWord.hebrew}</b>?</>
+                  : <>Which word is “{activeWord.translation}”?</>}
+              </div>
+              <div className="options sound-options">
+                {cwOptions.map((o) => (
+                  <button
+                    key={o}
+                    className={`${reverse ? '' : 'he'} ${cwPicked === o ? (o === cwCorrect ? 'correct' : 'wrong') : ''}`}
+                    onClick={() => answerCrossword(o)}
+                  >
+                    {o}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    )
+  }
+
+  if (step.kind === 'memory') {
+    return (
+      <>
+        {header}
+        <div className="panel card">
+          <span className="badge">🎴 Memory: find the pairs</span>
+          <div className="memory-grid">
+            {memCards.map((card, i) => {
+              const open = memOpen.includes(i) || memSolved.includes(card.wordId)
+              return (
+                <button
+                  key={card.id}
+                  className={`memory-card ${open ? 'open' : ''} ${memSolved.includes(card.wordId) ? 'done' : ''} ${card.he ? 'he' : ''}`}
+                  onClick={() => flipMemory(i)}
+                >
+                  {open ? card.text : '?'}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  if (step.kind !== 'card' || !ex) return header
   const newChip = isNewWord(step.item.wordId) && <span className="badge new">✨ new</span>
 
   if (hintWord) {

@@ -291,6 +291,45 @@ button.ghost.missed { border: 1px solid var(--red); color: var(--red); padding: 
 }
 .boxdots i.on { background: var(--blue); }
 
+/* Sentence choice: full-width stacked options */
+.sentence-options { grid-template-columns: 1fr; max-width: 700px; }
+.sentence-options button { font-size: 17px; }
+
+/* Crossword */
+.cw-grid-wrap { overflow-x: auto; margin: 14px 0; display: flex; justify-content: center; }
+.cw-grid { border-collapse: collapse; }
+.cw-grid td { width: 44px; height: 44px; padding: 0; }
+.cw-void { background: transparent; }
+.cw-cell {
+  background: var(--panel-2); border: 1px solid #3a4666; cursor: pointer; position: relative;
+  text-align: center;
+}
+.cw-cell.active { background: #1d3050; border-color: var(--blue); }
+.cw-cell.solved { background: #1f3a2a; }
+.cw-num { position: absolute; top: 1px; right: 3px; font-size: 9px; color: var(--muted); }
+.cw-letter { font-size: 22px; }
+.cw-clues { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 10px; }
+.cw-clue {
+  background: var(--panel-2); color: var(--text); border: 1px solid transparent;
+  border-radius: 8px; padding: 7px 12px; font-size: 14px; cursor: pointer;
+}
+.cw-clue.sel { border-color: var(--blue); }
+.cw-clue.done { opacity: 0.45; }
+.cw-answers { border-top: 1px solid #2a3547; padding-top: 12px; margin-top: 6px; }
+
+/* Memory */
+.memory-grid {
+  display: grid; grid-template-columns: repeat(4, minmax(90px, 150px)); gap: 10px;
+  justify-content: center; margin-top: 16px;
+}
+.memory-card {
+  aspect-ratio: 3/2; border-radius: 10px; border: 2px solid #3a4666;
+  background: var(--panel-2); color: var(--muted); font-size: 24px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 4px;
+}
+.memory-card.open { color: var(--text); font-size: 17px; border-color: var(--blue); }
+.memory-card.done { border-color: var(--green); opacity: 0.55; cursor: default; }
+
 .flash-good { animation: flashGood 0.2s; }
 .flash-bad { animation: flashBad 0.2s; }
 @keyframes flashGood { 50% { box-shadow: inset 0 0 0 3px var(--green); } }

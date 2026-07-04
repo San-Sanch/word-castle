@@ -29,7 +29,7 @@ export const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'דוד': 'דּוֹד', // uncle (dod) — otherwise read as the name David
   'דודה': 'דּוֹדָה', // aunt (doda)
   'מכתב': 'מִכְתָּב', // letter (mikhtav) — Dicta picked מַכְתֵּב (dictation machine)
-  'מים': 'מַֽיִם', // water — meteg marks the stress: MA-im, not ma-IM
+  'מים': 'מַיְם', // water — closing glide reads as one stressed syllable: MA-im
 }
 
 /**

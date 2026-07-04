@@ -8,7 +8,10 @@ const MODES: Array<[StudyMode, string, string]> = [
   ['flashcards', '🃏', 'Flashcards'],
   ['listening', '🎧', 'Listening'],
   ['matching', '🧩', 'Matching'],
-  ['sentences', '📝', 'Sentences'],
+  ['sentences', '💬', 'Sentences'],
+  ['blanks', '📝', 'Missing word'],
+  ['crossword', '🔠', 'Crossword'],
+  ['memory', '🎴', 'Memory'],
 ]
 
 const TOPIC_EMOJI: Record<string, string> = {
@@ -78,8 +81,9 @@ export default function LearnScreen(props: {
   onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
   onSetStudyMode: (mode: StudyMode) => void
+  onToggleReverse: () => void
 }) {
-  const { state, words, today, onStartSession, onSpeedRound, onSetStudyMode } = props
+  const { state, words, today, onStartSession, onSpeedRound, onSetStudyMode, onToggleReverse } = props
   const topics = topicInfos(words, state, today)
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
   const startedTotal = topics.reduce((n, t) => n + t.started, 0)
@@ -105,6 +109,13 @@ export default function LearnScreen(props: {
               </button>
             )
           })}
+          <button
+            className={`chip ${state.settings.reverse ? 'active' : ''}`}
+            title="Swap directions: prompts in English, answers in Hebrew"
+            onClick={onToggleReverse}
+          >
+            ↔ Reverse
+          </button>
         </div>
         <button className="primary big" onClick={() => onStartSession(null, planDone ? 'more-new' : 'normal')}>
           {planDone ? '➕ Keep learning' : '▶ Daily session'}
