@@ -28,6 +28,12 @@ test('hebrewToLatin: shin vs sin, tsadi, final letters', () => {
   assert.equal(hebrewToLatin('אֶרֶץ'), 'e-retz')
 })
 
+test('hebrewToLatin: tsere-yud is the ei diphthong', () => {
+  assert.equal(hebrewToLatin('אֵילוּ'), 'ei-lu')
+  assert.equal(hebrewToLatin('אֵיזֶה'), 'ei-ze')
+  assert.equal(hebrewToLatin('בֵּין'), 'bein')
+})
+
 test('hebrewToLatin: silent final he, initial shva', () => {
   assert.equal(hebrewToLatin('שָׁנָה'), 'sha-na')
   assert.equal(hebrewToLatin('שְׁנַיִם'), 'shna-yim')

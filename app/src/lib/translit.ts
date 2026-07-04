@@ -92,8 +92,10 @@ function romanizeWord(word: string): string {
       pieces.push({ cons: '', vowel: 'o' })
       continue
     }
-    // yud as part of hiriq/tsere male: absorbed into the previous vowel
-    if (g.letter === 'י' && !vowelMark && !dagesh && pieces.length && /[ie]/.test(pieces[pieces.length - 1].vowel)) {
+    // yud as part of hiriq/tsere male: absorbed into the previous vowel;
+    // after 'e' it forms the 'ei' diphthong (אֵיזֶה -> ei-ze)
+    if (g.letter === 'י' && !vowelMark && !dagesh && pieces.length && /^[ie]$/.test(pieces[pieces.length - 1].vowel)) {
+      if (pieces[pieces.length - 1].vowel === 'e') pieces[pieces.length - 1].vowel = 'ei'
       continue
     }
     // silent final he
