@@ -1095,7 +1095,8 @@ export default function SessionScreen(props: {
           <span className="badge">🏗️ Build the sentence</span>
           <div className={`prompt small ${reverse ? 'he' : ''}`} style={{ marginTop: 10 }}>
             {reverse ? step.sentence.hebrew : step.sentence.translation}
-            {reverse && <SpeakButton text={step.sentence.hebrew} />}
+            {/* hear the target sentence any time */}
+            <SpeakButton text={step.sentence.hebrew} />
           </div>
           <div className={`build-answer ${reverse ? '' : 'he'} ${done ? 'done' : ''}`}>
             {buildTokens.slice(0, buildProgress).map((t, i) => (
