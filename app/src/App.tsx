@@ -12,12 +12,14 @@ import {
   type ProfileMeta,
 } from './lib/storage'
 import { todayISO, computeStreak } from './lib/time'
-import { initSpeech, loadVocalized, type VocalizedMap } from './lib/speech'
+import { initSpeech, loadVocalized, loadStressOverrides, type VocalizedMap } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import vocalizedJson from './data/vocalized.json'
+import stressJson from './data/stress-overrides.json'
 
 loadVocalized(vocalizedJson as VocalizedMap)
+loadStressOverrides(stressJson as Record<string, string>)
 import LearnScreen from './ui/LearnScreen'
 import SessionScreen, { type SessionMode } from './ui/SessionScreen'
 import SpeedScreen from './ui/SpeedScreen'

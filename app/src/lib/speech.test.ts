@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { ttsNormalize, loadVocalized } from './speech.js'
+import { ttsNormalize, loadVocalized, loadStressOverrides } from './speech.js'
 
 test('ttsNormalize: drops parenthesized hints', () => {
   assert.equal(ttsNormalize('עובד/עובדת (ב)'), 'עובד, עובדת')
@@ -36,6 +36,17 @@ test('ttsNormalize: tsere-yud gets the glide shva everywhere', () => {
   assert.match(ttsNormalize('ביצה'), /\u05D9\u05B0/)
   // ba-yit: yud with its own vowel stays untouched
   assert.doesNotMatch(ttsNormalize('בית'), /\u05D9\u05B0/)
+  loadVocalized({ full: {}, tokens: {} })
+})
+
+test('stress overrides apply by skeleton, even inside full-sentence matches', () => {
+  loadVocalized({ full: { 'יש לי כסף': 'יֵשׁ לִי כֶּסֶף' }, tokens: {} })
+  loadStressOverrides({ 'כסף': 'כֶּאסֶף' })
+  assert.ok(ttsNormalize('יש לי כסף').includes('כֶּאסֶף')) // KE-sef inside the sentence
+  // manual overrides beat stress overrides
+  loadStressOverrides({ 'דוד': 'דָּוִד' })
+  assert.equal(ttsNormalize('דוד'), 'דּוֹד')
+  loadStressOverrides({})
   loadVocalized({ full: {}, tokens: {} })
 })
 

@@ -30,6 +30,12 @@ existing rows), run this full pipeline from `word-castle/app/`.
 5. **Transcriptions**: `node scripts/transliterate.mjs`
    - Hand-written transliterations from the categorized CSV win; the rest are
      romanized from the vocalized forms. Vowel-less garbage is dropped.
+6. **Stress fixes (local Mac only)**: `node scripts/fix-stress.mjs`
+   - Finds words whose CAPS-marked stressed syllable (from the transliterations)
+     is not final, builds aleph-respelling candidates, renders BOTH spellings
+     through `say -v Carmit` and keeps only candidates that measurably shift
+     the audio weight. Writes `src/data/stress-overrides.json`.
+   - Slow (~2 renders per mil'el word). Needs the Carmit voice installed.
 6. **Checks**: `npm test && npx tsc --noEmit && npx vite build` — all green.
 7. **Spot checks** (read the script outputs):
    - uncle = `dod`, breakfast = `a-ru-KHAT BO-ker`
