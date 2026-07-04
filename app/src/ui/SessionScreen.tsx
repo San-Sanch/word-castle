@@ -260,6 +260,9 @@ export default function SessionScreen(props: {
   const [sessionCorrect, setSessionCorrect] = useState(0)
   const [answeredWordIds, setAnsweredWordIds] = useState<string[]>([])
   const masteredAtStart = useRef(todayLog(state, today).graduated)
+  // steps array as of the latest requeue: state updates are async, so handlers
+  // that advance after a requeue must not read the stale `steps` closure
+  const stepsAfterRequeue = useRef<Step[] | null>(null)
 
   // --- match group state ---
   const [groupEx, setGroupEx] = useState<MatchExercise | null>(null)
@@ -561,7 +564,7 @@ export default function SessionScreen(props: {
     setHintWord(word)
     if (canSpeakHebrew()) speakHebrew(word.hebrew)
     dispatchAnswer(step.item, false, 'choice')
-    requeue(step.item)
+    stepsAfterRequeue.current = requeue(step.item)
   }
 
   // matching-mode group interactions: each completed pair is an SRS answer
@@ -1213,7 +1216,15 @@ export default function SessionScreen(props: {
         <div className="panel card newword">
           <span className="badge">🛈 Here it is — it will come back soon</span>
           <WordInfo word={hintWord} />
-          <button className="primary" onClick={() => { touch(); advance(steps) }}>
+          <button
+            className="primary"
+            onClick={() => {
+              touch()
+              const next = stepsAfterRequeue.current ?? steps
+              stepsAfterRequeue.current = null
+              advance(next)
+            }}
+          >
             Continue →
           </button>
         </div>
