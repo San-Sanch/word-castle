@@ -747,6 +747,20 @@ export default function SessionScreen(props: {
 
   const log = todayLog(state, today)
 
+  /** Compact post-answer reveal for audio exercises: word + transcription + meaning. */
+  const AnswerReveal = ({ wordId }: { wordId: string }) => {
+    const word = wordById.get(wordId)
+    if (!word) return null
+    const tr = TRANSLIT[word.id]
+    return (
+      <div className="answer-reveal">
+        <span className="he">{word.hebrew}</span>
+        {tr && <span className="translit"> {tr.he}</span>}
+        <span> — {word.translation}</span>
+      </div>
+    )
+  }
+
   const WordInfo = ({ word }: { word: Word }) => {
     const tr = TRANSLIT[word.id]
     return (
@@ -872,6 +886,7 @@ export default function SessionScreen(props: {
             </button>
           ))}
         </div>
+        {soundPicked !== null && <AnswerReveal wordId={q.wordId} />}
       </div>
     )
   }
@@ -1255,6 +1270,7 @@ export default function SessionScreen(props: {
               </button>
             ))}
           </div>
+          {picked !== null && <AnswerReveal wordId={ex.wordId} />}
           {hintButton}
         </div>
       </>
@@ -1296,6 +1312,7 @@ export default function SessionScreen(props: {
               </button>
             ))}
           </div>
+          {picked !== null && ex.audioOnly && <AnswerReveal wordId={ex.wordId} />}
           {hintButton}
         </div>
       </>
