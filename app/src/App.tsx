@@ -16,6 +16,7 @@ import { initSpeech } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import CastleScreen from './ui/CastleScreen'
+import { CoinIcon, BrickIcon, FlameIcon } from './ui/sprites'
 import SessionScreen from './ui/SessionScreen'
 import GuardianScreen from './ui/GuardianScreen'
 import StatsScreen from './ui/StatsScreen'
@@ -134,9 +135,9 @@ export default function App() {
             </option>
           ))}
         </select>
-        <span className="stat">🪙 {state.wallet.coins}</span>
-        <span className="stat">🧱 {state.wallet.bricks}</span>
-        <span className="stat">🔥 {streak}</span>
+        <span className="stat"><CoinIcon size={18} /> {state.wallet.coins}</span>
+        <span className="stat"><BrickIcon size={18} /> {state.wallet.bricks}</span>
+        <span className="stat"><FlameIcon size={18} /> {streak}</span>
         <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
           <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
         </div>
