@@ -17,3 +17,9 @@ test('ttsNormalize: plain words untouched, whitespace collapsed', () => {
   assert.equal(ttsNormalize('שלום'), 'שלום')
   assert.equal(ttsNormalize('  ארוחת   בוקר '), 'ארוחת בוקר')
 })
+
+test('ttsNormalize: ambiguous words get vowelized so the voice reads them right', () => {
+  assert.equal(ttsNormalize('דוד'), 'דּוֹד') // uncle, not the name David
+  assert.equal(ttsNormalize('דוד, דודה'), 'דּוֹד, דּוֹדָה')
+  assert.equal(ttsNormalize('דוד שלי'), 'דּוֹד שלי')
+})

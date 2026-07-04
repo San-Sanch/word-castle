@@ -21,9 +21,18 @@ export function canSpeakHebrew(): boolean {
 }
 
 /**
+ * Unvocalized Hebrew is ambiguous; the system voice sometimes picks the wrong
+ * reading. Vowelized overrides force the intended one. Extend as more are found.
+ */
+const PRONUNCIATION_OVERRIDES: Record<string, string> = {
+  'דוד': 'דּוֹד', // uncle (dod) — otherwise read as the name David
+  'דודה': 'דּוֹדָה', // aunt (doda)
+}
+
+/**
  * Prepares dictionary entries for speech: "עובד/עובדת (ב)" is written for the eye,
- * not the voice. Parenthesized grammar hints are dropped and slash-separated forms
- * become comma pauses.
+ * not the voice. Parenthesized grammar hints are dropped, slash-separated forms
+ * become comma pauses, and known-ambiguous words are vowelized.
  */
 export function ttsNormalize(text: string): string {
   return text
@@ -32,6 +41,12 @@ export function ttsNormalize(text: string): string {
     .replace(/\s+/g, ' ')
     .replace(/\s*,\s*$/g, '')
     .trim()
+    .split(' ')
+    .map((token) => {
+      const m = token.match(/^(.*?)(,?)$/)!
+      return (PRONUNCIATION_OVERRIDES[m[1]] ?? m[1]) + m[2]
+    })
+    .join(' ')
 }
 
 export function speakHebrew(text: string): boolean {

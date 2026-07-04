@@ -30,24 +30,44 @@ export interface ChoiceExercise {
   correctIndex: number
 }
 
-/** Distractor preference: same category + same translation language, then same language, then any. */
-export function makeChoice(word: Word, direction: Direction, pool: Word[], rng: () => number): ChoiceExercise {
+const tokenCount = (s: string) => s.trim().split(/\s+/).length
+
+/**
+ * Wrong options must not give themselves away by shape: a single-word answer
+ * gets single-word distractors; phrases get similar-length phrases (±1 token).
+ */
+function shapeCompatible(answer: string, candidate: string): boolean {
+  const a = tokenCount(answer)
+  const c = tokenCount(candidate)
+  return a === 1 ? c === 1 : Math.abs(a - c) <= 1
+}
+
+/** Distractor preference: same category + shape, then same shape, then anything. */
+export function makeChoice(
+  word: Word,
+  direction: Direction,
+  pool: Word[],
+  rng: () => number,
+  count = 4,
+): ChoiceExercise {
   const answer = direction === 'recognition' ? word.translation : word.hebrew
   const textOf = (w: Word) => (direction === 'recognition' ? w.translation : w.hebrew)
   const candidates = pool.filter((w) => w.id !== word.id && textOf(w) !== answer)
+  const inShape = candidates.filter((w) => shapeCompatible(answer, textOf(w)))
   const tiers = [
-    candidates.filter((w) => w.category === word.category && w.translationLang === word.translationLang),
-    candidates.filter((w) => w.translationLang === word.translationLang),
-    candidates,
+    inShape.filter((w) => w.category === word.category && w.translationLang === word.translationLang),
+    inShape.filter((w) => w.translationLang === word.translationLang),
+    inShape,
+    candidates, // last resort: tiny pools may have to break shape
   ]
   const picked: string[] = []
   for (const tier of tiers) {
     for (const w of shuffle(tier, rng)) {
       const text = textOf(w)
-      if (picked.length >= 3) break
+      if (picked.length >= count - 1) break
       if (!picked.includes(text)) picked.push(text)
     }
-    if (picked.length >= 3) break
+    if (picked.length >= count - 1) break
   }
   const options = shuffle([answer, ...picked], rng)
   return {
@@ -140,17 +160,21 @@ export function hebrewSimilarity(a: string, b: string): number {
   return prefix * 2 + overlap * 3 + lengthCloseness
 }
 
-/** Hear the word, pick it among 6 similar-looking/sounding Hebrew words. */
-export function makeSoundMatch(word: Word, pool: Word[], rng: () => number): SoundExercise {
-  const candidates = pool
-    .filter((w) => w.id !== word.id && w.hebrew !== word.hebrew)
-    .map((w) => ({ w, score: hebrewSimilarity(word.hebrew, w.hebrew) }))
-    .sort((a, b) => b.score - a.score)
-  const topPool = candidates.slice(0, 12)
+/** Hear the word, pick it among similar-looking/sounding Hebrew words (8 options). */
+export function makeSoundMatch(word: Word, pool: Word[], rng: () => number, count = 8): SoundExercise {
+  const base = pool.filter((w) => w.id !== word.id && w.hebrew !== word.hebrew)
+  const inShape = base.filter((w) => shapeCompatible(word.hebrew, w.hebrew))
+  const ranked = (list: Word[]) =>
+    list
+      .map((w) => ({ w, score: hebrewSimilarity(word.hebrew, w.hebrew) }))
+      .sort((a, b) => b.score - a.score)
   const picked: string[] = []
-  for (const { w } of shuffle(topPool, rng)) {
-    if (picked.length >= 5) break
-    if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+  for (const source of [ranked(inShape).slice(0, count * 2 + 4), ranked(base)]) {
+    for (const { w } of shuffle(source, rng)) {
+      if (picked.length >= count - 1) break
+      if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+    }
+    if (picked.length >= count - 1) break
   }
   const options = shuffle([word.hebrew, ...picked], rng)
   return {

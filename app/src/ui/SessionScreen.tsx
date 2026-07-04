@@ -217,7 +217,7 @@ export default function SessionScreen(props: {
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: item.direction }
     if (studyMode === 'listening') {
       if (item.direction === 'recall') return makeSoundMatch(word, words, rng)
-      return { ...makeChoice(word, 'recognition', words, rng), audioOnly: true }
+      return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
     }
     const review = state.reviews.find((r) => r.wordId === item.wordId && r.direction === item.direction)
     const box = review?.box ?? 0
@@ -230,7 +230,7 @@ export default function SessionScreen(props: {
       const kind = kinds[Math.floor(rng() * kinds.length)]
       if (kind === 'flash') return { kind: 'flash', word, direction: item.direction }
       if (kind === 'sound') return makeSoundMatch(word, words, rng)
-      if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng), audioOnly: true }
+      if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
       if (kind === 'blank') {
         const pick = withSentence[Math.floor(rng() * withSentence.length)]
         return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
@@ -759,7 +759,7 @@ export default function SessionScreen(props: {
               <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the Hebrew word'}</div>
             </>
           )}
-          <div className="options">
+          <div className={`options ${ex.audioOnly ? 'sound-options' : ''}`}>
             {ex.options.map((o, i) => (
               <button
                 key={i}

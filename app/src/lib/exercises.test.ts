@@ -40,6 +40,40 @@ test('makeChoice: small pools still produce 4 unique options or fewer without cr
   assert.equal(new Set(ex.options).size, ex.options.length)
 })
 
+test('makeChoice: option count is configurable (8 for listening)', () => {
+  const big = Array.from({ length: 20 }, (_, i) => W(String(i + 10)))
+  const ex = makeChoice(big[0], 'recognition', big, mulberry32(4), 8)
+  assert.equal(ex.options.length, 8)
+  assert.equal(new Set(ex.options).size, 8)
+})
+
+test('makeChoice: single-word answers never get phrase distractors', () => {
+  const target = W('t', { translation: 'uncle' })
+  const phrases = [
+    W('p1', { translation: 'this is a long sentence' }),
+    W('p2', { translation: 'I am having a great time' }),
+    W('p3', { translation: 'bon appetit friend' }),
+  ]
+  const singles = [W('s1', { translation: 'aunt' }), W('s2', { translation: 'cousin' }), W('s3', { translation: 'nephew' })]
+  const ex = makeChoice(target, 'recognition', [target, ...phrases, ...singles], mulberry32(2))
+  for (const o of ex.options) {
+    assert.equal(o.trim().split(/\s+/).length, 1, `phrase leaked into options: "${o}"`)
+  }
+})
+
+test('makeChoice: phrase answers prefer similar-length distractors', () => {
+  const target = W('t', { translation: 'good morning friend' })
+  const mixed = [
+    W('a', { translation: 'see you later everyone' }),
+    W('b', { translation: 'have a nice day' }),
+    W('c', { translation: 'yes' }),
+    W('d', { translation: 'good evening dear friend' }),
+  ]
+  const ex = makeChoice(target, 'recognition', [target, ...mixed], mulberry32(3))
+  // 'yes' (1 token vs 3) is out of shape; with enough close candidates it stays out
+  assert.ok(!ex.options.includes('yes'), ex.options.join(','))
+})
+
 test('makeBlank: blanks the matched token, options include the word', () => {
   const words = [W('1', { hebrew: 'עברית' }), W('2', { hebrew: 'יין' }), W('3'), W('4')]
   const s: Sentence = {
