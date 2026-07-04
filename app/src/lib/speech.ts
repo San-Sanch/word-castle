@@ -28,8 +28,9 @@ export function canSpeakHebrew(): boolean {
 const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'דוד': 'דּוֹד', // uncle (dod) — otherwise read as the name David
   'דודה': 'דּוֹדָה', // aunt (doda)
-  // the voice flattens tsere-yud to plain 'e'; double-yud forces the 'ei' glide
-  'אילו': 'אֵיילוּ', // which (pl.) — ei-lu, not e-lu
+  // the voice flattens tsere-yud to plain 'e'; an explicit shva on the yud
+  // makes it a closing glide: ei-lu (double-yud read as an extra syllable)
+  'אילו': 'אֵיְלוּ', // which (pl.) — ei-lu, not e-lu / e-ai-lu
 }
 
 export interface VocalizedMap {

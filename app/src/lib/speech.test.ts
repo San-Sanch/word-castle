@@ -26,7 +26,7 @@ test('ttsNormalize: ambiguous words get vowelized so the voice reads them right'
 
 test('ttsNormalize: tokens with trailing punctuation still get vocalized', () => {
   loadVocalized({ full: {}, tokens: { 'איזו': 'אֵיזוֹ' } })
-  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה, אֵיזוֹ, אֵיילוּ?')
+  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה, אֵיזוֹ, אֵיְלוּ?')
   loadVocalized({ full: {}, tokens: {} })
 })
 
