@@ -143,7 +143,9 @@ export default function WorldBoard(props: {
     const dx = (e.clientX - drag.current.x) * s
     const dy = (e.clientY - drag.current.y) * s
     drag.current.moved = Math.max(drag.current.moved, Math.abs(dx) + Math.abs(dy))
-    setCamera((c) => ({ ...c, panX: drag.current!.start.panX + dx, panY: drag.current!.start.panY + dy }))
+    // capture now: drag.current may be nulled by pointer-up before the updater runs
+    const { panX, panY } = drag.current.start
+    setCamera((c) => ({ ...c, panX: panX + dx, panY: panY + dy }))
   }
   const onPointerUp = () => {
     lastDragMoved.current = drag.current?.moved ?? 0
