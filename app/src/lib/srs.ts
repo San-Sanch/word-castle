@@ -48,8 +48,10 @@ export function buildSessionPlan(args: {
   introducedToday: number
   /** limit the session to one word category */
   topic?: string | null
+  /** the daily new-word cap is a pace guide, not a wall: let the learner push past it */
+  ignoreNewLimit?: boolean
 }): SessionPlan {
-  const { words, states, today, settings, introducedToday, topic } = args
+  const { words, states, today, settings, introducedToday, topic, ignoreNewLimit } = args
   const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
   const due = states
     .filter((s) => s.dueAt <= today && (!inTopic || inTopic.has(s.wordId)))
@@ -58,7 +60,7 @@ export function buildSessionPlan(args: {
 
   const known = new Set(states.map((s) => s.wordId))
   const room = Math.max(0, settings.sessionSize - due.length)
-  const newAllowance = Math.max(0, settings.newWordsPerDay - introducedToday)
+  const newAllowance = ignoreNewLimit ? Infinity : Math.max(0, settings.newWordsPerDay - introducedToday)
   const newWordIds = words
     .filter((w) => !known.has(w.id) && (!inTopic || inTopic.has(w.id)))
     .slice(0, Math.min(room, newAllowance))

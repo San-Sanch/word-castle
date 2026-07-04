@@ -162,6 +162,18 @@ test('raidCheck: fresh state never raids', () => {
   assert.equal(s.attacks.length, 0)
 })
 
+test('practiceAnswer: counts toward day stats without touching SRS', () => {
+  let s = withReview(initialGameState(), 'w1', 3, 'recognition')
+  s = gameReducer(s, { type: 'practiceAnswer', correct: true, today: T })
+  s = gameReducer(s, { type: 'practiceAnswer', correct: false, today: T })
+  const log = todayLog(s, T)
+  assert.equal(log.cardsAnswered, 2)
+  assert.equal(log.correct, 1)
+  assert.equal(log.mistakes, 1)
+  assert.equal(s.reviews[0].box, 3) // untouched
+  assert.equal(s.tick, 0) // practice does not tick the (dormant) world either
+})
+
 test('coins never go negative', () => {
   let s = { ...initialGameState(), wallet: { coins: 10, bricks: 0, wood: 0, stone: 0, food: 0 } }
   s = gameReducer(s, { type: 'applyAttack', kind: 'session', severity: 5, defense: 0, result: 'coin-loss', coinsDelta: -50, ruin: false, today: T })

@@ -138,6 +138,7 @@ export type GameAction =
       combo?: number
       today: string
     }
+  | { type: 'practiceAnswer'; correct: boolean; today: string }
   | { type: 'bonusCoins'; amount: number; today: string }
   | { type: 'activeTime'; seconds: number; today: string }
   | { type: 'build'; itemType: CastleItemType; x: number; y: number; nowIso: string }
@@ -222,6 +223,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       )
       // learning drives time: the world advances one tick per answered card
       return advanceWorld(next)
+    }
+
+    case 'practiceAnswer': {
+      // extra reps outside the schedule: counted as effort, no SRS changes
+      const log = todayLog(state, action.today)
+      return upsertLog(state, {
+        ...log,
+        cardsAnswered: log.cardsAnswered + 1,
+        correct: log.correct + (action.correct ? 1 : 0),
+        mistakes: log.mistakes + (action.correct ? 0 : 1),
+      })
     }
 
     case 'bonusCoins': {

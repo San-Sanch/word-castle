@@ -30,6 +30,8 @@ type CurrentEx = { kind: 'intro'; word: Word } | ChoiceExercise | BlankExercise
 
 type Phase = 'cards' | 'match' | 'sound' | 'summary' | 'empty'
 
+export type SessionMode = 'normal' | 'more-new' | 'practice'
+
 const SOUND_QUESTIONS = 5
 
 function SpeakButton(props: { text: string }) {
@@ -54,9 +56,12 @@ export default function SessionScreen(props: {
   words: Word[]
   sentences: Sentence[]
   topic: string | null
+  mode: SessionMode
   onExit: () => void
+  onMoreNew: () => void
+  onPractice: () => void
 }) {
-  const { state, dispatch, words, sentences, topic, onExit } = props
+  const { state, dispatch, words, sentences, topic, mode, onExit, onMoreNew, onPractice } = props
   const today = todayISO()
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
@@ -73,6 +78,15 @@ export default function SessionScreen(props: {
   }, [sentences])
 
   const [items, setItems] = useState<QueueItem[]>(() => {
+    if (mode === 'practice') {
+      // weakest words first, off the schedule, no SRS effect
+      const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
+      return state.reviews
+        .filter((r) => !inTopic || inTopic.has(r.wordId))
+        .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
+        .slice(0, state.settings.sessionSize)
+        .map((s) => ({ wordId: s.wordId, direction: s.direction, intro: false, firstTry: true }))
+    }
     const plan = buildSessionPlan({
       words,
       states: state.reviews,
@@ -80,6 +94,7 @@ export default function SessionScreen(props: {
       settings: state.settings,
       introducedToday: introducedTodayCount(state, today),
       topic,
+      ignoreNewLimit: mode === 'more-new',
     })
     const due: QueueItem[] = plan.dueStates.map((s) => ({
       wordId: s.wordId,
@@ -216,15 +231,19 @@ export default function SessionScreen(props: {
     setPicked(i)
     const item = items[idx]
     const correct = i === ex.correctIndex
-    dispatch({
-      type: 'answer',
-      wordId: item.wordId,
-      direction: item.direction,
-      correct,
-      firstTry: item.firstTry,
-      rewardKind: ex.kind === 'blank' ? 'blank' : 'choice',
-      today,
-    })
+    if (mode === 'practice') {
+      dispatch({ type: 'practiceAnswer', correct, today })
+    } else {
+      dispatch({
+        type: 'answer',
+        wordId: item.wordId,
+        direction: item.direction,
+        correct,
+        firstTry: item.firstTry,
+        rewardKind: ex.kind === 'blank' ? 'blank' : 'choice',
+        today,
+      })
+    }
     setSessionAnswered((n) => n + 1)
     if (correct) setSessionCorrect((n) => n + 1)
     setAnsweredWordIds((list) => [...list, item.wordId])
@@ -285,14 +304,30 @@ export default function SessionScreen(props: {
   // ---------- render ----------
 
   if (phase === 'empty') {
+    const started = new Set(state.reviews.map((r) => r.wordId))
+    const scope = topic ? words.filter((w) => w.category === topic) : words
+    const unstartedLeft = scope.filter((w) => !started.has(w.id)).length
+    const startedInScope = scope.filter((w) => started.has(w.id)).length
     return (
       <div className="panel card">
-        <p>
-          {topic
-            ? `Nothing to do in “${topic}” right now: no due reviews and the daily new-word limit is used up.`
-            : 'Nothing due and no new words available. Come back tomorrow!'}
+        <p className="prompt small">Daily plan for {topic ? `“${topic}”` : 'today'} is done ✅</p>
+        <p className="muted">
+          The daily new-word pace ({state.settings.newWordsPerDay}/day, adjustable in Settings) is
+          used up and nothing is due for review. But nobody is stopping you:
         </p>
-        <button className="primary" onClick={onExit}>Back</button>
+        <div className="row-gap" style={{ justifyContent: 'center' }}>
+          {unstartedLeft > 0 && (
+            <button className="primary" onClick={onMoreNew}>
+              ➕ Learn more new words ({unstartedLeft} left{topic ? ' here' : ''})
+            </button>
+          )}
+          {startedInScope > 0 && (
+            <button className="ghost" onClick={onPractice}>
+              🏋️ Extra practice (weakest words)
+            </button>
+          )}
+          <button className="ghost" onClick={onExit}>Back</button>
+        </div>
       </div>
     )
   }
@@ -395,7 +430,8 @@ export default function SessionScreen(props: {
     <>
       <div className="progress">
         <span>
-          {topic ? `📖 ${topic}` : 'Session'} · card {Math.min(idx + 1, items.length)}/{items.length}
+          {mode === 'practice' ? '🏋️ Practice' : topic ? `📖 ${topic}` : 'Session'} · card{' '}
+          {Math.min(idx + 1, items.length)}/{items.length}
         </span>
         <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
           End session

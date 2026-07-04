@@ -65,7 +65,7 @@ export default function LearnScreen(props: {
   state: GameState
   words: Word[]
   today: string
-  onStartSession: (topic: string | null) => void
+  onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
 }) {
   const { state, words, today, onStartSession, onSpeedRound } = props
@@ -73,17 +73,21 @@ export default function LearnScreen(props: {
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
   const startedTotal = topics.reduce((n, t) => n + t.started, 0)
   const canSpeed = startedTotal >= 8
+  const introducedToday = state.reviews.filter((r) => r.direction === 'recognition' && r.introducedAt === today).length
+  const planDone = dueTotal === 0 && introducedToday >= state.settings.newWordsPerDay
 
   return (
     <>
       <div className="panel center hero">
-        <button className="primary big" onClick={() => onStartSession(null)}>
-          ▶ Daily session
+        <button className="primary big" onClick={() => onStartSession(null, planDone ? 'more-new' : 'normal')}>
+          {planDone ? '➕ Keep learning' : '▶ Daily session'}
         </button>
         <p className="muted" style={{ marginBottom: 0 }}>
           {dueTotal > 0
             ? `${dueTotal} words are waiting for review · new words from all topics`
-            : 'Nothing due right now — start to pick up new words'}
+            : planDone
+              ? `Daily plan done (${introducedToday} new words) — keep going as long as you like`
+              : 'Nothing due right now — start to pick up new words'}
         </p>
         {canSpeed && (
           <button className="ghost" style={{ marginTop: 10 }} onClick={onSpeedRound}>

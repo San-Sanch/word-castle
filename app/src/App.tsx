@@ -16,7 +16,7 @@ import { initSpeech } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import LearnScreen from './ui/LearnScreen'
-import SessionScreen from './ui/SessionScreen'
+import SessionScreen, { type SessionMode } from './ui/SessionScreen'
 import SpeedScreen from './ui/SpeedScreen'
 import StatsScreen from './ui/StatsScreen'
 import SettingsScreen from './ui/SettingsScreen'
@@ -33,6 +33,7 @@ export default function App() {
   const [loaded, setLoaded] = useState(false)
   const [screen, setScreen] = useState<Screen>('learn')
   const [topic, setTopic] = useState<string | null>(null)
+  const [sessionMode, setSessionMode] = useState<SessionMode>('normal')
   const [sessionNonce, setSessionNonce] = useState(0)
   const saveTimer = useRef<number | null>(null)
   const stateRef = useRef(state)
@@ -96,8 +97,9 @@ export default function App() {
   const goalPct = Math.min(100, Math.round((log.activeSeconds / goalSec) * 100))
   const streak = computeStreak(state.dayLogs, today)
 
-  const startSession = (t: string | null) => {
+  const startSession = (t: string | null, mode: SessionMode = 'normal') => {
     setTopic(t)
+    setSessionMode(mode)
     setSessionNonce((n) => n + 1)
     setScreen('session')
   }
@@ -141,13 +143,16 @@ export default function App() {
       )}
       {screen === 'session' && (
         <SessionScreen
-          key={`${profile}-${topic ?? 'all'}-${sessionNonce}`}
+          key={`${profile}-${topic ?? 'all'}-${sessionMode}-${sessionNonce}`}
           state={state}
           dispatch={dispatch}
           words={WORDS}
           sentences={SENTENCES}
           topic={topic}
+          mode={sessionMode}
           onExit={() => setScreen('learn')}
+          onMoreNew={() => startSession(topic, 'more-new')}
+          onPractice={() => startSession(topic, 'practice')}
         />
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={WORDS} onExit={() => setScreen('learn')} />}

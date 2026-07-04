@@ -84,6 +84,17 @@ test('buildSessionPlan: topic filter narrows due reviews and new words', () => {
   assert.deepEqual(plan.newWordIds, ['c'])
 })
 
+test('buildSessionPlan: ignoreNewLimit keeps serving new words past the daily cap', () => {
+  const words = [W('a'), W('b'), W('c'), W('d')]
+  const plan = buildSessionPlan({
+    words, states: [], today: '2026-07-04',
+    settings: { sessionSize: 3, newWordsPerDay: 1 },
+    introducedToday: 5,
+    ignoreNewLimit: true,
+  })
+  assert.deepEqual(plan.newWordIds, ['a', 'b', 'c']) // sessionSize still caps it
+})
+
 test('buildSessionPlan: respects sessionSize and introducedToday', () => {
   const words = [W('a'), W('b'), W('c')]
   const states: ReviewState[] = [
