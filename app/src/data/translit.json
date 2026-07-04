@@ -203,9 +203,6 @@
  "12o9sh0": {
   "he": "a-ru-KHAT BO-ker"
  },
- "vhyyvm": {
-  "he": "a-ru-khat tzvhvryym"
- },
  "19s11fd": {
   "he": "a-ru-KHAT E-rev"
  },
@@ -447,14 +444,10 @@
   "he": "sin"
  },
  "1ltneud": {
-  "he": "SHE-kel",
-  "plural": "shka-lim, shkh"
+  "he": "SHE-kel"
  },
  "10rwj5r": {
   "he": "KE-sef"
- },
- "1o5cp3d": {
-  "he": "ke-sef mzu-man, mzvmnym"
  },
  "1yd06b4": {
   "he": "ka-rtis",
@@ -476,7 +469,7 @@
   "he": "EY-fo?"
  },
  "gvc1lm": {
-  "he": "e-ze, yzv, ylv"
+  "he": "e-ze, e-zo, e-lu"
  },
  "xwf6lr": {
   "he": "le-AN?"
@@ -591,11 +584,17 @@
   "he": "a-ni ro-tze ta-frit",
   "plural": "be-va-ka-SHA"
  },
+ "s4mtzo": {
+  "he": "m"
+ },
  "1sxpwt9": {
   "he": "le"
  },
  "17o85n1": {
   "he": "be"
+ },
+ "tlp1oj": {
+  "he": "v"
  },
  "1fhpid8": {
   "he": "she"
@@ -911,9 +910,6 @@
  "12pxyrv": {
   "he": "kha-DAR she-NA"
  },
- "13v3n45": {
-  "he": "kha-dar mvtyy"
- },
  "ri2p11": {
   "he": "she-ru-TIM"
  },
@@ -1100,9 +1096,6 @@
  },
  "uqdtwf": {
   "he": "ya-kar, yka-ra"
- },
- "d0qi3t": {
-  "he": "ya-rok, yrvk"
  },
  "fid99o": {
   "he": "ta-im, ti-ma"
@@ -2253,7 +2246,7 @@
   "he": "hu gar lyad ha-yam"
  },
  "12qqc6j": {
-  "he": "ma et o-se khshyv"
+  "he": "ma et o-se a-khshayv"
  },
  "vvenio": {
   "he": "lan at ho-le-khet"
@@ -2262,7 +2255,7 @@
   "he": "at ga-ra po"
  },
  "18t0mzb": {
-  "he": "a-ta ro-tze mitz khshyv"
+  "he": "a-ta ro-tze mitz a-khshayv"
  },
  "1dv1roy": {
   "he": "ha-yam"
@@ -2282,20 +2275,11 @@
  "1ej40dc": {
   "he": "e-fo a-tem ba-im"
  },
- "16n9mta": {
-  "he": "hu ish vhy i-sha"
- },
  "ivnsx1": {
   "he": "re-va la-khat e-sre"
  },
  "14h85l8": {
   "he": "rak ma-yim bva-ka-sha"
- },
- "1e2qkh1": {
-  "he": "e-le ta-lmi-dim vvlfn"
- },
- "e8wq0a": {
-  "he": "hyn hkf - to-da"
  },
  "1bt5l4d": {
   "he": "yesh po ha-rbe u-got"
@@ -2318,9 +2302,6 @@
  "1f7oze8": {
   "he": "sa-vla-nut"
  },
- "1w7d799": {
-  "he": "tik tk"
- },
  "121rh5q": {
   "he": "ha-yom yesh li ma-tzav ru-akh"
  },
@@ -2341,9 +2322,6 @@
  },
  "17t71fh": {
   "he": "ma ka-ra"
- },
- "3dbot1": {
-  "he": "yo-de-a sh"
  },
  "17wwnn2": {
   "he": "mta-rgmim"
@@ -2399,9 +2377,6 @@
  "14rp9m4": {
   "he": "i-ta-lya"
  },
- "4wzila": {
-  "he": "me-zeg vvyr"
- },
  "sigswa": {
   "he": "ya-mim"
  },
@@ -2419,9 +2394,6 @@
  },
  "1s2cbgo": {
   "he": "e-fo at ni-mtzet"
- },
- "18xz6m4": {
-  "he": "e-ze me-zeg vvyr"
  },
  "vw9i1g": {
   "he": "ha-yom v"
@@ -2549,9 +2521,6 @@
  "obsfwi": {
   "he": "a-hlan ta-lmi-dim"
  },
- "1o58hj6": {
-  "he": "bo-ker vr ta-lmi-dim"
- },
  "11rbfzl": {
   "he": "lo-med, lo-me-det, lo-mdim, lo-mdot"
  },
@@ -2581,12 +2550,6 @@
  },
  "1bwltzi": {
   "he": "ma-khar yi-hye yom"
- },
- "q1cc9r": {
-  "he": "sha-bat sha-lom vshlvv"
- },
- "19v0pvn": {
-  "he": "a-ni yyf"
  },
  "cgus7c": {
   "he": "yom shi-mshi"
@@ -2654,9 +2617,6 @@
  "1cf8tb": {
   "he": "ba, ba-a, ba-im, ba-ot"
  },
- "1jf5xoe": {
-  "he": "mgn dvyd a-dom"
- },
  "107ww3o": {
   "he": "mkha-be esh"
  },
@@ -2690,9 +2650,6 @@
  "sw8vqw": {
   "he": "la-ma ki"
  },
- "1dmyxgh": {
-  "he": "tzvhvryym to-vim ta-lmi-dim"
- },
  "72zu48": {
   "he": "yo-de-a, yo-da-at, yo-dim, yo-dot"
  },
@@ -2701,9 +2658,6 @@
  },
  "11smtts": {
   "he": "mi-tzta-er, mi-tzta-e-ret, mi-tzta-a-rim, mi-tzta-a-rot"
- },
- "1jm9evz": {
-  "he": "sha-bat sha-lom vshlvv"
  },
  "10ji09z": {
   "he": "a-ni mda-ber ba-pe-le-fon"
@@ -2801,9 +2755,6 @@
  "1n633mi": {
   "he": "mo-de-rni, mo-de-rnit, mo-de-rni-yim, mo-de-rni-yut"
  },
- "pmvhm9": {
-  "he": "sha-a mvkdmt"
- },
  "qjd765": {
   "he": "sa-vir"
  },
@@ -2851,9 +2802,6 @@
  },
  "10h2igh": {
   "he": "tza-ir, tzi-ra, tzi-rim, tzi-rot"
- },
- "1hxp951": {
-  "he": "mvu-gar, mvvgrt, mvvgrym, mvvgrvt"
  },
  "bn5hqu": {
   "he": "za-ken, zke-na, zke-nim, zke-not"

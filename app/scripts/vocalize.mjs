@@ -92,8 +92,9 @@ for (let i = 0; i < list.length; i += BATCH) {
       return
     }
     if (voc !== src) full.set(src, voc)
-    const srcTokens = src.replace(/,/g, '').split(/\s+/)
-    const vocTokens = voc.replace(/,/g, '').split(/\s+/)
+    const depunct = (s) => s.replace(/[,?.!:;]/g, '')
+    const srcTokens = depunct(src).split(/\s+/).filter(Boolean)
+    const vocTokens = depunct(voc).split(/\s+/).filter(Boolean)
     if (srcTokens.length === vocTokens.length) {
       srcTokens.forEach((t, k) => {
         if (t !== vocTokens[k] && !tokens.has(t)) tokens.set(t, vocTokens[k])

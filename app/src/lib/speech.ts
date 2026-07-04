@@ -59,7 +59,8 @@ export function ttsNormalize(text: string): string {
     .replace(/\s*,\s*$/g, '')
     .trim()
   const vocalizeToken = (token: string) => {
-    const m = token.match(/^(.*?)(,?)$/)!
+    // trailing punctuation (?, ., !, comma…) is not part of the word
+    const m = token.match(/^(.*?)([,?.!:;]*)$/)!
     const word = PRONUNCIATION_OVERRIDES[m[1]] ?? vocalized.tokens[m[1]] ?? m[1]
     return word + m[2]
   }

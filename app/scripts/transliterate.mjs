@@ -35,15 +35,16 @@ const vocalize = (text) => {
   return c
     .split(' ')
     .map((tok) => {
-      const m = tok.match(/^(.*?)(,?)$/)
+      const m = tok.match(/^(.*?)([,?.!:;]*)$/)
       return (vocalized.tokens[m[1]] ?? m[1]) + m[2]
     })
     .join(' ')
 }
 
 // a romanization without vowels means the source had no nikud: garbage like
-// "vvyr" — better to show nothing
-const usable = (tr) => tr && /[aeiou]/i.test(tr)
+// "vvyr" — better to show nothing. Every word of the result must have a vowel.
+const usable = (tr) =>
+  tr && tr.split(/[\s,]+/).filter((t) => t.length > 1).every((t) => /[aeiou]/i.test(t))
 
 const out = {}
 let fromManual = 0
