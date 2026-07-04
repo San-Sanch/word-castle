@@ -72,12 +72,20 @@ export function makeChoice(
     }
     if (picked.length >= count - 1) break
   }
-  // shape may be broken only to guarantee a minimally viable question
-  if (picked.length < 3) {
-    for (const w of shuffle(candidates, rng)) {
-      const text = textOf(w)
-      if (picked.length >= 3) break
-      if (!picked.includes(text)) picked.push(text)
+  // always fill to the full count: pad with the least conspicuous remaining
+  // words — closest token count first, then closest length
+  if (picked.length < count - 1) {
+    const rest = candidates
+      .map((w) => textOf(w))
+      .filter((text) => !picked.includes(text))
+      .map((text) => ({
+        text,
+        key: Math.abs(tokenCount(text) - tokenCount(answer)) * 1000 + Math.abs(text.length - answer.length) * 10 + rng(),
+      }))
+      .sort((a, b) => a.key - b.key)
+    for (const r of rest) {
+      if (picked.length >= count - 1) break
+      picked.push(r.text)
     }
   }
   const options = shuffle([answer, ...picked], rng)

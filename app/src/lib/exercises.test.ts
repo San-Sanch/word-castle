@@ -55,32 +55,28 @@ test('makeChoice: option count is configurable (8 for listening)', () => {
   assert.equal(new Set(ex.options).size, 8)
 })
 
-test('makeChoice: single-word answers never get phrase distractors', () => {
+test('makeChoice: single-word answers prefer single words, pad only when they run out', () => {
   const target = W('t', { translation: 'uncle' })
-  const phrases = [
-    W('p1', { translation: 'this is a long sentence' }),
-    W('p2', { translation: 'I am having a great time' }),
-    W('p3', { translation: 'bon appetit friend' }),
-  ]
-  const singles = [W('s1', { translation: 'aunt' }), W('s2', { translation: 'cousin' }), W('s3', { translation: 'nephew' })]
-  const ex = makeChoice(target, 'recognition', [target, ...phrases, ...singles], mulberry32(2))
-  // rather 4 clean options than 8 with conspicuous sentences
-  assert.equal(ex.options.length, 4)
-  for (const o of ex.options) {
-    assert.equal(o.trim().split(/\s+/).length, 1, `phrase leaked into options: "${o}"`)
-  }
+  const singles = Array.from({ length: 9 }, (_, i) => W(`s${i}`, { translation: `word${i}` }))
+  const phrases = [W('p1', { translation: 'this is a long sentence' })]
+  // plenty of single words: no phrase in the 8
+  const ex = makeChoice(target, 'recognition', [target, ...singles, ...phrases], mulberry32(2))
+  assert.equal(ex.options.length, 8)
+  assert.ok(!ex.options.includes('this is a long sentence'))
+  // too few single words: still 8 options, padded with the closest shapes
+  const small = makeChoice(target, 'recognition', [target, ...singles.slice(0, 3), ...phrases,
+    W('p2', { translation: 'have a nice day' }), W('p3', { translation: 'see you soon' }),
+    W('p4', { translation: 'bon appetit my dear friend' })], mulberry32(2))
+  assert.equal(small.options.length, 8)
+  for (const s of ['word0', 'word1', 'word2']) assert.ok(small.options.includes(s))
 })
 
-test('makeChoice: phrase answers prefer similar-length distractors', () => {
+test('makeChoice: phrase answers prefer similar-length distractors when available', () => {
   const target = W('t', { translation: 'good morning friend' })
-  const mixed = [
-    W('a', { translation: 'see you later everyone' }),
-    W('b', { translation: 'have a nice day' }),
-    W('c', { translation: 'yes' }),
-    W('d', { translation: 'good evening dear friend' }),
-  ]
-  const ex = makeChoice(target, 'recognition', [target, ...mixed], mulberry32(3))
-  // 'yes' (1 token vs 3) is out of shape; with enough close candidates it stays out
+  const close = Array.from({ length: 8 }, (_, i) => W(`c${i}`, { translation: `nice long phrase ${i}` }))
+  const ex = makeChoice(target, 'recognition', [target, ...close, W('y', { translation: 'yes' })], mulberry32(3))
+  assert.equal(ex.options.length, 8)
+  // 'yes' (1 token vs 3) stays out while enough close candidates exist
   assert.ok(!ex.options.includes('yes'), ex.options.join(','))
 })
 
