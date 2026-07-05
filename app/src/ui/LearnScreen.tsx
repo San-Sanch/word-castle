@@ -1,6 +1,7 @@
 import type { GameState } from '../lib/game'
 import type { StudyMode, Word } from '../lib/types'
 import { canSpeakHebrew } from '../lib/speech'
+import { REVERSIBLE_MODES } from './SessionScreen'
 
 const MODES: Array<[StudyMode, string, string]> = [
   ['mixed', '🎯', 'Smart mix'],
@@ -14,6 +15,7 @@ const MODES: Array<[StudyMode, string, string]> = [
   ['memory', '🎴', 'Memory'],
   ['builder', '🏗️', 'Builder'],
   ['story', '📚', 'Story'],
+  ['original', '🔍', 'Find original'],
 ]
 
 const TOPIC_EMOJI: Record<string, string> = {
@@ -111,13 +113,23 @@ export default function LearnScreen(props: {
               </button>
             )
           })}
-          <button
-            className={`chip ${state.settings.reverse ? 'active' : ''}`}
-            title="Swap directions: prompts in English, answers in Hebrew"
-            onClick={onToggleReverse}
+          <label
+            className={`switch ${REVERSIBLE_MODES.has(state.settings.studyMode) ? '' : 'disabled'}`}
+            title={
+              REVERSIBLE_MODES.has(state.settings.studyMode)
+                ? 'Swap directions: prompts in English, answers in Hebrew'
+                : 'This mode has no direction to swap'
+            }
           >
-            ↔ Reverse
-          </button>
+            <span className="switch-label">↔ Reverse</span>
+            <input
+              type="checkbox"
+              checked={state.settings.reverse}
+              disabled={!REVERSIBLE_MODES.has(state.settings.studyMode)}
+              onChange={onToggleReverse}
+            />
+            <span className="slider" />
+          </label>
         </div>
         <button className="primary big" onClick={() => onStartSession(null, planDone ? 'more-new' : 'normal')}>
           {planDone ? '➕ Keep learning' : '▶ Daily session'}

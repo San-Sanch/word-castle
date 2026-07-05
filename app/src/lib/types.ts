@@ -98,6 +98,7 @@ export type StudyMode =
   | 'memory'
   | 'builder'
   | 'story'
+  | 'original'
 
 export interface Settings {
   newWordsPerDay: number

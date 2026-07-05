@@ -54,3 +54,48 @@ test('makeSoundMatch: small pool yields fewer options without crash', () => {
   assert.ok(ex.options.length >= 2 && ex.options.length <= 6)
   assert.equal(ex.options[ex.correctIndex], 'שלום')
 })
+
+// --- find-the-original: near-miss spelling distractors ---
+import { makeFindOriginal } from './exercises.js'
+
+function levenshtein(a: string, b: string): number {
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)])
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1))
+  return dp[a.length][b.length]
+}
+
+test('makeFindOriginal: 8 unique options, distractors within 1-2 letter edits', () => {
+  const word = W('t', 'מחברת')
+  const ex = makeFindOriginal({ ...word, translation: 'notebook' }, mulberry32(5))
+  assert.equal(ex.kind, 'choice')
+  assert.equal(ex.direction, 'recall')
+  assert.equal(ex.prompt, 'notebook')
+  assert.equal(ex.options.length, 8)
+  assert.equal(new Set(ex.options).size, 8)
+  assert.equal(ex.options[ex.correctIndex], 'מחברת')
+  for (const o of ex.options) {
+    if (o === 'מחברת') continue
+    const d = levenshtein(o, 'מחברת')
+    assert.ok(d >= 1 && d <= 2, `distractor "${o}" is ${d} edits away`)
+  }
+})
+
+test('makeFindOriginal: final letters stay well-formed', () => {
+  const ex = makeFindOriginal({ ...W('t', 'שולחן'), translation: 'table' }, mulberry32(9))
+  for (const o of ex.options) {
+    // no final forms mid-word
+    assert.ok(!/[םןץףך]./.test(o), `internal final letter in "${o}"`)
+    // no non-final מנצפכ at the end
+    assert.ok(!/[מנצפכ]$/.test(o), `non-final ending in "${o}"`)
+  }
+})
+
+test('makeFindOriginal: deterministic per seed and works for short words', () => {
+  const a = makeFindOriginal({ ...W('t', 'בת'), translation: 'daughter' }, mulberry32(3))
+  const b = makeFindOriginal({ ...W('t', 'בת'), translation: 'daughter' }, mulberry32(3))
+  assert.deepEqual(a, b)
+  assert.ok(a.options.length >= 4)
+})

@@ -210,6 +210,107 @@ export function makeSoundMatch(word: Word, pool: Word[], rng: () => number, coun
   }
 }
 
+// ---------- find the original: near-miss spelling distractors ----------
+
+const FINAL_TO_REGULAR: Record<string, string> = { 'ם': 'מ', 'ן': 'נ', 'ץ': 'צ', 'ף': 'פ', 'ך': 'כ' }
+const REGULAR_TO_FINAL: Record<string, string> = { 'מ': 'ם', 'נ': 'ן', 'צ': 'ץ', 'פ': 'ף', 'כ': 'ך' }
+
+/** visually/phonetically confusable Hebrew letters */
+const SIMILAR_LETTERS: Record<string, string[]> = {
+  'ב': ['כ', 'נ', 'פ'],
+  'כ': ['ב', 'נ', 'פ'],
+  'נ': ['ב', 'כ', 'ג'],
+  'ג': ['נ', 'צ'],
+  'ח': ['ה', 'ת'],
+  'ה': ['ח', 'ת'],
+  'ת': ['ח', 'ה'],
+  'ד': ['ר'],
+  'ר': ['ד'],
+  'ו': ['י', 'ז', 'ן'],
+  'י': ['ו', 'ז'],
+  'ז': ['ו', 'י'],
+  'ס': ['ם', 'ט'],
+  'ט': ['ס', 'מ'],
+  'מ': ['ט', 'ס'],
+  'ע': ['א', 'צ'],
+  'א': ['ע'],
+  'צ': ['ע', 'ג'],
+  'ש': ['ט'],
+  'ל': ['ך'],
+  'ק': ['ר', 'ה'],
+  'פ': ['ב', 'כ'],
+}
+const ALEF_BET = 'אבגדהוזחטיכלמנסעפצקרשת'
+
+/** normalize final letters: regular forms inside, final forms at word ends */
+function fixFinals(text: string): string {
+  return text
+    .split(' ')
+    .map((word) => {
+      const chars = [...word].map((ch, i, arr) => {
+        const isLast = i === arr.length - 1
+        if (!isLast && FINAL_TO_REGULAR[ch]) return FINAL_TO_REGULAR[ch]
+        if (isLast && REGULAR_TO_FINAL[ch]) return REGULAR_TO_FINAL[ch]
+        return ch
+      })
+      return chars.join('')
+    })
+    .join(' ')
+}
+
+function mutateOnce(word: string, rng: () => number): string {
+  const chars = [...word.replace(/ /g, ' ')]
+  const letterIdxs = chars.map((c, i) => (/[א-ת]/.test(c) ? i : -1)).filter((i) => i >= 0)
+  if (letterIdxs.length < 2) return word
+  const op = Math.floor(rng() * 4)
+  const at = letterIdxs[Math.floor(rng() * letterIdxs.length)]
+  const regular = FINAL_TO_REGULAR[chars[at]] ?? chars[at]
+  if (op === 0 || op === 3) {
+    // substitute with a confusable letter
+    const cands = SIMILAR_LETTERS[regular] ?? []
+    const pick = cands.length ? cands[Math.floor(rng() * cands.length)] : ALEF_BET[Math.floor(rng() * ALEF_BET.length)]
+    if (pick === regular) return word
+    chars[at] = pick
+  } else if (op === 1) {
+    // swap adjacent letters
+    const pos = letterIdxs.findIndex((i) => i === at)
+    const next = letterIdxs[pos + 1] ?? letterIdxs[pos - 1]
+    if (next === undefined || chars[at] === chars[next]) return word
+    ;[chars[at], chars[next]] = [chars[next], chars[at]]
+  } else {
+    // insert a confusable letter next to an existing one
+    const cands = SIMILAR_LETTERS[regular] ?? [regular]
+    chars.splice(at + 1, 0, cands[Math.floor(rng() * cands.length)])
+  }
+  return fixFinals(chars.join(''))
+}
+
+/**
+ * English prompt, 8 Hebrew options: the real word plus near-misses that
+ * differ by only 1-2 letters. Trains exact spelling recognition.
+ */
+export function makeFindOriginal(word: Word, rng: () => number, count = 8): ChoiceExercise {
+  const original = word.hebrew
+  const distractors = new Set<string>()
+  for (let attempt = 0; attempt < 200 && distractors.size < count - 1; attempt++) {
+    let mutated = mutateOnce(original, rng)
+    if (rng() < 0.35) mutated = mutateOnce(mutated, rng)
+    mutated = fixFinals(mutated)
+    if (mutated !== original && !distractors.has(mutated) && /[א-ת]/.test(mutated)) {
+      distractors.add(mutated)
+    }
+  }
+  const options = shuffle([original, ...distractors], rng)
+  return {
+    kind: 'choice',
+    wordId: word.id,
+    direction: 'recall',
+    prompt: word.translation,
+    options,
+    correctIndex: options.indexOf(original),
+  }
+}
+
 export interface SentenceChoiceExercise {
   kind: 'sentchoice'
   sentenceId: string

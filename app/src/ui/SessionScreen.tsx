@@ -6,6 +6,7 @@ import type { Sentence, Word, Direction, StudyMode } from '../lib/types'
 import { buildSessionPlan } from '../lib/srs'
 import {
   makeChoice,
+  makeFindOriginal,
   makeBlank,
   makeMatch,
   makeSoundMatch,
@@ -81,7 +82,13 @@ const MODE_LABEL: Record<StudyMode, string> = {
   memory: '🎴 Memory',
   builder: '🏗️ Builder',
   story: '📚 Story',
+  original: '🔍 Find original',
 }
+
+/** modes where swapping languages actually changes the exercise */
+export const REVERSIBLE_MODES: ReadonlySet<StudyMode> = new Set([
+  'mixed', 'random', 'flashcards', 'listening', 'sentences', 'crossword', 'builder',
+])
 
 function SpeakButton(props: { text: string }) {
   if (!canSpeakHebrew()) return null
@@ -215,7 +222,10 @@ export default function SessionScreen(props: {
     }
 
     const needsSentence = studyMode === 'blanks'
-    const eligible = (id: string) => topicOk(id) && (!needsSentence || sentencesByWord.has(id))
+    const eligible = (id: string) =>
+      topicOk(id) &&
+      (!needsSentence || sentencesByWord.has(id)) &&
+      (studyMode !== 'original' || !wordById.get(id)!.hebrew.includes('/'))
 
     if (mode === 'practice') {
       const queue = state.reviews
@@ -226,8 +236,14 @@ export default function SessionScreen(props: {
       return buildSteps(queue)
     }
 
+    const planWords =
+      studyMode === 'original'
+        ? words.filter((w) => !w.hebrew.includes('/'))
+        : needsSentence
+          ? words.filter((w) => sentencesByWord.has(w.id))
+          : words
     const plan = buildSessionPlan({
-      words: needsSentence ? words.filter((w) => sentencesByWord.has(w.id)) : words,
+      words: planWords,
       states: needsSentence ? state.reviews.filter((r) => sentencesByWord.has(r.wordId)) : state.reviews,
       today,
       settings: state.settings,
@@ -342,6 +358,7 @@ export default function SessionScreen(props: {
   const genExercise = (item: QueueItem): CurrentEx => {
     const word = wordById.get(item.wordId)!
     const dir = effDirection(item.direction)
+    if (studyMode === 'original') return makeFindOriginal(word, rng)
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
       // variant-list entries (אחרון/אחרונה/…) cannot be "the word you hear"
@@ -441,6 +458,38 @@ export default function SessionScreen(props: {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, currentStep, phase])
+
+  // flipping reverse mid-session regenerates the current card (progress-safe
+  // steps like crossword/memory just keep going; their next actions use it)
+  const firstReverseRun = useRef(true)
+  useEffect(() => {
+    if (firstReverseRun.current) {
+      firstReverseRun.current = false
+      return
+    }
+    if (phase !== 'steps' || !currentStep) return
+    if (currentStep.kind === 'card') {
+      setPicked(null)
+      setRevealed(false)
+      setHintWord(null)
+      setEx(genExercise(currentStep.item))
+    } else if (currentStep.kind === 'sent') {
+      setPicked(null)
+      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse))
+    } else if (currentStep.kind === 'build') {
+      const toks = reverse
+        ? currentStep.sentence.translation.replace(/[.?!]/g, '').split(/\s+/).filter(Boolean)
+        : currentStep.sentence.tokens
+      setBuildTokens(toks)
+      setBuildTiles(shuffle(toks.map((text, i) => ({ id: i, text, used: false })), rng))
+      setBuildProgress(0)
+      buildMissed.current = false
+    } else if (currentStep.kind === 'crossword') {
+      setCwActive(null)
+      setCwPicked(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reverse])
 
   // audio-first cards speak themselves
   useEffect(() => {
@@ -841,9 +890,25 @@ export default function SessionScreen(props: {
         {reverse ? ' ↔' : ''}
         {topic ? ` · ${topic}` : ''} · {Math.min(idx + 1, steps.length)}/{steps.length}
       </span>
-      <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
-        End session
-      </button>
+      <span className="row-gap" style={{ alignItems: 'center', gap: 10 }}>
+        {REVERSIBLE_MODES.has(studyMode) && (
+          <label className="switch" title="Swap languages: prompts in English, answers in Hebrew">
+            <span className="switch-label">↔ Reverse</span>
+            <input
+              type="checkbox"
+              checked={reverse}
+              onChange={() => {
+                touch()
+                dispatch({ type: 'setSettings', settings: { ...state.settings, reverse: !reverse } })
+              }}
+            />
+            <span className="slider" />
+          </label>
+        )}
+        <button className="ghost" onClick={onExit} style={{ fontSize: 12, padding: '4px 10px' }}>
+          End session
+        </button>
+      </span>
     </div>
   )
 
