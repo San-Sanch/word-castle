@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { Dispatch } from 'react'
+import type { Dispatch, MouseEvent as ReactMouseEvent } from 'react'
 import type { GameState, GameAction } from '../lib/game'
 import { introducedTodayCount, todayLog } from '../lib/game'
 import type { Sentence, Word, Direction, StudyMode } from '../lib/types'
@@ -104,6 +104,29 @@ export function modeAvailable(mode: StudyMode, caps: CourseCaps): boolean {
   return true // mixed/random/flashcards/listening/matching/memory/crossword/original
 }
 
+/** Shows one translation at a time with ‹ › arrows to peek at the rest, so a
+ * long comma-separated meaning list doesn't clutter the card. Arrow clicks don't
+ * bubble, so tapping them inside an answer button won't select that answer. */
+function TranslationText({ text }: { text: string }) {
+  const parts = text.split(/,\s+/).map((p) => p.trim()).filter(Boolean)
+  const [i, setI] = useState(0)
+  if (parts.length <= 1) return <>{text}</>
+  const at = Math.min(i, parts.length - 1)
+  const step = (d: number) => (e: ReactMouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setI((v) => (((v + d) % parts.length) + parts.length) % parts.length)
+  }
+  return (
+    <span className="multi">
+      <span className="multi-arrow" role="button" title="Previous meaning" onClick={step(-1)}>‹</span>
+      <span className="multi-val">{parts[at]}</span>
+      <span className="multi-arrow" role="button" title="More meanings" onClick={step(1)}>›</span>
+      <span className="multi-count">{at + 1}/{parts.length}</span>
+    </span>
+  )
+}
+
 function SpeakButton(props: { text: string }) {
   if (!canSpeakHebrew()) return null
   return (
@@ -137,6 +160,7 @@ export default function SessionScreen(props: {
   const today = todayISO()
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
   const mutationScheme = rtl ? HEBREW_SCHEME : LATIN_SCHEME
+  const optCount = Math.min(12, Math.max(3, state.settings.optionCount || 8))
   // A course may lack the data a saved mode needs; fall back so it can't produce
   // an empty, un-startable session.
   const requested = state.settings.studyMode
@@ -377,19 +401,19 @@ export default function SessionScreen(props: {
   const genExercise = (item: QueueItem): CurrentEx => {
     const word = wordById.get(item.wordId)!
     const dir = effDirection(item.direction)
-    if (studyMode === 'original') return makeFindOriginal(word, rng, 8, mutationScheme)
+    if (studyMode === 'original') return makeFindOriginal(word, rng, optCount, mutationScheme)
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
       // variant-list entries (אחרון/אחרונה/…) cannot be "the word you hear"
-      if (dir === 'recall' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng)
-      return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
+      if (dir === 'recall' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng, optCount)
+      return { ...makeChoice(word, 'recognition', words, rng, optCount), audioOnly: true }
     }
     const review = state.reviews.find((r) => r.wordId === item.wordId && r.direction === item.direction)
     const box = review?.box ?? 0
     const withSentence = sentencesByWord.get(item.wordId) ?? []
     if (studyMode === 'blanks' && withSentence.length > 0) {
       const pick = withSentence[Math.floor(rng() * withSentence.length)]
-      return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
+      return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng, optCount)
     }
     if (studyMode === 'random') {
       const kinds: Array<'choice' | 'audio-choice' | 'blank' | 'sound' | 'flash'> = ['choice', 'flash']
@@ -397,13 +421,13 @@ export default function SessionScreen(props: {
       if (canSpeakHebrew()) kinds.push('sound', 'audio-choice')
       const kind = kinds[Math.floor(rng() * kinds.length)]
       if (kind === 'flash') return { kind: 'flash', word, direction: dir }
-      if (kind === 'sound' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng)
-      if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng, 8), audioOnly: true }
+      if (kind === 'sound' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng, optCount)
+      if (kind === 'audio-choice') return { ...makeChoice(word, 'recognition', words, rng, optCount), audioOnly: true }
       if (kind === 'blank') {
         const pick = withSentence[Math.floor(rng() * withSentence.length)]
-        return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
+        return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng, optCount)
       }
-      return makeChoice(word, dir, words, rng)
+      return makeChoice(word, dir, words, rng, optCount)
     }
     if (studyMode === 'mixed') {
       const kind = pickExerciseKind({
@@ -414,10 +438,10 @@ export default function SessionScreen(props: {
       })
       if (kind === 'blank') {
         const pick = withSentence[Math.floor(rng() * withSentence.length)]
-        return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng)
+        return makeBlank(pick.sentence, { tokenIndex: pick.tokenIndex, wordId: item.wordId }, words, rng, optCount)
       }
     }
-    return makeChoice(word, dir, words, rng)
+    return makeChoice(word, dir, words, rng, optCount)
   }
 
   // prepare the current step; keyed on the step OBJECT so a requeue (which
@@ -432,7 +456,7 @@ export default function SessionScreen(props: {
       ensureIntroduced(currentStep.item.wordId)
       setEx(genExercise(currentStep.item))
     } else if (currentStep.kind === 'sent') {
-      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse))
+      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse, optCount))
     } else if (currentStep.kind === 'group') {
       for (const item of currentStep.items) ensureIntroduced(item.wordId)
       mismatched.current = new Set()
@@ -494,7 +518,7 @@ export default function SessionScreen(props: {
       setEx(genExercise(currentStep.item))
     } else if (currentStep.kind === 'sent') {
       setPicked(null)
-      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse))
+      setSentEx(makeSentenceChoice(currentStep.sentence, sentences, rng, reverse, optCount))
     } else if (currentStep.kind === 'build') {
       const toks = reverse
         ? currentStep.sentence.translation.replace(/[.?!]/g, '').split(/\s+/).filter(Boolean)
@@ -566,7 +590,7 @@ export default function SessionScreen(props: {
     if (soundBonusPossible()) {
       const pool = [...new Set(answeredWordIds)].filter((id) => !wordById.get(id)!.hebrew.includes('/'))
       const chosen = pool.sort(() => rng() - 0.5).slice(0, SOUND_QUESTIONS).map((id) => wordById.get(id)!)
-      setSoundQs(chosen.map((w) => makeSoundMatch(w, words, rng)))
+      setSoundQs(chosen.map((w) => makeSoundMatch(w, words, rng, optCount)))
       setSoundIdx(0)
       setSoundPicked(null)
       setPhase('sound-bonus')
@@ -696,7 +720,7 @@ export default function SessionScreen(props: {
     const word = wordById.get(wordId)!
     setCwActive(wordId)
     setCwPicked(null)
-    const choice = makeChoice(word, reverse ? 'recognition' : 'recall', words, rng, 8)
+    const choice = makeChoice(word, reverse ? 'recognition' : 'recall', words, rng, optCount)
     setCwOptions(choice.options)
     setCwCorrect(choice.options[choice.correctIndex])
     if (reverse && canSpeakHebrew()) speakHebrew(word.hebrew)
@@ -839,7 +863,7 @@ export default function SessionScreen(props: {
       <div className="answer-reveal">
         <span className="he">{word.hebrew}</span>
         {tr && <span className="translit"> {tr.he}</span>}
-        <span> — {word.translation}</span>
+        <span> — <TranslationText text={word.translation} /></span>
       </div>
     )
   }
@@ -864,7 +888,7 @@ export default function SessionScreen(props: {
             )}
           </div>
         )}
-        <div className="prompt small">{word.translation}</div>
+        <div className="prompt small"><TranslationText text={word.translation} /></div>
         <div className="sub">{word.category}</div>
       </div>
     )
@@ -1329,18 +1353,22 @@ export default function SessionScreen(props: {
         {ex.word.hebrew} <SpeakButton text={ex.word.hebrew} />
       </div>
     ) : (
-      <div className="prompt small">{ex.word.translation}</div>
+      <div className="prompt small"><TranslationText text={ex.word.translation} /></div>
     )
     return (
       <>
         {header}
         <div className="panel card">
           {newChip}
-          {front}
+          {/* before reveal show the prompt; after reveal WordInfo shows both sides
+              once, so keeping `front` too would print the prompt side twice */}
           {!revealed ? (
-            <button className="primary" onClick={() => { touch(); setRevealed(true); if (ex.direction === 'recall' && canSpeakHebrew()) speakHebrew(ex.word.hebrew) }}>
-              Show answer
-            </button>
+            <>
+              {front}
+              <button className="primary" onClick={() => { touch(); setRevealed(true); if (ex.direction === 'recall' && canSpeakHebrew()) speakHebrew(ex.word.hebrew) }}>
+                Show answer
+              </button>
+            </>
           ) : (
             <>
               <WordInfo word={ex.word} />
@@ -1401,9 +1429,9 @@ export default function SessionScreen(props: {
           ) : (
             <>
               <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>
-                {ex.prompt} {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} />}
+                <TranslationText text={ex.prompt} /> {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} />}
               </div>
-              <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the Hebrew word'}</div>
+              <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the word'}</div>
             </>
           )}
           <div className={`options ${ex.audioOnly ? 'sound-options' : ''}`}>
@@ -1416,7 +1444,7 @@ export default function SessionScreen(props: {
                 disabled={picked !== null}
                 onClick={() => answerCard(i)}
               >
-                {o}
+                <TranslationText text={o} />
               </button>
             ))}
           </div>

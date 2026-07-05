@@ -104,6 +104,8 @@ export interface Settings {
   newWordsPerDay: number
   dailyGoalMinutes: number
   sessionSize: number
+  /** how many answer options multiple-choice exercises show (incl. the correct one) */
+  optionCount: number
   attackChancePct: number
   studyMode: StudyMode
   /** swap directions everywhere: prompts in English, answers in Hebrew */
@@ -121,6 +123,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newWordsPerDay: 10,
   dailyGoalMinutes: 20,
   sessionSize: 25,
+  optionCount: 8,
   attackChancePct: 15,
   studyMode: 'mixed',
   reverse: false,

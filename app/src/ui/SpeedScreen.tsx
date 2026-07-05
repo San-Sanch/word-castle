@@ -28,10 +28,11 @@ export default function SpeedScreen(props: {
   const [ex, setEx] = useState<ChoiceExercise | null>(null)
   const [flash, setFlash] = useState<'good' | 'bad' | null>(null)
 
+  const optCount = Math.min(12, Math.max(3, state.settings.optionCount || 8))
   const next = () => {
     const w = pool[Math.floor(rng() * pool.length)]
-    // same rules as listening: 8 options, shape-matched distractors
-    setEx(makeChoice(w, rng() < 0.5 ? 'recognition' : 'recall', words, rng, 8))
+    // shape-matched distractors; option count follows the Settings value
+    setEx(makeChoice(w, rng() < 0.5 ? 'recognition' : 'recall', words, rng, optCount))
   }
   useEffect(() => {
     next()

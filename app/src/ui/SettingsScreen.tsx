@@ -25,6 +25,11 @@ export default function SettingsScreen(props: {
       dispatch({ type: 'setSettings', settings: { ...s, [key]: v } })
     }
 
+  const setOptionCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = Math.min(12, Math.max(3, Number(e.target.value) || 8))
+    dispatch({ type: 'setSettings', settings: { ...s, optionCount: v } })
+  }
+
   const toggle = (key: keyof typeof s.exercises) => () =>
     dispatch({
       type: 'setSettings',
@@ -118,6 +123,10 @@ export default function SettingsScreen(props: {
         <div className="field">
           <label>Cards per session</label>
           <input type="number" value={s.sessionSize} onChange={setNum('sessionSize')} />
+        </div>
+        <div className="field">
+          <label>Answer options per question (3–12)</label>
+          <input type="number" min={3} max={12} value={s.optionCount} onChange={setOptionCount} />
         </div>
       </div>
 

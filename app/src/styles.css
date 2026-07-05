@@ -35,6 +35,16 @@ body {
    and Latin-script course words (English/Spanish) render LTR under the same class */
 .he { direction: rtl; unicode-bidi: plaintext; }
 
+/* multi-meaning cell: show one translation with arrows to peek at the rest */
+.multi { display: inline-flex; align-items: center; gap: 6px; direction: ltr; unicode-bidi: plaintext; }
+.multi-val { unicode-bidi: plaintext; }
+.multi-arrow {
+  cursor: pointer; user-select: none; opacity: 0.55; font-size: 1.3em; line-height: 1;
+  padding: 0 4px; border-radius: 6px;
+}
+.multi-arrow:hover { opacity: 1; background: rgba(127, 127, 127, 0.18); }
+.multi-count { font-size: 0.7em; opacity: 0.5; }
+
 /* Header */
 .header {
   display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
