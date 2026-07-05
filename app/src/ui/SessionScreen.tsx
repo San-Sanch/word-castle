@@ -14,6 +14,8 @@ import {
   mulberry32,
   shuffle,
   pickExerciseKind,
+  HEBREW_SCHEME,
+  LATIN_SCHEME,
   type ChoiceExercise,
   type BlankExercise,
   type MatchExercise,
@@ -90,6 +92,18 @@ export const REVERSIBLE_MODES: ReadonlySet<StudyMode> = new Set([
   'mixed', 'random', 'flashcards', 'listening', 'sentences', 'crossword', 'builder',
 ])
 
+/** What data a mode needs beyond a plain word list. Word-only modes run for any
+ * course; sentence/story modes need that course to supply the data. */
+export interface CourseCaps {
+  sentences: boolean
+  stories: boolean
+}
+export function modeAvailable(mode: StudyMode, caps: CourseCaps): boolean {
+  if (mode === 'sentences' || mode === 'blanks' || mode === 'builder') return caps.sentences
+  if (mode === 'story') return caps.stories
+  return true // mixed/random/flashcards/listening/matching/memory/crossword/original
+}
+
 function SpeakButton(props: { text: string }) {
   if (!canSpeakHebrew()) return null
   return (
@@ -111,18 +125,23 @@ export default function SessionScreen(props: {
   dispatch: Dispatch<GameAction>
   words: Word[]
   sentences: Sentence[]
+  rtl: boolean
+  caps: CourseCaps
   topic: string | null
   mode: SessionMode
   onExit: () => void
   onMoreNew: () => void
   onPractice: () => void
 }) {
-  const { state, dispatch, words, sentences, topic, mode, onExit, onMoreNew, onPractice } = props
+  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice } = props
   const today = todayISO()
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
-  const studyMode: StudyMode = canSpeakHebrew() || state.settings.studyMode !== 'listening'
-    ? state.settings.studyMode
-    : 'mixed'
+  const mutationScheme = rtl ? HEBREW_SCHEME : LATIN_SCHEME
+  // A course may lack the data a saved mode needs; fall back so it can't produce
+  // an empty, un-startable session.
+  const requested = state.settings.studyMode
+  const usable = modeAvailable(requested, caps) ? requested : 'mixed'
+  const studyMode: StudyMode = canSpeakHebrew() || usable !== 'listening' ? usable : 'mixed'
   const reverse = state.settings.reverse
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
   const sentencesByWord = useMemo(() => {
@@ -358,7 +377,7 @@ export default function SessionScreen(props: {
   const genExercise = (item: QueueItem): CurrentEx => {
     const word = wordById.get(item.wordId)!
     const dir = effDirection(item.direction)
-    if (studyMode === 'original') return makeFindOriginal(word, rng)
+    if (studyMode === 'original') return makeFindOriginal(word, rng, 8, mutationScheme)
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
       // variant-list entries (אחרון/אחרונה/…) cannot be "the word you hear"
@@ -1088,7 +1107,7 @@ export default function SessionScreen(props: {
         {header}
         <div className="panel card">
           <span className="badge">🔠 Crossword: solve every word</span>
-          <div className="cw-grid-wrap" dir="rtl">
+          <div className="cw-grid-wrap" dir={rtl ? 'rtl' : 'ltr'}>
             <table className="cw-grid">
               <tbody>
                 {Array.from({ length: puzzle.rows }, (_, r) => (

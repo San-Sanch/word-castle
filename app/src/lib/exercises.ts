@@ -242,15 +242,50 @@ const SIMILAR_LETTERS: Record<string, string[]> = {
 }
 const ALEF_BET = 'אבגדהוזחטיכלמנסעפצקרשת'
 
-/** normalize final letters: regular forms inside, final forms at word ends */
-function fixFinals(text: string): string {
+// Latin-script confusables (English/Spanish and any structurally similar
+// language reuse this one scheme). Keys are lowercase base letters.
+const LATIN_SIMILAR: Record<string, string[]> = {
+  a: ['e', 'o', 'i'], e: ['a', 'i', 'o'], i: ['e', 'y', 'l'], o: ['a', 'u', 'e'],
+  u: ['o', 'a'], y: ['i', 'e'], b: ['d', 'p'], d: ['b', 'p'], p: ['b', 'q', 'd'],
+  q: ['p', 'g'], c: ['k', 's'], k: ['c', 'q'], s: ['c', 'z'], z: ['s'], g: ['j', 'q'],
+  j: ['g', 'i'], m: ['n'], n: ['m', 'r'], r: ['n'], t: ['d', 'f'], f: ['t', 'v'],
+  v: ['f', 'w', 'b'], w: ['v', 'u'], l: ['i', 't'], h: ['n'], x: ['s', 'c'],
+}
+const LATIN_ALPHABET = [...'abcdefghijklmnopqrstuvwxyz']
+
+/** Per-script config so spelling-distractor generation works in any alphabet. */
+export interface MutationScheme {
+  isLetter: (c: string) => boolean
+  similar: Record<string, string[]>
+  alphabet: string[]
+  finalToRegular: Record<string, string>
+  regularToFinal: Record<string, string>
+}
+export const HEBREW_SCHEME: MutationScheme = {
+  isLetter: (c) => /[א-ת]/.test(c),
+  similar: SIMILAR_LETTERS,
+  alphabet: [...ALEF_BET],
+  finalToRegular: FINAL_TO_REGULAR,
+  regularToFinal: REGULAR_TO_FINAL,
+}
+export const LATIN_SCHEME: MutationScheme = {
+  isLetter: (c) => /[a-zà-öø-ÿ]/i.test(c),
+  similar: LATIN_SIMILAR,
+  alphabet: LATIN_ALPHABET,
+  finalToRegular: {},
+  regularToFinal: {},
+}
+
+/** normalize final letters (Hebrew): regular forms inside, final forms at word ends */
+function fixFinals(text: string, scheme: MutationScheme): string {
+  if (Object.keys(scheme.regularToFinal).length === 0) return text
   return text
     .split(' ')
     .map((word) => {
       const chars = [...word].map((ch, i, arr) => {
         const isLast = i === arr.length - 1
-        if (!isLast && FINAL_TO_REGULAR[ch]) return FINAL_TO_REGULAR[ch]
-        if (isLast && REGULAR_TO_FINAL[ch]) return REGULAR_TO_FINAL[ch]
+        if (!isLast && scheme.finalToRegular[ch]) return scheme.finalToRegular[ch]
+        if (isLast && scheme.regularToFinal[ch]) return scheme.regularToFinal[ch]
         return ch
       })
       return chars.join('')
@@ -258,19 +293,21 @@ function fixFinals(text: string): string {
     .join(' ')
 }
 
-function mutateOnce(word: string, rng: () => number): string {
-  const chars = [...word.replace(/ /g, ' ')]
-  const letterIdxs = chars.map((c, i) => (/[א-ת]/.test(c) ? i : -1)).filter((i) => i >= 0)
+function mutateOnce(word: string, rng: () => number, scheme: MutationScheme): string {
+  const chars = [...word]
+  const letterIdxs = chars.map((c, i) => (scheme.isLetter(c) ? i : -1)).filter((i) => i >= 0)
   if (letterIdxs.length < 2) return word
+  const keepCase = (src: string, out: string) =>
+    src === src.toUpperCase() && src !== src.toLowerCase() ? out.toUpperCase() : out
   const op = Math.floor(rng() * 4)
   const at = letterIdxs[Math.floor(rng() * letterIdxs.length)]
-  const regular = FINAL_TO_REGULAR[chars[at]] ?? chars[at]
+  const regular = (scheme.finalToRegular[chars[at]] ?? chars[at]).toLowerCase()
   if (op === 0 || op === 3) {
     // substitute with a confusable letter
-    const cands = SIMILAR_LETTERS[regular] ?? []
-    const pick = cands.length ? cands[Math.floor(rng() * cands.length)] : ALEF_BET[Math.floor(rng() * ALEF_BET.length)]
+    const cands = scheme.similar[regular] ?? []
+    const pick = cands.length ? cands[Math.floor(rng() * cands.length)] : scheme.alphabet[Math.floor(rng() * scheme.alphabet.length)]
     if (pick === regular) return word
-    chars[at] = pick
+    chars[at] = keepCase(chars[at], pick)
   } else if (op === 1) {
     // swap adjacent letters
     const pos = letterIdxs.findIndex((i) => i === at)
@@ -279,24 +316,30 @@ function mutateOnce(word: string, rng: () => number): string {
     ;[chars[at], chars[next]] = [chars[next], chars[at]]
   } else {
     // insert a confusable letter next to an existing one
-    const cands = SIMILAR_LETTERS[regular] ?? [regular]
+    const cands = scheme.similar[regular] ?? [regular]
     chars.splice(at + 1, 0, cands[Math.floor(rng() * cands.length)])
   }
-  return fixFinals(chars.join(''))
+  return fixFinals(chars.join(''), scheme)
 }
 
 /**
- * English prompt, 8 Hebrew options: the real word plus near-misses that
- * differ by only 1-2 letters. Trains exact spelling recognition.
+ * Prompt is the meaning, options are the term spelled the real way plus
+ * near-misses that differ by 1-2 letters. Trains exact spelling recognition.
+ * The scheme picks the alphabet, so it works for Hebrew, Latin, etc.
  */
-export function makeFindOriginal(word: Word, rng: () => number, count = 8): ChoiceExercise {
+export function makeFindOriginal(
+  word: Word,
+  rng: () => number,
+  count = 8,
+  scheme: MutationScheme = HEBREW_SCHEME,
+): ChoiceExercise {
   const original = word.hebrew
   const distractors = new Set<string>()
   for (let attempt = 0; attempt < 200 && distractors.size < count - 1; attempt++) {
-    let mutated = mutateOnce(original, rng)
-    if (rng() < 0.35) mutated = mutateOnce(mutated, rng)
-    mutated = fixFinals(mutated)
-    if (mutated !== original && !distractors.has(mutated) && /[א-ת]/.test(mutated)) {
+    let mutated = mutateOnce(original, rng, scheme)
+    if (rng() < 0.35) mutated = mutateOnce(mutated, rng, scheme)
+    mutated = fixFinals(mutated, scheme)
+    if (mutated !== original && !distractors.has(mutated) && [...mutated].some(scheme.isLetter)) {
       distractors.add(mutated)
     }
   }

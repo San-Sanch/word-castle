@@ -31,7 +31,9 @@ body {
 }
 @media (max-width: 900px) { .castle-layout { grid-template-columns: 1fr; } }
 
-.he { direction: rtl; unicode-bidi: isolate; }
+/* plaintext: derive direction from the content itself, so Hebrew renders RTL
+   and Latin-script course words (English/Spanish) render LTR under the same class */
+.he { direction: rtl; unicode-bidi: plaintext; }
 
 /* Header */
 .header {

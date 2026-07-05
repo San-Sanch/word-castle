@@ -12,12 +12,27 @@ export function initSpeech(): void {
   window.speechSynthesis.onvoiceschanged = refreshVoices
 }
 
-function hebrewVoice(): SpeechSynthesisVoice | null {
-  return voices.find((v) => v.lang.toLowerCase().startsWith('he')) ?? null
+// BCP-47 lang of the word being learned in the active course. The speak/can-speak
+// helpers keep their `Hebrew` names for call-site stability, but dispatch on this:
+// Hebrew goes through the nikud pipeline, other languages speak their text as-is.
+let currentLang = 'he-IL'
+
+export function setSpeechLang(lang: string): void {
+  currentLang = lang
 }
 
+function langPrefix(): string {
+  return currentLang.slice(0, 2).toLowerCase()
+}
+
+function currentVoice(): SpeechSynthesisVoice | null {
+  const p = langPrefix()
+  return voices.find((v) => v.lang.toLowerCase().startsWith(p)) ?? null
+}
+
+// True when the active course's language can be spoken by an installed voice.
 export function canSpeakHebrew(): boolean {
-  return typeof window !== 'undefined' && 'speechSynthesis' in window && hebrewVoice() !== null
+  return typeof window !== 'undefined' && 'speechSynthesis' in window && currentVoice() !== null
 }
 
 /**
@@ -111,12 +126,24 @@ export function ttsNormalize(text: string): string {
   return forceEiGlide(out)
 }
 
+// For non-Hebrew courses the text is a plain word/phrase written for the eye:
+// drop parenthetical grammar hints and turn slash-separated forms into pauses.
+function plainNormalize(text: string): string {
+  return text
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\s*\/\s*/g, ', ')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*,\s*$/g, '')
+    .trim()
+}
+
 export function speakHebrew(text: string, onEnd?: () => void): boolean {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
     onEnd?.()
     return false
   }
-  const utterance = new SpeechSynthesisUtterance(ttsNormalize(text))
+  const hebrew = langPrefix() === 'he'
+  const utterance = new SpeechSynthesisUtterance(hebrew ? ttsNormalize(text) : plainNormalize(text))
   if (onEnd) {
     let called = false
     const done = () => {
@@ -129,10 +156,10 @@ export function speakHebrew(text: string, onEnd?: () => void): boolean {
     utterance.onerror = done
     window.setTimeout(done, 12000) // safety: never hang the flow
   }
-  const voice = hebrewVoice()
+  const voice = currentVoice()
   if (voice) utterance.voice = voice
-  utterance.lang = 'he-IL'
-  utterance.rate = 0.85
+  utterance.lang = currentLang
+  utterance.rate = hebrew ? 0.85 : 0.9
   window.speechSynthesis.cancel()
   window.speechSynthesis.speak(utterance)
   return true

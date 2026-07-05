@@ -12,11 +12,13 @@ import {
   type ProfileMeta,
 } from './lib/storage'
 import { todayISO, computeStreak } from './lib/time'
-import { initSpeech, loadVocalized, loadStressOverrides, type VocalizedMap } from './lib/speech'
+import { initSpeech, loadVocalized, loadStressOverrides, setSpeechLang, type VocalizedMap } from './lib/speech'
 import wordsJson from './data/words.json'
 import sentencesJson from './data/sentences.json'
 import vocalizedJson from './data/vocalized.json'
 import stressJson from './data/stress-overrides.json'
+import enUkWords from './data/course-en-uk.json'
+import esEnWords from './data/course-es-en.json'
 
 loadVocalized(vocalizedJson as VocalizedMap)
 loadStressOverrides(stressJson as Record<string, string>)
@@ -30,12 +32,46 @@ import SettingsScreen from './ui/SettingsScreen'
 export const WORDS = wordsJson as Word[]
 export const SENTENCES = sentencesJson as Sentence[]
 
+// A course is a self-contained word set with its own display flag, spoken
+// language and progress. Hebrew keeps its rich data (nikud/sentences/translit);
+// the Duolingo-derived courses are flat word→translation lists.
+export interface Course {
+  id: string
+  label: string
+  flag: string
+  words: Word[]
+  sentences: Sentence[]
+  speechLang: string
+  /** the term text is right-to-left (Hebrew) */
+  rtl: boolean
+  /** reading-comprehension stories exist for this course (Hebrew-only for now) */
+  stories: boolean
+}
+
+export const COURSES: Course[] = [
+  { id: 'hebrew', label: 'Hebrew → Українська', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true },
+  { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', rtl: false, stories: false },
+  { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', rtl: false, stories: false },
+]
+
+const COURSE_KEY = 'wc-active-course'
+function activeCourseId(): string {
+  const id = localStorage.getItem(COURSE_KEY)
+  return COURSES.some((c) => c.id === id) ? (id as string) : COURSES[0].id
+}
+// Progress is namespaced per (profile, course); Hebrew keeps the bare profile key
+// so pre-existing saves migrate untouched.
+function storeKey(profileId: string, courseId: string): string {
+  return courseId === 'hebrew' ? profileId : `${profileId}__${courseId}`
+}
+
 export type Screen = 'learn' | 'session' | 'speed' | 'vocabulary' | 'stats' | 'settings'
 
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, newPlayerState)
   const [profiles, setProfiles] = useState<ProfileMeta[]>(() => listProfiles())
   const [profile, setProfile] = useState<string>(() => activeProfileId())
+  const [courseId, setCourseId] = useState<string>(() => activeCourseId())
   const [loaded, setLoaded] = useState(false)
   const [screen, setScreen] = useState<Screen>('learn')
   const [topic, setTopic] = useState<string | null>(null)
@@ -45,13 +81,24 @@ export default function App() {
   const stateRef = useRef(state)
   stateRef.current = state
 
+  const course = COURSES.find((c) => c.id === courseId) ?? COURSES[0]
+  const words = course.words
+  const sentences = course.sentences
+  const storeId = storeKey(profile, course.id)
+  const storeIdRef = useRef(storeId)
+  storeIdRef.current = storeId
+
   useEffect(() => {
     initSpeech()
   }, [])
 
   useEffect(() => {
+    setSpeechLang(course.speechLang)
+  }, [course.speechLang])
+
+  useEffect(() => {
     setLoaded(false)
-    loadState(profile)
+    loadState(storeId)
       .then((saved) => {
         dispatch({ type: 'import', state: saved ?? newPlayerState() })
         setLoaded(true)
@@ -61,23 +108,38 @@ export default function App() {
         dispatch({ type: 'import', state: newPlayerState() })
         setLoaded(true)
       })
-  }, [profile])
+  }, [storeId])
 
   useEffect(() => {
     if (!loaded) return
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
     saveTimer.current = window.setTimeout(() => {
-      saveState(profile, stateRef.current).catch((e) => console.error('save failed', e))
+      saveState(storeIdRef.current, stateRef.current).catch((e) => console.error('save failed', e))
     }, 400)
-  }, [state, loaded, profile])
+  }, [state, loaded])
+
+  // persist current progress before switching the (profile, course) key
+  const flushSave = () => {
+    if (saveTimer.current) window.clearTimeout(saveTimer.current)
+    if (loaded) saveState(storeIdRef.current, stateRef.current).catch((e) => console.error('save failed', e))
+  }
 
   const switchProfile = (id: string) => {
     if (id === profile) return
-    if (saveTimer.current) window.clearTimeout(saveTimer.current)
-    if (loaded) saveState(profile, stateRef.current).catch((e) => console.error('save failed', e))
+    flushSave()
     setActiveProfile(id)
     setScreen('learn')
+    setTopic(null)
     setProfile(id)
+  }
+
+  const switchCourse = (id: string) => {
+    if (id === courseId) return
+    flushSave()
+    localStorage.setItem(COURSE_KEY, id)
+    setScreen('learn')
+    setTopic(null)
+    setCourseId(id)
   }
 
   const handleCreateProfile = async (name: string, test: boolean) => {
@@ -113,7 +175,19 @@ export default function App() {
   return (
     <>
       <div className="header">
-        <span className="title">🇮🇱 Word Castle</span>
+        <span className="title">{course.flag} Word Castle</span>
+        <select
+          className="profile-select"
+          value={courseId}
+          onChange={(e) => switchCourse(e.target.value)}
+          title="Course / language"
+        >
+          {COURSES.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.flag} {c.label}
+            </option>
+          ))}
+        </select>
         <select
           className="profile-select"
           value={profile}
@@ -141,7 +215,8 @@ export default function App() {
       {screen === 'learn' && (
         <LearnScreen
           state={state}
-          words={WORDS}
+          words={words}
+          caps={{ sentences: sentences.length > 0, stories: course.stories }}
           today={today}
           onStartSession={startSession}
           onSpeedRound={() => setScreen('speed')}
@@ -151,11 +226,13 @@ export default function App() {
       )}
       {screen === 'session' && (
         <SessionScreen
-          key={`${profile}-${topic ?? 'all'}-${sessionMode}-${sessionNonce}`}
+          key={`${storeId}-${topic ?? 'all'}-${sessionMode}-${sessionNonce}`}
           state={state}
           dispatch={dispatch}
-          words={WORDS}
-          sentences={SENTENCES}
+          words={words}
+          sentences={sentences}
+          rtl={course.rtl}
+          caps={{ sentences: sentences.length > 0, stories: course.stories }}
           topic={topic}
           mode={sessionMode}
           onExit={() => setScreen('learn')}
@@ -163,9 +240,9 @@ export default function App() {
           onPractice={() => startSession(topic, 'practice')}
         />
       )}
-      {screen === 'speed' && <SpeedScreen state={state} words={WORDS} onExit={() => setScreen('learn')} />}
-      {screen === 'vocabulary' && <VocabularyScreen state={state} words={WORDS} />}
-      {screen === 'stats' && <StatsScreen state={state} words={WORDS} today={today} />}
+      {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}
+      {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} />}
+      {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
       {screen === 'settings' && (
         <SettingsScreen
           state={state}

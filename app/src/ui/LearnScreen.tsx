@@ -1,7 +1,7 @@
 import type { GameState } from '../lib/game'
 import type { StudyMode, Word } from '../lib/types'
 import { canSpeakHebrew } from '../lib/speech'
-import { REVERSIBLE_MODES } from './SessionScreen'
+import { REVERSIBLE_MODES, modeAvailable, type CourseCaps } from './SessionScreen'
 
 const MODES: Array<[StudyMode, string, string]> = [
   ['mixed', '🎯', 'Smart mix'],
@@ -37,6 +37,29 @@ const TOPIC_EMOJI: Record<string, string> = {
   'Adjectives': '🖌️',
   'Prepositions & Function': '🔗',
   'Nature': '🌿',
+  // semantic taxonomy shared by the Duolingo-derived courses (English/Spanish)
+  'People & Family': '👨‍👩‍👧',
+  'Body & Health': '🩺',
+  'Food & Drink': '🍎',
+  'Home & Living': '🏠',
+  'Clothing & Accessories': '👕',
+  'Animals & Nature': '🐾',
+  'Weather & Environment': '⛅',
+  'Places & Buildings': '🏛️',
+  'Travel & Transport': '✈️',
+  'Time & Calendar': '🕐',
+  'Numbers & Quantity': '🔢',
+  'Money & Shopping': '🛒',
+  'Work & Business': '💼',
+  'School & Learning': '🎓',
+  'Technology & Media': '💻',
+  'Communication & Language': '💬',
+  'Emotions & Feelings': '❤️',
+  'Common Verbs & Actions': '🏃',
+  'Movement & Direction': '🧭',
+  'Descriptions & Qualities': '🎨',
+  'Grammar & Function Words': '🔗',
+  'Phrases & Expressions': '💡',
 }
 
 export interface TopicInfo {
@@ -81,13 +104,15 @@ export function topicInfos(words: Word[], state: GameState, today: string): Topi
 export default function LearnScreen(props: {
   state: GameState
   words: Word[]
+  caps: CourseCaps
   today: string
   onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
   onSetStudyMode: (mode: StudyMode) => void
   onToggleReverse: () => void
 }) {
-  const { state, words, today, onStartSession, onSpeedRound, onSetStudyMode, onToggleReverse } = props
+  const { state, words, caps, today, onStartSession, onSpeedRound, onSetStudyMode, onToggleReverse } = props
+  const modes = MODES.filter(([m]) => modeAvailable(m, caps))
   const topics = topicInfos(words, state, today)
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
   const startedTotal = topics.reduce((n, t) => n + t.started, 0)
@@ -99,7 +124,7 @@ export default function LearnScreen(props: {
     <>
       <div className="panel center hero">
         <div className="mode-chips">
-          {MODES.map(([m, ico, label]) => {
+          {modes.map(([m, ico, label]) => {
             const disabled = m === 'listening' && !canSpeakHebrew()
             return (
               <button

@@ -1,0 +1,6792 @@
+[
+{
+"id": "esen-1",
+"hebrew": "tele",
+"hebrewFull": "tele",
+"gender": null,
+"plural": null,
+"translation": "TV, television, telly",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-2",
+"hebrew": "enseñar",
+"hebrewFull": "enseñar",
+"gender": null,
+"plural": null,
+"translation": "(to) teach, teach, taught, teaching",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-3",
+"hebrew": "amar",
+"hebrewFull": "amar",
+"gender": null,
+"plural": null,
+"translation": "(to) love, love",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-4",
+"hebrew": "ver",
+"hebrewFull": "ver",
+"gender": null,
+"plural": null,
+"translation": "let's, saw, (to) look, watching",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-5",
+"hebrew": "usualmente",
+"hebrewFull": "usualmente",
+"gender": null,
+"plural": null,
+"translation": "usually, normally",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-6",
+"hebrew": "llamar",
+"hebrewFull": "llamar",
+"gender": null,
+"plural": null,
+"translation": "let's, calling, hails, hail",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-7",
+"hebrew": "ayudar",
+"hebrewFull": "ayudar",
+"gender": null,
+"plural": null,
+"translation": "assist, help out, helping, didn't",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-8",
+"hebrew": "alguno",
+"hebrewFull": "alguno",
+"gender": null,
+"plural": null,
+"translation": "any, some (people), one, either",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-9",
+"hebrew": "pueblos",
+"hebrewFull": "pueblos",
+"gender": null,
+"plural": null,
+"translation": "towns, peoples, small town, villages",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-10",
+"hebrew": "gente",
+"hebrewFull": "gente",
+"gender": null,
+"plural": null,
+"translation": "people, good, kind, properly",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-11",
+"hebrew": "lugar",
+"hebrewFull": "lugar",
+"gender": null,
+"plural": null,
+"translation": "site, area's, stood, spot",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-12",
+"hebrew": "parte",
+"hebrewFull": "parte",
+"gender": null,
+"plural": null,
+"translation": "breaks, part, leaves, some",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-13",
+"hebrew": "visitar",
+"hebrewFull": "visitar",
+"gender": null,
+"plural": null,
+"translation": "let's, visit's, (to) visit, visiting",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-14",
+"hebrew": "conozco",
+"hebrewFull": "conozco",
+"gender": null,
+"plural": null,
+"translation": "know, I'm familiar with, (I) know, (I) meet",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-15",
+"hebrew": "conocer",
+"hebrewFull": "conocer",
+"gender": null,
+"plural": null,
+"translation": "to meet, know, (to) know, (to) get to know",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-16",
+"hebrew": "país",
+"hebrewFull": "país",
+"gender": null,
+"plural": null,
+"translation": "country's, land, country, country’s",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-17",
+"hebrew": "conoces",
+"hebrewFull": "conoces",
+"gender": null,
+"plural": null,
+"translation": "(you) know, (?) are you familiar with, (?) have you known, (?) do you know",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-18",
+"hebrew": "río",
+"hebrewFull": "río",
+"gender": null,
+"plural": null,
+"translation": "Rio, (I) am laughing, river, Río",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-19",
+"hebrew": "pelota",
+"hebrewFull": "pelota",
+"gender": null,
+"plural": null,
+"translation": "ball",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-20",
+"hebrew": "caballo",
+"hebrewFull": "caballo",
+"gender": null,
+"plural": null,
+"translation": "horse, horses",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-21",
+"hebrew": "montar",
+"hebrewFull": "montar",
+"gender": null,
+"plural": null,
+"translation": "riding, (to) ride, ride, setting",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-22",
+"hebrew": "normalmente",
+"hebrewFull": "normalmente",
+"gender": null,
+"plural": null,
+"translation": "normally, usually",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-23",
+"hebrew": "a nosotros",
+"hebrewFull": "a nosotros",
+"gender": null,
+"plural": null,
+"translation": "us",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-24",
+"hebrew": "para nosotros",
+"hebrewFull": "para nosotros",
+"gender": null,
+"plural": null,
+"translation": "For us",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-25",
+"hebrew": "a ustedes",
+"hebrewFull": "a ustedes",
+"gender": null,
+"plural": null,
+"translation": "you all",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-26",
+"hebrew": "tiempo",
+"hebrewFull": "tiempo",
+"gender": null,
+"plural": null,
+"translation": "tense, long, weather, half",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-27",
+"hebrew": "pasar",
+"hebrewFull": "pasar",
+"gender": null,
+"plural": null,
+"translation": "let's, passing, go, spending",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-28",
+"hebrew": "a él",
+"hebrewFull": "a él",
+"gender": null,
+"plural": null,
+"translation": "he",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-29",
+"hebrew": "tenis",
+"hebrewFull": "tenis",
+"gender": null,
+"plural": null,
+"translation": "tennis, plimsoll, running shoe, sneaker",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-30",
+"hebrew": "a usted",
+"hebrewFull": "a usted",
+"gender": null,
+"plural": null,
+"translation": "to you",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-31",
+"hebrew": "a ti",
+"hebrewFull": "a ti",
+"gender": null,
+"plural": null,
+"translation": "you",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-32",
+"hebrew": "a mí",
+"hebrewFull": "a mí",
+"gender": null,
+"plural": null,
+"translation": "i, me",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-33",
+"hebrew": "zoológico",
+"hebrewFull": "zoológico",
+"gender": null,
+"plural": null,
+"translation": "zoo, zoo's",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-34",
+"hebrew": "para él",
+"hebrewFull": "para él",
+"gender": null,
+"plural": null,
+"translation": "in his opinion",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-35",
+"hebrew": "les gusta",
+"hebrewFull": "les gusta",
+"gender": null,
+"plural": null,
+"translation": "(?) do they like, (they) like, like",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-36",
+"hebrew": "para ella",
+"hebrewFull": "para ella",
+"gender": null,
+"plural": null,
+"translation": "in her opinion",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-37",
+"hebrew": "les encanta",
+"hebrewFull": "les encanta",
+"gender": null,
+"plural": null,
+"translation": "(?) do they love, (they) love, loves, love",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-38",
+"hebrew": "aquel",
+"hebrewFull": "aquel",
+"gender": null,
+"plural": null,
+"translation": "that",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-39",
+"hebrew": "es muy simpático",
+"hebrewFull": "es muy simpático",
+"gender": null,
+"plural": null,
+"translation": "nice",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-40",
+"hebrew": "es divertido",
+"hebrewFull": "es divertido",
+"gender": null,
+"plural": null,
+"translation": "fun",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-41",
+"hebrew": "inteligentes",
+"hebrewFull": "inteligentes",
+"gender": null,
+"plural": null,
+"translation": "intelligent, smart",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-42",
+"hebrew": "persona",
+"hebrewFull": "persona",
+"gender": null,
+"plural": null,
+"translation": "person",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-43",
+"hebrew": "estudioso",
+"hebrewFull": "estudioso",
+"gender": null,
+"plural": null,
+"translation": "studious",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-44",
+"hebrew": "perezoso",
+"hebrewFull": "perezoso",
+"gender": null,
+"plural": null,
+"translation": "lazy",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-45",
+"hebrew": "responsable",
+"hebrewFull": "responsable",
+"gender": null,
+"plural": null,
+"translation": "reliable, responsible, culprit's",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-46",
+"hebrew": "es grande",
+"hebrewFull": "es grande",
+"gender": null,
+"plural": null,
+"translation": "big",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-47",
+"hebrew": "rubio",
+"hebrewFull": "rubio",
+"gender": null,
+"plural": null,
+"translation": "blond",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-48",
+"hebrew": "moreno",
+"hebrewFull": "moreno",
+"gender": null,
+"plural": null,
+"translation": "darker, dark-haired, brunette, tan",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-49",
+"hebrew": "amarillo",
+"hebrewFull": "amarillo",
+"gender": null,
+"plural": null,
+"translation": "yellow",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-50",
+"hebrew": "guapo",
+"hebrewFull": "guapo",
+"gender": null,
+"plural": null,
+"translation": "good-looking, handsome, dressed-up",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-51",
+"hebrew": "negro",
+"hebrewFull": "negro",
+"gender": null,
+"plural": null,
+"translation": "black",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-52",
+"hebrew": "sucio",
+"hebrewFull": "sucio",
+"gender": null,
+"plural": null,
+"translation": "dirty",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-53",
+"hebrew": "abierto",
+"hebrewFull": "abierto",
+"gender": null,
+"plural": null,
+"translation": "made, open, raised, opened",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-54",
+"hebrew": "limpio",
+"hebrewFull": "limpio",
+"gender": null,
+"plural": null,
+"translation": "wash, clearer, I am cleaning, (I) wash",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-55",
+"hebrew": "felices",
+"hebrewFull": "felices",
+"gender": null,
+"plural": null,
+"translation": "happy",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-56",
+"hebrew": "tristes",
+"hebrewFull": "tristes",
+"gender": null,
+"plural": null,
+"translation": "sad",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-57",
+"hebrew": "nervioso",
+"hebrewFull": "nervioso",
+"gender": null,
+"plural": null,
+"translation": "tense, nervous, strung",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-58",
+"hebrew": "emocionados",
+"hebrewFull": "emocionados",
+"gender": null,
+"plural": null,
+"translation": "excited",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-59",
+"hebrew": "diecisiete",
+"hebrewFull": "diecisiete",
+"gender": null,
+"plural": null,
+"translation": "seventeen, number seventeen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-60",
+"hebrew": "dieciséis",
+"hebrewFull": "dieciséis",
+"gender": null,
+"plural": null,
+"translation": "sixteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-61",
+"hebrew": "veinte",
+"hebrewFull": "veinte",
+"gender": null,
+"plural": null,
+"translation": "twenty, (number) twenty",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-62",
+"hebrew": "en efectivo",
+"hebrewFull": "en efectivo",
+"gender": null,
+"plural": null,
+"translation": "with cash",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-63",
+"hebrew": "diecinueve",
+"hebrewFull": "diecinueve",
+"gender": null,
+"plural": null,
+"translation": "nineteen, number nineteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-64",
+"hebrew": "dieciocho",
+"hebrewFull": "dieciocho",
+"gender": null,
+"plural": null,
+"translation": "eighteen, number eighteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-65",
+"hebrew": "tarjeta de crédito",
+"hebrewFull": "tarjeta de crédito",
+"gender": null,
+"plural": null,
+"translation": "credit card, credit",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-66",
+"hebrew": "cuesta",
+"hebrewFull": "cuesta",
+"gender": null,
+"plural": null,
+"translation": "is, it's hard, (it) is, cost",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-67",
+"hebrew": "cuestan",
+"hebrewFull": "cuestan",
+"gender": null,
+"plural": null,
+"translation": "(they) cost, (?) do they cost, cost, are",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-68",
+"hebrew": "trece",
+"hebrewFull": "trece",
+"gender": null,
+"plural": null,
+"translation": "thirteen, (number) thirteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-69",
+"hebrew": "quince",
+"hebrewFull": "quince",
+"gender": null,
+"plural": null,
+"translation": "fifteen, (number) fifteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-70",
+"hebrew": "catorce",
+"hebrewFull": "catorce",
+"gender": null,
+"plural": null,
+"translation": "fourteen",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-71",
+"hebrew": "dólar",
+"hebrewFull": "dólar",
+"gender": null,
+"plural": null,
+"translation": "dollar",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-72",
+"hebrew": "peso",
+"hebrewFull": "peso",
+"gender": null,
+"plural": null,
+"translation": "(I) weigh out, shot, weight, scales",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-73",
+"hebrew": "me puedo probar",
+"hebrewFull": "me puedo probar",
+"gender": null,
+"plural": null,
+"translation": "(?) can I try on",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-74",
+"hebrew": "precio",
+"hebrewFull": "precio",
+"gender": null,
+"plural": null,
+"translation": "price, charge, deal, priced",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-75",
+"hebrew": "talla",
+"hebrewFull": "talla",
+"gender": null,
+"plural": null,
+"translation": "size, carve",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-76",
+"hebrew": "probador",
+"hebrewFull": "probador",
+"gender": null,
+"plural": null,
+"translation": "fitting room",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-77",
+"hebrew": "buscar",
+"hebrewFull": "buscar",
+"gender": null,
+"plural": null,
+"translation": "to look for, (to) look for, (to) look up, (to) collect",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-78",
+"hebrew": "ti",
+"hebrewFull": "ti",
+"gender": null,
+"plural": null,
+"translation": "you, yourself",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-79",
+"hebrew": "cierra",
+"hebrewFull": "cierra",
+"gender": null,
+"plural": null,
+"translation": "(you) close, (?) does it close, lock, close",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-80",
+"hebrew": "de compras",
+"hebrewFull": "de compras",
+"gender": null,
+"plural": null,
+"translation": "shopping",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-81",
+"hebrew": "abre",
+"hebrewFull": "abre",
+"gender": null,
+"plural": null,
+"translation": "(it) opens, (?) does it open, open, opening",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-82",
+"hebrew": "mí",
+"hebrewFull": "mí",
+"gender": null,
+"plural": null,
+"translation": "me",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-83",
+"hebrew": "películas",
+"hebrewFull": "películas",
+"gender": null,
+"plural": null,
+"translation": "movies, films",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-84",
+"hebrew": "menor",
+"hebrewFull": "menor",
+"gender": null,
+"plural": null,
+"translation": "little, younger, youngest, lesser",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-85",
+"hebrew": "mayor",
+"hebrewFull": "mayor",
+"gender": null,
+"plural": null,
+"translation": "elderly, old, biggest, older",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-86",
+"hebrew": "marido",
+"hebrewFull": "marido",
+"gender": null,
+"plural": null,
+"translation": "husband, spouse's",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-87",
+"hebrew": "nos encanta",
+"hebrewFull": "nos encanta",
+"gender": null,
+"plural": null,
+"translation": "we love, love",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-88",
+"hebrew": "escuchar",
+"hebrewFull": "escuchar",
+"gender": null,
+"plural": null,
+"translation": "hears, hear, (to) listen, (to) listen to",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-89",
+"hebrew": "tocar",
+"hebrewFull": "tocar",
+"gender": null,
+"plural": null,
+"translation": "to play, to touch, (to) touch, (to) affect",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-90",
+"hebrew": "nos gusta",
+"hebrewFull": "nos gusta",
+"gender": null,
+"plural": null,
+"translation": "(we) like, like",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-91",
+"hebrew": "conciertos",
+"hebrewFull": "conciertos",
+"gender": null,
+"plural": null,
+"translation": "concerts, concert",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-92",
+"hebrew": "guitarra",
+"hebrewFull": "guitarra",
+"gender": null,
+"plural": null,
+"translation": "guitar",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-93",
+"hebrew": "piano",
+"hebrewFull": "piano",
+"gender": null,
+"plural": null,
+"translation": "piano",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-94",
+"hebrew": "baloncesto",
+"hebrewFull": "baloncesto",
+"gender": null,
+"plural": null,
+"translation": "basketball",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-95",
+"hebrew": "le encanta",
+"hebrewFull": "le encanta",
+"gender": null,
+"plural": null,
+"translation": "loves, (he) loves, (?) do you love, (she) loves",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-96",
+"hebrew": "le gusta",
+"hebrewFull": "le gusta",
+"gender": null,
+"plural": null,
+"translation": "(he) likes, likes, (?) do you like, (?) does she like",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-97",
+"hebrew": "deporte",
+"hebrewFull": "deporte",
+"gender": null,
+"plural": null,
+"translation": "sport, sports",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-98",
+"hebrew": "se llaman",
+"hebrewFull": "se llaman",
+"gender": null,
+"plural": null,
+"translation": "their names are, (they) are called, they are",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-99",
+"hebrew": "padres",
+"hebrewFull": "padres",
+"gender": null,
+"plural": null,
+"translation": "parents, fathers",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-100",
+"hebrew": "familias",
+"hebrewFull": "familias",
+"gender": null,
+"plural": null,
+"translation": "families",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-101",
+"hebrew": "nuestro",
+"hebrewFull": "nuestro",
+"gender": null,
+"plural": null,
+"translation": "us's, our, ours, notre",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-102",
+"hebrew": "postre",
+"hebrewFull": "postre",
+"gender": null,
+"plural": null,
+"translation": "dessert",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-103",
+"hebrew": "sopa",
+"hebrewFull": "sopa",
+"gender": null,
+"plural": null,
+"translation": "soup",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-104",
+"hebrew": "frito",
+"hebrewFull": "frito",
+"gender": null,
+"plural": null,
+"translation": "fried, fry",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-105",
+"hebrew": "patata",
+"hebrewFull": "patata",
+"gender": null,
+"plural": null,
+"translation": "potato",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-106",
+"hebrew": "un plato",
+"hebrewFull": "un plato",
+"gender": null,
+"plural": null,
+"translation": "dish",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-107",
+"hebrew": "blanco",
+"hebrewFull": "blanco",
+"gender": null,
+"plural": null,
+"translation": "white, white's",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-108",
+"hebrew": "botella",
+"hebrewFull": "botella",
+"gender": null,
+"plural": null,
+"translation": "bottle",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-109",
+"hebrew": "tinto",
+"hebrewFull": "tinto",
+"gender": null,
+"plural": null,
+"translation": "red",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-110",
+"hebrew": "otro",
+"hebrewFull": "otro",
+"gender": null,
+"plural": null,
+"translation": "other, another one, another, each other",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-111",
+"hebrew": "bebida",
+"hebrewFull": "bebida",
+"gender": null,
+"plural": null,
+"translation": "drink, drink's",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-112",
+"hebrew": "puede traer",
+"hebrewFull": "puede traer",
+"gender": null,
+"plural": null,
+"translation": "(?) can you bring",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-113",
+"hebrew": "plato",
+"hebrewFull": "plato",
+"gender": null,
+"plural": null,
+"translation": "dish, course, plate",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-114",
+"hebrew": "tenedor",
+"hebrewFull": "tenedor",
+"gender": null,
+"plural": null,
+"translation": "fork",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-115",
+"hebrew": "cuchillo",
+"hebrewFull": "cuchillo",
+"gender": null,
+"plural": null,
+"translation": "knife",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-116",
+"hebrew": "cuchara",
+"hebrewFull": "cuchara",
+"gender": null,
+"plural": null,
+"translation": "spoon",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-117",
+"hebrew": "quisiera",
+"hebrewFull": "quisiera",
+"gender": null,
+"plural": null,
+"translation": "(I) would like, (I) wish, wanted, like",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-118",
+"hebrew": "frijol",
+"hebrewFull": "frijol",
+"gender": null,
+"plural": null,
+"translation": "food, bean, frijol",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-119",
+"hebrew": "menús",
+"hebrewFull": "menús",
+"gender": null,
+"plural": null,
+"translation": "menus",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-120",
+"hebrew": "cerveza",
+"hebrewFull": "cerveza",
+"gender": null,
+"plural": null,
+"translation": "beer",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-121",
+"hebrew": "teléfonos",
+"hebrewFull": "teléfonos",
+"gender": null,
+"plural": null,
+"translation": "phones, telephones",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-122",
+"hebrew": "celulares",
+"hebrewFull": "celulares",
+"gender": null,
+"plural": null,
+"translation": "cell phones",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-123",
+"hebrew": "debajo",
+"hebrewFull": "debajo",
+"gender": null,
+"plural": null,
+"translation": "under",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-124",
+"hebrew": "jardín",
+"hebrewFull": "jardín",
+"gender": null,
+"plural": null,
+"translation": "garden, yard, lawn's",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-125",
+"hebrew": "planta",
+"hebrewFull": "planta",
+"gender": null,
+"plural": null,
+"translation": "plants, floor, floor's, plant",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-126",
+"hebrew": "limpiar",
+"hebrewFull": "limpiar",
+"gender": null,
+"plural": null,
+"translation": "to clean, (to) ice, (to) clear, (to) clean … out",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-127",
+"hebrew": "sobre",
+"hebrewFull": "sobre",
+"gender": null,
+"plural": null,
+"translation": "on, about, on top of, (I/he/she/it/you) look down on",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-128",
+"hebrew": "pintar",
+"hebrewFull": "pintar",
+"gender": null,
+"plural": null,
+"translation": "to paint, to draw, paint, draw",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-129",
+"hebrew": "estantería",
+"hebrewFull": "estantería",
+"gender": null,
+"plural": null,
+"translation": "bookcase, bookshelf, shelf",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-130",
+"hebrew": "silla",
+"hebrewFull": "silla",
+"gender": null,
+"plural": null,
+"translation": "chair, chair's",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-131",
+"hebrew": "tenemos",
+"hebrewFull": "tenemos",
+"gender": null,
+"plural": null,
+"translation": "we're having, (we) are, (?) do we have, we're",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-132",
+"hebrew": "tienen",
+"hebrewFull": "tienen",
+"gender": null,
+"plural": null,
+"translation": "(they) are, (?) is there, make, (you) have",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-133",
+"hebrew": "ventana",
+"hebrewFull": "ventana",
+"gender": null,
+"plural": null,
+"translation": "window, window's",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-134",
+"hebrew": "habitación",
+"hebrewFull": "habitación",
+"gender": null,
+"plural": null,
+"translation": "rooms', bedroom's, room, bedroom",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-135",
+"hebrew": "hay",
+"hebrewFull": "hay",
+"gender": null,
+"plural": null,
+"translation": "there is, there are, there's, is there",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-136",
+"hebrew": "cocina",
+"hebrewFull": "cocina",
+"gender": null,
+"plural": null,
+"translation": "(he) is cooking, (you) cook, kitchen, (she) cooks",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-137",
+"hebrew": "moderno",
+"hebrewFull": "moderno",
+"gender": null,
+"plural": null,
+"translation": "modern, fashionable",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-138",
+"hebrew": "dormitorio",
+"hebrewFull": "dormitorio",
+"gender": null,
+"plural": null,
+"translation": "room, dorm, bedroom, dormitory",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-139",
+"hebrew": "cama",
+"hebrewFull": "cama",
+"gender": null,
+"plural": null,
+"translation": "bed, bed’s",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-140",
+"hebrew": "nevera",
+"hebrewFull": "nevera",
+"gender": null,
+"plural": null,
+"translation": "fridge, refrigerator, cooler's, refrigerator's",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-141",
+"hebrew": "sala",
+"hebrewFull": "sala",
+"gender": null,
+"plural": null,
+"translation": "rooms', lounge, room, living room",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-142",
+"hebrew": "se levanta",
+"hebrewFull": "se levanta",
+"gender": null,
+"plural": null,
+"translation": "(he) gets up, (?) does he get up, (?) are you getting up, stands up",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-143",
+"hebrew": "a qué hora",
+"hebrewFull": "a qué hora",
+"gender": null,
+"plural": null,
+"translation": "when, (?) what time",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-144",
+"hebrew": "te duchas",
+"hebrewFull": "te duchas",
+"gender": null,
+"plural": null,
+"translation": "(?) do you shower, (you) shower, (?) are you showering, shower",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-145",
+"hebrew": "te levantas",
+"hebrewFull": "te levantas",
+"gender": null,
+"plural": null,
+"translation": "(you) get up, (you) are getting up, (?) do you get up",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-146",
+"hebrew": "doce",
+"hebrewFull": "doce",
+"gender": null,
+"plural": null,
+"translation": "twelve, number twelve",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-147",
+"hebrew": "once",
+"hebrewFull": "once",
+"gender": null,
+"plural": null,
+"translation": "eleven, number eleven",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-148",
+"hebrew": "se ducha",
+"hebrewFull": "se ducha",
+"gender": null,
+"plural": null,
+"translation": "(she) showers, (he) showers, showers, (?) does she shower",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-149",
+"hebrew": "me ducho",
+"hebrewFull": "me ducho",
+"gender": null,
+"plural": null,
+"translation": "(I) shower, shower",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-150",
+"hebrew": "me levanto",
+"hebrewFull": "me levanto",
+"gender": null,
+"plural": null,
+"translation": "(I) get up",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-151",
+"hebrew": "tiene que",
+"hebrewFull": "tiene que",
+"gender": null,
+"plural": null,
+"translation": "(you) have to, (he) needs to, (she) must, (she) has to",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-152",
+"hebrew": "tienes que",
+"hebrewFull": "tienes que",
+"gender": null,
+"plural": null,
+"translation": "(you) need, (you) have to, (you) must, need",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-153",
+"hebrew": "tengo que",
+"hebrewFull": "tengo que",
+"gender": null,
+"plural": null,
+"translation": "(I) need to, (I) have to, have, need",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-154",
+"hebrew": "domingos",
+"hebrewFull": "domingos",
+"gender": null,
+"plural": null,
+"translation": "Sundays, Sunday, Sabbath, allowances",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-155",
+"hebrew": "hora",
+"hebrewFull": "hora",
+"gender": null,
+"plural": null,
+"translation": "time, hour, appointment's",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-156",
+"hebrew": "vamos",
+"hebrewFull": "vamos",
+"gender": null,
+"plural": null,
+"translation": "let's, we're going, (we) are going, we've been going (since)",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-157",
+"hebrew": "mirar",
+"hebrewFull": "mirar",
+"gender": null,
+"plural": null,
+"translation": "to look, (to) look at, (to) watch, look at",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-158",
+"hebrew": "van",
+"hebrewFull": "van",
+"gender": null,
+"plural": null,
+"translation": "(you) go, go, (they) will, will",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-159",
+"hebrew": "sábados",
+"hebrewFull": "sábados",
+"gender": null,
+"plural": null,
+"translation": "Saturdays, Saturday, Sabbath",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-160",
+"hebrew": "televisión",
+"hebrewFull": "televisión",
+"gender": null,
+"plural": null,
+"translation": "television, TV",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-161",
+"hebrew": "media",
+"hebrewFull": "media",
+"gender": null,
+"plural": null,
+"translation": "meant, average, thirty, half",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-162",
+"hebrew": "días",
+"hebrewFull": "días",
+"gender": null,
+"plural": null,
+"translation": "days",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-163",
+"hebrew": "vas",
+"hebrewFull": "vas",
+"gender": null,
+"plural": null,
+"translation": "(you) go, go, going, (you) are going",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-164",
+"hebrew": "a menudo",
+"hebrewFull": "a menudo",
+"gender": null,
+"plural": null,
+"translation": "often",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-165",
+"hebrew": "va",
+"hebrewFull": "va",
+"gender": null,
+"plural": null,
+"translation": "is, there is going to, (she) goes, (he) goes",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-166",
+"hebrew": "voy",
+"hebrewFull": "voy",
+"gender": null,
+"plural": null,
+"translation": "go, I will leave, going, I'm going",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-167",
+"hebrew": "todo",
+"hebrewFull": "todo",
+"gender": null,
+"plural": null,
+"translation": "all, whole, everybody, everything",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-168",
+"hebrew": "cine",
+"hebrewFull": "cine",
+"gender": null,
+"plural": null,
+"translation": "theater, movie theater, cinema, movies",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-169",
+"hebrew": "noche",
+"hebrewFull": "noche",
+"gender": null,
+"plural": null,
+"translation": "night, evening",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-170",
+"hebrew": "perros",
+"hebrewFull": "perros",
+"gender": null,
+"plural": null,
+"translation": "dogs",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-171",
+"hebrew": "música",
+"hebrewFull": "música",
+"gender": null,
+"plural": null,
+"translation": "music, composer, harmonica, musician",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-172",
+"hebrew": "viejo",
+"hebrewFull": "viejo",
+"gender": null,
+"plural": null,
+"translation": "old, old man",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-173",
+"hebrew": "chico",
+"hebrewFull": "chico",
+"gender": null,
+"plural": null,
+"translation": "guy's, boy, small, klein",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-174",
+"hebrew": "dibujar",
+"hebrewFull": "dibujar",
+"gender": null,
+"plural": null,
+"translation": "to draw, draw, to sketch, to portray",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-175",
+"hebrew": "nadar",
+"hebrewFull": "nadar",
+"gender": null,
+"plural": null,
+"translation": "to swim, swimming, swim, to go swimming",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-176",
+"hebrew": "me encanta",
+"hebrewFull": "me encanta",
+"gender": null,
+"plural": null,
+"translation": "love",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-177",
+"hebrew": "correr",
+"hebrewFull": "correr",
+"gender": null,
+"plural": null,
+"translation": "to run, run, to race, to go for a run",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-178",
+"hebrew": "jugar",
+"hebrewFull": "jugar",
+"gender": null,
+"plural": null,
+"translation": "to play",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-179",
+"hebrew": "te encanta",
+"hebrewFull": "te encanta",
+"gender": null,
+"plural": null,
+"translation": "(?) do you love, love",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-180",
+"hebrew": "piscina",
+"hebrewFull": "piscina",
+"gender": null,
+"plural": null,
+"translation": "pool, swimming pool",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-181",
+"hebrew": "te gusta",
+"hebrewFull": "te gusta",
+"gender": null,
+"plural": null,
+"translation": "(you) like, (?) do you like, you, like",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-182",
+"hebrew": "pero",
+"hebrewFull": "pero",
+"gender": null,
+"plural": null,
+"translation": "but, only",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-183",
+"hebrew": "creo que",
+"hebrewFull": "creo que",
+"gender": null,
+"plural": null,
+"translation": "I think, I think that",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-184",
+"hebrew": "algo",
+"hebrewFull": "algo",
+"gender": null,
+"plural": null,
+"translation": "something, anything, a little, mid-afternoon snack",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-185",
+"hebrew": "me gusta",
+"hebrewFull": "me gusta",
+"gender": null,
+"plural": null,
+"translation": "(I) like, like",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-186",
+"hebrew": "porque",
+"hebrewFull": "porque",
+"gender": null,
+"plural": null,
+"translation": "because",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-187",
+"hebrew": "chocolate",
+"hebrewFull": "chocolate",
+"gender": null,
+"plural": null,
+"translation": "chocolate",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-188",
+"hebrew": "pastel",
+"hebrewFull": "pastel",
+"gender": null,
+"plural": null,
+"translation": "cake, cakes'",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-189",
+"hebrew": "quiere aprender",
+"hebrewFull": "quiere aprender",
+"gender": null,
+"plural": null,
+"translation": "wants to learn",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-190",
+"hebrew": "salen",
+"hebrewFull": "salen",
+"gender": null,
+"plural": null,
+"translation": "(they) go out, (they) leave, (?) do they leave, (?) are you leaving",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-191",
+"hebrew": "compramos",
+"hebrewFull": "compramos",
+"gender": null,
+"plural": null,
+"translation": "(?) are we buying, (we) bought, (we) buy, buy",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-192",
+"hebrew": "aprendemos",
+"hebrewFull": "aprendemos",
+"gender": null,
+"plural": null,
+"translation": "(we) learn, learn, (we) are learning",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-193",
+"hebrew": "salimos",
+"hebrewFull": "salimos",
+"gender": null,
+"plural": null,
+"translation": "(we) went out, (we) go out, leave, (we) left",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-194",
+"hebrew": "salir",
+"hebrewFull": "salir",
+"gender": null,
+"plural": null,
+"translation": "to leave, to go out, to come out, to appear",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-195",
+"hebrew": "compran",
+"hebrewFull": "compran",
+"gender": null,
+"plural": null,
+"translation": "(they) buy, get, (they) are buying, (?) do you buy",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-196",
+"hebrew": "necesito comprar",
+"hebrewFull": "necesito comprar",
+"gender": null,
+"plural": null,
+"translation": "need to buy",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-197",
+"hebrew": "aprenden",
+"hebrewFull": "aprenden",
+"gender": null,
+"plural": null,
+"translation": "(they) learn, (they) are learning, (?) are you learning, learn",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-198",
+"hebrew": "necesitamos abrir",
+"hebrewFull": "necesitamos abrir",
+"gender": null,
+"plural": null,
+"translation": "we need to open, we must open, we have to open, we need to unlock",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-199",
+"hebrew": "nosotras vivimos",
+"hebrewFull": "nosotras vivimos",
+"gender": null,
+"plural": null,
+"translation": "we live, we are living, we reside, we live in",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-200",
+"hebrew": "abrimos",
+"hebrewFull": "abrimos",
+"gender": null,
+"plural": null,
+"translation": "(we) open, we, (we) opened, open",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-201",
+"hebrew": "abren",
+"hebrewFull": "abren",
+"gender": null,
+"plural": null,
+"translation": "drive, get, (they) are opening, (they) open",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-202",
+"hebrew": "tú escribes",
+"hebrewFull": "tú escribes",
+"gender": null,
+"plural": null,
+"translation": "you write, you are writing",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-203",
+"hebrew": "usted vive",
+"hebrewFull": "usted vive",
+"gender": null,
+"plural": null,
+"translation": "you live, you are living, you reside",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-204",
+"hebrew": "vivir en",
+"hebrewFull": "vivir en",
+"gender": null,
+"plural": null,
+"translation": "live",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-205",
+"hebrew": "ellas escriben",
+"hebrewFull": "ellas escriben",
+"gender": null,
+"plural": null,
+"translation": "they write, they are writing, they do write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-206",
+"hebrew": "necesita escribir",
+"hebrewFull": "necesita escribir",
+"gender": null,
+"plural": null,
+"translation": "needs to write, has to write, must write, need to write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-207",
+"hebrew": "beben",
+"hebrewFull": "beben",
+"gender": null,
+"plural": null,
+"translation": "(?) are they drinking, (they) drink, drinks, (?) do you drink",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-208",
+"hebrew": "quiero beber",
+"hebrewFull": "quiero beber",
+"gender": null,
+"plural": null,
+"translation": "want to drink, wish to drink, would like to drink",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-209",
+"hebrew": "tú bebes",
+"hebrewFull": "tú bebes",
+"gender": null,
+"plural": null,
+"translation": "drink",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-210",
+"hebrew": "leer este",
+"hebrewFull": "leer este",
+"gender": null,
+"plural": null,
+"translation": "reading",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-211",
+"hebrew": "ella come",
+"hebrewFull": "ella come",
+"gender": null,
+"plural": null,
+"translation": "she eats, she is eating, she does eat",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-212",
+"hebrew": "ellos leen",
+"hebrewFull": "ellos leen",
+"gender": null,
+"plural": null,
+"translation": "they read, they are reading, they do read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-213",
+"hebrew": "comer una",
+"hebrewFull": "comer una",
+"gender": null,
+"plural": null,
+"translation": "eat",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-214",
+"hebrew": "nosotros comemos",
+"hebrewFull": "nosotros comemos",
+"gender": null,
+"plural": null,
+"translation": "we eat, we are eating, we do eat",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-215",
+"hebrew": "nosotros leemos",
+"hebrewFull": "nosotros leemos",
+"gender": null,
+"plural": null,
+"translation": "we read, we are reading, we do read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-216",
+"hebrew": "tomar el",
+"hebrewFull": "tomar el",
+"gender": null,
+"plural": null,
+"translation": "take",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-217",
+"hebrew": "tomamos",
+"hebrewFull": "tomamos",
+"gender": null,
+"plural": null,
+"translation": "(?) should we have, made, we're drinking, make",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-218",
+"hebrew": "trabajamos",
+"hebrewFull": "trabajamos",
+"gender": null,
+"plural": null,
+"translation": "work, (we) worked, (we) work, worked",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-219",
+"hebrew": "ellos hablan",
+"hebrewFull": "ellos hablan",
+"gender": null,
+"plural": null,
+"translation": "they speak, they talk",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-220",
+"hebrew": "toma",
+"hebrewFull": "toma",
+"gender": null,
+"plural": null,
+"translation": "(she) takes, takes, (he) takes, drink",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-221",
+"hebrew": "trabajan",
+"hebrewFull": "trabajan",
+"gender": null,
+"plural": null,
+"translation": "(?) do they work, work, they've worked, (they) are working",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-222",
+"hebrew": "tú hablas",
+"hebrewFull": "tú hablas",
+"gender": null,
+"plural": null,
+"translation": "you speak, you talk",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-223",
+"hebrew": "hablar español",
+"hebrewFull": "hablar español",
+"gender": null,
+"plural": null,
+"translation": "speak",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-224",
+"hebrew": "trabajar en",
+"hebrewFull": "trabajar en",
+"gender": null,
+"plural": null,
+"translation": "working",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-225",
+"hebrew": "leen",
+"hebrewFull": "leen",
+"gender": null,
+"plural": null,
+"translation": "(they) read, (you) are reading, (?) do you read, read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-226",
+"hebrew": "viven",
+"hebrewFull": "viven",
+"gender": null,
+"plural": null,
+"translation": "(?) do you live, (they) live, are living, they've lived",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-227",
+"hebrew": "abrir",
+"hebrewFull": "abrir",
+"gender": null,
+"plural": null,
+"translation": "to open, (to) open out, (to) open up, (to) begin",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-228",
+"hebrew": "escriben",
+"hebrewFull": "escriben",
+"gender": null,
+"plural": null,
+"translation": "(they) are writing, (?) do you write, (they) write, write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-229",
+"hebrew": "verano",
+"hebrewFull": "verano",
+"gender": null,
+"plural": null,
+"translation": "summer, summertime, summer's",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-230",
+"hebrew": "junto",
+"hebrewFull": "junto",
+"gender": null,
+"plural": null,
+"translation": "next, along, together, by",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-231",
+"hebrew": "restaurantes",
+"hebrewFull": "restaurantes",
+"gender": null,
+"plural": null,
+"translation": "restaurants",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-232",
+"hebrew": "arroz",
+"hebrewFull": "arroz",
+"gender": null,
+"plural": null,
+"translation": "rice",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-233",
+"hebrew": "comen",
+"hebrewFull": "comen",
+"gender": null,
+"plural": null,
+"translation": "(?) do you eat, (?) are you eating, (they) eat, (they) are eating",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-234",
+"hebrew": "quieren",
+"hebrewFull": "quieren",
+"gender": null,
+"plural": null,
+"translation": "(they) want, (?) do you want, want, (you) want",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-235",
+"hebrew": "comida",
+"hebrewFull": "comida",
+"gender": null,
+"plural": null,
+"translation": "eaten, food, meal, dinner's",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-236",
+"hebrew": "pollo",
+"hebrewFull": "pollo",
+"gender": null,
+"plural": null,
+"translation": "chicken, pollo",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-237",
+"hebrew": "bueno",
+"hebrewFull": "bueno",
+"gender": null,
+"plural": null,
+"translation": "well, all right, anyway, goods",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-238",
+"hebrew": "escribimos",
+"hebrewFull": "escribimos",
+"gender": null,
+"plural": null,
+"translation": "(we) wrote, write, (we) write, score",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-239",
+"hebrew": "casas",
+"hebrewFull": "casas",
+"gender": null,
+"plural": null,
+"translation": "houses, homes, you quash, you fit together",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-240",
+"hebrew": "correos electrónicos",
+"hebrewFull": "correos electrónicos",
+"gender": null,
+"plural": null,
+"translation": "emails",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-241",
+"hebrew": "vivimos",
+"hebrewFull": "vivimos",
+"gender": null,
+"plural": null,
+"translation": "live, (we) lived, (we) have lived, (we) live",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-242",
+"hebrew": "tarde",
+"hebrewFull": "tarde",
+"gender": null,
+"plural": null,
+"translation": "late, afternoon, evening, stall",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-243",
+"hebrew": "comemos",
+"hebrewFull": "comemos",
+"gender": null,
+"plural": null,
+"translation": "(we) eat, (we) are eating, (?) do you eat, (?) should we eat",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-244",
+"hebrew": "sándwiches",
+"hebrewFull": "sándwiches",
+"gender": null,
+"plural": null,
+"translation": "sandwiches",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-245",
+"hebrew": "caminar",
+"hebrewFull": "caminar",
+"gender": null,
+"plural": null,
+"translation": "to walk, walk",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-246",
+"hebrew": "leemos",
+"hebrewFull": "leemos",
+"gender": null,
+"plural": null,
+"translation": "(we) are reading, (we) read, read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-247",
+"hebrew": "queremos",
+"hebrewFull": "queremos",
+"gender": null,
+"plural": null,
+"translation": "want, (we) want, love",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-248",
+"hebrew": "periódico",
+"hebrewFull": "periódico",
+"gender": null,
+"plural": null,
+"translation": "newspaper, daily newspaper",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-249",
+"hebrew": "playa",
+"hebrewFull": "playa",
+"gender": null,
+"plural": null,
+"translation": "beach, beaches, seaside",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-250",
+"hebrew": "izquierda",
+"hebrewFull": "izquierda",
+"gender": null,
+"plural": null,
+"translation": "left",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-251",
+"hebrew": "tomar",
+"hebrewFull": "tomar",
+"gender": null,
+"plural": null,
+"translation": "to take, (to) take in, (to) have, (to) adopt",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-252",
+"hebrew": "derecha",
+"hebrewFull": "derecha",
+"gender": null,
+"plural": null,
+"translation": "right, right hand, right-hand, honest",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-253",
+"hebrew": "metro",
+"hebrewFull": "metro",
+"gender": null,
+"plural": null,
+"translation": "meters, underground, meter, subway",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-254",
+"hebrew": "al lado",
+"hebrewFull": "al lado",
+"gender": null,
+"plural": null,
+"translation": "next to",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-255",
+"hebrew": "están",
+"hebrewFull": "están",
+"gender": null,
+"plural": null,
+"translation": "you are, are, (they/you-plural) are, (they/you-plural) stay",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-256",
+"hebrew": "lejos",
+"hebrewFull": "lejos",
+"gender": null,
+"plural": null,
+"translation": "far, far away, by far, a long time ago",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-257",
+"hebrew": "puerta",
+"hebrewFull": "puerta",
+"gender": null,
+"plural": null,
+"translation": "door, gate, door’s",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-258",
+"hebrew": "parada",
+"hebrewFull": "parada",
+"gender": null,
+"plural": null,
+"translation": "stops, stop, caught",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-259",
+"hebrew": "del",
+"hebrewFull": "del",
+"gender": null,
+"plural": null,
+"translation": "of the, to the",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-260",
+"hebrew": "al",
+"hebrewFull": "al",
+"gender": null,
+"plural": null,
+"translation": "to the, with, your, the",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-261",
+"hebrew": "el café",
+"hebrewFull": "el café",
+"gender": null,
+"plural": null,
+"translation": "coffee",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-262",
+"hebrew": "estamos",
+"hebrewFull": "estamos",
+"gender": null,
+"plural": null,
+"translation": "have been (since), (?) are we, re, (we) are",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-263",
+"hebrew": "parque",
+"hebrewFull": "parque",
+"gender": null,
+"plural": null,
+"translation": "park, parks, parked, park's",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-264",
+"hebrew": "cerca",
+"hebrewFull": "cerca",
+"gender": null,
+"plural": null,
+"translation": "close, near, nearby, (he/she/it) besieges",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-265",
+"hebrew": "viajar",
+"hebrewFull": "viajar",
+"gender": null,
+"plural": null,
+"translation": "to travel, travel",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-266",
+"hebrew": "ir",
+"hebrewFull": "ir",
+"gender": null,
+"plural": null,
+"translation": "to go, (to) go, (to) go out, (to) run",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-267",
+"hebrew": "cerca de",
+"hebrewFull": "cerca de",
+"gender": null,
+"plural": null,
+"translation": "close to",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-268",
+"hebrew": "estación",
+"hebrewFull": "estación",
+"gender": null,
+"plural": null,
+"translation": "season, stations, station, station's",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-269",
+"hebrew": "mis",
+"hebrewFull": "mis",
+"gender": null,
+"plural": null,
+"translation": "my",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-270",
+"hebrew": "pequeños",
+"hebrewFull": "pequeños",
+"gender": null,
+"plural": null,
+"translation": "little, small, young, tiny",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-271",
+"hebrew": "pequeñas",
+"hebrewFull": "pequeñas",
+"gender": null,
+"plural": null,
+"translation": "little, small, tiny",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-272",
+"hebrew": "necesitan",
+"hebrewFull": "necesitan",
+"gender": null,
+"plural": null,
+"translation": "(you) need, (they) need, need, (?) do they need",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-273",
+"hebrew": "tus",
+"hebrewFull": "tus",
+"gender": null,
+"plural": null,
+"translation": "your, your (plural)",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-274",
+"hebrew": "sus",
+"hebrewFull": "sus",
+"gender": null,
+"plural": null,
+"translation": "your, his plural, her plural, your formal plural",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-275",
+"hebrew": "usan",
+"hebrewFull": "usan",
+"gender": null,
+"plural": null,
+"translation": "(they) use, (they) are wearing, wear, use",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-276",
+"hebrew": "estos",
+"hebrewFull": "estos",
+"gender": null,
+"plural": null,
+"translation": "these",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-277",
+"hebrew": "rojos",
+"hebrewFull": "rojos",
+"gender": null,
+"plural": null,
+"translation": "red",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-278",
+"hebrew": "rojas",
+"hebrewFull": "rojas",
+"gender": null,
+"plural": null,
+"translation": "red",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-279",
+"hebrew": "estas",
+"hebrewFull": "estas",
+"gender": null,
+"plural": null,
+"translation": "these",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-280",
+"hebrew": "pantalón",
+"hebrewFull": "pantalón",
+"gender": null,
+"plural": null,
+"translation": "trousers, pants",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-281",
+"hebrew": "necesitamos",
+"hebrewFull": "necesitamos",
+"gender": null,
+"plural": null,
+"translation": "(?) do we need, (we) need, need",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-282",
+"hebrew": "bonitos",
+"hebrewFull": "bonitos",
+"gender": null,
+"plural": null,
+"translation": "beautiful, nice, pretty, lovely",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-283",
+"hebrew": "usamos",
+"hebrewFull": "usamos",
+"gender": null,
+"plural": null,
+"translation": "(we) used, (we) wear, (we) use, wear",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-284",
+"hebrew": "nuevas",
+"hebrewFull": "nuevas",
+"gender": null,
+"plural": null,
+"translation": "new, newer, newest",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-285",
+"hebrew": "nuevos",
+"hebrewFull": "nuevos",
+"gender": null,
+"plural": null,
+"translation": "new, newer, newest",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-286",
+"hebrew": "bonitas",
+"hebrewFull": "bonitas",
+"gender": null,
+"plural": null,
+"translation": "nice, pretty, beautiful",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-287",
+"hebrew": "zapato",
+"hebrewFull": "zapato",
+"gender": null,
+"plural": null,
+"translation": "shoe",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-288",
+"hebrew": "grandes",
+"hebrewFull": "grandes",
+"gender": null,
+"plural": null,
+"translation": "big, too big, large, big  ",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-289",
+"hebrew": "interesantes",
+"hebrewFull": "interesantes",
+"gender": null,
+"plural": null,
+"translation": "interesting",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-290",
+"hebrew": "verdes",
+"hebrewFull": "verdes",
+"gender": null,
+"plural": null,
+"translation": "green, green (plural), 000 peseta note, 1",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-291",
+"hebrew": "carteras",
+"hebrewFull": "carteras",
+"gender": null,
+"plural": null,
+"translation": "purses, wallets, satchels, briefcases",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-292",
+"hebrew": "señores",
+"hebrewFull": "señores",
+"gender": null,
+"plural": null,
+"translation": "men, gentlemen, sirs, Mr.",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-293",
+"hebrew": "señoras",
+"hebrewFull": "señoras",
+"gender": null,
+"plural": null,
+"translation": "ladies, Mrs.",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-294",
+"hebrew": "cuántas",
+"hebrewFull": "cuántas",
+"gender": null,
+"plural": null,
+"translation": "how many",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-295",
+"hebrew": "unas",
+"hebrewFull": "unas",
+"gender": null,
+"plural": null,
+"translation": "some, a few, a, about",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-296",
+"hebrew": "vacaciones",
+"hebrewFull": "vacaciones",
+"gender": null,
+"plural": null,
+"translation": "vacation, vacations",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-297",
+"hebrew": "unos",
+"hebrewFull": "unos",
+"gender": null,
+"plural": null,
+"translation": "some, an, ones",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-298",
+"hebrew": "cuánto",
+"hebrewFull": "cuánto",
+"gender": null,
+"plural": null,
+"translation": "how much, what, how long",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-299",
+"hebrew": "muchas",
+"hebrewFull": "muchas",
+"gender": null,
+"plural": null,
+"translation": "many, a lot of, lots of, much",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-300",
+"hebrew": "fines de semana",
+"hebrewFull": "fines de semana",
+"gender": null,
+"plural": null,
+"translation": "weekends",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-301",
+"hebrew": "ustedes",
+"hebrewFull": "ustedes",
+"gender": null,
+"plural": null,
+"translation": "you guys, you, you all, yourselves",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-302",
+"hebrew": "muchos",
+"hebrewFull": "muchos",
+"gender": null,
+"plural": null,
+"translation": "lots of, a lot of, many, much",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-303",
+"hebrew": "jugador",
+"hebrewFull": "jugador",
+"gender": null,
+"plural": null,
+"translation": "player",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-304",
+"hebrew": "son",
+"hebrewFull": "son",
+"gender": null,
+"plural": null,
+"translation": "is, (they) are, it's, you're",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-305",
+"hebrew": "hablan",
+"hebrewFull": "hablan",
+"gender": null,
+"plural": null,
+"translation": "spoken, speaks, speak, talking",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-306",
+"hebrew": "ellas",
+"hebrewFull": "ellas",
+"gender": null,
+"plural": null,
+"translation": "they, them",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-307",
+"hebrew": "universidades",
+"hebrewFull": "universidades",
+"gender": null,
+"plural": null,
+"translation": "universities, colleges",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-308",
+"hebrew": "ciudades",
+"hebrewFull": "ciudades",
+"gender": null,
+"plural": null,
+"translation": "cities, towns",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-309",
+"hebrew": "estudian",
+"hebrewFull": "estudian",
+"gender": null,
+"plural": null,
+"translation": "(they) are studying, (they) study, investigate, (?) do they study",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-310",
+"hebrew": "ellos",
+"hebrewFull": "ellos",
+"gender": null,
+"plural": null,
+"translation": "they, them",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-311",
+"hebrew": "hablamos",
+"hebrewFull": "hablamos",
+"gender": null,
+"plural": null,
+"translation": "(we) speak, (we) are talking, speak, talking",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-312",
+"hebrew": "nosotras",
+"hebrewFull": "nosotras",
+"gender": null,
+"plural": null,
+"translation": "we, we (feminine), us",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-313",
+"hebrew": "estudiamos",
+"hebrewFull": "estudiamos",
+"gender": null,
+"plural": null,
+"translation": "study, (we) study, (we) studied, studied",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-314",
+"hebrew": "nosotros",
+"hebrewFull": "nosotros",
+"gender": null,
+"plural": null,
+"translation": "we, us",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-315",
+"hebrew": "somos",
+"hebrewFull": "somos",
+"gender": null,
+"plural": null,
+"translation": "we are, are, be, is",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-316",
+"hebrew": "hombres",
+"hebrewFull": "hombres",
+"gender": null,
+"plural": null,
+"translation": "men",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-317",
+"hebrew": "mujeres",
+"hebrewFull": "mujeres",
+"gender": null,
+"plural": null,
+"translation": "women, wives",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-318",
+"hebrew": "me siento",
+"hebrewFull": "me siento",
+"gender": null,
+"plural": null,
+"translation": "I've been feeling (since), I feel, I'm feeling, feel",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-319",
+"hebrew": "se siente",
+"hebrewFull": "se siente",
+"gender": null,
+"plural": null,
+"translation": "(he) feels, (she) feels, (she) is feeling, (?) does he feel",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-320",
+"hebrew": "te sientes",
+"hebrewFull": "te sientes",
+"gender": null,
+"plural": null,
+"translation": "(?) do you feel, (?) are you feeling, (you)  feel, feel",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-321",
+"hebrew": "un poco",
+"hebrewFull": "un poco",
+"gender": null,
+"plural": null,
+"translation": "slightly, any, kind of, somewhat",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-322",
+"hebrew": "otra vez",
+"hebrewFull": "otra vez",
+"gender": null,
+"plural": null,
+"translation": "again",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-323",
+"hebrew": "bebé",
+"hebrewFull": "bebé",
+"gender": null,
+"plural": null,
+"translation": "baby, baby’s",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-324",
+"hebrew": "sorprendido",
+"hebrewFull": "sorprendido",
+"gender": null,
+"plural": null,
+"translation": "surprised, shocked",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-325",
+"hebrew": "nunca",
+"hebrewFull": "nunca",
+"gender": null,
+"plural": null,
+"translation": "never",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-326",
+"hebrew": "a veces",
+"hebrewFull": "a veces",
+"gender": null,
+"plural": null,
+"translation": "sometimes",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-327",
+"hebrew": "disfrutar",
+"hebrewFull": "disfrutar",
+"gender": null,
+"plural": null,
+"translation": "to enjoy, enjoy",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-328",
+"hebrew": "dormir",
+"hebrewFull": "dormir",
+"gender": null,
+"plural": null,
+"translation": "to sleep, sleep, (to) fall asleep",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-329",
+"hebrew": "mamá",
+"hebrewFull": "mamá",
+"gender": null,
+"plural": null,
+"translation": "mom, mother, ma, mom’s",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-330",
+"hebrew": "papá",
+"hebrewFull": "papá",
+"gender": null,
+"plural": null,
+"translation": "pa, father, dad, dad's",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-331",
+"hebrew": "contento",
+"hebrewFull": "contento",
+"gender": null,
+"plural": null,
+"translation": "happier, happy, glad, pleased",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-332",
+"hebrew": "también",
+"hebrewFull": "también",
+"gender": null,
+"plural": null,
+"translation": "also, too, as well",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-333",
+"hebrew": "por qué",
+"hebrewFull": "por qué",
+"gender": null,
+"plural": null,
+"translation": "why, reason",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-334",
+"hebrew": "preocupado",
+"hebrewFull": "preocupado",
+"gender": null,
+"plural": null,
+"translation": "anxious, worried, concerned",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-335",
+"hebrew": "aburrido",
+"hebrewFull": "aburrido",
+"gender": null,
+"plural": null,
+"translation": "boring, bored, uninteresting",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-336",
+"hebrew": "enojado",
+"hebrewFull": "enojado",
+"gender": null,
+"plural": null,
+"translation": "maddest, annoyed, mad, angrier",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-337",
+"hebrew": "siempre",
+"hebrewFull": "siempre",
+"gender": null,
+"plural": null,
+"translation": "always, providing (that), provided (that), after all",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-338",
+"hebrew": "triste",
+"hebrewFull": "triste",
+"gender": null,
+"plural": null,
+"translation": "sad, dismal, gloomy, miserable",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-339",
+"hebrew": "contigo",
+"hebrewFull": "contigo",
+"gender": null,
+"plural": null,
+"translation": "with you",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-340",
+"hebrew": "conmigo",
+"hebrewFull": "conmigo",
+"gender": null,
+"plural": null,
+"translation": "with me",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-341",
+"hebrew": "qué tal",
+"hebrewFull": "qué tal",
+"gender": null,
+"plural": null,
+"translation": "how's, how's ... going, (?) how are you, how",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-342",
+"hebrew": "enfermo",
+"hebrewFull": "enfermo",
+"gender": null,
+"plural": null,
+"translation": "sick, ill",
+"translationLang": "en",
+"category": "Body & Health"
+},
+{
+"id": "esen-343",
+"hebrew": "emocionar",
+"hebrewFull": "emocionar",
+"gender": null,
+"plural": null,
+"translation": "move, moves",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-344",
+"hebrew": "ahora",
+"hebrewFull": "ahora",
+"gender": null,
+"plural": null,
+"translation": "now, a moment ago",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-345",
+"hebrew": "lee",
+"hebrewFull": "lee",
+"gender": null,
+"plural": null,
+"translation": "lees, (she) is reading, read, (she) reads",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-346",
+"hebrew": "nuevo",
+"hebrewFull": "nuevo",
+"gender": null,
+"plural": null,
+"translation": "new, newer, newest, newly",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-347",
+"hebrew": "negocio",
+"hebrewFull": "negocio",
+"gender": null,
+"plural": null,
+"translation": "business's, business, deal, store",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-348",
+"hebrew": "tener",
+"hebrewFull": "tener",
+"gender": null,
+"plural": null,
+"translation": "to have, have",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-349",
+"hebrew": "correo electrónico",
+"hebrewFull": "correo electrónico",
+"gender": null,
+"plural": null,
+"translation": "email",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-350",
+"hebrew": "poco",
+"hebrewFull": "poco",
+"gender": null,
+"plural": null,
+"translation": "little, bit, a while, few",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-351",
+"hebrew": "cuál",
+"hebrewFull": "cuál",
+"gender": null,
+"plural": null,
+"translation": "what, which, which one",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-352",
+"hebrew": "carta",
+"hebrewFull": "carta",
+"gender": null,
+"plural": null,
+"translation": "letter, card",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-353",
+"hebrew": "escribe",
+"hebrewFull": "escribe",
+"gender": null,
+"plural": null,
+"translation": "(?) does she write, (he) is writing, (you) write, (?) are you writing",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-354",
+"hebrew": "escritorio",
+"hebrewFull": "escritorio",
+"gender": null,
+"plural": null,
+"translation": "desktop, desk, desk's",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-355",
+"hebrew": "los",
+"hebrewFull": "los",
+"gender": null,
+"plural": null,
+"translation": "your, her, the, those",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-356",
+"hebrew": "las",
+"hebrewFull": "las",
+"gender": null,
+"plural": null,
+"translation": "your, her, the, their",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-357",
+"hebrew": "mensaje",
+"hebrewFull": "mensaje",
+"gender": null,
+"plural": null,
+"translation": "message, text",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-358",
+"hebrew": "secretario",
+"hebrewFull": "secretario",
+"gender": null,
+"plural": null,
+"translation": "secretary, minister, secretary's",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-359",
+"hebrew": "jefe",
+"hebrewFull": "jefe",
+"gender": null,
+"plural": null,
+"translation": "manager, manager's, boss's, boss",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-360",
+"hebrew": "inglesa",
+"hebrewFull": "inglesa",
+"gender": null,
+"plural": null,
+"translation": "English",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-361",
+"hebrew": "española",
+"hebrewFull": "española",
+"gender": null,
+"plural": null,
+"translation": "Spanish",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-362",
+"hebrew": "nueve",
+"hebrewFull": "nueve",
+"gender": null,
+"plural": null,
+"translation": "nine",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-363",
+"hebrew": "diez",
+"hebrewFull": "diez",
+"gender": null,
+"plural": null,
+"translation": "ten",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-364",
+"hebrew": "año",
+"hebrewFull": "año",
+"gender": null,
+"plural": null,
+"translation": "years', year, year's, year’s",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-365",
+"hebrew": "alta",
+"hebrewFull": "alta",
+"gender": null,
+"plural": null,
+"translation": "tall, high",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-366",
+"hebrew": "simpática",
+"hebrewFull": "simpática",
+"gender": null,
+"plural": null,
+"translation": "nice, friendly, likeable",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-367",
+"hebrew": "bajo",
+"hebrewFull": "bajo",
+"gender": null,
+"plural": null,
+"translation": "short",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-368",
+"hebrew": "simpático",
+"hebrewFull": "simpático",
+"gender": null,
+"plural": null,
+"translation": "nice, sympathetic, pleasant, delightful",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-369",
+"hebrew": "alto",
+"hebrewFull": "alto",
+"gender": null,
+"plural": null,
+"translation": "tall, high, high ground, halt!",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-370",
+"hebrew": "baja",
+"hebrewFull": "baja",
+"gender": null,
+"plural": null,
+"translation": "turns down, goes down, low, (she) gets off",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-371",
+"hebrew": "mascota",
+"hebrewFull": "mascota",
+"gender": null,
+"plural": null,
+"translation": "pets, mascot, pet, buddy's",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-372",
+"hebrew": "pequeña",
+"hebrewFull": "pequeña",
+"gender": null,
+"plural": null,
+"translation": "little, tiny, small, short",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-373",
+"hebrew": "hijos",
+"hebrewFull": "hijos",
+"gender": null,
+"plural": null,
+"translation": "children, sons",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-374",
+"hebrew": "pequeño",
+"hebrewFull": "pequeño",
+"gender": null,
+"plural": null,
+"translation": "small , little ones, shorts",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-375",
+"hebrew": "su",
+"hebrewFull": "su",
+"gender": null,
+"plural": null,
+"translation": "his, her, your formal, their",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-376",
+"hebrew": "bonita",
+"hebrewFull": "bonita",
+"gender": null,
+"plural": null,
+"translation": "beautiful, nice, pretty, bonita",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-377",
+"hebrew": "italiano",
+"hebrewFull": "italiano",
+"gender": null,
+"plural": null,
+"translation": "Italian",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-378",
+"hebrew": "seis",
+"hebrewFull": "seis",
+"gender": null,
+"plural": null,
+"translation": "six",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-379",
+"hebrew": "siete",
+"hebrewFull": "siete",
+"gender": null,
+"plural": null,
+"translation": "seven, number seven, tear",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-380",
+"hebrew": "estudiantes",
+"hebrewFull": "estudiantes",
+"gender": null,
+"plural": null,
+"translation": "students, university students, college students",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-381",
+"hebrew": "preguntas",
+"hebrewFull": "preguntas",
+"gender": null,
+"plural": null,
+"translation": "questions",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-382",
+"hebrew": "ocho",
+"hebrewFull": "ocho",
+"gender": null,
+"plural": null,
+"translation": "eight, number eight",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-383",
+"hebrew": "clases",
+"hebrewFull": "clases",
+"gender": null,
+"plural": null,
+"translation": "classes, to have classes, classrooms, kinds",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-384",
+"hebrew": "cinco",
+"hebrewFull": "cinco",
+"gender": null,
+"plural": null,
+"translation": "five, moment",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-385",
+"hebrew": "aprendes",
+"hebrewFull": "aprendes",
+"gender": null,
+"plural": null,
+"translation": "(?) are you learning, (you) learn, learn",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-386",
+"hebrew": "aprende",
+"hebrewFull": "aprende",
+"gender": null,
+"plural": null,
+"translation": "(she) is learning, (he) learns, (she) learns, (he) is learning",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-387",
+"hebrew": "aprender",
+"hebrewFull": "aprender",
+"gender": null,
+"plural": null,
+"translation": "to learn, learning, learn",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-388",
+"hebrew": "aprendo",
+"hebrewFull": "aprendo",
+"gender": null,
+"plural": null,
+"translation": "(I) am learning, learning, (I) learn, learn",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-389",
+"hebrew": "esta",
+"hebrewFull": "esta",
+"gender": null,
+"plural": null,
+"translation": "this",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-390",
+"hebrew": "bibliotecas",
+"hebrewFull": "bibliotecas",
+"gender": null,
+"plural": null,
+"translation": "libraries, bookshelves, bookcase, collections",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-391",
+"hebrew": "cuatro",
+"hebrewFull": "cuatro",
+"gender": null,
+"plural": null,
+"translation": "four, number four, four-stringed guitar",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-392",
+"hebrew": "computadoras",
+"hebrewFull": "computadoras",
+"gender": null,
+"plural": null,
+"translation": "computers",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-393",
+"hebrew": "biblioteca",
+"hebrewFull": "biblioteca",
+"gender": null,
+"plural": null,
+"translation": "library, bookcase, bookshelves, collection",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-394",
+"hebrew": "bolígrafos",
+"hebrewFull": "bolígrafos",
+"gender": null,
+"plural": null,
+"translation": "pens, ballpoint pens",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-395",
+"hebrew": "libros",
+"hebrewFull": "libros",
+"gender": null,
+"plural": null,
+"translation": "books",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-396",
+"hebrew": "cero",
+"hebrewFull": "cero",
+"gender": null,
+"plural": null,
+"translation": "zero, nought, love, nil",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-397",
+"hebrew": "novio",
+"hebrewFull": "novio",
+"gender": null,
+"plural": null,
+"translation": "boyfriend, fiancé, groom",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-398",
+"hebrew": "pueblo",
+"hebrewFull": "pueblo",
+"gender": null,
+"plural": null,
+"translation": "town, people, small town, (I) am settled",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-399",
+"hebrew": "novia",
+"hebrewFull": "novia",
+"gender": null,
+"plural": null,
+"translation": "girlfriend, bride, fiancée",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-400",
+"hebrew": "médico",
+"hebrewFull": "médico",
+"gender": null,
+"plural": null,
+"translation": "doctor",
+"translationLang": "en",
+"category": "Body & Health"
+},
+{
+"id": "esen-401",
+"hebrew": "ciudad",
+"hebrewFull": "ciudad",
+"gender": null,
+"plural": null,
+"translation": "city, town",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-402",
+"hebrew": "médica",
+"hebrewFull": "médica",
+"gender": null,
+"plural": null,
+"translation": "doctor, medical",
+"translationLang": "en",
+"category": "Body & Health"
+},
+{
+"id": "esen-403",
+"hebrew": "joven",
+"hebrewFull": "joven",
+"gender": null,
+"plural": null,
+"translation": "young, young man, young woman, young person",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-404",
+"hebrew": "amiga",
+"hebrewFull": "amiga",
+"gender": null,
+"plural": null,
+"translation": "friend, friend's, friend’s, girlfriend",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-405",
+"hebrew": "ser",
+"hebrewFull": "ser",
+"gender": null,
+"plural": null,
+"translation": "made, being, name's, it'd",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-406",
+"hebrew": "dirección",
+"hebrewFull": "dirección",
+"gender": null,
+"plural": null,
+"translation": "address, direction, post / position of manager, authorities",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-407",
+"hebrew": "amigo",
+"hebrewFull": "amigo",
+"gender": null,
+"plural": null,
+"translation": "friend, buddy, bud",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-408",
+"hebrew": "número",
+"hebrewFull": "número",
+"gender": null,
+"plural": null,
+"translation": "number, act, constable, issue",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-409",
+"hebrew": "celular",
+"hebrewFull": "celular",
+"gender": null,
+"plural": null,
+"translation": "number, cell phone, phone's, cellphone",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-410",
+"hebrew": "portugués",
+"hebrewFull": "portugués",
+"gender": null,
+"plural": null,
+"translation": "Portuguese",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-411",
+"hebrew": "maestra",
+"hebrewFull": "maestra",
+"gender": null,
+"plural": null,
+"translation": "teacher, instructor's",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-412",
+"hebrew": "camarero",
+"hebrewFull": "camarero",
+"gender": null,
+"plural": null,
+"translation": "waiter, barman, bellboy, steward",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-413",
+"hebrew": "camarera",
+"hebrewFull": "camarera",
+"gender": null,
+"plural": null,
+"translation": "waitress, barmaid, maid, stewardess",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-414",
+"hebrew": "Francia",
+"hebrewFull": "Francia",
+"gender": null,
+"plural": null,
+"translation": "France",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-415",
+"hebrew": "Inglaterra",
+"hebrewFull": "Inglaterra",
+"gender": null,
+"plural": null,
+"translation": "England",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-416",
+"hebrew": "vivir",
+"hebrewFull": "vivir",
+"gender": null,
+"plural": null,
+"translation": "to live, live, (to) be alive, Living",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-417",
+"hebrew": "vives",
+"hebrewFull": "vives",
+"gender": null,
+"plural": null,
+"translation": "live, (?) do you live, (you) live, lived",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-418",
+"hebrew": "Europa",
+"hebrewFull": "Europa",
+"gender": null,
+"plural": null,
+"translation": "Europe",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-419",
+"hebrew": "vive",
+"hebrewFull": "vive",
+"gender": null,
+"plural": null,
+"translation": "(he) lives, live, (?) do you live, (?) does she live",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-420",
+"hebrew": "beber",
+"hebrewFull": "beber",
+"gender": null,
+"plural": null,
+"translation": "to drink, drink, drinking",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-421",
+"hebrew": "vino",
+"hebrewFull": "vino",
+"gender": null,
+"plural": null,
+"translation": "wine, (he/she/it/you) came, (he/she/it/you) arrived, come",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-422",
+"hebrew": "comer",
+"hebrewFull": "comer",
+"gender": null,
+"plural": null,
+"translation": "to eat, eat, eating",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-423",
+"hebrew": "trabajar",
+"hebrewFull": "trabajar",
+"gender": null,
+"plural": null,
+"translation": "to work",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-424",
+"hebrew": "trabajo",
+"hebrewFull": "trabajo",
+"gender": null,
+"plural": null,
+"translation": "work, (I) work, jobs, workplace",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-425",
+"hebrew": "oficina",
+"hebrewFull": "oficina",
+"gender": null,
+"plural": null,
+"translation": "office",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-426",
+"hebrew": "trabaja",
+"hebrewFull": "trabaja",
+"gender": null,
+"plural": null,
+"translation": "work, (you) are working, (she) is working, (?) does she work",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-427",
+"hebrew": "trabajas",
+"hebrewFull": "trabajas",
+"gender": null,
+"plural": null,
+"translation": "(?) have you been working, (?) do you work, you've worked, (you) work",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-428",
+"hebrew": "fábrica",
+"hebrewFull": "fábrica",
+"gender": null,
+"plural": null,
+"translation": "factory, stonework",
+"translationLang": "en",
+"category": "Work & Business"
+},
+{
+"id": "esen-429",
+"hebrew": "quién",
+"hebrewFull": "quién",
+"gender": null,
+"plural": null,
+"translation": "who, who (singular), whom",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-430",
+"hebrew": "francés",
+"hebrewFull": "francés",
+"gender": null,
+"plural": null,
+"translation": "French",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-431",
+"hebrew": "hablar",
+"hebrewFull": "hablar",
+"gender": null,
+"plural": null,
+"translation": "to speak, to talk, (to) talk about, (to) call",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-432",
+"hebrew": "estudia",
+"hebrewFull": "estudia",
+"gender": null,
+"plural": null,
+"translation": "(you) study, (she) studies, (?) does he study, study",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-433",
+"hebrew": "habla",
+"hebrewFull": "habla",
+"gender": null,
+"plural": null,
+"translation": "(he) is speaking, (?) does he speak, speaks, (?) do you speak",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-434",
+"hebrew": "fin de semana",
+"hebrewFull": "fin de semana",
+"gender": null,
+"plural": null,
+"translation": "weekend",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-435",
+"hebrew": "disfruta",
+"hebrewFull": "disfruta",
+"gender": null,
+"plural": null,
+"translation": "(you) enjoy, (he) enjoys, (he) is enjoying, enjoy",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-436",
+"hebrew": "película",
+"hebrewFull": "película",
+"gender": null,
+"plural": null,
+"translation": "movie, film",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-437",
+"hebrew": "baile",
+"hebrewFull": "baile",
+"gender": null,
+"plural": null,
+"translation": "dance, dance!, dance hall, (I/he/she/it/you) dance",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-438",
+"hebrew": "semana",
+"hebrewFull": "semana",
+"gender": null,
+"plural": null,
+"translation": "week, allowance, pocket money",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-439",
+"hebrew": "favorito",
+"hebrewFull": "favorito",
+"gender": null,
+"plural": null,
+"translation": "favorite",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-440",
+"hebrew": "divertida",
+"hebrewFull": "divertida",
+"gender": null,
+"plural": null,
+"translation": "funny, fun, amusing",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-441",
+"hebrew": "fiesta",
+"hebrewFull": "fiesta",
+"gender": null,
+"plural": null,
+"translation": "party, holiday, don't, festival",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-442",
+"hebrew": "concierto",
+"hebrewFull": "concierto",
+"gender": null,
+"plural": null,
+"translation": "concert, (I) arrange, (I) agree, (I) am in tune",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-443",
+"hebrew": "divertido",
+"hebrewFull": "divertido",
+"gender": null,
+"plural": null,
+"translation": "fun",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-444",
+"hebrew": "domingo",
+"hebrewFull": "domingo",
+"gender": null,
+"plural": null,
+"translation": "Sunday, Sabbath, allowance, pocket money",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-445",
+"hebrew": "sábado",
+"hebrewFull": "sábado",
+"gender": null,
+"plural": null,
+"translation": "Saturday, Sabbath",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-446",
+"hebrew": "viernes",
+"hebrewFull": "viernes",
+"gender": null,
+"plural": null,
+"translation": "Friday, Fridays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-447",
+"hebrew": "miércoles",
+"hebrewFull": "miércoles",
+"gender": null,
+"plural": null,
+"translation": "Wednesday, Wednesdays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-448",
+"hebrew": "béisbol",
+"hebrewFull": "béisbol",
+"gender": null,
+"plural": null,
+"translation": "baseball",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-449",
+"hebrew": "jueves",
+"hebrewFull": "jueves",
+"gender": null,
+"plural": null,
+"translation": "Thursday, Thursdays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-450",
+"hebrew": "cumpleaños",
+"hebrewFull": "cumpleaños",
+"gender": null,
+"plural": null,
+"translation": "birthday, birthday party, birthdays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-451",
+"hebrew": "día",
+"hebrewFull": "día",
+"gender": null,
+"plural": null,
+"translation": "day",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-452",
+"hebrew": "qué",
+"hebrewFull": "qué",
+"gender": null,
+"plural": null,
+"translation": "what, how",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-453",
+"hebrew": "partido",
+"hebrewFull": "partido",
+"gender": null,
+"plural": null,
+"translation": "game, match, departed, administrative area",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-454",
+"hebrew": "mañana",
+"hebrewFull": "mañana",
+"gender": null,
+"plural": null,
+"translation": "tomorrow, morning, future",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-455",
+"hebrew": "cuándo",
+"hebrewFull": "cuándo",
+"gender": null,
+"plural": null,
+"translation": "when",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-456",
+"hebrew": "martes",
+"hebrewFull": "martes",
+"gender": null,
+"plural": null,
+"translation": "Tuesday, Tuesdays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-457",
+"hebrew": "hoy",
+"hebrewFull": "hoy",
+"gender": null,
+"plural": null,
+"translation": "today, nowadays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-458",
+"hebrew": "lunes",
+"hebrewFull": "lunes",
+"gender": null,
+"plural": null,
+"translation": "Monday, Mondays",
+"translationLang": "en",
+"category": "Time & Calendar"
+},
+{
+"id": "esen-459",
+"hebrew": "fútbol",
+"hebrewFull": "fútbol",
+"gender": null,
+"plural": null,
+"translation": "soccer, football",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-460",
+"hebrew": "uso",
+"hebrewFull": "uso",
+"gender": null,
+"plural": null,
+"translation": "(I) am wearing, (I) am using, (I) use, use",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-461",
+"hebrew": "usas",
+"hebrewFull": "usas",
+"gender": null,
+"plural": null,
+"translation": "(?) do you use, (?) are you using, (?) do you wear, (you) wear",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-462",
+"hebrew": "usa",
+"hebrewFull": "usa",
+"gender": null,
+"plural": null,
+"translation": "(she) is using, (he) is using, (?) does he wear, (?) are you using",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-463",
+"hebrew": "usar",
+"hebrewFull": "usar",
+"gender": null,
+"plural": null,
+"translation": "to use, to wear",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-464",
+"hebrew": "ayuda",
+"hebrewFull": "ayuda",
+"gender": null,
+"plural": null,
+"translation": "help, (you-formal) help, (he/she/it) helps, (he/she/it) helps oneself",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-465",
+"hebrew": "necesitas",
+"hebrewFull": "necesitas",
+"gender": null,
+"plural": null,
+"translation": "(you) need, (?) do you need, need",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-466",
+"hebrew": "necesita",
+"hebrewFull": "necesita",
+"gender": null,
+"plural": null,
+"translation": "(?) does she need, (you) need, (?) does he need, require",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-467",
+"hebrew": "quieres",
+"hebrewFull": "quieres",
+"gender": null,
+"plural": null,
+"translation": "do you want, want, you, (you) want",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-468",
+"hebrew": "quiere",
+"hebrewFull": "quiere",
+"gender": null,
+"plural": null,
+"translation": "mean, wants, (?) do you want, (he) wants",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-469",
+"hebrew": "banana",
+"hebrewFull": "banana",
+"gender": null,
+"plural": null,
+"translation": "banana",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-470",
+"hebrew": "más",
+"hebrewFull": "más",
+"gender": null,
+"plural": null,
+"translation": "more, any more, most, else",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-471",
+"hebrew": "té",
+"hebrewFull": "té",
+"gender": null,
+"plural": null,
+"translation": "tea, tea party",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-472",
+"hebrew": "mal",
+"hebrewFull": "mal",
+"gender": null,
+"plural": null,
+"translation": "unwell, bad, ill, wrong",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-473",
+"hebrew": "ocupada",
+"hebrewFull": "ocupada",
+"gender": null,
+"plural": null,
+"translation": "busy",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-474",
+"hebrew": "feliz",
+"hebrewFull": "feliz",
+"gender": null,
+"plural": null,
+"translation": "happy, apt, felicitous",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-475",
+"hebrew": "te llamas",
+"hebrewFull": "te llamas",
+"gender": null,
+"plural": null,
+"translation": "your name is, (?) is your name",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-476",
+"hebrew": "se llama",
+"hebrewFull": "se llama",
+"gender": null,
+"plural": null,
+"translation": "(her) name is, (his) name is, (it) is called, is named",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-477",
+"hebrew": "ocupado",
+"hebrewFull": "ocupado",
+"gender": null,
+"plural": null,
+"translation": "busy, been on the game, concerned, confiscated",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-478",
+"hebrew": "cómo está",
+"hebrewFull": "cómo está",
+"gender": null,
+"plural": null,
+"translation": "how's",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-479",
+"hebrew": "señor",
+"hebrewFull": "señor",
+"gender": null,
+"plural": null,
+"translation": "Mr., gentleman’s, sir, gentleman",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-480",
+"hebrew": "señorita",
+"hebrewFull": "señorita",
+"gender": null,
+"plural": null,
+"translation": "lady, miss, Ms., young lady",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-481",
+"hebrew": "buenas tardes",
+"hebrewFull": "buenas tardes",
+"gender": null,
+"plural": null,
+"translation": "good afternoon, good evening",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-482",
+"hebrew": "usted",
+"hebrewFull": "usted",
+"gender": null,
+"plural": null,
+"translation": "you'll, you, you—i've",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-483",
+"hebrew": "señora",
+"hebrewFull": "señora",
+"gender": null,
+"plural": null,
+"translation": "ma'am, woman, lady, Mrs.",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-484",
+"hebrew": "hasta mañana",
+"hebrewFull": "hasta mañana",
+"gender": null,
+"plural": null,
+"translation": "see you tomorrow",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-485",
+"hebrew": "hasta luego",
+"hebrewFull": "hasta luego",
+"gender": null,
+"plural": null,
+"translation": "see you later, I'll see you later",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-486",
+"hebrew": "cansada",
+"hebrewFull": "cansada",
+"gender": null,
+"plural": null,
+"translation": "tired, made … tired, tired oneself out, been tiring",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-487",
+"hebrew": "bien",
+"hebrewFull": "bien",
+"gender": null,
+"plural": null,
+"translation": "ok, fine, well-to-do, OK",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-488",
+"hebrew": "cómo",
+"hebrewFull": "cómo",
+"gender": null,
+"plural": null,
+"translation": "how's, what, how, like",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-489",
+"hebrew": "cansado",
+"hebrewFull": "cansado",
+"gender": null,
+"plural": null,
+"translation": "tired, made … tired, tired oneself out, been tiring",
+"translationLang": "en",
+"category": "Emotions & Feelings"
+},
+{
+"id": "esen-490",
+"hebrew": "estoy",
+"hebrewFull": "estoy",
+"gender": null,
+"plural": null,
+"translation": "am, I'm, I've been, feel",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-491",
+"hebrew": "estás",
+"hebrewFull": "estás",
+"gender": null,
+"plural": null,
+"translation": "are you, you're, you are, you've been",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-492",
+"hebrew": "mexicano",
+"hebrewFull": "mexicano",
+"gender": null,
+"plural": null,
+"translation": "Mexican",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-493",
+"hebrew": "cubano",
+"hebrewFull": "cubano",
+"gender": null,
+"plural": null,
+"translation": "Cuban",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-494",
+"hebrew": "mexicana",
+"hebrewFull": "mexicana",
+"gender": null,
+"plural": null,
+"translation": "mexican",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-495",
+"hebrew": "cubana",
+"hebrewFull": "cubana",
+"gender": null,
+"plural": null,
+"translation": "Cuban",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-496",
+"hebrew": "nombre",
+"hebrewFull": "nombre",
+"gender": null,
+"plural": null,
+"translation": "name",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-497",
+"hebrew": "americana",
+"hebrewFull": "americana",
+"gender": null,
+"plural": null,
+"translation": "American",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-498",
+"hebrew": "España",
+"hebrewFull": "España",
+"gender": null,
+"plural": null,
+"translation": "Spain",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-499",
+"hebrew": "me llamo",
+"hebrewFull": "me llamo",
+"gender": null,
+"plural": null,
+"translation": "my name is",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-500",
+"hebrew": "americano",
+"hebrewFull": "americano",
+"gender": null,
+"plural": null,
+"translation": "American",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-501",
+"hebrew": "medicina",
+"hebrewFull": "medicina",
+"gender": null,
+"plural": null,
+"translation": "medicine",
+"translationLang": "en",
+"category": "Body & Health"
+},
+{
+"id": "esen-502",
+"hebrew": "universidad",
+"hebrewFull": "universidad",
+"gender": null,
+"plural": null,
+"translation": "university, college, university's",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-503",
+"hebrew": "computadora",
+"hebrewFull": "computadora",
+"gender": null,
+"plural": null,
+"translation": "computer",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-504",
+"hebrew": "lees",
+"hebrewFull": "lees",
+"gender": null,
+"plural": null,
+"translation": "read, (you) are reading, (you) read, (?) do you read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-505",
+"hebrew": "estudias",
+"hebrewFull": "estudias",
+"gender": null,
+"plural": null,
+"translation": "(you) study, (?) have you been studyin, (?) do you study, (you) are studying",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-506",
+"hebrew": "escribes",
+"hebrewFull": "escribes",
+"gender": null,
+"plural": null,
+"translation": "writing, (you) write, (?) are you writing, (?) do you write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-507",
+"hebrew": "profesor",
+"hebrewFull": "profesor",
+"gender": null,
+"plural": null,
+"translation": "professor",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-508",
+"hebrew": "escribo",
+"hebrewFull": "escribo",
+"gender": null,
+"plural": null,
+"translation": "contribute, (I) write, (I) am writing, write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-509",
+"hebrew": "importante",
+"hebrewFull": "importante",
+"gender": null,
+"plural": null,
+"translation": "important",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-510",
+"hebrew": "estudio",
+"hebrewFull": "estudio",
+"gender": null,
+"plural": null,
+"translation": "study, studio",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-511",
+"hebrew": "mucho",
+"hebrewFull": "mucho",
+"gender": null,
+"plural": null,
+"translation": "a lot",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-512",
+"hebrew": "comprendo",
+"hebrewFull": "comprendo",
+"gender": null,
+"plural": null,
+"translation": "understand",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-513",
+"hebrew": "leo",
+"hebrewFull": "leo",
+"gender": null,
+"plural": null,
+"translation": "I read, read, Leo, I am reading",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-514",
+"hebrew": "escribir",
+"hebrewFull": "escribir",
+"gender": null,
+"plural": null,
+"translation": "to write",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-515",
+"hebrew": "pregunta",
+"hebrewFull": "pregunta",
+"gender": null,
+"plural": null,
+"translation": "question",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-516",
+"hebrew": "leer",
+"hebrewFull": "leer",
+"gender": null,
+"plural": null,
+"translation": "to read",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-517",
+"hebrew": "estudiar",
+"hebrewFull": "estudiar",
+"gender": null,
+"plural": null,
+"translation": "to study",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-518",
+"hebrew": "problema",
+"hebrewFull": "problema",
+"gender": null,
+"plural": null,
+"translation": "bug, problems, matter, trouble",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-519",
+"hebrew": "estudiante",
+"hebrewFull": "estudiante",
+"gender": null,
+"plural": null,
+"translation": "student",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-520",
+"hebrew": "difícil",
+"hebrewFull": "difícil",
+"gender": null,
+"plural": null,
+"translation": "difficult",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-521",
+"hebrew": "clase",
+"hebrewFull": "clase",
+"gender": null,
+"plural": null,
+"translation": "class",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-522",
+"hebrew": "fácil",
+"hebrewFull": "fácil",
+"gender": null,
+"plural": null,
+"translation": "easy",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-523",
+"hebrew": "maestro",
+"hebrewFull": "maestro",
+"gender": null,
+"plural": null,
+"translation": "teacher",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-524",
+"hebrew": "examen",
+"hebrewFull": "examen",
+"gender": null,
+"plural": null,
+"translation": "exam",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-525",
+"hebrew": "libro",
+"hebrewFull": "libro",
+"gender": null,
+"plural": null,
+"translation": "book",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-526",
+"hebrew": "escuela",
+"hebrewFull": "escuela",
+"gender": null,
+"plural": null,
+"translation": "school",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-527",
+"hebrew": "bolígrafo",
+"hebrewFull": "bolígrafo",
+"gender": null,
+"plural": null,
+"translation": "pen",
+"translationLang": "en",
+"category": "School & Learning"
+},
+{
+"id": "esen-528",
+"hebrew": "demasiado",
+"hebrewFull": "demasiado",
+"gender": null,
+"plural": null,
+"translation": "too",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-529",
+"hebrew": "regalo",
+"hebrewFull": "regalo",
+"gender": null,
+"plural": null,
+"translation": "gift",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-530",
+"hebrew": "cinturón",
+"hebrewFull": "cinturón",
+"gender": null,
+"plural": null,
+"translation": "belt",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-531",
+"hebrew": "reloj",
+"hebrewFull": "reloj",
+"gender": null,
+"plural": null,
+"translation": "watch, clock",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-532",
+"hebrew": "favorita",
+"hebrewFull": "favorita",
+"gender": null,
+"plural": null,
+"translation": "favorite",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-533",
+"hebrew": "cómoda",
+"hebrewFull": "cómoda",
+"gender": null,
+"plural": null,
+"translation": "dresser, comfortable, convenient",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-534",
+"hebrew": "cartera",
+"hebrewFull": "cartera",
+"gender": null,
+"plural": null,
+"translation": "purse, bag, wallet, postal worker",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-535",
+"hebrew": "diferente",
+"hebrewFull": "diferente",
+"gender": null,
+"plural": null,
+"translation": "different",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-536",
+"hebrew": "abrigo",
+"hebrewFull": "abrigo",
+"gender": null,
+"plural": null,
+"translation": "coat",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-537",
+"hebrew": "caro",
+"hebrewFull": "caro",
+"gender": null,
+"plural": null,
+"translation": "expensive",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-538",
+"hebrew": "ese",
+"hebrewFull": "ese",
+"gender": null,
+"plural": null,
+"translation": "the, that, that's",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-539",
+"hebrew": "barato",
+"hebrewFull": "barato",
+"gender": null,
+"plural": null,
+"translation": "cheap",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-540",
+"hebrew": "falda",
+"hebrewFull": "falda",
+"gender": null,
+"plural": null,
+"translation": "skirt",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-541",
+"hebrew": "rojo",
+"hebrewFull": "rojo",
+"gender": null,
+"plural": null,
+"translation": "red",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-542",
+"hebrew": "este",
+"hebrewFull": "este",
+"gender": null,
+"plural": null,
+"translation": "this",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-543",
+"hebrew": "comprar",
+"hebrewFull": "comprar",
+"gender": null,
+"plural": null,
+"translation": "to buy",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-544",
+"hebrew": "sombrero",
+"hebrewFull": "sombrero",
+"gender": null,
+"plural": null,
+"translation": "hat",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-545",
+"hebrew": "gris",
+"hebrewFull": "gris",
+"gender": null,
+"plural": null,
+"translation": "gray, grey",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-546",
+"hebrew": "camiseta",
+"hebrewFull": "camiseta",
+"gender": null,
+"plural": null,
+"translation": "T-shirt",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-547",
+"hebrew": "vestido",
+"hebrewFull": "vestido",
+"gender": null,
+"plural": null,
+"translation": "dress",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-548",
+"hebrew": "marrón",
+"hebrewFull": "marrón",
+"gender": null,
+"plural": null,
+"translation": "brown",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-549",
+"hebrew": "camisa",
+"hebrewFull": "camisa",
+"gender": null,
+"plural": null,
+"translation": "shirt, blouse, top",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-550",
+"hebrew": "ropa",
+"hebrewFull": "ropa",
+"gender": null,
+"plural": null,
+"translation": "clothes",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-551",
+"hebrew": "tienda",
+"hebrewFull": "tienda",
+"gender": null,
+"plural": null,
+"translation": "store",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-552",
+"hebrew": "chaqueta",
+"hebrewFull": "chaqueta",
+"gender": null,
+"plural": null,
+"translation": "jacket",
+"translationLang": "en",
+"category": "Clothing & Accessories"
+},
+{
+"id": "esen-553",
+"hebrew": "azul",
+"hebrewFull": "azul",
+"gender": null,
+"plural": null,
+"translation": "blue",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-554",
+"hebrew": "verde",
+"hebrewFull": "verde",
+"gender": null,
+"plural": null,
+"translation": "green",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-555",
+"hebrew": "y",
+"hebrewFull": "y",
+"gender": null,
+"plural": null,
+"translation": "and",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-556",
+"hebrew": "hijo",
+"hebrewFull": "hijo",
+"gender": null,
+"plural": null,
+"translation": "son",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-557",
+"hebrew": "interesante",
+"hebrewFull": "interesante",
+"gender": null,
+"plural": null,
+"translation": "interesting",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-558",
+"hebrew": "tienes",
+"hebrewFull": "tienes",
+"gender": null,
+"plural": null,
+"translation": "you have, you've, have, are",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-559",
+"hebrew": "hija",
+"hebrewFull": "hija",
+"gender": null,
+"plural": null,
+"translation": "daughter",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-560",
+"hebrew": "bicicleta",
+"hebrewFull": "bicicleta",
+"gender": null,
+"plural": null,
+"translation": "bicycle",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-561",
+"hebrew": "vivo",
+"hebrewFull": "vivo",
+"gender": null,
+"plural": null,
+"translation": "alive, brighter, live, bright",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-562",
+"hebrew": "abuela",
+"hebrewFull": "abuela",
+"gender": null,
+"plural": null,
+"translation": "grandmother, [grandmother/grandma/nan/grandmom/granny/gran/nana/gramma/grandmama/grannie/gram]",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-563",
+"hebrew": "familia",
+"hebrewFull": "familia",
+"gender": null,
+"plural": null,
+"translation": "family",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-564",
+"hebrew": "perfecto",
+"hebrewFull": "perfecto",
+"gender": null,
+"plural": null,
+"translation": "perfect",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-565",
+"hebrew": "abuelo",
+"hebrewFull": "abuelo",
+"gender": null,
+"plural": null,
+"translation": "grandfather, [granddad/grandad/grandpa/grampa/grandpop/granddaddy/grandaddy/gramps]",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-566",
+"hebrew": "apartamento",
+"hebrewFull": "apartamento",
+"gender": null,
+"plural": null,
+"translation": "apartment",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-567",
+"hebrew": "esposo",
+"hebrewFull": "esposo",
+"gender": null,
+"plural": null,
+"translation": "husband",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-568",
+"hebrew": "esposa",
+"hebrewFull": "esposa",
+"gender": null,
+"plural": null,
+"translation": "wife",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-569",
+"hebrew": "perro",
+"hebrewFull": "perro",
+"gender": null,
+"plural": null,
+"translation": "dog",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-570",
+"hebrew": "hermano",
+"hebrewFull": "hermano",
+"gender": null,
+"plural": null,
+"translation": "brother",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-571",
+"hebrew": "bonito",
+"hebrewFull": "bonito",
+"gender": null,
+"plural": null,
+"translation": "pretty",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-572",
+"hebrew": "muy",
+"hebrewFull": "muy",
+"gender": null,
+"plural": null,
+"translation": "very",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-573",
+"hebrew": "gato",
+"hebrewFull": "gato",
+"gender": null,
+"plural": null,
+"translation": "cat",
+"translationLang": "en",
+"category": "Animals & Nature"
+},
+{
+"id": "esen-574",
+"hebrew": "hermana",
+"hebrewFull": "hermana",
+"gender": null,
+"plural": null,
+"translation": "sister",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-575",
+"hebrew": "grande",
+"hebrewFull": "grande",
+"gender": null,
+"plural": null,
+"translation": "big",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-576",
+"hebrew": "casa",
+"hebrewFull": "casa",
+"gender": null,
+"plural": null,
+"translation": "house",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-577",
+"hebrew": "carro",
+"hebrewFull": "carro",
+"gender": null,
+"plural": null,
+"translation": "car, automobile",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-578",
+"hebrew": "padre",
+"hebrewFull": "padre",
+"gender": null,
+"plural": null,
+"translation": "father, dad",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-579",
+"hebrew": "elegante",
+"hebrewFull": "elegante",
+"gender": null,
+"plural": null,
+"translation": "elegant",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-580",
+"hebrew": "tiene",
+"hebrewFull": "tiene",
+"gender": null,
+"plural": null,
+"translation": "is, makes, (?) does it have, is there",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-581",
+"hebrew": "inteligente",
+"hebrewFull": "inteligente",
+"gender": null,
+"plural": null,
+"translation": "intelligent",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-582",
+"hebrew": "madre",
+"hebrewFull": "madre",
+"gender": null,
+"plural": null,
+"translation": "mother",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-583",
+"hebrew": "o",
+"hebrewFull": "o",
+"gender": null,
+"plural": null,
+"translation": "or",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-584",
+"hebrew": "pagar",
+"hebrewFull": "pagar",
+"gender": null,
+"plural": null,
+"translation": "to pay",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-585",
+"hebrew": "ensalada",
+"hebrewFull": "ensalada",
+"gender": null,
+"plural": null,
+"translation": "salad",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-586",
+"hebrew": "tomate",
+"hebrewFull": "tomate",
+"gender": null,
+"plural": null,
+"translation": "tomato",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-587",
+"hebrew": "quiero",
+"hebrewFull": "quiero",
+"gender": null,
+"plural": null,
+"translation": "(I) love, (I) want, want, I'll have",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-588",
+"hebrew": "cuenta",
+"hebrewFull": "cuenta",
+"gender": null,
+"plural": null,
+"translation": "check",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-589",
+"hebrew": "sal",
+"hebrewFull": "sal",
+"gender": null,
+"plural": null,
+"translation": "salt",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-590",
+"hebrew": "taza",
+"hebrewFull": "taza",
+"gender": null,
+"plural": null,
+"translation": "cup, mug",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-591",
+"hebrew": "naranja",
+"hebrewFull": "naranja",
+"gender": null,
+"plural": null,
+"translation": "orange",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-592",
+"hebrew": "café",
+"hebrewFull": "café",
+"gender": null,
+"plural": null,
+"translation": "coffee",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-593",
+"hebrew": "vaso",
+"hebrewFull": "vaso",
+"gender": null,
+"plural": null,
+"translation": "glass",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-594",
+"hebrew": "jugo",
+"hebrewFull": "jugo",
+"gender": null,
+"plural": null,
+"translation": "juice",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-595",
+"hebrew": "sin",
+"hebrewFull": "sin",
+"gender": null,
+"plural": null,
+"translation": "absent, without, with no, of",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-596",
+"hebrew": "azúcar",
+"hebrewFull": "azúcar",
+"gender": null,
+"plural": null,
+"translation": "sugar",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-597",
+"hebrew": "carne",
+"hebrewFull": "carne",
+"gender": null,
+"plural": null,
+"translation": "meat, pork, beef",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-598",
+"hebrew": "queso",
+"hebrewFull": "queso",
+"gender": null,
+"plural": null,
+"translation": "cheese",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-599",
+"hebrew": "pescado",
+"hebrewFull": "pescado",
+"gender": null,
+"plural": null,
+"translation": "fish",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-600",
+"hebrew": "de",
+"hebrewFull": "de",
+"gender": null,
+"plural": null,
+"translation": "country's, with, singer's, made of",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-601",
+"hebrew": "con",
+"hebrewFull": "con",
+"gender": null,
+"plural": null,
+"translation": "with",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-602",
+"hebrew": "sándwich",
+"hebrewFull": "sándwich",
+"gender": null,
+"plural": null,
+"translation": "sandwich",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-603",
+"hebrew": "hamburguesa",
+"hebrewFull": "hamburguesa",
+"gender": null,
+"plural": null,
+"translation": "burger, hamburger",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-604",
+"hebrew": "dos",
+"hebrewFull": "dos",
+"gender": null,
+"plural": null,
+"translation": "two",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-605",
+"hebrew": "para",
+"hebrewFull": "para",
+"gender": null,
+"plural": null,
+"translation": "for",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-606",
+"hebrew": "personas",
+"hebrewFull": "personas",
+"gender": null,
+"plural": null,
+"translation": "people",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-607",
+"hebrew": "mesa",
+"hebrewFull": "mesa",
+"gender": null,
+"plural": null,
+"translation": "table",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-608",
+"hebrew": "restaurante",
+"hebrewFull": "restaurante",
+"gender": null,
+"plural": null,
+"translation": "restaurant",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-609",
+"hebrew": "uno",
+"hebrewFull": "uno",
+"gender": null,
+"plural": null,
+"translation": "one",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-610",
+"hebrew": "tres",
+"hebrewFull": "tres",
+"gender": null,
+"plural": null,
+"translation": "three",
+"translationLang": "en",
+"category": "Numbers & Quantity"
+},
+{
+"id": "esen-611",
+"hebrew": "supermercado",
+"hebrewFull": "supermercado",
+"gender": null,
+"plural": null,
+"translation": "supermarket",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-612",
+"hebrew": "cerrado",
+"hebrewFull": "cerrado",
+"gender": null,
+"plural": null,
+"translation": "closed",
+"translationLang": "en",
+"category": "Descriptions & Qualities"
+},
+{
+"id": "esen-613",
+"hebrew": "banco",
+"hebrewFull": "banco",
+"gender": null,
+"plural": null,
+"translation": "bank, bank's, banks, bank’s",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-614",
+"hebrew": "calle",
+"hebrewFull": "calle",
+"gender": null,
+"plural": null,
+"translation": "street",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-615",
+"hebrew": "baño",
+"hebrewFull": "baño",
+"gender": null,
+"plural": null,
+"translation": "bathroom",
+"translationLang": "en",
+"category": "Home & Living"
+},
+{
+"id": "esen-616",
+"hebrew": "hospital",
+"hebrewFull": "hospital",
+"gender": null,
+"plural": null,
+"translation": "hospital, hospitals, hospital's",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-617",
+"hebrew": "museo",
+"hebrewFull": "museo",
+"gender": null,
+"plural": null,
+"translation": "museums, museum, museum's",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-618",
+"hebrew": "tu",
+"hebrewFull": "tu",
+"gender": null,
+"plural": null,
+"translation": "your",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-619",
+"hebrew": "tren",
+"hebrewFull": "tren",
+"gender": null,
+"plural": null,
+"translation": "train",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-620",
+"hebrew": "autobús",
+"hebrewFull": "autobús",
+"gender": null,
+"plural": null,
+"translation": "bus",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-621",
+"hebrew": "aeropuerto",
+"hebrewFull": "aeropuerto",
+"gender": null,
+"plural": null,
+"translation": "airport",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-622",
+"hebrew": "boleto",
+"hebrewFull": "boleto",
+"gender": null,
+"plural": null,
+"translation": "ticket",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-623",
+"hebrew": "a",
+"hebrewFull": "a",
+"gender": null,
+"plural": null,
+"translation": "to, with, away, a",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-624",
+"hebrew": "dinero",
+"hebrewFull": "dinero",
+"gender": null,
+"plural": null,
+"translation": "money",
+"translationLang": "en",
+"category": "Money & Shopping"
+},
+{
+"id": "esen-625",
+"hebrew": "dónde",
+"hebrewFull": "dónde",
+"gender": null,
+"plural": null,
+"translation": "where",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-626",
+"hebrew": "reserva",
+"hebrewFull": "reserva",
+"gender": null,
+"plural": null,
+"translation": "reservation",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-627",
+"hebrew": "tengo",
+"hebrewFull": "tengo",
+"gender": null,
+"plural": null,
+"translation": "I've got, is there, I'm having, I'm",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-628",
+"hebrew": "está",
+"hebrewFull": "está",
+"gender": null,
+"plural": null,
+"translation": "it is",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-629",
+"hebrew": "aquí",
+"hebrewFull": "aquí",
+"gender": null,
+"plural": null,
+"translation": "here",
+"translationLang": "en",
+"category": "Movement & Direction"
+},
+{
+"id": "esen-630",
+"hebrew": "hotel",
+"hebrewFull": "hotel",
+"gender": null,
+"plural": null,
+"translation": "hotel, hotels, hotel’s",
+"translationLang": "en",
+"category": "Places & Buildings"
+},
+{
+"id": "esen-631",
+"hebrew": "en",
+"hebrewFull": "en",
+"gender": null,
+"plural": null,
+"translation": "in",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-632",
+"hebrew": "maleta",
+"hebrewFull": "maleta",
+"gender": null,
+"plural": null,
+"translation": "suitcase",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-633",
+"hebrew": "pasaporte",
+"hebrewFull": "pasaporte",
+"gender": null,
+"plural": null,
+"translation": "passport",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-634",
+"hebrew": "mi",
+"hebrewFull": "mi",
+"gender": null,
+"plural": null,
+"translation": "my",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-635",
+"hebrew": "teléfono",
+"hebrewFull": "teléfono",
+"gender": null,
+"plural": null,
+"translation": "phone",
+"translationLang": "en",
+"category": "Technology & Media"
+},
+{
+"id": "esen-636",
+"hebrew": "necesito",
+"hebrewFull": "necesito",
+"gender": null,
+"plural": null,
+"translation": "need, (I) need, (?) do I need, I'm in need of",
+"translationLang": "en",
+"category": "Common Verbs & Actions"
+},
+{
+"id": "esen-637",
+"hebrew": "taxi",
+"hebrewFull": "taxi",
+"gender": null,
+"plural": null,
+"translation": "taxi, cabs, cab, taxi's",
+"translationLang": "en",
+"category": "Travel & Transport"
+},
+{
+"id": "esen-638",
+"hebrew": "español",
+"hebrewFull": "español",
+"gender": null,
+"plural": null,
+"translation": "Spanish, Spaniard, Spanish man",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-639",
+"hebrew": "hablo",
+"hebrewFull": "hablo",
+"gender": null,
+"plural": null,
+"translation": "(I) am talking, speak, talking, speaking",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-640",
+"hebrew": "hablas",
+"hebrewFull": "hablas",
+"gender": null,
+"plural": null,
+"translation": "(?) do you speak, speak, talking, (you) speak",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-641",
+"hebrew": "disculpe",
+"hebrewFull": "disculpe",
+"gender": null,
+"plural": null,
+"translation": "excuse me, excuse!, (I/he/she/it/you) excuse, (I/he/she/it/you) apologize",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-642",
+"hebrew": "inglés",
+"hebrewFull": "inglés",
+"gender": null,
+"plural": null,
+"translation": "English, British, Englishman",
+"translationLang": "en",
+"category": "Communication & Language"
+},
+{
+"id": "esen-643",
+"hebrew": "no",
+"hebrewFull": "no",
+"gender": null,
+"plural": null,
+"translation": "haven't, do not, wasn't, n't",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-644",
+"hebrew": "sí",
+"hebrewFull": "sí",
+"gender": null,
+"plural": null,
+"translation": "yes, yourself",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-645",
+"hebrew": "por favor",
+"hebrewFull": "por favor",
+"gender": null,
+"plural": null,
+"translation": "please",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-646",
+"hebrew": "de nada",
+"hebrewFull": "de nada",
+"gender": null,
+"plural": null,
+"translation": "you're welcome, you are welcome",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-647",
+"hebrew": "perdón",
+"hebrewFull": "perdón",
+"gender": null,
+"plural": null,
+"translation": "sorry, excuse me, pardon, forgiveness",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-648",
+"hebrew": "lo siento",
+"hebrewFull": "lo siento",
+"gender": null,
+"plural": null,
+"translation": "sorry, I am sorry",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-649",
+"hebrew": "adiós",
+"hebrewFull": "adiós",
+"gender": null,
+"plural": null,
+"translation": "goodbye",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-650",
+"hebrew": "mucho gusto",
+"hebrewFull": "mucho gusto",
+"gender": null,
+"plural": null,
+"translation": "nice to meet you, so nice to meet you",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-651",
+"hebrew": "buenos días",
+"hebrewFull": "buenos días",
+"gender": null,
+"plural": null,
+"translation": "good morning",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-652",
+"hebrew": "gracias",
+"hebrewFull": "gracias",
+"gender": null,
+"plural": null,
+"translation": "thanks, thank you, party piece, clemencies",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-653",
+"hebrew": "hola",
+"hebrewFull": "hola",
+"gender": null,
+"plural": null,
+"translation": "hello, hi",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-654",
+"hebrew": "buenas noches",
+"hebrewFull": "buenas noches",
+"gender": null,
+"plural": null,
+"translation": "good night, good evening",
+"translationLang": "en",
+"category": "Phrases & Expressions"
+},
+{
+"id": "esen-655",
+"hebrew": "bebes",
+"hebrewFull": "bebes",
+"gender": null,
+"plural": null,
+"translation": "(?) do you drink, (you) drink, drink",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-656",
+"hebrew": "agua",
+"hebrewFull": "agua",
+"gender": null,
+"plural": null,
+"translation": "water",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-657",
+"hebrew": "como",
+"hebrewFull": "como",
+"gender": null,
+"plural": null,
+"translation": "(I) eat, (I) am eating, like, as",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-658",
+"hebrew": "bebo",
+"hebrewFull": "bebo",
+"gender": null,
+"plural": null,
+"translation": "(I) drink, (I) am drinking, drink",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-659",
+"hebrew": "leche",
+"hebrewFull": "leche",
+"gender": null,
+"plural": null,
+"translation": "milk",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-660",
+"hebrew": "pan",
+"hebrewFull": "pan",
+"gender": null,
+"plural": null,
+"translation": "bread, bar, cake, loaf",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-661",
+"hebrew": "bebe",
+"hebrewFull": "bebe",
+"gender": null,
+"plural": null,
+"translation": "(he) is drinking, (you) are drinking, (he) drinks, (?) do you drink",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-662",
+"hebrew": "comes",
+"hebrewFull": "comes",
+"gender": null,
+"plural": null,
+"translation": "ate, (you) are eating, (?) do you eat, (you) eat",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-663",
+"hebrew": "es",
+"hebrewFull": "es",
+"gender": null,
+"plural": null,
+"translation": "is, are you, it's, has been (since)",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-664",
+"hebrew": "ella",
+"hebrewFull": "ella",
+"gender": null,
+"plural": null,
+"translation": "she, her, she'll, she's",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-665",
+"hebrew": "eres",
+"hebrewFull": "eres",
+"gender": null,
+"plural": null,
+"translation": "you're, aren't being, are, you’re",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-666",
+"hebrew": "él",
+"hebrewFull": "él",
+"gender": null,
+"plural": null,
+"translation": "he, him, it",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-667",
+"hebrew": "tú",
+"hebrewFull": "tú",
+"gender": null,
+"plural": null,
+"translation": "you'll, you, you—i've",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-668",
+"hebrew": "come",
+"hebrewFull": "come",
+"gender": null,
+"plural": null,
+"translation": "(it) eats, (?) do you eat, (she) eats, (?) does she eat",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-669",
+"hebrew": "manzana",
+"hebrewFull": "manzana",
+"gender": null,
+"plural": null,
+"translation": "apple, block",
+"translationLang": "en",
+"category": "Food & Drink"
+},
+{
+"id": "esen-670",
+"hebrew": "soy",
+"hebrewFull": "soy",
+"gender": null,
+"plural": null,
+"translation": "I am, am",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-671",
+"hebrew": "niño",
+"hebrewFull": "niño",
+"gender": null,
+"plural": null,
+"translation": "boy, child, kid, son",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-672",
+"hebrew": "hombre",
+"hebrewFull": "hombre",
+"gender": null,
+"plural": null,
+"translation": "man, bloke, guy",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-673",
+"hebrew": "una",
+"hebrewFull": "una",
+"gender": null,
+"plural": null,
+"translation": "a, an, one, some",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-674",
+"hebrew": "yo",
+"hebrewFull": "yo",
+"gender": null,
+"plural": null,
+"translation": "I, me",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-675",
+"hebrew": "la",
+"hebrewFull": "la",
+"gender": null,
+"plural": null,
+"translation": "your, her, the, their",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-676",
+"hebrew": "niña",
+"hebrewFull": "niña",
+"gender": null,
+"plural": null,
+"translation": "girl, young lady",
+"translationLang": "en",
+"category": "People & Family"
+},
+{
+"id": "esen-677",
+"hebrew": "un",
+"hebrewFull": "un",
+"gender": null,
+"plural": null,
+"translation": "a, an, one, some",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-678",
+"hebrew": "el",
+"hebrewFull": "el",
+"gender": null,
+"plural": null,
+"translation": "the, a, an",
+"translationLang": "en",
+"category": "Grammar & Function Words"
+},
+{
+"id": "esen-679",
+"hebrew": "mujer",
+"hebrewFull": "mujer",
+"gender": null,
+"plural": null,
+"translation": "woman, wife, lady",
+"translationLang": "en",
+"category": "People & Family"
+}
+]
