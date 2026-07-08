@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import type { Sentence, Word } from './lib/types'
 import { gameReducer, newPlayerState, todayLog, type GameState } from './lib/game'
-import { loadState as loadLocalState } from './lib/storage'
+import { loadState, saveState } from './lib/storage'
 import { loadCourseState, saveCourseState, migrateLocalToCloud } from './lib/cloudStore'
 import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend } from './lib/wixClient'
 import { todayISO, computeStreak } from './lib/time'
@@ -52,26 +52,17 @@ function activeCourseId(): string {
   const id = localStorage.getItem(COURSE_KEY)
   return COURSES.some((c) => c.id === id) ? (id as string) : COURSES[0].id
 }
-// Legacy local (pre-cloud) storage key, used only to migrate old progress once.
-function legacyStoreKey(courseId: string): string {
+// Local (offline / logged-out) storage key. Hebrew keeps the bare key so the
+// pilot's pre-cloud progress stays intact.
+function localKey(courseId: string): string {
   return courseId === 'hebrew' ? 'main' : `main__${courseId}`
 }
 const MIGRATED_KEY = 'wc-migrated-to-cloud'
 
-const backend = makeCloudBackend()
+const cloud = makeCloudBackend()
 
 export type Screen = 'learn' | 'session' | 'speed' | 'vocabulary' | 'stats' | 'settings'
 type Auth = 'checking' | 'out' | 'in'
-
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
-  return (
-    <div className="panel center hero">
-      <h1 className="title" style={{ fontSize: 28 }}>🏰 Word Castle</h1>
-      <p className="muted">Sign in to sync your learning progress across devices.</p>
-      <button className="primary big" onClick={onLogin}>Sign in / Sign up</button>
-    </div>
-  )
-}
 
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, newPlayerState)
@@ -89,8 +80,18 @@ export default function App() {
   const course = COURSES.find((c) => c.id === courseId) ?? COURSES[0]
   const words = course.words
   const sentences = course.sentences
+  const authRef = useRef<Auth>(auth)
+  authRef.current = auth
   const courseIdRef = useRef(course.id)
   courseIdRef.current = course.id
+
+  // load/save the active course's progress from cloud (when signed in) or local
+  const loadForCourse = (courseId: string): Promise<GameState | null> =>
+    authRef.current === 'in' ? loadCourseState(cloud, courseId) : loadState(localKey(courseId))
+  const saveForCourse = (courseId: string, s: GameState): Promise<void> =>
+    authRef.current === 'in'
+      ? saveCourseState(cloud, courseId, '', s, new Date().toISOString())
+      : saveState(localKey(courseId), s)
 
   useEffect(() => {
     initSpeech()
@@ -100,8 +101,8 @@ export default function App() {
     setSpeechLang(course.speechLang)
   }, [course.speechLang])
 
-  // resolve auth on load: finish any login callback, then (once) migrate legacy
-  // local progress into the cloud so the pilot's data isn't lost.
+  // resolve auth once: finish any login callback, then (on first login) migrate
+  // the local pilot progress up to the cloud so nothing is lost.
   useEffect(() => {
     ;(async () => {
       try {
@@ -109,55 +110,54 @@ export default function App() {
       } catch (e) {
         console.error('login callback failed', e)
       }
-      if (!isLoggedIn()) {
-        setAuth('out')
-        return
-      }
-      if (!localStorage.getItem(MIGRATED_KEY)) {
-        try {
-          for (const c of COURSES) {
-            const local = await loadLocalState(legacyStoreKey(c.id))
-            if (local) await migrateLocalToCloud(backend, c.id, '', local, new Date().toISOString())
+      if (isLoggedIn()) {
+        if (!localStorage.getItem(MIGRATED_KEY)) {
+          try {
+            for (const c of COURSES) {
+              const local = await loadState(localKey(c.id))
+              if (local) await migrateLocalToCloud(cloud, c.id, '', local, new Date().toISOString())
+            }
+          } catch (e) {
+            console.error('cloud migration failed', e)
           }
-        } catch (e) {
-          console.error('cloud migration failed', e)
+          localStorage.setItem(MIGRATED_KEY, '1')
         }
-        localStorage.setItem(MIGRATED_KEY, '1')
+        setAuth('in')
+      } else {
+        setAuth('out')
       }
-      setAuth('in')
     })()
   }, [])
 
-  // load the active course's progress from the cloud
   useEffect(() => {
-    if (auth !== 'in') return
+    if (auth === 'checking') return
     setLoaded(false)
-    loadCourseState(backend, course.id)
+    loadForCourse(course.id)
       .then((saved) => {
         dispatch({ type: 'import', state: saved ?? newPlayerState() })
         setLoaded(true)
       })
       .catch((e) => {
-        console.error('cloud load failed', e)
+        console.error('load failed', e)
         dispatch({ type: 'import', state: newPlayerState() })
         setLoaded(true)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, courseId])
 
   useEffect(() => {
-    if (auth !== 'in' || !loaded) return
+    if (!loaded || auth === 'checking') return
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
     saveTimer.current = window.setTimeout(() => {
-      saveCourseState(backend, courseIdRef.current, '', stateRef.current, new Date().toISOString())
-        .catch((e) => console.error('cloud save failed', e))
+      saveForCourse(courseIdRef.current, stateRef.current).catch((e) => console.error('save failed', e))
     }, 600)
-  }, [state, loaded, auth])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, loaded])
 
   const flushSave = () => {
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
-    if (auth === 'in' && loaded) {
-      saveCourseState(backend, courseIdRef.current, '', stateRef.current, new Date().toISOString())
-        .catch((e) => console.error('cloud save failed', e))
+    if (loaded && auth !== 'checking') {
+      saveForCourse(courseIdRef.current, stateRef.current).catch((e) => console.error('save failed', e))
     }
   }
 
@@ -170,9 +170,7 @@ export default function App() {
     setCourseId(id)
   }
 
-  if (auth === 'checking') return <div className="panel">Loading…</div>
-  if (auth === 'out') return <LoginScreen onLogin={startLogin} />
-  if (!loaded) return <div className="panel">Loading…</div>
+  if (auth === 'checking' || !loaded) return <div className="panel">Loading…</div>
 
   const today = todayISO()
   const log = todayLog(state, today)
@@ -203,6 +201,11 @@ export default function App() {
             </option>
           ))}
         </select>
+        {auth === 'in' ? (
+          <button className="ghost" onClick={logout} title="Signed in — click to log out">☁️ ✓</button>
+        ) : (
+          <button className="ghost" onClick={startLogin} title="Sign in to sync progress across devices">☁️ Sign in</button>
+        )}
         <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
         <span className="stat" title="Day streak">🔥 {streak}</span>
         <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
@@ -245,7 +248,9 @@ export default function App() {
       {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}
       {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
-      {screen === 'settings' && <SettingsScreen state={state} dispatch={dispatch} onLogout={logout} />}
+      {screen === 'settings' && (
+        <SettingsScreen state={state} dispatch={dispatch} loggedIn={auth === 'in'} onLogin={startLogin} onLogout={logout} />
+      )}
 
       {screen !== 'session' && screen !== 'speed' && (
         <nav className="nav">

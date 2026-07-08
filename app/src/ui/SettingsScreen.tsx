@@ -7,9 +7,11 @@ import { canSpeakHebrew } from '../lib/speech'
 export default function SettingsScreen(props: {
   state: GameState
   dispatch: Dispatch<GameAction>
+  loggedIn: boolean
+  onLogin: () => void
   onLogout: () => void
 }) {
-  const { state, dispatch, onLogout } = props
+  const { state, dispatch, loggedIn, onLogin, onLogout } = props
   const s = state.settings
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -59,10 +61,17 @@ export default function SettingsScreen(props: {
     <>
       <div className="panel">
         <h2>👤 Account</h2>
-        <p className="muted">
-          Your progress is synced to your Wix account, so it follows you across devices.
-        </p>
-        <button className="ghost" onClick={onLogout}>🚪 Log out</button>
+        {loggedIn ? (
+          <>
+            <p className="muted">☁️ Signed in — your progress syncs to your Wix account across devices.</p>
+            <button className="ghost" onClick={onLogout}>🚪 Log out</button>
+          </>
+        ) : (
+          <>
+            <p className="muted">You're playing locally on this device. Sign in to sync your progress across devices.</p>
+            <button className="ghost" onClick={onLogin}>☁️ Sign in to sync</button>
+          </>
+        )}
       </div>
 
       <div className="panel">
