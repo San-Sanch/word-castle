@@ -13,6 +13,8 @@
     "deploy": "vite build && cd dist && git init -q && git checkout -q -b gh-pages && git add -A && git commit -q -m Deploy && git push -f https://github.com/San-Sanch/word-castle.git gh-pages && cd .. && rm -rf dist/.git"
   },
   "dependencies": {
+    "@wix/data": "^1.0.486",
+    "@wix/sdk": "^1.21.13",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

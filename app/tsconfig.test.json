@@ -10,5 +10,6 @@
     "outDir": ".test-build",
     "rootDir": "src/lib"
   },
-  "include": ["src/lib/**/*.ts"]
+  "include": ["src/lib/**/*.ts"],
+  "exclude": ["src/lib/wixClient.ts"]
 }

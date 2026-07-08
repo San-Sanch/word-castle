@@ -1,23 +1,17 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import type { Dispatch } from 'react'
 import type { GameState, GameAction } from '../lib/game'
-import { serializeState, deserializeState, type ProfileMeta } from '../lib/storage'
+import { serializeState, deserializeState } from '../lib/storage'
 import { canSpeakHebrew } from '../lib/speech'
 
 export default function SettingsScreen(props: {
   state: GameState
   dispatch: Dispatch<GameAction>
-  profiles: ProfileMeta[]
-  activeProfile: string
-  activeProfileMeta: ProfileMeta | undefined
-  onSwitchProfile: (id: string) => void
-  onCreateProfile: (name: string, test: boolean) => void
-  onDeleteProfile: (id: string) => void
+  onLogout: () => void
 }) {
-  const { state, dispatch, profiles, activeProfile, onSwitchProfile, onCreateProfile, onDeleteProfile } = props
+  const { state, dispatch, onLogout } = props
   const s = state.settings
   const fileRef = useRef<HTMLInputElement>(null)
-  const [newName, setNewName] = useState('')
 
   const setNum = (key: 'newWordsPerDay' | 'dailyGoalMinutes' | 'sessionSize') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,53 +55,14 @@ export default function SettingsScreen(props: {
     })
   }
 
-  const createProfile = (test: boolean) => {
-    const name = newName.trim() || (test ? 'Test' : 'Player')
-    onCreateProfile(name, test)
-    setNewName('')
-  }
-
   return (
     <>
       <div className="panel">
-        <h2>👥 Profiles</h2>
-        {profiles.map((p) => (
-          <div key={p.id} className="shop-row">
-            <span>{p.test ? '🧪' : '👤'}</span>
-            <span className="label">
-              {p.name}
-              {p.id === activeProfile && <span className="muted"> · active</span>}
-              {p.test && <span className="muted"> · test resources</span>}
-            </span>
-            {p.id !== activeProfile && (
-              <button className="ghost" onClick={() => onSwitchProfile(p.id)}>Switch</button>
-            )}
-            {profiles.length > 1 && (
-              <button
-                className="ghost"
-                style={{ color: 'var(--red)' }}
-                onClick={() => {
-                  if (window.confirm(`Delete profile "${p.name}" and all its progress?`)) onDeleteProfile(p.id)
-                }}
-              >
-                🗑
-              </button>
-            )}
-          </div>
-        ))}
-        <div className="row-gap" style={{ marginTop: 10 }}>
-          <input
-            placeholder="New profile name"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-          />
-          <button className="ghost" onClick={() => createProfile(false)}>➕ New player</button>
-          <button className="ghost" onClick={() => createProfile(true)}>🧪 Test profile</button>
-        </div>
+        <h2>👤 Account</h2>
         <p className="muted">
-          Each profile has fully separate learning progress and settings — handy for trying the
-          fresh-player experience or letting a teammate play.
+          Your progress is synced to your Wix account, so it follows you across devices.
         </p>
+        <button className="ghost" onClick={onLogout}>🚪 Log out</button>
       </div>
 
       <div className="panel">
@@ -147,8 +102,8 @@ export default function SettingsScreen(props: {
         ))}
         {!canSpeakHebrew() && (
           <p className="muted">
-            ⚠️ No Hebrew voice found in this browser, so pronunciation and the sound round are unavailable.
-            On macOS: System Settings → Accessibility → Spoken Content → System voice → add a Hebrew voice (e.g. Carmit).
+            ⚠️ No voice found for this course's language in your browser, so pronunciation and the
+            sound round are unavailable.
           </p>
         )}
       </div>
@@ -160,7 +115,7 @@ export default function SettingsScreen(props: {
           <button className="ghost" onClick={() => fileRef.current?.click()}>⬆️ Import backup</button>
           <input ref={fileRef} type="file" accept="application/json" style={{ display: 'none' }} onChange={importSave} />
         </div>
-        <p className="muted">Progress lives in this browser only. Export a backup now and then.</p>
+        <p className="muted">Export a backup any time; import replaces your current course progress.</p>
       </div>
 
       <div className="panel">
