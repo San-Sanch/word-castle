@@ -7,7 +7,7 @@ import { items } from '@wix/data'
 import type { ProgressBackend, ProgressItem } from './cloudStore'
 
 // Public OAuth Client ID of the Word Castle headless project (safe to embed).
-const CLIENT_ID = '1b68f71e-a66d-4810-a92e-9a45dc7eca17'
+const CLIENT_ID = '01785127-e3a3-4320-aaab-ac9af95490aa'
 const COLLECTION = 'progress'
 const TOKENS_KEY = 'wcWixTokens'
 const OAUTH_KEY = 'wcWixOAuthData'
