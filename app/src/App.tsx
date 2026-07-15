@@ -3,7 +3,7 @@ import type { Sentence, Word } from './lib/types'
 import { gameReducer, newPlayerState, todayLog, type GameState } from './lib/game'
 import { loadState, saveState } from './lib/storage'
 import { loadCourseState, saveCourseState, migrateLocalToCloud } from './lib/cloudStore'
-import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend } from './lib/wixClient'
+import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend, reportWordError } from './lib/wixClient'
 import { todayISO, computeStreak } from './lib/time'
 import { initSpeech, loadVocalized, loadStressOverrides, setSpeechLang, type VocalizedMap } from './lib/speech'
 import wordsJson from './data/words.json'
@@ -243,10 +243,11 @@ export default function App() {
           onExit={() => setScreen('learn')}
           onMoreNew={() => startSession(topic, 'more-new')}
           onPractice={() => startSession(topic, 'practice')}
+          onReportWord={course.id === 'hebrew' ? (w) => { reportWordError(w).catch((e) => console.error('report failed', e)) } : undefined}
         />
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}
-      {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} />}
+      {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} errorsEnabled={course.id === 'hebrew'} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
       {screen === 'settings' && (
         <SettingsScreen state={state} dispatch={dispatch} loggedIn={auth === 'in'} onLogin={startLogin} onLogout={logout} />

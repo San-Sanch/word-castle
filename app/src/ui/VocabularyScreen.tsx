@@ -1,8 +1,11 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import type { GameState } from '../lib/game'
 import type { Word } from '../lib/types'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
+import { errorIcon, type WordErrorStatus } from '../lib/wordErrors'
+import { fetchWordErrors, reportWordError, clearWordError } from '../lib/wixClient'
+import { useLongPress } from './useLongPress'
 import translitJson from '../data/translit.json'
 
 const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
@@ -23,13 +26,43 @@ interface Row {
   dueAt: string | null
 }
 
-export default function VocabularyScreen(props: { state: GameState; words: Word[] }) {
-  const { state, words } = props
+/** Speak button that also reports bad pronunciation on a ~1s hold. */
+function VocabSpeak({ word, big, onReport }: { word: Word; big?: boolean; onReport?: (w: Word) => void }) {
+  const lp = useLongPress(
+    () => speakHebrew(word.hebrew),
+    () => onReport?.(word),
+  )
+  if (!canSpeakHebrew()) return null
+  const cls = big ? 'primary' : 'speak'
+  if (!onReport) {
+    return <button className={cls} onClick={(e) => { e.stopPropagation(); speakHebrew(word.hebrew) }}>{big ? '🔊 Play' : '🔊'}</button>
+  }
+  return <button className={cls} title="Tap: play · Hold: report bad pronunciation" {...lp}>{big ? '🔊 Play' : '🔊'}</button>
+}
+
+export default function VocabularyScreen(props: { state: GameState; words: Word[]; errorsEnabled: boolean }) {
+  const { state, words, errorsEnabled } = props
   const today = todayISO()
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('all')
   const [status, setStatus] = useState('all')
   const [sort, setSort] = useState<SortKey>('category')
+  const [errorsOnly, setErrorsOnly] = useState(false)
+  const [errors, setErrors] = useState<Record<string, WordErrorStatus>>({})
+  const [expanded, setExpanded] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (errorsEnabled) fetchWordErrors().then(setErrors).catch(() => {})
+  }, [errorsEnabled])
+
+  const report = (w: Word) => {
+    setErrors((e) => ({ ...e, [w.id]: 'error' }))
+    reportWordError(w).catch((err) => console.error('report failed', err))
+  }
+  const unreport = (id: string) => {
+    setErrors((e) => { const n = { ...e }; delete n[id]; return n })
+    clearWordError(id).catch((err) => console.error('clear failed', err))
+  }
 
   const rows = useMemo<Row[]>(() => {
     const byWord = new Map<string, { rec?: { box: number; dueAt: string; lapses: number; introducedAt: string }; recall?: { box: number; dueAt: string; lapses: number } }>()
@@ -66,7 +99,8 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
-    let list = rows.filter((r) => {
+    const list = rows.filter((r) => {
+      if (errorsOnly && !errors[r.word.id]) return false
       if (category !== 'all' && r.word.category !== category) return false
       if (status === 'new' && r.status !== 'new') return false
       if (status === 'learning' && r.status !== 'learning') return false
@@ -88,13 +122,15 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
       recent: (a, b) => (b.startedAt ?? '').localeCompare(a.startedAt ?? ''),
     }
     return [...list].sort(cmp[sort])
-  }, [rows, search, category, status, sort])
+  }, [rows, search, category, status, sort, errorsOnly, errors])
 
   const counts = useMemo(() => {
     const learning = rows.filter((r) => r.status === 'learning').length
     const mastered = rows.filter((r) => r.status === 'mastered').length
     return { learning, mastered, total: rows.length }
   }, [rows])
+
+  const errorCount = useMemo(() => Object.keys(errors).length, [errors])
 
   const Box = ({ n }: { n: number }) => (
     <span className="boxdots" title={`memory level ${n}/7`}>
@@ -104,12 +140,16 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
     </span>
   )
 
+  const statusLabel = (r: Row) =>
+    r.status === 'mastered' ? '🎓 mastered' : r.status === 'learning' ? (r.due ? 'learning · due for review' : 'learning') : 'not started yet'
+
   return (
     <>
       <div className="panel">
         <h2>📖 Vocabulary</h2>
         <p className="muted">
           {counts.total} words · {counts.learning} learning · {counts.mastered} mastered
+          {errorsEnabled && errorCount > 0 && ` · ${errorCount} flagged`}
         </p>
         <div className="vocab-controls">
           <input
@@ -140,6 +180,12 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
             <option value="recent">Sort: recently started</option>
           </select>
         </div>
+        {errorsEnabled && (
+          <label className="vocab-errors-toggle" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 8, cursor: 'pointer' }}>
+            <input type="checkbox" checked={errorsOnly} onChange={(e) => setErrorsOnly(e.target.checked)} />
+            <span>Words with errors {errorCount > 0 ? `(${errorCount})` : ''}</span>
+          </label>
+        )}
       </div>
 
       <div className="panel vocab-table-wrap">
@@ -158,30 +204,76 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
             </tr>
           </thead>
           <tbody>
-            {filtered.map((r) => (
-              <tr key={r.word.id}>
-                <td>
-                  {canSpeakHebrew() && (
-                    <button className="speak" onClick={() => speakHebrew(r.word.hebrew)}>🔊</button>
+            {filtered.map((r) => {
+              const flag = errors[r.word.id]
+              const isOpen = expanded === r.word.id
+              return (
+                <Fragment key={r.word.id}>
+                  <tr
+                    className={`vocab-row ${isOpen ? 'open' : ''}`}
+                    onClick={() => setExpanded(isOpen ? null : r.word.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td onClick={(e) => e.stopPropagation()}>
+                      {errorsEnabled && flag && <span title={flag} style={{ marginRight: 4 }}>{errorIcon(flag)}</span>}
+                      <VocabSpeak word={r.word} onReport={errorsEnabled ? report : undefined} />
+                    </td>
+                    <td className="he vocab-he">
+                      {r.word.hebrew}
+                      {r.word.gender && <span className="muted"> ({r.word.gender === 'm' ? 'ז׳' : 'נ׳'})</span>}
+                    </td>
+                    <td className="translit-cell">{r.translit}</td>
+                    <td>{r.word.translation}</td>
+                    <td className="muted">{r.word.category}</td>
+                    <td><Box n={r.recBox} /></td>
+                    <td><Box n={r.recallBox} /></td>
+                    <td className={r.lapses > 2 ? 'hard' : ''}>{r.lapses || ''}</td>
+                    <td>
+                      {r.status === 'mastered' && <span className="status-badge mastered">🎓</span>}
+                      {r.status === 'learning' && (r.due ? <span className="status-badge due">due</span> : <span className="status-badge learning">learning</span>)}
+                      {r.status === 'new' && <span className="status-badge fresh">new</span>}
+                    </td>
+                  </tr>
+                  {isOpen && (
+                    <tr className="vocab-detail-row">
+                      <td colSpan={9}>
+                        <div className="vocab-detail">
+                          <div className="vocab-detail-head">
+                            <span className="he vocab-detail-word">{r.word.hebrew}</span>
+                            <VocabSpeak word={r.word} big onReport={errorsEnabled ? report : undefined} />
+                          </div>
+                          {r.translit && <div className="translit">{r.translit}</div>}
+                          <div className="vocab-detail-grid">
+                            <div><b>Translation:</b> {r.word.translation}</div>
+                            {r.word.gender && <div><b>Gender:</b> {r.word.gender === 'm' ? 'masculine (ז׳)' : 'feminine (נ׳)'}</div>}
+                            {r.word.plural && <div><b>Plural:</b> <span className="he">{r.word.plural}</span></div>}
+                            <div><b>Topic:</b> {r.word.category}</div>
+                            <div><b>Status:</b> {statusLabel(r)}</div>
+                            <div><b>Recognition:</b> level {r.recBox}/7</div>
+                            <div><b>Recall:</b> level {r.recallBox}/7</div>
+                            <div><b>Mistakes:</b> {r.lapses}</div>
+                            {r.startedAt && <div><b>Started:</b> {r.startedAt}</div>}
+                            {r.dueAt && <div><b>Next review:</b> {r.dueAt}</div>}
+                          </div>
+                          {errorsEnabled && (
+                            <div className="vocab-detail-errors" style={{ marginTop: 10 }}>
+                              {flag ? (
+                                <div className="row-gap" style={{ alignItems: 'center', gap: 10 }}>
+                                  <span>{errorIcon(flag)} {flag === 'fixed' ? 'Marked as fixed' : 'Reported — pending fix'}</span>
+                                  <button className="ghost" onClick={(e) => { e.stopPropagation(); unreport(r.word.id) }}>Remove from list</button>
+                                </div>
+                              ) : (
+                                <button className="ghost" onClick={(e) => { e.stopPropagation(); report(r.word) }}>🚩 Report bad pronunciation</button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
                   )}
-                </td>
-                <td className="he vocab-he">
-                  {r.word.hebrew}
-                  {r.word.gender && <span className="muted"> ({r.word.gender === 'm' ? 'ז׳' : 'נ׳'})</span>}
-                </td>
-                <td className="translit-cell">{r.translit}</td>
-                <td>{r.word.translation}</td>
-                <td className="muted">{r.word.category}</td>
-                <td><Box n={r.recBox} /></td>
-                <td><Box n={r.recallBox} /></td>
-                <td className={r.lapses > 2 ? 'hard' : ''}>{r.lapses || ''}</td>
-                <td>
-                  {r.status === 'mastered' && <span className="status-badge mastered">🎓</span>}
-                  {r.status === 'learning' && (r.due ? <span className="status-badge due">due</span> : <span className="status-badge learning">learning</span>)}
-                  {r.status === 'new' && <span className="status-badge fresh">new</span>}
-                </td>
-              </tr>
-            ))}
+                </Fragment>
+              )
+            })}
             {filtered.length === 0 && (
               <tr><td colSpan={9} className="muted">Nothing matches.</td></tr>
             )}

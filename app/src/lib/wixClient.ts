@@ -83,6 +83,55 @@ export async function logout(): Promise<void> {
   }
 }
 
+// ---- word_errors: global, shared list of Hebrew words with bad pronunciation ----
+// Anyone (visitor or member) can report/clear; item _id === wordId so writes are
+// a plain upsert. Status 'error' = reported, 'fixed' = corrected by a maintainer.
+const WORD_ERRORS = 'word_errors'
+export type WordErrorStatus = 'error' | 'fixed'
+
+function itemField<T = unknown>(item: Record<string, unknown>, key: string): T {
+  // the SDK may return fields at top level or nested under `data`
+  const data = (item.data as Record<string, unknown> | undefined) ?? item
+  return data[key] as T
+}
+
+export async function fetchWordErrors(): Promise<Record<string, WordErrorStatus>> {
+  try {
+    const res = await client.items.query(WORD_ERRORS).limit(1000).find()
+    const map: Record<string, WordErrorStatus> = {}
+    for (const it of res.items as Array<Record<string, unknown>>) {
+      const id = itemField<string>(it, 'wordId')
+      const status = itemField<WordErrorStatus>(it, 'status')
+      if (id && (status === 'error' || status === 'fixed')) map[id] = status
+    }
+    return map
+  } catch (e) {
+    console.error('fetchWordErrors failed', e)
+    return {}
+  }
+}
+
+/** Report a word as mispronounced (always sets 'error', even if it was 'fixed'). */
+export async function reportWordError(word: { id: string; hebrew: string; translation: string }): Promise<void> {
+  await client.items.save(WORD_ERRORS, {
+    _id: word.id,
+    wordId: word.id,
+    hebrew: word.hebrew,
+    translation: word.translation,
+    status: 'error',
+    updatedAt: new Date().toISOString(),
+  } as Record<string, unknown>)
+}
+
+/** Remove a word from the error list (e.g. reported by mistake). */
+export async function clearWordError(wordId: string): Promise<void> {
+  try {
+    await client.items.remove(WORD_ERRORS, wordId)
+  } catch (e) {
+    console.error('clearWordError failed', e)
+  }
+}
+
 /** ProgressBackend over the author-scoped `progress` collection: each query
  * returns only the logged-in member's items, so no manual member filtering. */
 export function makeCloudBackend(): ProgressBackend {

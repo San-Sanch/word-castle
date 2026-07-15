@@ -35,6 +35,21 @@ body {
    and Latin-script course words (English/Spanish) render LTR under the same class */
 .he { direction: rtl; unicode-bidi: plaintext; }
 
+/* transient "marked for review" toast */
+.report-toast {
+  position: fixed; left: 50%; top: 16px; transform: translateX(-50%);
+  background: var(--green, #2e7d32); color: #fff; padding: 10px 16px; border-radius: 10px;
+  font-size: 14px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.3); max-width: 90vw; text-align: center;
+}
+
+/* Vocabulary: expandable detail row */
+.vocab-row.open { background: rgba(127,127,127,0.10); }
+.vocab-detail-row td { padding: 0; }
+.vocab-detail { padding: 14px 16px; background: rgba(127,127,127,0.08); border-radius: 0 0 10px 10px; }
+.vocab-detail-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vocab-detail-word { font-size: 26px; }
+.vocab-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 6px 18px; margin-top: 10px; font-size: 14px; }
+
 /* multi-meaning cell: show one translation with arrows to peek at the rest */
 .multi { display: inline-flex; align-items: center; gap: 6px; direction: ltr; unicode-bidi: plaintext; }
 .multi-val { unicode-bidi: plaintext; }

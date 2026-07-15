@@ -23,6 +23,7 @@ import {
   type SentenceChoiceExercise,
 } from '../lib/exercises'
 import { generateCrossword, type Crossword } from '../lib/crossword'
+import { useLongPress } from './useLongPress'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import translitJson from '../data/translit.json'
@@ -127,20 +128,49 @@ function TranslationText({ text }: { text: string }) {
   )
 }
 
-function SpeakButton(props: { text: string }) {
+function SpeakButton(props: { text: string; word?: Word; onReport?: (w: Word) => void }) {
+  const { text, word, onReport } = props
+  const canReport = !!(word && onReport)
+  const lp = useLongPress(
+    () => speakHebrew(text),
+    () => {
+      if (word && onReport) {
+        onReport(word)
+        try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
+      }
+    },
+  )
   if (!canSpeakHebrew()) return null
+  if (!canReport) {
+    return (
+      <button className="speak" title="Play pronunciation" onClick={(e) => { e.stopPropagation(); speakHebrew(text) }}>
+        🔊
+      </button>
+    )
+  }
   return (
-    <button
-      className="speak"
-      title="Play pronunciation"
-      onClick={(e) => {
-        e.stopPropagation()
-        speakHebrew(props.text)
-      }}
-    >
+    <button className="speak" title="Tap: play · Hold: report bad pronunciation" {...lp}>
       🔊
     </button>
   )
+}
+
+/** Big "Play again" button used in audio exercises; hold to report bad pronunciation. */
+function SpeakBig(props: { onTap: () => void; label: string; word?: Word; onReport?: (w: Word) => void; className?: string }) {
+  const { onTap, label, word, onReport, className } = props
+  const lp = useLongPress(
+    onTap,
+    () => {
+      if (word && onReport) {
+        onReport(word)
+        try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
+      }
+    },
+  )
+  if (!(word && onReport)) {
+    return <button className={className ?? 'primary'} onClick={onTap}>{label}</button>
+  }
+  return <button className={className ?? 'primary'} title="Tap: play · Hold: report bad pronunciation" {...lp}>{label}</button>
 }
 
 export default function SessionScreen(props: {
@@ -155,9 +185,19 @@ export default function SessionScreen(props: {
   onExit: () => void
   onMoreNew: () => void
   onPractice: () => void
+  /** report a word as mispronounced (provided only for the Hebrew course) */
+  onReportWord?: (word: Word) => void
 }) {
-  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice } = props
+  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice, onReportWord } = props
   const today = todayISO()
+  const [reportToast, setReportToast] = useState<string | null>(null)
+  const doReport = onReportWord
+    ? (w: Word) => {
+        onReportWord(w)
+        setReportToast('Marked for review — we’ll fix its pronunciation 🙏')
+        window.setTimeout(() => setReportToast(null), 1800)
+      }
+    : undefined
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
   const mutationScheme = rtl ? HEBREW_SCHEME : LATIN_SCHEME
   const optCount = Math.min(12, Math.max(3, state.settings.optionCount || 8))
@@ -873,7 +913,7 @@ export default function SessionScreen(props: {
     return (
       <div className="hint-panel">
         <div className="prompt he">
-          {word.hebrew} <SpeakButton text={word.hebrew} />
+          {word.hebrew} <SpeakButton text={word.hebrew} word={word} onReport={doReport} />
         </div>
         {tr && <div className="translit">{tr.he}</div>}
         {(word.gender || word.plural) && (
@@ -926,6 +966,8 @@ export default function SessionScreen(props: {
   }
 
   const header = (
+    <>
+      {reportToast && <div className="report-toast">{reportToast}</div>}
     <div className="progress">
       <span>
         {mode === 'practice' ? '🏋️ Practice · ' : ''}
@@ -953,6 +995,7 @@ export default function SessionScreen(props: {
         </button>
       </span>
     </div>
+    </>
   )
 
   if (phase === 'match-bonus' && bonusMatch) {
@@ -1350,7 +1393,7 @@ export default function SessionScreen(props: {
   if (ex.kind === 'flash') {
     const front = ex.direction === 'recognition' ? (
       <div className="prompt he">
-        {ex.word.hebrew} <SpeakButton text={ex.word.hebrew} />
+        {ex.word.hebrew} <SpeakButton text={ex.word.hebrew} word={ex.word} onReport={doReport} />
       </div>
     ) : (
       <div className="prompt small"><TranslationText text={ex.word.translation} /></div>
@@ -1390,9 +1433,7 @@ export default function SessionScreen(props: {
         <div className="panel card">
           {newChip}
           <div style={{ margin: '18px 0' }}>
-            <button className="primary" onClick={() => { touch(); speakHebrew(ex.hebrew) }}>
-              🔊 Play again
-            </button>
+            <SpeakBig onTap={() => { touch(); speakHebrew(ex.hebrew) }} label="🔊 Play again" word={wordById.get(ex.wordId)} onReport={doReport} />
           </div>
           <div className="options sound-options">
             {ex.options.map((o, i) => (
@@ -1421,15 +1462,13 @@ export default function SessionScreen(props: {
           {newChip}
           {ex.audioOnly ? (
             <div style={{ margin: '18px 0' }}>
-              <button className="primary" onClick={() => { touch(); speakHebrew(wordById.get(ex.wordId)!.hebrew) }}>
-                🔊 Play again
-              </button>
+              <SpeakBig onTap={() => { touch(); speakHebrew(wordById.get(ex.wordId)!.hebrew) }} label="🔊 Play again" word={wordById.get(ex.wordId)} onReport={doReport} />
               <div className="sub" style={{ marginTop: 8 }}>What did you hear?</div>
             </div>
           ) : (
             <>
               <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>
-                <TranslationText text={ex.prompt} /> {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} />}
+                <TranslationText text={ex.prompt} /> {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} word={wordById.get(ex.wordId)} onReport={doReport} />}
               </div>
               <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the word'}</div>
             </>
