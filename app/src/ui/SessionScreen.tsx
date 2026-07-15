@@ -269,12 +269,14 @@ export default function SessionScreen(props: {
     return queue.map((item) => ({ kind: 'card', item }))
   }
 
-  /** Sessions are never 2 cards long: pad with weakest-word practice reps. */
+  /** Top up a short session with EXTRA practice — but only with words that are
+   * genuinely due today. Words answered correctly (now scheduled for a future
+   * day) are never re-added, so you don't see them again the same day. */
   const padQueue = (queue: QueueItem[], eligible: (wordId: string) => boolean): QueueItem[] => {
     if (queue.length >= state.settings.sessionSize) return queue.slice(0, state.settings.sessionSize)
     const used = new Set(queue.map((q) => `${q.wordId}|${q.direction}`))
     const fill: QueueItem[] = state.reviews
-      .filter((r) => eligible(r.wordId) && !used.has(`${r.wordId}|${r.direction}`))
+      .filter((r) => eligible(r.wordId) && !used.has(`${r.wordId}|${r.direction}`) && r.dueAt <= today)
       .sort((a, b) => (a.box === b.box ? (a.dueAt < b.dueAt ? -1 : 1) : a.box - b.box))
       .slice(0, state.settings.sessionSize - queue.length)
       .map((r) => ({ wordId: r.wordId, direction: r.direction, firstTry: true, practice: true }))
@@ -451,8 +453,11 @@ export default function SessionScreen(props: {
     if (studyMode === 'original') return makeFindOriginal(word, rng, optCount, mutationScheme)
     if (studyMode === 'flashcards') return { kind: 'flash', word, direction: dir }
     if (studyMode === 'listening') {
-      // variant-list entries (אחרון/אחרונה/…) cannot be "the word you hear"
-      if (dir === 'recall' && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng, optCount)
+      // Listening options follow the Reverse toggle, NOT each word's SRS direction:
+      // default = hear Hebrew, pick the English meaning (recognition-style, English
+      // options); Reverse = pick the Hebrew word you heard (sound-match). SRS still
+      // records against item.direction (dispatchAnswer), so due reviews still advance.
+      if (reverse && !word.hebrew.includes('/')) return makeSoundMatch(word, words, rng, optCount)
       return { ...makeChoice(word, 'recognition', words, rng, optCount), audioOnly: true }
     }
     const review = state.reviews.find((r) => r.wordId === item.wordId && r.direction === item.direction)

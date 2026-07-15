@@ -68,6 +68,18 @@ test('buildSessionPlan: due first (oldest), then new words up to daily limit', (
   assert.deepEqual(plan.newWordIds, ['d', 'e'])
 })
 
+test('a word answered correctly today is NOT served again the same day', () => {
+  const today = '2026-07-04'
+  const answered = applyAnswer(newReviewState('a', 'recognition', today), true, today)
+  assert.ok(answered.dueAt > today, 'correct answer must schedule beyond today')
+  const plan = buildSessionPlan({
+    words: [W('a'), W('b')], states: [answered], today,
+    settings: { sessionSize: 25, newWordsPerDay: 0 },
+    introducedToday: 99,
+  })
+  assert.equal(plan.dueStates.some((s) => s.wordId === 'a'), false)
+})
+
 test('buildSessionPlan: topic filter narrows due reviews and new words', () => {
   const words = [W('a', 'Verbs'), W('b', 'Family'), W('c', 'Verbs'), W('d', 'Family')]
   const states: ReviewState[] = [
