@@ -39,8 +39,26 @@ body {
 .report-toast {
   position: fixed; left: 50%; top: 16px; transform: translateX(-50%);
   background: var(--green, #2e7d32); color: #fff; padding: 10px 16px; border-radius: 10px;
-  font-size: 14px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.3); max-width: 90vw; text-align: center;
+  font-size: 14px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.3); max-width: 92vw;
+  display: flex; align-items: center; gap: 12px;
 }
+.report-toast .he { direction: rtl; unicode-bidi: plaintext; font-weight: 600; }
+.report-toast-cancel {
+  background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 8px; padding: 4px 10px; font-size: 13px; cursor: pointer; white-space: nowrap;
+}
+.report-toast-cancel:hover { background: rgba(255,255,255,0.32); }
+
+/* hold-to-report clock ring overlay on speak buttons */
+.holdable { position: relative; }
+.hold-ring { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.hold-ring svg { width: 100%; height: 100%; max-width: 42px; max-height: 42px; transform: rotate(-90deg); }
+.hold-ring-bg { fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-width: 3; }
+.hold-ring-fg {
+  fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round;
+  animation-name: hold-sweep; animation-timing-function: linear; animation-fill-mode: forwards;
+}
+@keyframes hold-sweep { to { stroke-dashoffset: 0; } }
 
 /* Vocabulary: expandable detail row */
 .vocab-row.open { background: rgba(127,127,127,0.10); }

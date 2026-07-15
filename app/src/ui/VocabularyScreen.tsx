@@ -6,6 +6,7 @@ import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import { errorIcon, type WordErrorStatus } from '../lib/wordErrors'
 import { fetchWordErrors, reportWordError, clearWordError } from '../lib/wixClient'
 import { useLongPress } from './useLongPress'
+import { HoldRing } from './HoldRing'
 import translitJson from '../data/translit.json'
 
 const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
@@ -28,16 +29,21 @@ interface Row {
 
 /** Speak button that also reports bad pronunciation on a ~1s hold. */
 function VocabSpeak({ word, big, onReport }: { word: Word; big?: boolean; onReport?: (w: Word) => void }) {
-  const lp = useLongPress(
+  const { pressing, ms, handlers } = useLongPress(
     () => speakHebrew(word.hebrew),
     () => onReport?.(word),
   )
   if (!canSpeakHebrew()) return null
   const cls = big ? 'primary' : 'speak'
+  const label = big ? '🔊 Play' : '🔊'
   if (!onReport) {
-    return <button className={cls} onClick={(e) => { e.stopPropagation(); speakHebrew(word.hebrew) }}>{big ? '🔊 Play' : '🔊'}</button>
+    return <button className={cls} onClick={(e) => { e.stopPropagation(); speakHebrew(word.hebrew) }}>{label}</button>
   }
-  return <button className={cls} title="Tap: play · Hold: report bad pronunciation" {...lp}>{big ? '🔊 Play' : '🔊'}</button>
+  return (
+    <button className={`${cls} holdable`} title="Tap: play · Hold: report bad pronunciation" {...handlers}>
+      {label}{pressing && <HoldRing ms={ms} />}
+    </button>
+  )
 }
 
 export default function VocabularyScreen(props: { state: GameState; words: Word[]; errorsEnabled: boolean }) {

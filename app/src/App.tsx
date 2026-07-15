@@ -3,7 +3,7 @@ import type { Sentence, Word } from './lib/types'
 import { gameReducer, newPlayerState, todayLog, type GameState } from './lib/game'
 import { loadState, saveState } from './lib/storage'
 import { loadCourseState, saveCourseState, migrateLocalToCloud } from './lib/cloudStore'
-import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend, reportWordError } from './lib/wixClient'
+import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend, reportWordError, clearWordError } from './lib/wixClient'
 import { todayISO, computeStreak } from './lib/time'
 import { initSpeech, loadVocalized, loadStressOverrides, setSpeechLang, type VocalizedMap } from './lib/speech'
 import wordsJson from './data/words.json'
@@ -244,6 +244,7 @@ export default function App() {
           onMoreNew={() => startSession(topic, 'more-new')}
           onPractice={() => startSession(topic, 'practice')}
           onReportWord={course.id === 'hebrew' ? (w) => { reportWordError(w).catch((e) => console.error('report failed', e)) } : undefined}
+          onUnreportWord={course.id === 'hebrew' ? (id) => { clearWordError(id).catch((e) => console.error('unreport failed', e)) } : undefined}
         />
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}

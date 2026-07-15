@@ -24,6 +24,7 @@ import {
 } from '../lib/exercises'
 import { generateCrossword, type Crossword } from '../lib/crossword'
 import { useLongPress } from './useLongPress'
+import { HoldRing } from './HoldRing'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import translitJson from '../data/translit.json'
@@ -128,17 +129,16 @@ function TranslationText({ text }: { text: string }) {
   )
 }
 
+function reportHaptic() {
+  try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
+}
+
 function SpeakButton(props: { text: string; word?: Word; onReport?: (w: Word) => void }) {
   const { text, word, onReport } = props
   const canReport = !!(word && onReport)
-  const lp = useLongPress(
+  const { pressing, ms, handlers } = useLongPress(
     () => speakHebrew(text),
-    () => {
-      if (word && onReport) {
-        onReport(word)
-        try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
-      }
-    },
+    () => { if (word && onReport) { onReport(word); reportHaptic() } },
   )
   if (!canSpeakHebrew()) return null
   if (!canReport) {
@@ -149,8 +149,8 @@ function SpeakButton(props: { text: string; word?: Word; onReport?: (w: Word) =>
     )
   }
   return (
-    <button className="speak" title="Tap: play · Hold: report bad pronunciation" {...lp}>
-      🔊
+    <button className="speak holdable" title="Tap: play · Hold: report bad pronunciation" {...handlers}>
+      🔊{pressing && <HoldRing ms={ms} />}
     </button>
   )
 }
@@ -158,19 +158,18 @@ function SpeakButton(props: { text: string; word?: Word; onReport?: (w: Word) =>
 /** Big "Play again" button used in audio exercises; hold to report bad pronunciation. */
 function SpeakBig(props: { onTap: () => void; label: string; word?: Word; onReport?: (w: Word) => void; className?: string }) {
   const { onTap, label, word, onReport, className } = props
-  const lp = useLongPress(
+  const { pressing, ms, handlers } = useLongPress(
     onTap,
-    () => {
-      if (word && onReport) {
-        onReport(word)
-        try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
-      }
-    },
+    () => { if (word && onReport) { onReport(word); reportHaptic() } },
   )
   if (!(word && onReport)) {
     return <button className={className ?? 'primary'} onClick={onTap}>{label}</button>
   }
-  return <button className={className ?? 'primary'} title="Tap: play · Hold: report bad pronunciation" {...lp}>{label}</button>
+  return (
+    <button className={`${className ?? 'primary'} holdable`} title="Tap: play · Hold: report bad pronunciation" {...handlers}>
+      {label}{pressing && <HoldRing ms={ms} />}
+    </button>
+  )
 }
 
 export default function SessionScreen(props: {
@@ -185,19 +184,27 @@ export default function SessionScreen(props: {
   onExit: () => void
   onMoreNew: () => void
   onPractice: () => void
-  /** report a word as mispronounced (provided only for the Hebrew course) */
+  /** report / un-report a word as mispronounced (provided only for the Hebrew course) */
   onReportWord?: (word: Word) => void
+  onUnreportWord?: (wordId: string) => void
 }) {
-  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice, onReportWord } = props
+  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice, onReportWord, onUnreportWord } = props
   const today = todayISO()
-  const [reportToast, setReportToast] = useState<string | null>(null)
+  const [reportToast, setReportToast] = useState<Word | null>(null)
+  const toastTimer = useRef<number | null>(null)
   const doReport = onReportWord
     ? (w: Word) => {
         onReportWord(w)
-        setReportToast('Marked for review — we’ll fix its pronunciation 🙏')
-        window.setTimeout(() => setReportToast(null), 1800)
+        setReportToast(w)
+        if (toastTimer.current) window.clearTimeout(toastTimer.current)
+        toastTimer.current = window.setTimeout(() => setReportToast(null), 5000)
       }
     : undefined
+  const undoReport = () => {
+    if (reportToast && onUnreportWord) onUnreportWord(reportToast.id)
+    if (toastTimer.current) window.clearTimeout(toastTimer.current)
+    setReportToast(null)
+  }
   const rng = useRef(mulberry32((Date.now() ^ 0x9e3779b9) >>> 0)).current
   const mutationScheme = rtl ? HEBREW_SCHEME : LATIN_SCHEME
   const optCount = Math.min(12, Math.max(3, state.settings.optionCount || 8))
@@ -967,7 +974,12 @@ export default function SessionScreen(props: {
 
   const header = (
     <>
-      {reportToast && <div className="report-toast">{reportToast}</div>}
+      {reportToast && (
+        <div className="report-toast">
+          <span>«<span className="he">{reportToast.hebrew}</span>» додано до списку на перевірку</span>
+          <button className="report-toast-cancel" onClick={undoReport}>Скасувати</button>
+        </div>
+      )}
     <div className="progress">
       <span>
         {mode === 'practice' ? '🏋️ Practice · ' : ''}
