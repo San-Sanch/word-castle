@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mulberry32, makeChoice, makeBlank, makeMatch, makeSentenceChoice, pickExerciseKind, answerDelayMs } from './exercises.js'
+import { mulberry32, makeChoice, makeBlank, makeMatch, makeSentenceChoice, pickExerciseKind } from './exercises.js'
 import type { Sentence, Word } from './types.js'
 
 const S = (id: string, hebrew: string, translation: string): Sentence => ({
@@ -132,9 +132,16 @@ test('pickExerciseKind: blank only when enabled, box>=2 and sentence exists', ()
   assert.equal(pickExerciseKind({ box: 3, hasSentence: true, settings: { choice: true, blank: false }, roll: 0.1 }), 'choice')
 })
 
-test('answerDelayMs: audio exercises hold the reveal 3s, others keep short delays', () => {
-  assert.equal(answerDelayMs(true, true), 3000)
-  assert.equal(answerDelayMs(true, false), 3000)
-  assert.equal(answerDelayMs(false, true), 650)
-  assert.equal(answerDelayMs(false, false), 1500)
+test('makeChoice: distractors that differ only by case/punctuation are excluded', () => {
+  const target = W('bye', { hebrew: 'להתראות', translation: 'goodbye' })
+  const dupes = [
+    W('bye2', { hebrew: 'שלום', translation: 'Goodbye!' }),
+    W('bye3', { hebrew: 'ביי', translation: ' goodbye ' }),
+  ]
+  const filler = Array.from({ length: 8 }, (_, i) => W(`f${i}`))
+  for (let seed = 1; seed <= 5; seed++) {
+    const ex = makeChoice(target, 'recognition', [target, ...dupes, ...filler], mulberry32(seed))
+    const normed = ex.options.map((o) => o.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, '').trim())
+    assert.equal(normed.filter((o) => o === 'goodbye').length, 1, `seed ${seed}: ${ex.options}`)
+  }
 })

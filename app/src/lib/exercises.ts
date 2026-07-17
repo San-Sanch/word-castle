@@ -32,6 +32,11 @@ export interface ChoiceExercise {
 
 const tokenCount = (s: string) => s.trim().split(/\s+/).length
 
+/** "goodbye" and " Goodbye! " are the same answer: distractors must differ from
+ * the correct option (and from each other) beyond case, punctuation and spacing. */
+const normText = (s: string) =>
+  s.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\s+/g, ' ').trim()
+
 /**
  * Wrong options must not give themselves away by shape: a single-word answer
  * gets single-word distractors; phrases get similar-length phrases (±1 token).
@@ -56,7 +61,8 @@ export function makeChoice(
 ): ChoiceExercise {
   const answer = direction === 'recognition' ? word.translation : word.hebrew
   const textOf = (w: Word) => (direction === 'recognition' ? w.translation : w.hebrew)
-  const candidates = pool.filter((w) => w.id !== word.id && textOf(w) !== answer)
+  const normAnswer = normText(answer)
+  const candidates = pool.filter((w) => w.id !== word.id && normText(textOf(w)) !== normAnswer)
   const inShape = candidates.filter((w) => shapeCompatible(answer, textOf(w)))
   const tiers = [
     inShape.filter((w) => w.category === word.category && w.translationLang === word.translationLang),
@@ -64,11 +70,15 @@ export function makeChoice(
     inShape,
   ]
   const picked: string[] = []
+  const pickedNorm = new Set<string>()
   for (const tier of tiers) {
     for (const w of shuffle(tier, rng)) {
       const text = textOf(w)
       if (picked.length >= count - 1) break
-      if (!picked.includes(text)) picked.push(text)
+      if (!pickedNorm.has(normText(text))) {
+        picked.push(text)
+        pickedNorm.add(normText(text))
+      }
     }
     if (picked.length >= count - 1) break
   }
@@ -77,7 +87,7 @@ export function makeChoice(
   if (picked.length < count - 1) {
     const rest = candidates
       .map((w) => textOf(w))
-      .filter((text) => !picked.includes(text))
+      .filter((text) => !pickedNorm.has(normText(text)))
       .map((text) => ({
         text,
         key: Math.abs(tokenCount(text) - tokenCount(answer)) * 1000 + Math.abs(text.length - answer.length) * 10 + rng(),
@@ -85,7 +95,9 @@ export function makeChoice(
       .sort((a, b) => a.key - b.key)
     for (const r of rest) {
       if (picked.length >= count - 1) break
+      if (pickedNorm.has(normText(r.text))) continue
       picked.push(r.text)
+      pickedNorm.add(normText(r.text))
     }
   }
   const options = shuffle([answer, ...picked], rng)
@@ -186,17 +198,23 @@ export function hebrewSimilarity(a: string, b: string): number {
 /** Hear the word, pick it among similar-looking/sounding Hebrew words (8 options). */
 export function makeSoundMatch(word: Word, pool: Word[], rng: () => number, count = 8): SoundExercise {
   // slash entries are dictionary variant lists, not hearable words
-  const base = pool.filter((w) => w.id !== word.id && w.hebrew !== word.hebrew && !w.hebrew.includes('/'))
+  const base = pool.filter(
+    (w) => w.id !== word.id && normText(w.hebrew) !== normText(word.hebrew) && !w.hebrew.includes('/'),
+  )
   const inShape = base.filter((w) => shapeCompatible(word.hebrew, w.hebrew))
   const ranked = (list: Word[]) =>
     list
       .map((w) => ({ w, score: hebrewSimilarity(word.hebrew, w.hebrew) }))
       .sort((a, b) => b.score - a.score)
   const picked: string[] = []
+  const pickedNorm = new Set<string>()
   for (const source of [ranked(inShape).slice(0, count * 2 + 4), ranked(base)]) {
     for (const { w } of shuffle(source, rng)) {
       if (picked.length >= count - 1) break
-      if (!picked.includes(w.hebrew)) picked.push(w.hebrew)
+      if (!pickedNorm.has(normText(w.hebrew))) {
+        picked.push(w.hebrew)
+        pickedNorm.add(normText(w.hebrew))
+      }
     }
     if (picked.length >= count - 1) break
   }
@@ -410,11 +428,4 @@ export function pickExerciseKind(args: {
   const { box, hasSentence, settings, roll } = args
   if (settings.blank && hasSentence && box >= 2 && roll < 0.4) return 'blank'
   return 'choice'
-}
-
-/** How long to keep the answered card on screen. Audio exercises hold 3s so the
- * revealed word/transcription/translation can be read; others advance fast. */
-export function answerDelayMs(audio: boolean, correct: boolean): number {
-  if (audio) return 3000
-  return correct ? 650 : 1500
 }

@@ -14,7 +14,6 @@ import {
   mulberry32,
   shuffle,
   pickExerciseKind,
-  answerDelayMs,
   HEBREW_SCHEME,
   LATIN_SCHEME,
   type ChoiceExercise,
@@ -693,8 +692,7 @@ export default function SessionScreen(props: {
     const word = wordById.get(step.item.wordId)
     if (word && ex.kind === 'choice' && !ex.audioOnly && canSpeakHebrew()) speakHebrew(word.hebrew)
     const nextSteps = correct ? steps : requeue(step.item)
-    const audio = ex.kind === 'sound' || (ex.kind === 'choice' && !!ex.audioOnly)
-    window.setTimeout(() => advance(nextSteps), answerDelayMs(audio, correct))
+    window.setTimeout(() => advance(nextSteps), correct ? 650 : 1500)
   }
 
   const answerFlash = (knew: boolean) => {
