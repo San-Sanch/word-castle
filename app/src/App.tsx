@@ -187,39 +187,37 @@ export default function App() {
 
   return (
     <>
-      <div className="header">
-        <span className="title">{course.flag} Word Castle</span>
-        <select
-          className="profile-select"
-          value={courseId}
-          onChange={(e) => switchCourse(e.target.value)}
-          title="Course / language"
-        >
-          {COURSES.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.flag} {c.label}
-            </option>
-          ))}
-        </select>
-        {auth === 'in' ? (
-          <button className="ghost" onClick={logout} title="Signed in — click to log out">☁️ ✓</button>
-        ) : (
-          <button className="ghost" onClick={startLogin} title="Sign in to sync progress across devices">☁️ Sign in</button>
-        )}
-        <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
-        <span className="stat" title="Day streak">🔥 {streak}</span>
-        {screen !== 'session' && (
-          <>
-            <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
-              <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
-            </div>
-            <span className="goal-label">
-              Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
-              {goalPct >= 100 ? ' ✓' : ''}
-            </span>
-          </>
-        )}
-      </div>
+      {screen !== 'session' && (
+        <div className="header">
+          <span className="title">{course.flag} Word Castle</span>
+          <select
+            className="profile-select"
+            value={courseId}
+            onChange={(e) => switchCourse(e.target.value)}
+            title="Course / language"
+          >
+            {COURSES.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.flag} {c.label}
+              </option>
+            ))}
+          </select>
+          {auth === 'in' ? (
+            <button className="ghost" onClick={logout} title="Signed in — click to log out">☁️ ✓</button>
+          ) : (
+            <button className="ghost" onClick={startLogin} title="Sign in to sync progress across devices">☁️ Sign in</button>
+          )}
+          <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
+          <span className="stat" title="Day streak">🔥 {streak}</span>
+          <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
+            <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
+          </div>
+          <span className="goal-label">
+            Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
+            {goalPct >= 100 ? ' ✓' : ''}
+          </span>
+        </div>
+      )}
 
       {screen === 'learn' && (
         <LearnScreen
