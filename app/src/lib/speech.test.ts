@@ -3,14 +3,15 @@ import assert from 'node:assert/strict'
 import { ttsNormalize, loadVocalized, loadStressOverrides } from './speech.js'
 
 test('ttsNormalize: drops parenthesized hints', () => {
-  assert.equal(ttsNormalize('עובד/עובדת (ב)'), 'עובד, עובדת')
+  assert.equal(ttsNormalize('עובד/עובדת (ב)'), 'עובד. עובדת')
   assert.equal(ttsNormalize('רואה (את)'), 'רואה')
-  assert.equal(ttsNormalize('מדבר/מדברת (עם/על/ב)'), 'מדבר, מדברת')
+  assert.equal(ttsNormalize('מדבר/מדברת (עם/על/ב)'), 'מדבר. מדברת')
 })
 
-test('ttsNormalize: slash forms become a comma pause', () => {
-  assert.equal(ttsNormalize('זה/זאת/אלה'), 'זה, זאת, אלה')
-  assert.equal(ttsNormalize('נכון/לא נכון'), 'נכון, לא נכון')
+test('ttsNormalize: slash forms become a period pause (slash must never be voiced)', () => {
+  assert.equal(ttsNormalize('זה/זאת/אלה'), 'זה. זאת. אלה')
+  assert.equal(ttsNormalize('נכון/לא נכון'), 'נכון. לא נכון')
+  assert.equal(ttsNormalize('אתה צודק/את צודקת'), 'אתה צודק. את צודקת')
 })
 
 test('ttsNormalize: plain words untouched, whitespace collapsed', () => {
@@ -26,7 +27,7 @@ test('ttsNormalize: ambiguous words get vowelized so the voice reads them right'
 
 test('ttsNormalize: tokens with trailing punctuation still get vocalized', () => {
   loadVocalized({ full: {}, tokens: { 'איזו': 'אֵיזוֹ', 'אילו': 'אֵילוּ' } })
-  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה, אֵיְזוֹ, אֵיְלוּ?')
+  assert.equal(ttsNormalize('איזה/איזו/אילו?'), 'איזה. אֵיְזוֹ. אֵיְלוּ?')
   loadVocalized({ full: {}, tokens: {} })
 })
 
@@ -55,8 +56,8 @@ test('ttsNormalize: manual corrections for wrong engine choices', () => {
   assert.equal(ttsNormalize('מים'), 'מַיְם') // stressed MA-im (maym glide)
   assert.equal(ttsNormalize('סבא'), 'סַאבָּא') // SA-ba, not sa-BA
   assert.equal(ttsNormalize('סבתא'), 'סַבְּתָא') // SAV-ta
-  assert.equal(ttsNormalize('בית'), 'בַּאיִת') // BA-yit
-  assert.equal(ttsNormalize('היא באה מהבית'), 'היא באה מֵהַבַּאיִת') // me-ha-BA-yit
+  assert.equal(ttsNormalize('בית'), 'בַּיִת') // plain nikud (Sanch: no respelling hacks)
+  assert.equal(ttsNormalize('היא באה מהבית'), 'היא באה מֵהַבַּיִת')
 })
 
 test('ttsNormalize: generated vocalization applies (full phrase first, tokens as fallback)', () => {
@@ -82,4 +83,23 @@ test('ttsNormalize: flagged-word fixes (2026-07-17 word_errors batch)', () => {
   assert.equal(ttsNormalize('מ'), 'מִ') // mi, not the letter name mem
   assert.equal(ttsNormalize('אנגליה'), 'אַנְגְּלִיאָה') // ang-LI-ya (measured)
   assert.equal(ttsNormalize('מנגו'), 'מַאנְגּוֹ') // MAN-go (measured)
+})
+
+test('ttsNormalize: plain nikud for the once-respelled words (Sanch 2026-07-17)', () => {
+  assert.equal(ttsNormalize('בבית'), 'בַּבַּיִת')
+  // manual plain-nikud override must beat the generated aleph respelling
+  loadStressOverrides({ 'גרמניה': 'גֶּרְמַאנְיָה' })
+  assert.equal(ttsNormalize('גרמניה'), 'גֶּרְמַנְיָה')
+  loadStressOverrides({})
+})
+
+test('ttsNormalize: slash entries still use full-phrase nikud (legacy comma keys)', () => {
+  // vocalized.json full keys were built with ", " separators; the period-pause
+  // lookup must still find them, or את falls back to the wrong homograph (אֶת)
+  loadVocalized({
+    full: { 'אתה צודק, את צודקת': 'אַתָּה צוֹדֵק, אַתְּ צוֹדֶקֶת' },
+    tokens: { 'את': 'אֶת' },
+  })
+  assert.equal(ttsNormalize('אתה צודק/את צודקת'), 'אַתָּה צוֹדֵק. אַתְּ צוֹדֶקֶת')
+  loadVocalized({ full: {}, tokens: {} })
 })

@@ -47,11 +47,14 @@ export const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'סבא': 'סַאבָּא', // grandpa — mater-lectionis aleph pulls the stress to SA-ba (measured)
   'סבתא': 'סַבְּתָא', // grandma — the only spelling Carmit renders differently (SAV-ta)
   'כמה': 'כַּאמָּה', // KA-ma (how much/how old) — reported in בת כמה את
-  // bayit family: mater-lectionis aleph forces BA-yit (measured 19/7 head-heavy)
-  'בית': 'בַּאיִת',
-  'הבית': 'הַבַּאיִת',
-  'מהבית': 'מֵהַבַּאיִת',
-  'בבית': 'בַּבַּאיִת',
+  // bayit family: plain nikud — Sanch found the mater-aleph respelling (בַּאיִת)
+  // worse than Carmit's default reading (2026-07-17); keep entries so הבית is
+  // covered and no generated respelling can come back
+  'בית': 'בַּיִת',
+  'הבית': 'הַבַּיִת',
+  'מהבית': 'מֵהַבַּיִת',
+  'בבית': 'בַּבַּיִת',
+  'גרמניה': 'גֶּרְמַנְיָה', // plain nikud beats the generated aleph respelling (same call)
   'מים': 'מַיְם', // water — closing glide reads as one stressed syllable: MA-im
   'שפה': 'שָׂפָה', // language (sa-FA) — Dicta picked שֶׁפֹּה ("that here")
   'צוהוריים': 'צָהֳרַיְם', // noon (tso-ho-RA-im) — no nikud data; closing glide like מים
@@ -112,13 +115,14 @@ const stripNikud = (s: string) => s.replace(NIKUD_RE, '')
 /**
  * Prepares dictionary entries for speech: "עובד/עובדת (ב)" is written for the eye,
  * not the voice. Parenthesized grammar hints are dropped, slash-separated forms
- * become comma pauses, then the text is vowelized (full-phrase match first,
+ * become period pauses (a comma pause was too short and the transition audible —
+ * Sanch, 2026-07-17), then the text is vowelized (full-phrase match first,
  * per-token second, manual overrides always winning).
  */
 export function ttsNormalize(text: string): string {
   const cleaned = text
     .replace(/\([^)]*\)/g, ' ')
-    .replace(/\s*\/\s*/g, ', ')
+    .replace(/\s*\/\s*/g, '. ')
     .replace(/\s+/g, ' ')
     .replace(/\s*,\s*$/g, '')
     .trim()
@@ -129,7 +133,14 @@ export function ttsNormalize(text: string): string {
     const m = token.match(/^(.*?)([,?.!:;]*)$/)!
     return (vocalized.tokens[m[1]] ?? m[1]) + m[2]
   }
-  const base = vocalized.full[cleaned] ?? cleaned.split(' ').map(vocalizeToken).join(' ')
+  // vocalized.full is keyed with ", " separators (built before the period-pause
+  // change); slash entries must still hit it — the token fallback can pick the
+  // wrong homograph (אַתְּ vs אֶת)
+  const legacyFull = cleaned.includes('. ')
+    ? vocalized.full[cleaned.replace(/\. /g, ', ')]?.replace(/, /g, '. ')
+    : undefined
+  const base =
+    vocalized.full[cleaned] ?? legacyFull ?? cleaned.split(' ').map(vocalizeToken).join(' ')
   // post-pass: manual corrections and measured stress respellings win,
   // matched by consonant skeleton so they also apply inside full sentences
   const out = base
