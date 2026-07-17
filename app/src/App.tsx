@@ -39,12 +39,15 @@ export interface Course {
   rtl: boolean
   /** reading-comprehension stories exist for this course (Hebrew-only for now) */
   stories: boolean
+  /** translations are comma-separated meaning lists (Duolingo courses); the
+   * curated Hebrew set uses commas inside phrases, so it must never be split */
+  commaMeanings: boolean
 }
 
 export const COURSES: Course[] = [
-  { id: 'hebrew', label: 'Hebrew → Українська', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true },
-  { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', rtl: false, stories: false },
-  { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', rtl: false, stories: false },
+  { id: 'hebrew', label: 'Hebrew → Українська', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true, commaMeanings: false },
+  { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', rtl: false, stories: false, commaMeanings: true },
+  { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', rtl: false, stories: false, commaMeanings: true },
 ]
 
 const COURSE_KEY = 'wc-active-course'
@@ -239,6 +242,7 @@ export default function App() {
           words={words}
           sentences={sentences}
           rtl={course.rtl}
+          splitTranslations={course.commaMeanings}
           caps={{ sentences: sentences.length > 0, stories: course.stories }}
           topic={topic}
           mode={sessionMode}

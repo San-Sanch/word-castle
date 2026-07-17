@@ -335,6 +335,9 @@ button.primary.big { font-size: 19px; padding: 15px 34px; margin-bottom: 10px; }
   background: none; border: none; font-size: 20px; cursor: pointer; padding: 2px 4px;
 }
 .spell-hint { color: var(--gold); font-size: 13px; margin-bottom: 8px; }
+/* reserved space for the answer reveal so the option list never jumps down */
+.reveal-slot { min-height: 64px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.reveal-slot .answer-reveal { margin-top: 0; }
 .hint-panel { margin: 10px 0; }
 .answer-reveal {
   margin-top: 14px; padding: 10px 16px; border-radius: 10px;

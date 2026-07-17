@@ -29,6 +29,7 @@ import { HoldRing } from './HoldRing'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import { showSpellingWarning, type WordErrorStatus } from '../lib/wordErrors'
+import { translationParts } from '../lib/translations'
 import { fetchWordErrors } from '../lib/wixClient'
 import translitJson from '../data/translit.json'
 import storiesJson from '../data/stories.json'
@@ -110,10 +111,10 @@ export function modeAvailable(mode: StudyMode, caps: CourseCaps): boolean {
 }
 
 /** Shows one translation at a time with ‹ › arrows to peek at the rest, so a
- * long comma-separated meaning list doesn't clutter the card. Arrow clicks don't
- * bubble, so tapping them inside an answer button won't select that answer. */
-function TranslationText({ text }: { text: string }) {
-  const parts = text.split(/,\s+/).map((p) => p.trim()).filter(Boolean)
+ * long comma-separated meaning list doesn't clutter the card. Splitting is
+ * course-driven (`split`): Hebrew phrases with commas must stay whole. */
+function TranslationText({ text, split }: { text: string; split: boolean }) {
+  const parts = translationParts(text, split)
   const [i, setI] = useState(0)
   if (parts.length <= 1) return <>{text}</>
   const at = Math.min(i, parts.length - 1)
@@ -181,6 +182,8 @@ export default function SessionScreen(props: {
   words: Word[]
   sentences: Sentence[]
   rtl: boolean
+  /** course translations are comma-separated meaning lists (safe to split) */
+  splitTranslations: boolean
   caps: CourseCaps
   topic: string | null
   mode: SessionMode
@@ -191,7 +194,7 @@ export default function SessionScreen(props: {
   onReportWord?: (word: Word) => void
   onUnreportWord?: (wordId: string) => void
 }) {
-  const { state, dispatch, words, sentences, rtl, caps, topic, mode, onExit, onMoreNew, onPractice, onReportWord, onUnreportWord } = props
+  const { state, dispatch, words, sentences, rtl, splitTranslations, caps, topic, mode, onExit, onMoreNew, onPractice, onReportWord, onUnreportWord } = props
   const today = todayISO()
   const [reportToast, setReportToast] = useState<Word | null>(null)
   const toastTimer = useRef<number | null>(null)
@@ -935,7 +938,7 @@ export default function SessionScreen(props: {
       <div className="answer-reveal">
         <span className="he">{word.hebrew}</span>
         {tr && <span className="translit"> {tr.he}</span>}
-        <span> — <TranslationText text={word.translation} /></span>
+        <span> — <TranslationText text={word.translation} split={splitTranslations} /></span>
       </div>
     )
   }
@@ -960,7 +963,7 @@ export default function SessionScreen(props: {
             )}
           </div>
         )}
-        <div className="prompt small"><TranslationText text={word.translation} /></div>
+        <div className="prompt small"><TranslationText text={word.translation} split={splitTranslations} /></div>
         <div className="sub">{word.category}</div>
       </div>
     )
@@ -1461,7 +1464,7 @@ export default function SessionScreen(props: {
         {ex.word.hebrew} <SpeakButton text={ex.word.hebrew} word={ex.word} onReport={doReport} />
       </div>
     ) : (
-      <div className="prompt small"><TranslationText text={ex.word.translation} /></div>
+      <div className="prompt small"><TranslationText text={ex.word.translation} split={splitTranslations} /></div>
     )
     return (
       <>
@@ -1498,7 +1501,7 @@ export default function SessionScreen(props: {
         <div className="panel card audio-card">
           {newChip}
           <div className="sub" style={{ marginTop: 8 }}>Pick the word you hear</div>
-          {picked !== null && <AnswerReveal wordId={ex.wordId} />}
+          <div className="reveal-slot">{picked !== null && <AnswerReveal wordId={ex.wordId} />}</div>
           <div className="options sound-options">
             {ex.options.map((o, i) => (
               <button
@@ -1528,12 +1531,14 @@ export default function SessionScreen(props: {
           ) : (
             <>
               <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>
-                <TranslationText text={ex.prompt} /> {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} word={wordById.get(ex.wordId)} onReport={doReport} />}
+                <TranslationText text={ex.prompt} split={splitTranslations} /> {ex.direction === 'recognition' && <SpeakButton text={ex.prompt} word={wordById.get(ex.wordId)} onReport={doReport} />}
               </div>
               <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the word'}</div>
             </>
           )}
-          {picked !== null && ex.audioOnly && <AnswerReveal wordId={ex.wordId} />}
+          {ex.audioOnly && (
+            <div className="reveal-slot">{picked !== null && <AnswerReveal wordId={ex.wordId} />}</div>
+          )}
           <div className={`options ${ex.audioOnly ? 'sound-options' : ''}`}>
             {ex.options.map((o, i) => (
               <button
@@ -1544,7 +1549,7 @@ export default function SessionScreen(props: {
                 disabled={picked !== null}
                 onClick={() => answerCard(i)}
               >
-                <TranslationText text={o} />
+                {ex.direction === 'recall' ? o : translationParts(o, splitTranslations)[0]}
               </button>
             ))}
           </div>
