@@ -53,6 +53,22 @@ export const PRONUNCIATION_OVERRIDES: Record<string, string> = {
   'מהבית': 'מֵהַבַּאיִת',
   'בבית': 'בַּבַּאיִת',
   'מים': 'מַיְם', // water — closing glide reads as one stressed syllable: MA-im
+  'שפה': 'שָׂפָה', // language (sa-FA) — Dicta picked שֶׁפֹּה ("that here")
+  'צוהוריים': 'צָהֳרַיְם', // noon (tso-ho-RA-im) — no nikud data; closing glide like מים
+  'היי': 'הַאי', // hi (hay) — one closed syllable (measured)
+  'ו': 'וֶה', // the prefix "ve-" taught as a standalone entry ("ו...")
+  'מ': 'מִ', // the prefix "mi-" — bare mem is read as the letter name (measured)
+  'אנגליה': 'אַנְגְּלִיאָה', // England (ang-LI-ya) — mater aleph pulls stress (measured .32→.71)
+  'מנגו': 'מַאנְגּוֹ', // mango (MAN-go) — mater aleph (measured .60→.68)
+}
+
+/**
+ * Whole-phrase corrections checked before any token work. Needed when a
+ * per-token override is wrong in a specific phrase: standalone בית is BA-yit,
+ * but the construct בית ספר is "bet sefer" — the token pass would corrupt it.
+ */
+export const PHRASE_OVERRIDES: Record<string, string> = {
+  'בית ספר': 'בֵּית סֵפֶר', // bet SE-fer, not BA-yit sefer
 }
 
 /**
@@ -106,6 +122,8 @@ export function ttsNormalize(text: string): string {
     .replace(/\s+/g, ' ')
     .replace(/\s*,\s*$/g, '')
     .trim()
+  const phrase = PHRASE_OVERRIDES[cleaned]
+  if (phrase) return forceEiGlide(phrase)
   const vocalizeToken = (token: string) => {
     // trailing punctuation (?, ., !, comma…) is not part of the word
     const m = token.match(/^(.*?)([,?.!:;]*)$/)!

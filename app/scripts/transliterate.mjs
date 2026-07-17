@@ -32,13 +32,23 @@ for (const row of catCsv.slice(1)) {
 
 const vocalize = (text) => {
   const c = clean(text)
-  if (vocalized.full[c]) return vocalized.full[c]
-  return c
+  const base =
+    vocalized.full[c] ??
+    c
+      .split(' ')
+      .map((tok) => {
+        const m = tok.match(/^(.*?)([,?.!:;]*)$/)
+        return (vocalized.tokens[m[1]] ?? m[1]) + m[2]
+      })
+      .join(' ')
+  // manual pronunciation corrections are the same authority the voice uses —
+  // matched by consonant skeleton so they also win over full-phrase nikud
+  // (mirrors ttsNormalize in src/lib/speech.ts)
+  return base
     .split(' ')
     .map((tok) => {
       const m = tok.match(/^(.*?)([,?.!:;]*)$/)
-      // manual pronunciation corrections are the same authority the voice uses
-      return (PRONUNCIATION_OVERRIDES[m[1]] ?? vocalized.tokens[m[1]] ?? m[1]) + m[2]
+      return (PRONUNCIATION_OVERRIDES[strip(m[1])] ?? m[1]) + m[2]
     })
     .join(' ')
 }

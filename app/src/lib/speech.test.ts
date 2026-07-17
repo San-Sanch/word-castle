@@ -71,3 +71,15 @@ test('ttsNormalize: generated vocalization applies (full phrase first, tokens as
   assert.equal(ttsNormalize('דוד'), 'דּוֹד')
   loadVocalized({ full: {}, tokens: {} })
 })
+
+test('ttsNormalize: flagged-word fixes (2026-07-17 word_errors batch)', () => {
+  // phrase override wins over the per-token bayit respelling (bet-, not BA-yit)
+  assert.equal(ttsNormalize('בית ספר'), 'בֵּיְת סֵפֶר')
+  assert.equal(ttsNormalize('שפה'), 'שָׂפָה') // sa-FA, not Dicta's she-po
+  assert.ok(ttsNormalize('ארוחת צוהוריים').includes('צָהֳרַיְם')) // tso-ho-RA-im
+  assert.equal(ttsNormalize('היי'), 'הַאי') // hay, one syllable
+  assert.equal(ttsNormalize('ו...'), 'וֶה...') // ve
+  assert.equal(ttsNormalize('מ'), 'מִ') // mi, not the letter name mem
+  assert.equal(ttsNormalize('אנגליה'), 'אַנְגְּלִיאָה') // ang-LI-ya (measured)
+  assert.equal(ttsNormalize('מנגו'), 'מַאנְגּוֹ') // MAN-go (measured)
+})
