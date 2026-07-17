@@ -27,6 +27,8 @@ import { useLongPress } from './useLongPress'
 import { HoldRing } from './HoldRing'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
+import { showSpellingWarning, type WordErrorStatus } from '../lib/wordErrors'
+import { fetchWordErrors } from '../lib/wixClient'
 import translitJson from '../data/translit.json'
 import storiesJson from '../data/stories.json'
 
@@ -192,16 +194,31 @@ export default function SessionScreen(props: {
   const today = todayISO()
   const [reportToast, setReportToast] = useState<Word | null>(null)
   const toastTimer = useRef<number | null>(null)
+  // open spelling reports (long-tap): drives the ❗ badge on audio exercises;
+  // an entry disappears from the map once a maintainer marks the word 'fixed'
+  const [wordErrors, setWordErrors] = useState<Record<string, WordErrorStatus>>({})
+  const [spellHint, setSpellHint] = useState(false)
+  useEffect(() => {
+    if (onReportWord) fetchWordErrors().then(setWordErrors).catch(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const doReport = onReportWord
     ? (w: Word) => {
         onReportWord(w)
+        setWordErrors((m) => ({ ...m, [w.id]: 'error' }))
         setReportToast(w)
         if (toastTimer.current) window.clearTimeout(toastTimer.current)
         toastTimer.current = window.setTimeout(() => setReportToast(null), 5000)
       }
     : undefined
   const undoReport = () => {
-    if (reportToast && onUnreportWord) onUnreportWord(reportToast.id)
+    if (reportToast && onUnreportWord) {
+      onUnreportWord(reportToast.id)
+      setWordErrors((m) => {
+        const { [reportToast.id]: _, ...rest } = m
+        return rest
+      })
+    }
     if (toastTimer.current) window.clearTimeout(toastTimer.current)
     setReportToast(null)
   }
@@ -504,6 +521,7 @@ export default function SessionScreen(props: {
     setPicked(null)
     setRevealed(false)
     setHintWord(null)
+    setSpellHint(false)
     if (currentStep.kind === 'card') {
       ensureIntroduced(currentStep.item.wordId)
       setEx(genExercise(currentStep.item))
@@ -1407,6 +1425,34 @@ export default function SessionScreen(props: {
     </button>
   )
 
+  /** Pinned action bar for audio exercises: Play again left, Don't know right.
+   * A ❗ next to Play again marks a word with an open spelling report. */
+  const audioFooter = (wordId: string, onPlay: () => void) => {
+    const word = wordById.get(wordId)
+    return (
+      <div className="audio-footer">
+        {spellHint && <div className="spell-hint">This word might be spelled incorrectly</div>}
+        <div className="audio-footer-row">
+          <span className="audio-footer-left">
+            <SpeakBig onTap={onPlay} label="🔊 Play again" word={word} onReport={doReport} />
+            {word && showSpellingWarning(wordErrors, word.id) && (
+              <button
+                className="spell-flag"
+                title="This word might be spelled incorrectly"
+                onClick={() => { touch(); setSpellHint((s) => !s) }}
+              >
+                ❗
+              </button>
+            )}
+          </span>
+          <button className="hint-btn audio-hint" onClick={showHint} disabled={picked !== null}>
+            🛈 Don't know
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (ex.kind === 'flash') {
     const front = ex.direction === 'recognition' ? (
       <div className="prompt he">
@@ -1447,11 +1493,9 @@ export default function SessionScreen(props: {
     return (
       <>
         {header}
-        <div className="panel card">
+        <div className="panel card audio-card">
           {newChip}
-          <div style={{ margin: '18px 0' }}>
-            <SpeakBig onTap={() => { touch(); speakHebrew(ex.hebrew) }} label="🔊 Play again" word={wordById.get(ex.wordId)} onReport={doReport} />
-          </div>
+          <div className="sub" style={{ marginTop: 8 }}>Pick the word you hear</div>
           <div className="options sound-options">
             {ex.options.map((o, i) => (
               <button
@@ -1465,7 +1509,7 @@ export default function SessionScreen(props: {
             ))}
           </div>
           {picked !== null && <AnswerReveal wordId={ex.wordId} />}
-          {hintButton}
+          {audioFooter(ex.wordId, () => { touch(); speakHebrew(ex.hebrew) })}
         </div>
       </>
     )
@@ -1475,13 +1519,10 @@ export default function SessionScreen(props: {
     return (
       <>
         {header}
-        <div className="panel card">
+        <div className={`panel card ${ex.audioOnly ? 'audio-card' : ''}`}>
           {newChip}
           {ex.audioOnly ? (
-            <div style={{ margin: '18px 0' }}>
-              <SpeakBig onTap={() => { touch(); speakHebrew(wordById.get(ex.wordId)!.hebrew) }} label="🔊 Play again" word={wordById.get(ex.wordId)} onReport={doReport} />
-              <div className="sub" style={{ marginTop: 8 }}>What did you hear?</div>
-            </div>
+            <div className="sub" style={{ marginTop: 8 }}>What did you hear?</div>
           ) : (
             <>
               <div className={`prompt ${ex.direction === 'recognition' ? 'he' : 'small'}`}>
@@ -1505,7 +1546,9 @@ export default function SessionScreen(props: {
             ))}
           </div>
           {picked !== null && ex.audioOnly && <AnswerReveal wordId={ex.wordId} />}
-          {hintButton}
+          {ex.audioOnly
+            ? audioFooter(ex.wordId, () => { touch(); speakHebrew(wordById.get(ex.wordId)!.hebrew) })
+            : hintButton}
         </div>
       </>
     )

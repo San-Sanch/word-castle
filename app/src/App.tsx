@@ -208,13 +208,17 @@ export default function App() {
         )}
         <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
         <span className="stat" title="Day streak">🔥 {streak}</span>
-        <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
-          <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
-        </div>
-        <span className="goal-label">
-          Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
-          {goalPct >= 100 ? ' ✓' : ''}
-        </span>
+        {screen !== 'session' && (
+          <>
+            <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
+              <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
+            </div>
+            <span className="goal-label">
+              Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
+              {goalPct >= 100 ? ' ✓' : ''}
+            </span>
+          </>
+        )}
       </div>
 
       {screen === 'learn' && (

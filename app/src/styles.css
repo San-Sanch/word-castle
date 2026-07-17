@@ -317,6 +317,24 @@ button.primary.big { font-size: 19px; padding: 15px 34px; margin-bottom: 10px; }
   color: var(--muted); font-size: 13px; cursor: pointer; text-decoration: underline dotted;
 }
 .hint-btn:hover { color: var(--text); }
+
+/* Audio exercises: the answer list scrolls with the page while the action bar
+   (Play again / Don't know) stays pinned to the bottom of the viewport */
+.audio-card { padding-bottom: 0; }
+.audio-footer {
+  position: sticky; bottom: 0; z-index: 5;
+  background: var(--panel); margin-top: 16px; padding: 10px 0 16px;
+}
+.audio-footer-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.audio-footer-left { display: flex; align-items: center; gap: 6px; }
+.audio-footer .hint-btn { display: inline-block; margin: 0; }
+.audio-footer .hint-btn:disabled { opacity: 0.4; cursor: default; }
+.spell-flag {
+  background: none; border: none; font-size: 20px; cursor: pointer; padding: 2px 4px;
+}
+.spell-hint { color: var(--gold); font-size: 13px; margin-bottom: 8px; }
 .hint-panel { margin: 10px 0; }
 .answer-reveal {
   margin-top: 14px; padding: 10px 16px; border-radius: 10px;

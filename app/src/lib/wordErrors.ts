@@ -13,6 +13,15 @@ export function statusAfterReport(): WordErrorStatus {
   return 'error'
 }
 
+/** During exercises: warn about a possibly misspelled word only while its report
+ * is still open — a 'fixed' or absent entry shows nothing. */
+export function showSpellingWarning(
+  errors: Record<string, WordErrorStatus>,
+  wordId: string,
+): boolean {
+  return errors[wordId] === 'error'
+}
+
 /** The words currently on the error list, in the given word order, paired with
  * their status. Words missing from `errors` are excluded. */
 export function wordsWithErrors(

@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { errorIcon, statusAfterReport, wordsWithErrors } from './wordErrors.js'
+import { errorIcon, statusAfterReport, wordsWithErrors, showSpellingWarning } from './wordErrors.js'
 import type { Word } from './types.js'
 
 const w = (id: string): Word => ({
@@ -27,4 +27,12 @@ test('wordsWithErrors keeps only flagged words, in order, with status', () => {
 
 test('wordsWithErrors is empty when nothing is flagged', () => {
   assert.equal(wordsWithErrors([w('a')], {}).length, 0)
+})
+
+test('spelling warning shows only while a word is in error status', () => {
+  const errors = { a: 'error' as const, b: 'fixed' as const }
+  assert.equal(showSpellingWarning(errors, 'a'), true)
+  assert.equal(showSpellingWarning(errors, 'b'), false) // fixed → cleared
+  assert.equal(showSpellingWarning(errors, 'c'), false) // never reported
+  assert.equal(showSpellingWarning({}, 'a'), false)
 })
