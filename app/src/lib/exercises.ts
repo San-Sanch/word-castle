@@ -411,3 +411,10 @@ export function pickExerciseKind(args: {
   if (settings.blank && hasSentence && box >= 2 && roll < 0.4) return 'blank'
   return 'choice'
 }
+
+/** How long to keep the answered card on screen. Audio exercises hold 3s so the
+ * revealed word/transcription/translation can be read; others advance fast. */
+export function answerDelayMs(audio: boolean, correct: boolean): number {
+  if (audio) return 3000
+  return correct ? 650 : 1500
+}

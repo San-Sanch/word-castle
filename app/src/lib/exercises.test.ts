@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mulberry32, makeChoice, makeBlank, makeMatch, makeSentenceChoice, pickExerciseKind } from './exercises.js'
+import { mulberry32, makeChoice, makeBlank, makeMatch, makeSentenceChoice, pickExerciseKind, answerDelayMs } from './exercises.js'
 import type { Sentence, Word } from './types.js'
 
 const S = (id: string, hebrew: string, translation: string): Sentence => ({
@@ -130,4 +130,11 @@ test('pickExerciseKind: blank only when enabled, box>=2 and sentence exists', ()
   assert.equal(pickExerciseKind({ box: 3, hasSentence: true, settings, roll: 0.1 }), 'blank')
   assert.equal(pickExerciseKind({ box: 3, hasSentence: true, settings, roll: 0.9 }), 'choice')
   assert.equal(pickExerciseKind({ box: 3, hasSentence: true, settings: { choice: true, blank: false }, roll: 0.1 }), 'choice')
+})
+
+test('answerDelayMs: audio exercises hold the reveal 3s, others keep short delays', () => {
+  assert.equal(answerDelayMs(true, true), 3000)
+  assert.equal(answerDelayMs(true, false), 3000)
+  assert.equal(answerDelayMs(false, true), 650)
+  assert.equal(answerDelayMs(false, false), 1500)
 })

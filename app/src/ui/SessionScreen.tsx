@@ -14,6 +14,7 @@ import {
   mulberry32,
   shuffle,
   pickExerciseKind,
+  answerDelayMs,
   HEBREW_SCHEME,
   LATIN_SCHEME,
   type ChoiceExercise,
@@ -689,7 +690,8 @@ export default function SessionScreen(props: {
     const word = wordById.get(step.item.wordId)
     if (word && ex.kind === 'choice' && !ex.audioOnly && canSpeakHebrew()) speakHebrew(word.hebrew)
     const nextSteps = correct ? steps : requeue(step.item)
-    window.setTimeout(() => advance(nextSteps), correct ? 650 : 1500)
+    const audio = ex.kind === 'sound' || (ex.kind === 'choice' && !!ex.audioOnly)
+    window.setTimeout(() => advance(nextSteps), answerDelayMs(audio, correct))
   }
 
   const answerFlash = (knew: boolean) => {
@@ -1496,6 +1498,7 @@ export default function SessionScreen(props: {
         <div className="panel card audio-card">
           {newChip}
           <div className="sub" style={{ marginTop: 8 }}>Pick the word you hear</div>
+          {picked !== null && <AnswerReveal wordId={ex.wordId} />}
           <div className="options sound-options">
             {ex.options.map((o, i) => (
               <button
@@ -1508,7 +1511,6 @@ export default function SessionScreen(props: {
               </button>
             ))}
           </div>
-          {picked !== null && <AnswerReveal wordId={ex.wordId} />}
           {audioFooter(ex.wordId, () => { touch(); speakHebrew(ex.hebrew) })}
         </div>
       </>
@@ -1531,6 +1533,7 @@ export default function SessionScreen(props: {
               <div className="sub">{ex.direction === 'recognition' ? 'What does it mean?' : 'Pick the word'}</div>
             </>
           )}
+          {picked !== null && ex.audioOnly && <AnswerReveal wordId={ex.wordId} />}
           <div className={`options ${ex.audioOnly ? 'sound-options' : ''}`}>
             {ex.options.map((o, i) => (
               <button
@@ -1545,7 +1548,6 @@ export default function SessionScreen(props: {
               </button>
             ))}
           </div>
-          {picked !== null && ex.audioOnly && <AnswerReveal wordId={ex.wordId} />}
           {ex.audioOnly
             ? audioFooter(ex.wordId, () => { touch(); speakHebrew(wordById.get(ex.wordId)!.hebrew) })
             : hintButton}
