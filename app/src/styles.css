@@ -285,6 +285,14 @@ th { color: var(--muted); font-weight: 600; }
   background: var(--panel-2); color: var(--text); font-size: 14px;
 }
 .timer-select .timer-left { color: var(--gold); font-variant-numeric: tabular-nums; }
+.segmented { display: inline-flex; border: 1px solid #3a4666; border-radius: 10px; overflow: hidden; }
+.segmented button {
+  padding: 6px 12px; border: none; background: var(--panel-2); color: var(--muted);
+  font-size: 13px; cursor: pointer; border-left: 1px solid #3a4666;
+}
+.segmented button:first-child { border-left: none; }
+.segmented button.on { background: #2a2410; color: var(--gold); font-weight: 700; }
+.shuffle-btn { padding: 6px 12px; font-size: 13px; }
 .autolisten-card {
   margin: 6px 0 18px; padding: 22px 12px; border-radius: 14px;
   background: var(--panel-2); border: 1px solid #2a3350;

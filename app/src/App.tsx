@@ -260,6 +260,7 @@ export default function App() {
         <AutoListenScreen
           state={state}
           words={words}
+          sentences={sentences}
           today={today}
           dispatch={dispatch}
           onExit={() => setScreen('learn')}
