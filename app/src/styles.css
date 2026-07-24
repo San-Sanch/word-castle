@@ -273,6 +273,10 @@ th { color: var(--muted); font-weight: 600; }
   border: 1px solid #3a4666; background: var(--panel-2); cursor: pointer;
 }
 .bias-dot.on { background: var(--gold); border-color: var(--gold); }
+
+/* Auto listening */
+.autolisten-word { margin: 22px 0 6px; }
+.autolisten-word .big-he { font-size: 44px; margin-bottom: 8px; }
 .field input[type="number"] {
   width: 90px; padding: 8px; border-radius: 8px;
   border: 1px solid #3a4666; background: var(--panel-2); color: var(--text); font-size: 15px;

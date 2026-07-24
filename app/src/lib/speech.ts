@@ -166,6 +166,36 @@ function plainNormalize(text: string): string {
     .trim()
 }
 
+/** Speak arbitrary text in a given language (e.g. an English translation),
+ * independent of the active course language. */
+export function speakText(text: string, lang: string, onEnd?: () => void): boolean {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    onEnd?.()
+    return false
+  }
+  const utterance = new SpeechSynthesisUtterance(plainNormalize(text))
+  if (onEnd) {
+    let called = false
+    const done = () => {
+      if (!called) {
+        called = true
+        onEnd()
+      }
+    }
+    utterance.onend = done
+    utterance.onerror = done
+    window.setTimeout(done, 12000) // safety: never hang the flow
+  }
+  const p = lang.slice(0, 2).toLowerCase()
+  const voice = voices.find((v) => v.lang.toLowerCase().startsWith(p)) ?? null
+  if (voice) utterance.voice = voice
+  utterance.lang = lang
+  utterance.rate = 0.9
+  window.speechSynthesis.cancel()
+  window.speechSynthesis.speak(utterance)
+  return true
+}
+
 export function speakHebrew(text: string, onEnd?: () => void): boolean {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
     onEnd?.()

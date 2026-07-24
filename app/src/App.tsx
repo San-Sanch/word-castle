@@ -18,6 +18,7 @@ loadStressOverrides(stressJson as Record<string, string>)
 import LearnScreen from './ui/LearnScreen'
 import SessionScreen, { type SessionMode } from './ui/SessionScreen'
 import SpeedScreen from './ui/SpeedScreen'
+import AutoListenScreen from './ui/AutoListenScreen'
 import StatsScreen from './ui/StatsScreen'
 import VocabularyScreen from './ui/VocabularyScreen'
 import SettingsScreen from './ui/SettingsScreen'
@@ -64,7 +65,7 @@ const MIGRATED_KEY = 'wc-migrated-to-cloud'
 
 const cloud = makeCloudBackend()
 
-export type Screen = 'learn' | 'session' | 'speed' | 'vocabulary' | 'stats' | 'settings'
+export type Screen = 'learn' | 'session' | 'speed' | 'autolisten' | 'vocabulary' | 'stats' | 'settings'
 type Auth = 'checking' | 'out' | 'in'
 
 export default function App() {
@@ -230,6 +231,7 @@ export default function App() {
           today={today}
           onStartSession={startSession}
           onSpeedRound={() => setScreen('speed')}
+          onAutoListen={() => setScreen('autolisten')}
           onSetStudyMode={(m) => dispatch({ type: 'setSettings', settings: { ...state.settings, studyMode: m } })}
           onToggleReverse={() => dispatch({ type: 'setSettings', settings: { ...state.settings, reverse: !state.settings.reverse } })}
         />
@@ -254,6 +256,9 @@ export default function App() {
         />
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}
+      {screen === 'autolisten' && (
+        <AutoListenScreen state={state} words={words} today={today} dispatch={dispatch} onExit={() => setScreen('learn')} />
+      )}
       {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} errorsEnabled={course.id === 'hebrew'} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
       {screen === 'settings' && (

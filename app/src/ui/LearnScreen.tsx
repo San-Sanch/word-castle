@@ -108,10 +108,11 @@ export default function LearnScreen(props: {
   today: string
   onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
+  onAutoListen: () => void
   onSetStudyMode: (mode: StudyMode) => void
   onToggleReverse: () => void
 }) {
-  const { state, words, caps, today, onStartSession, onSpeedRound, onSetStudyMode, onToggleReverse } = props
+  const { state, words, caps, today, onStartSession, onSpeedRound, onAutoListen, onSetStudyMode, onToggleReverse } = props
   const modes = MODES.filter(([m]) => modeAvailable(m, caps))
   const topics = topicInfos(words, state, today)
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
@@ -166,11 +167,24 @@ export default function LearnScreen(props: {
               ? `Daily plan done (${introducedToday} new words) — keep going as long as you like`
               : 'Nothing due right now — start to pick up new words'}
         </p>
-        {canSpeed && (
-          <button className="ghost" style={{ marginTop: 10 }} onClick={onSpeedRound}>
-            ⚡ Speed round (60s)
-          </button>
-        )}
+        <div className="row-gap" style={{ justifyContent: 'center' }}>
+          {canSpeed && (
+            <button className="ghost" style={{ marginTop: 10 }} onClick={onSpeedRound}>
+              ⚡ Speed round (60s)
+            </button>
+          )}
+          {startedTotal > 0 && (
+            <button
+              className="ghost"
+              style={{ marginTop: 10 }}
+              disabled={!canSpeakHebrew()}
+              title={canSpeakHebrew() ? '' : 'Needs a system voice for this course'}
+              onClick={onAutoListen}
+            >
+              🎧 Auto listening
+            </button>
+          )}
+        </div>
       </div>
 
       <h2 className="section-title">Topics</h2>
