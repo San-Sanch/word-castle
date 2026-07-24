@@ -4,8 +4,14 @@ import type { GameAction, GameState } from '../lib/game'
 import type { Word } from '../lib/types'
 import { buildAutoPlaylist, pauseAfterMs, GAP_AFTER_PAIR_MS } from '../lib/autoListen'
 import { speakHebrew, speakText, canSpeakHebrew } from '../lib/speech'
+import { useLongPress } from './useLongPress'
+import { HoldRing } from './HoldRing'
 
 const TIMER_CHOICES = [0, 5, 10, 15, 30] // minutes, 0 = until stopped
+
+function haptic() {
+  try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
+}
 
 export default function AutoListenScreen(props: {
   state: GameState
@@ -13,8 +19,10 @@ export default function AutoListenScreen(props: {
   today: string
   dispatch: Dispatch<GameAction>
   onExit: () => void
+  /** flag the current word as mispronounced (Hebrew course only) */
+  onReportWord?: (word: Word) => void
 }) {
-  const { state, words, today, dispatch, onExit } = props
+  const { state, words, today, dispatch, onExit, onReportWord } = props
   const playlist = useMemo(() => buildAutoPlaylist(words, state.reviews), [words, state.reviews])
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
 
@@ -23,6 +31,7 @@ export default function AutoListenScreen(props: {
   const [reverse, setReverse] = useState(false)
   const [timerMin, setTimerMin] = useState(0)
   const [leftSec, setLeftSec] = useState<number | null>(null)
+  const [flagged, setFlagged] = useState<Set<string>>(new Set())
 
   const runRef = useRef(0) // bumping it cancels any in-flight speak/pause chain
   const timeoutRef = useRef<number | null>(null)
@@ -30,6 +39,8 @@ export default function AutoListenScreen(props: {
   reverseRef.current = reverse
   const idxRef = useRef(idx)
   idxRef.current = idx
+  const playingRef = useRef(playing)
+  playingRef.current = playing
 
   const clearPending = () => {
     if (timeoutRef.current !== null) {
@@ -38,10 +49,14 @@ export default function AutoListenScreen(props: {
     }
   }
 
-  const stop = () => {
+  const cancelSpeech = () => {
     runRef.current++
     clearPending()
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel()
+  }
+
+  const stop = () => {
+    cancelSpeech()
     setPlaying(false)
   }
 
@@ -49,9 +64,10 @@ export default function AutoListenScreen(props: {
     const run = ++runRef.current
     const step = (j: number) => {
       if (runRef.current !== run || playlist.length === 0) return
-      const word = wordById.get(playlist[j % playlist.length])
+      const n = ((j % playlist.length) + playlist.length) % playlist.length
+      const word = wordById.get(playlist[n])
       if (!word) return
-      setIdx(j % playlist.length)
+      setIdx(n)
       const first = (cb: () => void) =>
         reverseRef.current ? speakText(word.translation, 'en-US', cb) : speakHebrew(word.hebrew, cb)
       const second = (cb: () => void) =>
@@ -62,7 +78,7 @@ export default function AutoListenScreen(props: {
           if (runRef.current !== run) return
           second(() => {
             if (runRef.current !== run) return
-            timeoutRef.current = window.setTimeout(() => step(j + 1), GAP_AFTER_PAIR_MS)
+            timeoutRef.current = window.setTimeout(() => step(n + 1), GAP_AFTER_PAIR_MS)
           })
         }, pauseAfterMs(reverseRef.current ? word.translation : word.hebrew))
       })
@@ -75,6 +91,36 @@ export default function AutoListenScreen(props: {
     setPlaying(true)
     playFrom(idxRef.current)
   }
+
+  const toggle = () => (playingRef.current ? stop() : start())
+
+  // manual step: move the cursor; keep playing from there, or (paused) preview
+  // the term once so stepping is audible
+  const goTo = (delta: number) => {
+    if (playlist.length === 0) return
+    const n = (((idxRef.current + delta) % playlist.length) + playlist.length) % playlist.length
+    idxRef.current = n
+    setIdx(n)
+    if (playingRef.current) {
+      playFrom(n)
+    } else {
+      cancelSpeech()
+      const w = wordById.get(playlist[n])
+      if (w) reverseRef.current ? speakText(w.translation, 'en-US') : speakHebrew(w.hebrew)
+    }
+  }
+
+  const cur = playlist.length > 0 ? wordById.get(playlist[idx]) : undefined
+  const canReport = !!onReportWord
+  const flagCurrent = () => {
+    if (!cur || !onReportWord) return
+    onReportWord(cur)
+    haptic()
+    setFlagged((s) => new Set(s).add(cur.id))
+  }
+
+  // one hook for the yellow button: tap = play/pause, hold = flag for fix
+  const { pressing, ms, handlers } = useLongPress(toggle, () => canReport && flagCurrent())
 
   // countdown when a timer is chosen; hitting zero stops the loop
   useEffect(() => {
@@ -104,12 +150,11 @@ export default function AutoListenScreen(props: {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => stop(), [])
 
-  const cur = playlist.length > 0 ? wordById.get(playlist[idx]) : undefined
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 
   return (
-    <div className="panel center">
-      <h2>🎧 Auto listening</h2>
+    <div className="panel center autolisten">
+      <h2 style={{ marginTop: 0 }}>🎧 Auto listening</h2>
       {playlist.length === 0 ? (
         <>
           <p className="muted">No words in learning yet — do a session first, then come back to listen.</p>
@@ -118,48 +163,56 @@ export default function AutoListenScreen(props: {
       ) : (
         <>
           {!canSpeakHebrew() && (
-            <p className="muted">⚠️ No voice found for this course's language — install a system voice first.</p>
+            <p className="muted small">⚠️ No voice found for this course's language — install a system voice first.</p>
           )}
-          <p className="muted">
-            {reverse ? 'Translation first, then the word' : 'Word first, then the translation'} · {playlist.length}{' '}
-            words on repeat, reviews first
-          </p>
-          {cur && (
-            <div className="autolisten-word">
-              <div className="he big-he">{cur.hebrew}</div>
-              <div className="muted">{cur.translation}</div>
-            </div>
-          )}
-          <div className="row-gap" style={{ justifyContent: 'center', marginTop: 12 }}>
-            {playing ? (
-              <button className="primary big" onClick={stop}>⏸ Pause</button>
-            ) : (
-              <button className="primary big" onClick={start}>▶ {idx > 0 ? 'Resume' : 'Start'}</button>
+
+          <div className="autolisten-controls">
+            <label className="switch" title="Swap order: translation first, then the word">
+              <span className="switch-label">↔ Reverse</span>
+              <input type="checkbox" checked={reverse} onChange={() => setReverse((r) => !r)} />
+              <span className="slider" />
+            </label>
+            <label className="timer-select">
+              <span className="switch-label">⏱</span>
+              <select value={timerMin} onChange={(e) => setTimerMin(Number(e.target.value))}>
+                {TIMER_CHOICES.map((m) => (
+                  <option key={m} value={m}>{m === 0 ? '∞ no timer' : `${m} min`}</option>
+                ))}
+              </select>
+              {leftSec !== null && <b className="timer-left">{fmt(leftSec)}</b>}
+            </label>
+          </div>
+
+          <div className="autolisten-card">
+            {cur && (
+              <>
+                <div className="he big-he">
+                  {cur.hebrew}
+                  {flagged.has(cur.id) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
+                </div>
+                <div className="muted">{cur.translation}</div>
+              </>
             )}
+            <div className="autolisten-pos small">{idx + 1} / {playlist.length}</div>
+          </div>
+
+          <div className="transport" role="group" aria-label="Playback controls">
+            <button className="tbtn" title="Back 5 words" onClick={() => goTo(-5)}>−5</button>
+            <button className="tbtn" title="Previous word" onClick={() => goTo(-1)}>‹</button>
             <button
-              className={`ghost ${reverse ? 'active' : ''}`}
-              title="Swap order: translation first, then the word"
-              onClick={() => setReverse((r) => !r)}
+              className="play holdable"
+              title={canReport ? 'Tap: play / pause · Hold: flag pronunciation' : 'Play / pause'}
+              aria-label={playing ? 'Pause' : 'Play'}
+              {...handlers}
             >
-              ↔ Reverse {reverse ? 'on' : 'off'}
+              {playing ? '⏸' : '▶'}
+              {pressing && <HoldRing ms={ms} />}
             </button>
+            <button className="tbtn" title="Next word" onClick={() => goTo(1)}>›</button>
+            <button className="tbtn" title="Forward 5 words" onClick={() => goTo(5)}>+5</button>
           </div>
-          <div className="row-gap" style={{ justifyContent: 'center', marginTop: 12, alignItems: 'center' }}>
-            <span className="muted">Timer:</span>
-            {TIMER_CHOICES.map((m) => (
-              <button
-                key={m}
-                className={`chip ${timerMin === m ? 'active' : ''}`}
-                onClick={() => setTimerMin(m)}
-              >
-                {m === 0 ? '∞' : `${m}m`}
-              </button>
-            ))}
-            {leftSec !== null && <b>{fmt(leftSec)}</b>}
-          </div>
-          <button className="ghost" style={{ marginTop: 16 }} onClick={() => { stop(); onExit() }}>
-            ← Done
-          </button>
+
+          <button className="ghost done-link" onClick={() => { stop(); onExit() }}>← Done</button>
         </>
       )}
     </div>

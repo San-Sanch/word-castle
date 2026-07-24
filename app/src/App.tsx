@@ -257,7 +257,14 @@ export default function App() {
       )}
       {screen === 'speed' && <SpeedScreen state={state} words={words} onExit={() => setScreen('learn')} />}
       {screen === 'autolisten' && (
-        <AutoListenScreen state={state} words={words} today={today} dispatch={dispatch} onExit={() => setScreen('learn')} />
+        <AutoListenScreen
+          state={state}
+          words={words}
+          today={today}
+          dispatch={dispatch}
+          onExit={() => setScreen('learn')}
+          onReportWord={course.id === 'hebrew' ? (w) => { reportWordError(w).catch((e) => console.error('report failed', e)) } : undefined}
+        />
       )}
       {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} errorsEnabled={course.id === 'hebrew'} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
