@@ -2865,6 +2865,10 @@
     "wordId": "1jtubsv"
    },
    {
+    "tokenIndex": 1,
+    "wordId": "1y81dt6"
+   },
+   {
     "tokenIndex": 2,
     "wordId": "1kzk2s"
    }
@@ -3301,7 +3305,12 @@
   "id": "1ybgy3p",
   "hebrew": "מתקשר ל...",
   "translation": "calling to...",
-  "matches": [],
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "19k2c4r"
+   }
+  ],
   "tokens": [
    "מתקשר",
    "ל"
@@ -3334,6 +3343,867 @@
   "tokens": [
    "שלום",
    "תלמידים"
+  ]
+ },
+ {
+  "id": "8w6uj5",
+  "hebrew": "מי את? מי אתה?",
+  "translation": "Хто ти?",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "18tqnn9"
+   }
+  ],
+  "tokens": [
+   "מי",
+   "את",
+   "מי",
+   "אתה"
+  ]
+ },
+ {
+  "id": "sif2y9",
+  "hebrew": "מאין את? מאין אתה?",
+  "translation": "Звідки ти?",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "18kl37k"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "18kl37k"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "18tqnn9"
+   }
+  ],
+  "tokens": [
+   "מאין",
+   "את",
+   "מאין",
+   "אתה"
+  ]
+ },
+ {
+  "id": "11m7dk5",
+  "hebrew": "את תלמידה? אתה תלמיד?",
+  "translation": "Ти учениця? Ти учень?",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "pizl9k"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "18tqnn9"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "ejja5o"
+   }
+  ],
+  "tokens": [
+   "את",
+   "תלמידה",
+   "אתה",
+   "תלמיד"
+  ]
+ },
+ {
+  "id": "612mfz",
+  "hebrew": "שלשום היה יום…",
+  "translation": "позавчора був…",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "o5n4sv"
+   }
+  ],
+  "tokens": [
+   "שלשום",
+   "היה",
+   "יום…"
+  ]
+ },
+ {
+  "id": "17xrgyh",
+  "hebrew": "אני אוהב לטייל בחו״ל (בחוץ לארץ)",
+  "translation": "Я люблю подорожувати за кордоном (за межами країни).",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "19k2c4r"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "1rdbcna"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "13k2ot7"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "אוהב",
+   "לטייל",
+   "בחו",
+   "ל",
+   "בחוץ",
+   "לארץ"
+  ]
+ },
+ {
+  "id": "1ds88zu",
+  "hebrew": "בן כמה אתה? אני בן…",
+  "translation": "Скільки тобі років? (до чоловіка) Мені … років.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "4o33cr"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "18tqnn9"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "בן",
+   "כמה",
+   "אתה",
+   "אני",
+   "בן…"
+  ]
+ },
+ {
+  "id": "1q2mv5q",
+  "hebrew": "בת כמה את? אני בת…",
+  "translation": "Скільки тобі років? (до жінки) Мені … років.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "otw0pz"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "בת",
+   "כמה",
+   "את",
+   "אני",
+   "בת…"
+  ]
+ },
+ {
+  "id": "1j9lgzc",
+  "hebrew": "בני כמה אתם? אנחנו בני…",
+  "translation": "Скільки вам років? Нам … років.",
+  "matches": [
+   {
+    "tokenIndex": 2,
+    "wordId": "1izjkmw"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "imaru7"
+   }
+  ],
+  "tokens": [
+   "בני",
+   "כמה",
+   "אתם",
+   "אנחנו",
+   "בני…"
+  ]
+ },
+ {
+  "id": "nkdtwa",
+  "hebrew": "בנות כמה אתן? אנחנו בנות…",
+  "translation": "Скільки вам років? (до жінок) Нам … років.",
+  "matches": [
+   {
+    "tokenIndex": 2,
+    "wordId": "1trfu1x"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "imaru7"
+   }
+  ],
+  "tokens": [
+   "בנות",
+   "כמה",
+   "אתן",
+   "אנחנו",
+   "בנות…"
+  ]
+ },
+ {
+  "id": "6hbe42",
+  "hebrew": "אני לא מבין(ה) למה זה ככה.",
+  "translation": "Я не розумію, чому це так.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "16tulm0"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "q3se07"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "1lxh4kv"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "לא",
+   "מבין",
+   "ה",
+   "למה",
+   "זה",
+   "ככה"
+  ]
+ },
+ {
+  "id": "18imjbd",
+  "hebrew": "אני יודע(ת) שזה נכון, בסדר.",
+  "translation": "Я знаю, що це правильно, гаразд.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "2agam7"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "יודע",
+   "ת",
+   "שזה",
+   "נכון",
+   "בסדר"
+  ]
+ },
+ {
+  "id": "7ohmv7",
+  "hebrew": "נא לומר את ההפך לשם התואר: קטן, יקר, קשה",
+  "translation": "Скажіть, будь ласка, протилежне до прикметника: маленький, дорогий, важкий.",
+  "matches": [
+   {
+    "tokenIndex": 2,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "fi8ot4"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "zuotcm"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "to2q0a"
+   },
+   {
+    "tokenIndex": 8,
+    "wordId": "19pxl0g"
+   }
+  ],
+  "tokens": [
+   "נא",
+   "לומר",
+   "את",
+   "ההפך",
+   "לשם",
+   "התואר",
+   "קטן",
+   "יקר",
+   "קשה"
+  ]
+ },
+ {
+  "id": "eitqay",
+  "hebrew": "מה אתה עושה כשאחד מבני המשפחה מכעיס אותך?",
+  "translation": "Що ти робиш, коли хтось із членів родини тебе злить?",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "18tqnn9"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "zpecat"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "8yxa3o"
+   },
+   {
+    "tokenIndex": 7,
+    "wordId": "10rip3e"
+   }
+  ],
+  "tokens": [
+   "מה",
+   "אתה",
+   "עושה",
+   "כשאחד",
+   "מבני",
+   "המשפחה",
+   "מכעיס",
+   "אותך"
+  ]
+ },
+ {
+  "id": "1edtopq",
+  "hebrew": "יש מזג אוויר אביבי",
+  "translation": "Погода весняна.",
+  "matches": [
+   {
+    "tokenIndex": 2,
+    "wordId": "jx5ayu"
+   }
+  ],
+  "tokens": [
+   "יש",
+   "מזג",
+   "אוויר",
+   "אביבי"
+  ]
+ },
+ {
+  "id": "tjlv5e",
+  "hebrew": "אני שמח שיש מזג אוויר טוב",
+  "translation": "Я радий, що погода гарна",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1lo55yv"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "jx5ayu"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "שמח",
+   "שיש",
+   "מזג",
+   "אוויר",
+   "טוב"
+  ]
+ },
+ {
+  "id": "1amfyim",
+  "hebrew": "אתמול הייתה שבת.",
+  "translation": "Вчора була субота.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1nyvgy8"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "27w217"
+   }
+  ],
+  "tokens": [
+   "אתמול",
+   "הייתה",
+   "שבת"
+  ]
+ },
+ {
+  "id": "15f3dq3",
+  "hebrew": "מחר יהיה יום חמישי.",
+  "translation": "Завтра буде четвер.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "71bf4w"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "10kycvg"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "huugs4"
+   }
+  ],
+  "tokens": [
+   "מחר",
+   "יהיה",
+   "יום",
+   "חמישי"
+  ]
+ },
+ {
+  "id": "1uy3t0c",
+  "hebrew": "מחרתיים תהיה שבת.",
+  "translation": "Післязавтра буде субота.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1qxa38r"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "27w217"
+   }
+  ],
+  "tokens": [
+   "מחרתיים",
+   "תהיה",
+   "שבת"
+  ]
+ },
+ {
+  "id": "sap1gt",
+  "hebrew": "איזה יום היה שלשום?",
+  "translation": "Який день був позавчора?",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "huugs4"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "o5n4sv"
+   }
+  ],
+  "tokens": [
+   "איזה",
+   "יום",
+   "היה",
+   "שלשום"
+  ]
+ },
+ {
+  "id": "2ub8b6",
+  "hebrew": "אתם יכולים לבוא לשתות כוס מיץ ביום ראשון!",
+  "translation": "Ви можете прийти випити склянку соку в неділю!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1izjkmw"
+   },
+   {
+    "tokenIndex": 1,
+    "wordId": "1a3darx"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "1jlw3eq"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "wg1lg4"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "2myoeh"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "pbvz6a"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "huugs4"
+   },
+   {
+    "tokenIndex": 7,
+    "wordId": "ozbk1m"
+   }
+  ],
+  "tokens": [
+   "אתם",
+   "יכולים",
+   "לבוא",
+   "לשתות",
+   "כוס",
+   "מיץ",
+   "ביום",
+   "ראשון"
+  ]
+ },
+ {
+  "id": "cbwbd2",
+  "hebrew": "אתה יכול לבוא לשתות כוס תה תמיד!",
+  "translation": "Ти завжди можеш прийти випити чашку чаю!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "18tqnn9"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "1jlw3eq"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "wg1lg4"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "2myoeh"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "ou759k"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "160mw4z"
+   }
+  ],
+  "tokens": [
+   "אתה",
+   "יכול",
+   "לבוא",
+   "לשתות",
+   "כוס",
+   "תה",
+   "תמיד"
+  ]
+ },
+ {
+  "id": "v25bvz",
+  "hebrew": "את יכולה לבוא לשתות כוס קפה תמיד!",
+  "translation": "Ти завжди можеш прийти випити чашку кави!",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "1jlw3eq"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "wg1lg4"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "2myoeh"
+   },
+   {
+    "tokenIndex": 5,
+    "wordId": "g3nex3"
+   },
+   {
+    "tokenIndex": 6,
+    "wordId": "160mw4z"
+   }
+  ],
+  "tokens": [
+   "את",
+   "יכולה",
+   "לבוא",
+   "לשתות",
+   "כוס",
+   "קפה",
+   "תמיד"
+  ]
+ },
+ {
+  "id": "1537ixt",
+  "hebrew": "אתמול היה סוער.",
+  "translation": "вчора було буряно.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1nyvgy8"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "pj7jpi"
+   }
+  ],
+  "tokens": [
+   "אתמול",
+   "היה",
+   "סוער"
+  ]
+ },
+ {
+  "id": "zvzx6h",
+  "hebrew": "אין דבר",
+  "translation": "нема за що",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "fzj8la"
+   }
+  ],
+  "tokens": [
+   "אין",
+   "דבר"
+  ]
+ },
+ {
+  "id": "dz2vh5",
+  "hebrew": "אין בעד מה",
+  "translation": "нічого страшного",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "fzj8la"
+   }
+  ],
+  "tokens": [
+   "אין",
+   "בעד",
+   "מה"
+  ]
+ },
+ {
+  "id": "f9kn2p",
+  "hebrew": "כמה בני אדם יש באוהל?",
+  "translation": "Скільки людей у наметі?",
+  "matches": [],
+  "tokens": [
+   "כמה",
+   "בני",
+   "אדם",
+   "יש",
+   "באוהל"
+  ]
+ },
+ {
+  "id": "v1uff8",
+  "hebrew": "אני מוכן לספר את הטקסט.",
+  "translation": "Я готовий розповісти текст.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "1bivruk"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "fxl94c"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מוכן",
+   "לספר",
+   "את",
+   "הטקסט"
+  ]
+ },
+ {
+  "id": "1lxhj5u",
+  "hebrew": "אני עובד, אבל עכשיו יש לי פחות עבודה.",
+  "translation": "Я працюю, але зараз у мене менше роботи.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "1jl30tr"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "nzq38a"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "עובד",
+   "אבל",
+   "עכשיו",
+   "יש",
+   "לי",
+   "פחות",
+   "עבודה"
+  ]
+ },
+ {
+  "id": "8aoxdq",
+  "hebrew": "אני מרגישה טוב.",
+  "translation": "почуваюся добре",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מרגישה",
+   "טוב"
+  ]
+ },
+ {
+  "id": "1rngnrz",
+  "hebrew": "תחנת אוטובוס",
+  "translation": "автобусна зупинка",
+  "matches": [
+   {
+    "tokenIndex": 1,
+    "wordId": "dw7ecc"
+   }
+  ],
+  "tokens": [
+   "תחנת",
+   "אוטובוס"
+  ]
+ },
+ {
+  "id": "1s4rx9g",
+  "hebrew": "תחנה מרכזית",
+  "translation": "центральна автостанція",
+  "matches": [],
+  "tokens": [
+   "תחנה",
+   "מרכזית"
+  ]
+ },
+ {
+  "id": "1s7wmgo",
+  "hebrew": "אני פוגש את החברים, את השותפים.",
+  "translation": "Я зустрічаю друзів, партнерів.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "fxl94c"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "fxl94c"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "פוגש",
+   "את",
+   "החברים",
+   "את",
+   "השותפים"
+  ]
+ },
+ {
+  "id": "19zm8v3",
+  "hebrew": "אל אימי ואל אחותי",
+  "translation": "До мами і до моєї сестри",
+  "matches": [
+   {
+    "tokenIndex": 3,
+    "wordId": "hzkqfg"
+   }
+  ],
+  "tokens": [
+   "אל",
+   "אימי",
+   "ואל",
+   "אחותי"
+  ]
+ },
+ {
+  "id": "1ly1r3j",
+  "hebrew": "אני אוהב לשבת ולקרוא.",
+  "translation": "Я люблю сидіти й читати.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 2,
+    "wordId": "10xzs0e"
+   },
+   {
+    "tokenIndex": 3,
+    "wordId": "dwvzvu"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "אוהב",
+   "לשבת",
+   "ולקרוא"
+  ]
+ },
+ {
+  "id": "1niy98a",
+  "hebrew": "אני מאחלת לכם ימי קיץ נעימים ושקטים",
+  "translation": "Бажаю вам приємних і спокійних літніх днів.",
+  "matches": [
+   {
+    "tokenIndex": 0,
+    "wordId": "1jtubsv"
+   },
+   {
+    "tokenIndex": 4,
+    "wordId": "1xfmfp3"
+   }
+  ],
+  "tokens": [
+   "אני",
+   "מאחלת",
+   "לכם",
+   "ימי",
+   "קיץ",
+   "נעימים",
+   "ושקטים"
   ]
  }
 ]
