@@ -1,5 +1,6 @@
 import type { GameState } from './game.js'
 import { initialGameState, newPlayerState } from './game.js'
+import { isGraduated } from './srs.js'
 
 const DB_NAME = 'word-castle'
 const STORE = 'state'
@@ -17,6 +18,15 @@ export function deserializeState(json: string): GameState {
     if (raw[k] === undefined) throw new Error(`Corrupt save: missing ${k}`)
   }
   const defaults = initialGameState()
+  // graduation thresholds may have been lowered since the save was written:
+  // credit every review state that already clears the current bar
+  const savedGraduated = raw.graduatedIds ?? []
+  const graduatedIds = [
+    ...savedGraduated,
+    ...(raw.reviews ?? [])
+      .filter((r) => isGraduated(r) && !savedGraduated.includes(r.wordId))
+      .map((r) => r.wordId),
+  ]
   return {
     ...defaults,
     ...raw,
@@ -29,7 +39,7 @@ export function deserializeState(json: string): GameState {
     },
     // an empty realm has no vision and no build anchor; grant the starting plot
     castle: raw.castle && raw.castle.length > 0 ? raw.castle : newPlayerState().castle,
-    graduatedIds: raw.graduatedIds ?? [],
+    graduatedIds,
     guardian: raw.guardian ?? null,
     attacks: raw.attacks ?? [],
     lastRaidCheck: raw.lastRaidCheck ?? null,

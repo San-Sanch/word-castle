@@ -38,18 +38,36 @@ test('applyAnswer: mistake drops two boxes, re-queues today', () => {
   assert.equal(s1.streak, 0)
 })
 
-test('recall activates when recognition reaches box 3', () => {
-  const rec = { ...newReviewState('w1', 'recognition', '2026-07-01'), box: 3 }
+test('recall activates when recognition reaches box 2', () => {
+  const rec = { ...newReviewState('w1', 'recognition', '2026-07-01'), box: 2 }
   assert.equal(shouldActivateRecall(rec, false), true)
   assert.equal(shouldActivateRecall(rec, true), false) // already exists
-  assert.equal(shouldActivateRecall({ ...rec, box: 2 }, false), false)
+  assert.equal(shouldActivateRecall({ ...rec, box: 1 }, false), false)
 })
 
-test('graduation: recall box >= 4', () => {
-  const rc = { ...newReviewState('w1', 'recall', '2026-07-01'), box: 4 }
+test('graduation: recall box >= 3', () => {
+  const rc = { ...newReviewState('w1', 'recall', '2026-07-01'), box: 3 }
   assert.equal(isGraduated(rc), true)
-  assert.equal(isGraduated({ ...rc, box: 3 }), false)
+  assert.equal(isGraduated({ ...rc, box: 2 }), false)
   assert.equal(isGraduated({ ...rc, direction: 'recognition' as const, box: 7 }), false)
+})
+
+test('buildSessionPlan: due recall cards outrank a recognition backlog', () => {
+  // a big overdue recognition backlog must not crowd recall cards out of the session
+  const words = [W('a'), W('b'), W('c'), W('d')]
+  const states: ReviewState[] = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('b', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('c', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('d', 'recall', '2026-06-20'), dueAt: '2026-07-03', box: 2 },
+  ]
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 2, newWordsPerDay: 0 },
+    introducedToday: 0,
+  })
+  assert.equal(plan.dueStates[0].direction, 'recall')
+  assert.equal(plan.dueStates.length, 2)
 })
 
 test('buildSessionPlan: due first (oldest), then new words up to daily limit', () => {

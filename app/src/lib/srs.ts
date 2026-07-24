@@ -5,9 +5,9 @@ export const INTERVALS_DAYS = [0, 1, 2, 4, 8, 16, 32, 64]
 export const MAX_BOX = INTERVALS_DAYS.length - 1
 
 /** Recognition box at which the recall direction unlocks. */
-export const RECALL_UNLOCK_BOX = 3
+export const RECALL_UNLOCK_BOX = 2
 /** Recall box at which a word graduates (pays bonus, becomes a brick). */
-export const GRADUATION_BOX = 4
+export const GRADUATION_BOX = 3
 
 export function newReviewState(wordId: string, direction: Direction, today: string): ReviewState {
   return { wordId, direction, box: 0, dueAt: today, lapses: 0, streak: 0, introducedAt: today }
@@ -53,9 +53,14 @@ export function buildSessionPlan(args: {
 }): SessionPlan {
   const { words, states, today, settings, introducedToday, topic, ignoreNewLimit } = args
   const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
+  // recall cards are the last step to mastery and are few — never let a large
+  // overdue recognition backlog crowd them out of the session
   const due = states
     .filter((s) => s.dueAt <= today && (!inTopic || inTopic.has(s.wordId)))
-    .sort((a, b) => (a.dueAt === b.dueAt ? a.box - b.box : a.dueAt < b.dueAt ? -1 : 1))
+    .sort((a, b) => {
+      if (a.direction !== b.direction) return a.direction === 'recall' ? -1 : 1
+      return a.dueAt === b.dueAt ? a.box - b.box : a.dueAt < b.dueAt ? -1 : 1
+    })
     .slice(0, settings.sessionSize)
 
   const known = new Set(states.map((s) => s.wordId))
