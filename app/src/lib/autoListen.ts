@@ -35,20 +35,36 @@ export function buildAutoPlaylist(opts: {
   /** limit to one topic (null = all topics) */
   category?: string | null
   categoryBias?: Record<string, number>
+  /** true = random order; false (default) = reviews-first, then new words in order */
+  shuffle?: boolean
   rng?: () => number
 }): AutoItem[] {
   const {
     words, reviews, sentences = [], content = 'words',
-    category = null, categoryBias = {}, rng = Math.random,
+    category = null, categoryBias = {}, shuffle: doShuffle = false, rng = Math.random,
   } = opts
   const inCat = (c: string) => category == null || c === category
 
   const wordItems: AutoItem[] = []
   if (content !== 'sentences') {
     const known = new Set(reviews.map((r) => r.wordId))
-    const learning = words.filter((w) => known.has(w.id) && inCat(w.category))
+    let learning = words.filter((w) => known.has(w.id) && inCat(w.category))
+    // ordered mode: most-overdue reviews first
+    if (!doShuffle) {
+      const due = new Map<string, string>()
+      for (const r of reviews) {
+        if (!known.has(r.wordId)) continue
+        const cur = due.get(r.wordId)
+        if (!cur || r.dueAt < cur) due.set(r.wordId, r.dueAt)
+      }
+      learning = [...learning].sort((a, b) => {
+        const da = due.get(a.id) ?? '', db = due.get(b.id) ?? ''
+        return da < db ? -1 : da > db ? 1 : 0
+      })
+    }
 
-    // new (unheard) words, sampled per topic by that topic's bias
+    // new (unheard) words: how many per topic follows that topic's bias; which
+    // ones is random when shuffling, else the first in dataset order
     const newByCat = new Map<string, Word[]>()
     for (const w of words) {
       if (known.has(w.id) || !inCat(w.category)) continue
@@ -61,7 +77,7 @@ export function buildAutoPlaylist(opts: {
     for (const [cat, pool] of newByCat) {
       const bias = categoryBias[cat] ?? NEUTRAL_BIAS
       const take = Math.round((pool.length * (MAX_BIAS - bias)) / MAX_BIAS)
-      picked.push(...shuffle(pool, rng).slice(0, take))
+      picked.push(...(doShuffle ? shuffle(pool, rng) : pool).slice(0, take))
     }
     for (const w of [...learning, ...picked]) {
       wordItems.push({ key: 'w:' + w.id, hebrew: w.hebrew, translation: w.translation, wordId: w.id })
@@ -76,5 +92,6 @@ export function buildAutoPlaylist(opts: {
       .map((s) => ({ key: 's:' + s.id, hebrew: s.hebrew, translation: s.translation }))
   }
 
-  return shuffle([...wordItems, ...sentItems], rng)
+  const all = [...wordItems, ...sentItems]
+  return doShuffle ? shuffle(all, rng) : all
 }

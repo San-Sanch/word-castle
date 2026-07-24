@@ -46,7 +46,7 @@ export interface Course {
 }
 
 export const COURSES: Course[] = [
-  { id: 'hebrew', label: 'Hebrew → Українська', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true, commaMeanings: false },
+  { id: 'hebrew', label: 'Hebrew → English', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true, commaMeanings: false },
   { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', rtl: false, stories: false, commaMeanings: true },
   { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', rtl: false, stories: false, commaMeanings: true },
 ]

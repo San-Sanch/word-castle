@@ -68,11 +68,21 @@ test('category filter restricts words, and sentences via their matched words', (
 test('same seed is deterministic; the list is actually shuffled', () => {
   const words = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => W(id))
   const reviews = words.map((w) => newReviewState(w.id, 'recognition', '2026-07-01'))
-  const a = buildAutoPlaylist({ words, reviews, content: 'words', rng: mulberry32(7) })
-  const b = buildAutoPlaylist({ words, reviews, content: 'words', rng: mulberry32(7) })
+  const a = buildAutoPlaylist({ words, reviews, content: 'words', shuffle: true, rng: mulberry32(7) })
+  const b = buildAutoPlaylist({ words, reviews, content: 'words', shuffle: true, rng: mulberry32(7) })
   assert.deepEqual(a.map((i) => i.key), b.map((i) => i.key)) // reproducible
   const inputOrder = words.map((w) => 'w:' + w.id).join(',')
   assert.notEqual(a.map((i) => i.key).join(','), inputOrder) // not just source order
+})
+
+test('ordered (default): most-overdue reviews first, then new words in dataset order', () => {
+  const words = [W('a'), W('b'), W('n1'), W('n2')]
+  const reviews: ReviewState[] = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-05' },
+    { ...newReviewState('b', 'recognition', '2026-06-01'), dueAt: '2026-07-02' }, // more overdue
+  ]
+  const out = buildAutoPlaylist({ words, reviews, content: 'words', categoryBias: { Family: 0 } })
+  assert.deepEqual(out.map((i) => i.key), ['w:b', 'w:a', 'w:n1', 'w:n2'])
 })
 
 test('pause scales up for longer phrases and sentences', () => {

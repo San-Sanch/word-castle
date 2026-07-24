@@ -275,44 +275,63 @@ th { color: var(--muted); font-weight: 600; }
 .bias-dot.on { background: var(--gold); border-color: var(--gold); }
 
 /* Auto listening */
-.autolisten-controls {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin: 4px 0 14px; flex-wrap: wrap;
-}
-.timer-select { display: inline-flex; align-items: center; gap: 8px; }
-.timer-select select {
-  padding: 6px 10px; border-radius: 8px; border: 1px solid #3a4666;
-  background: var(--panel-2); color: var(--text); font-size: 14px;
-}
-.timer-select .timer-left { color: var(--gold); font-variant-numeric: tabular-nums; }
-.segmented { display: inline-flex; border: 1px solid #3a4666; border-radius: 10px; overflow: hidden; }
-.segmented button {
-  padding: 6px 12px; border: none; background: var(--panel-2); color: var(--muted);
-  font-size: 13px; cursor: pointer; border-left: 1px solid #3a4666;
-}
-.segmented button:first-child { border-left: none; }
-.segmented button.on { background: #2a2410; color: var(--gold); font-weight: 700; }
-.shuffle-btn { padding: 6px 12px; font-size: 13px; }
+.autolisten { max-width: 520px; margin: 0 auto; }
 .autolisten-card {
-  margin: 6px 0 18px; padding: 22px 12px; border-radius: 14px;
-  background: var(--panel-2); border: 1px solid #2a3350;
+  margin: 8px auto 20px; padding: 28px 16px; border-radius: 16px;
+  background: var(--panel-2); border: 1px solid #2a3350; overflow: hidden;
 }
-.autolisten-card .big-he { font-size: 42px; line-height: 1.2; margin-bottom: 6px; }
+.autolisten-card .big-he {
+  font-size: clamp(24px, 7vw, 40px); line-height: 1.35; margin-bottom: 8px;
+  overflow-wrap: anywhere; word-break: break-word; max-width: 100%;
+}
+.autolisten-card .muted { overflow-wrap: anywhere; }
 .autolisten-card .flag-badge { font-size: 22px; }
-.autolisten-pos { color: var(--muted); margin-top: 10px; }
-.transport { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.autolisten-pos { color: var(--muted); margin-top: 12px; letter-spacing: 0.04em; }
+
+.transport { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .transport .tbtn {
-  min-width: 46px; height: 46px; padding: 0 10px; border-radius: 12px;
+  width: 54px; height: 50px; border-radius: 14px;
   border: 1px solid #3a4666; background: var(--panel-2); color: var(--text);
-  font-size: 20px; font-weight: 700; cursor: pointer;
+  font-size: 19px; font-weight: 700; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
 }
 .transport .tbtn:active { background: #2a3350; }
 .transport .play {
-  position: relative; width: 66px; height: 66px; border-radius: 50%;
+  position: relative; width: 68px; height: 68px; border-radius: 50%;
   border: none; background: var(--gold); color: #1a1408;
   font-size: 26px; cursor: pointer; touch-action: none;
   display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(212, 168, 67, 0.35);
+  /* keep long-press reliable on mobile: no text callout / selection */
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
 }
+
+/* settings tray — symmetric two-column rows */
+.al-settings {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 24px auto 0; padding: 14px; max-width: 520px;
+  border: 1px solid #2a3350; border-radius: 16px; background: rgba(255, 255, 255, 0.015);
+}
+.al-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.segmented.full { display: flex; width: 100%; border: 1px solid #3a4666; border-radius: 12px; overflow: hidden; }
+.segmented.full button {
+  flex: 1; padding: 11px 0; border: none; border-left: 1px solid #3a4666;
+  background: var(--panel-2); color: var(--muted); font-size: 14px; cursor: pointer;
+}
+.segmented.full button:first-child { border-left: none; }
+.segmented.full button.on { background: #2a2410; color: var(--gold); font-weight: 700; }
+.al-field {
+  display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 12px;
+  border: 1px solid #3a4666; border-radius: 12px; background: var(--panel-2); cursor: pointer;
+}
+.al-ico { font-size: 15px; opacity: 0.9; flex-shrink: 0; }
+.al-field select { flex: 1; min-width: 0; background: transparent; border: none; color: var(--text); font-size: 14px; cursor: pointer; }
+.al-field .timer-left { color: var(--gold); font-variant-numeric: tabular-nums; font-size: 13px; flex-shrink: 0; }
+.al-settings .al-switch {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  height: 46px; padding: 0 14px; border: 1px solid #3a4666; border-radius: 12px; background: var(--panel-2);
+}
+.al-settings .al-switch .switch-label { font-size: 14px; color: var(--text); }
 .done-link { margin-top: 18px; }
 .field input[type="number"] {
   width: 90px; padding: 8px; border-radius: 8px;

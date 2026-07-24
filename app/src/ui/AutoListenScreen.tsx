@@ -4,6 +4,7 @@ import type { GameAction, GameState } from '../lib/game'
 import type { Sentence, Word } from '../lib/types'
 import { buildAutoPlaylist, pauseAfterMs, GAP_AFTER_PAIR_MS, type ListenContent } from '../lib/autoListen'
 import { speakHebrew, speakText, canSpeakHebrew } from '../lib/speech'
+import { fetchWordErrors } from '../lib/wixClient'
 import { useLongPress } from './useLongPress'
 import { HoldRing } from './HoldRing'
 
@@ -39,16 +40,17 @@ export default function AutoListenScreen(props: {
 
   const [content, setContent] = useState<ListenContent>('words')
   const [category, setCategory] = useState<string | null>(null)
-  const [reshuffle, setReshuffle] = useState(0)
+  const [shuffled, setShuffled] = useState(false)
+  const [shuffleNonce, setShuffleNonce] = useState(0)
 
-  // fresh random order on entry and whenever the filters (or reviews) change
+  // ordered by default (reviews first); a fresh random order only when shuffled
   const playlist = useMemo(
     () => buildAutoPlaylist({
       words, reviews: state.reviews, sentences, content, category,
-      categoryBias: state.settings.categoryBias, rng: Math.random,
+      categoryBias: state.settings.categoryBias, shuffle: shuffled, rng: Math.random,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [words, sentences, state.reviews, content, category, state.settings.categoryBias, reshuffle],
+    [words, sentences, state.reviews, content, category, state.settings.categoryBias, shuffled, shuffleNonce],
   )
 
   const [idx, setIdx] = useState(0)
@@ -56,7 +58,15 @@ export default function AutoListenScreen(props: {
   const [reverse, setReverse] = useState(false)
   const [timerMin, setTimerMin] = useState(0)
   const [leftSec, setLeftSec] = useState<number | null>(null)
-  const [flagged, setFlagged] = useState<Set<string>>(new Set())
+  // wordIds already reported (from the cloud) plus ones flagged this session
+  const [flaggedIds, setFlaggedIds] = useState<Set<string>>(new Set())
+  useEffect(() => {
+    if (!onReportWord) return
+    fetchWordErrors()
+      .then((m) => setFlaggedIds(new Set(Object.keys(m).filter((id) => m[id] === 'error'))))
+      .catch(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const runRef = useRef(0) // bumping it cancels any in-flight speak/pause chain
   const timeoutRef = useRef<number | null>(null)
@@ -70,20 +80,14 @@ export default function AutoListenScreen(props: {
   playlistRef.current = playlist
 
   const clearPending = () => {
-    if (timeoutRef.current !== null) {
-      window.clearTimeout(timeoutRef.current)
-      timeoutRef.current = null
-    }
+    if (timeoutRef.current !== null) { window.clearTimeout(timeoutRef.current); timeoutRef.current = null }
   }
   const cancelSpeech = () => {
     runRef.current++
     clearPending()
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel()
   }
-  const stop = () => {
-    cancelSpeech()
-    setPlaying(false)
-  }
+  const stop = () => { cancelSpeech(); setPlaying(false) }
 
   const playFrom = (start: number) => {
     const list = playlistRef.current
@@ -118,7 +122,6 @@ export default function AutoListenScreen(props: {
   }
   const toggle = () => (playingRef.current ? stop() : start())
 
-  // manual step: move the cursor; keep playing from there, or (paused) preview
   const goTo = (delta: number) => {
     const list = playlistRef.current
     if (list.length === 0) return
@@ -134,14 +137,16 @@ export default function AutoListenScreen(props: {
     }
   }
 
-  // changing filters rebuilds the list — restart cleanly from the top
+  const toggleShuffle = () => setShuffled((s) => { if (!s) setShuffleNonce((n) => n + 1); return !s })
+
+  // changing filters / order rebuilds the list — restart cleanly from the top
   useEffect(() => {
     cancelSpeech()
     setPlaying(false)
     setIdx(0)
     idxRef.current = 0
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content, category, reshuffle])
+  }, [content, category, shuffled, shuffleNonce])
 
   const cur = playlist.length > 0 ? playlist[Math.min(idx, playlist.length - 1)] : undefined
   const canReport = !!onReportWord
@@ -149,13 +154,11 @@ export default function AutoListenScreen(props: {
     if (!cur?.wordId || !onReportWord) return
     const w = wordById.get(cur.wordId)
     if (!w) return
-    onReportWord(w)
-    haptic()
-    setFlagged((s) => new Set(s).add(cur.key))
+    onReportWord(w); haptic()
+    setFlaggedIds((s) => new Set(s).add(cur.wordId!))
   }
   const { pressing, ms, handlers } = useLongPress(toggle, () => canReport && flagCurrent())
 
-  // countdown when a timer is chosen; hitting zero stops the loop
   useEffect(() => {
     if (!playing || timerMin === 0) { setLeftSec(null); return }
     const endAt = Date.now() + timerMin * 60_000
@@ -169,14 +172,12 @@ export default function AutoListenScreen(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing, timerMin])
 
-  // passive listening still counts toward the daily active-minutes goal
   useEffect(() => {
     if (!playing) return
     const iv = window.setInterval(() => dispatch({ type: 'activeTime', seconds: 30, today }), 30_000)
     return () => window.clearInterval(iv)
   }, [playing, today, dispatch])
 
-  // never keep speaking after leaving the screen
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => stop(), [])
 
@@ -190,54 +191,8 @@ export default function AutoListenScreen(props: {
         <p className="muted small">⚠️ No voice found for this course's language — install a system voice first.</p>
       )}
 
-      <div className="autolisten-controls">
-        <label className="switch" title="Swap order: translation first, then the word">
-          <span className="switch-label">↔ Reverse</span>
-          <input type="checkbox" checked={reverse} onChange={() => setReverse((r) => !r)} />
-          <span className="slider" />
-        </label>
-        <label className="timer-select">
-          <span className="switch-label">⏱</span>
-          <select value={timerMin} onChange={(e) => setTimerMin(Number(e.target.value))}>
-            {TIMER_CHOICES.map((m) => (
-              <option key={m} value={m}>{m === 0 ? '∞ no timer' : `${m} min`}</option>
-            ))}
-          </select>
-          {leftSec !== null && <b className="timer-left">{fmt(leftSec)}</b>}
-        </label>
-      </div>
-
-      <div className="autolisten-controls">
-        <label className="timer-select" title="Which topic to listen to">
-          <span className="switch-label">📂</span>
-          <select value={category ?? ''} onChange={(e) => setCategory(e.target.value || null)}>
-            <option value="">All topics</option>
-            {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
-        {hasSentences && (
-          <div className="segmented" role="group" aria-label="What to play">
-            {CONTENT_OPTS.map(([val, label]) => (
-              <button
-                key={val}
-                className={content === val ? 'on' : ''}
-                onClick={() => setContent(val)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="autolisten-controls">
-        <button className="ghost shuffle-btn" title="Shuffle a new random order" onClick={() => setReshuffle((n) => n + 1)}>
-          🔀 Shuffle order
-        </button>
-      </div>
-
       {playlist.length === 0 ? (
-        <p className="muted" style={{ marginTop: 18 }}>
+        <p className="muted" style={{ margin: '24px 0' }}>
           Nothing to play with these filters — try “All topics” or start a session to add words.
         </p>
       ) : (
@@ -247,7 +202,7 @@ export default function AutoListenScreen(props: {
               <>
                 <div className="he big-he">
                   {cur.hebrew}
-                  {flagged.has(cur.key) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
+                  {cur.wordId && flaggedIds.has(cur.wordId) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
                 </div>
                 <div className="muted">{cur.translation}</div>
               </>
@@ -272,6 +227,44 @@ export default function AutoListenScreen(props: {
           </div>
         </>
       )}
+
+      <div className="al-settings">
+        {hasSentences && (
+          <div className="segmented full" role="group" aria-label="What to play">
+            {CONTENT_OPTS.map(([val, label]) => (
+              <button key={val} className={content === val ? 'on' : ''} onClick={() => setContent(val)}>{label}</button>
+            ))}
+          </div>
+        )}
+        <div className="al-grid">
+          <label className="al-field" title="Which topic to listen to">
+            <span className="al-ico">📂</span>
+            <select value={category ?? ''} onChange={(e) => setCategory(e.target.value || null)}>
+              <option value="">All topics</option>
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+          <label className="al-field" title="Auto-stop timer">
+            <span className="al-ico">⏱</span>
+            <select value={timerMin} onChange={(e) => setTimerMin(Number(e.target.value))}>
+              {TIMER_CHOICES.map((m) => <option key={m} value={m}>{m === 0 ? 'No timer' : `${m} min`}</option>)}
+            </select>
+            {leftSec !== null && <b className="timer-left">{fmt(leftSec)}</b>}
+          </label>
+        </div>
+        <div className="al-grid">
+          <label className="switch al-switch" title="Swap order: translation first">
+            <span className="switch-label">↔ Reverse</span>
+            <input type="checkbox" checked={reverse} onChange={() => setReverse((r) => !r)} />
+            <span className="slider" />
+          </label>
+          <label className="switch al-switch" title="Off: reviews first, in order · On: random order">
+            <span className="switch-label">🔀 Shuffle</span>
+            <input type="checkbox" checked={shuffled} onChange={toggleShuffle} />
+            <span className="slider" />
+          </label>
+        </div>
+      </div>
 
       <button className="ghost done-link" onClick={() => { stop(); onExit() }}>← Done</button>
     </div>
