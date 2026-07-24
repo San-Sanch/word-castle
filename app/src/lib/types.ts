@@ -110,6 +110,8 @@ export interface Settings {
   studyMode: StudyMode
   /** swap directions everywhere: prompts in English, answers in Hebrew */
   reverse: boolean
+  /** per-category new-word appetite: 0 = most new words … 2 = neutral … 4 = repeat only */
+  categoryBias: Record<string, number>
   exercises: {
     choice: boolean
     blank: boolean
@@ -127,6 +129,7 @@ export const DEFAULT_SETTINGS: Settings = {
   attackChancePct: 15,
   studyMode: 'mixed',
   reverse: false,
+  categoryBias: {},
   exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 

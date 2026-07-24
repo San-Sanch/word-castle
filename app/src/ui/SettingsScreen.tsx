@@ -1,19 +1,34 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import type { Dispatch } from 'react'
 import type { GameState, GameAction } from '../lib/game'
+import type { Word } from '../lib/types'
+import { NEUTRAL_BIAS } from '../lib/srs'
 import { serializeState, deserializeState } from '../lib/storage'
 import { canSpeakHebrew } from '../lib/speech'
 
 export default function SettingsScreen(props: {
   state: GameState
   dispatch: Dispatch<GameAction>
+  words: Word[]
   loggedIn: boolean
   onLogin: () => void
   onLogout: () => void
 }) {
-  const { state, dispatch, loggedIn, onLogin, onLogout } = props
+  const { state, dispatch, words, loggedIn, onLogin, onLogout } = props
   const s = state.settings
   const fileRef = useRef<HTMLInputElement>(null)
+
+  const categories = useMemo(() => {
+    const seen: string[] = []
+    for (const w of words) if (!seen.includes(w.category)) seen.push(w.category)
+    return seen
+  }, [words])
+
+  const setBias = (category: string, value: number) =>
+    dispatch({
+      type: 'setSettings',
+      settings: { ...s, categoryBias: { ...s.categoryBias, [category]: value } },
+    })
 
   const setNum = (key: 'newWordsPerDay' | 'dailyGoalMinutes' | 'sessionSize') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,6 +107,38 @@ export default function SettingsScreen(props: {
           <label>Answer options per question (3–12)</label>
           <input type="number" min={3} max={12} value={s.optionCount} onChange={setOptionCount} />
         </div>
+      </div>
+
+      <div className="panel">
+        <h2>📚 Topics: new vs repeat</h2>
+        <p className="muted">
+          Per topic, how eagerly new words are introduced: far left = lots of new words first,
+          far right = no new words, only repeat what you already started.
+        </p>
+        <div className="bias-header">
+          <span>More new words</span>
+          <span>More repetition</span>
+        </div>
+        {categories.map((cat) => {
+          const val = s.categoryBias[cat] ?? NEUTRAL_BIAS
+          return (
+            <div className="field bias-row" key={cat}>
+              <label>{cat}</label>
+              <div className="bias-dots" role="radiogroup" aria-label={`${cat}: new vs repeated words`}>
+                {[0, 1, 2, 3, 4].map((v) => (
+                  <button
+                    key={v}
+                    role="radio"
+                    aria-checked={val === v}
+                    className={`bias-dot ${val === v ? 'on' : ''}`}
+                    title={['Max new', 'More new', 'Neutral', 'Fewer new', 'No new words'][v]}
+                    onClick={() => setBias(cat, v)}
+                  />
+                ))}
+              </div>
+            </div>
+          )
+        })}
       </div>
 
       <div className="panel">

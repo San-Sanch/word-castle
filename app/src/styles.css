@@ -261,6 +261,18 @@ th { color: var(--muted); font-weight: 600; }
 
 /* Settings */
 .field { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.bias-header { display: flex; justify-content: flex-end; gap: 0; margin-bottom: 6px; }
+.bias-header span { font-size: 11px; color: var(--muted); width: 132px; }
+.bias-header span:first-child { text-align: left; }
+.bias-header span:last-child { text-align: right; width: auto; }
+.bias-row { margin-bottom: 8px; }
+.bias-row label { font-size: 14px; }
+.bias-dots { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.bias-dot {
+  width: 20px; height: 20px; border-radius: 50%; padding: 0;
+  border: 1px solid #3a4666; background: var(--panel-2); cursor: pointer;
+}
+.bias-dot.on { background: var(--gold); border-color: var(--gold); }
 .field input[type="number"] {
   width: 90px; padding: 8px; border-radius: 8px;
   border: 1px solid #3a4666; background: var(--panel-2); color: var(--text); font-size: 15px;

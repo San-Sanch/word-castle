@@ -9,6 +9,10 @@ export const RECALL_UNLOCK_BOX = 2
 /** Recall box at which a word graduates (pays bonus, becomes a brick). */
 export const GRADUATION_BOX = 3
 
+/** categoryBias scale: 0 = most new words … 4 = none (repeat only). */
+export const NEUTRAL_BIAS = 2
+export const MAX_BIAS = 4
+
 export function newReviewState(wordId: string, direction: Direction, today: string): ReviewState {
   return { wordId, direction, box: 0, dueAt: today, lapses: 0, streak: 0, introducedAt: today }
 }
@@ -44,7 +48,7 @@ export function buildSessionPlan(args: {
   words: Word[]
   states: ReviewState[]
   today: string
-  settings: { sessionSize: number; newWordsPerDay: number }
+  settings: { sessionSize: number; newWordsPerDay: number; categoryBias?: Record<string, number> }
   introducedToday: number
   /** limit the session to one word category */
   topic?: string | null
@@ -66,8 +70,12 @@ export function buildSessionPlan(args: {
   const known = new Set(states.map((s) => s.wordId))
   const room = Math.max(0, settings.sessionSize - due.length)
   const newAllowance = ignoreNewLimit ? Infinity : Math.max(0, settings.newWordsPerDay - introducedToday)
+  // per-category bias: 0 = introduce new words from here first … 2 = neutral …
+  // 4 = don't introduce new words at all (only repeat what's already learning)
+  const bias = (w: Word) => settings.categoryBias?.[w.category] ?? NEUTRAL_BIAS
   const newWordIds = words
-    .filter((w) => !known.has(w.id) && (!inTopic || inTopic.has(w.id)))
+    .filter((w) => !known.has(w.id) && (!inTopic || inTopic.has(w.id)) && bias(w) < MAX_BIAS)
+    .sort((a, b) => bias(a) - bias(b)) // stable: dataset order within the same bias
     .slice(0, Math.min(room, newAllowance))
     .map((w) => w.id)
 

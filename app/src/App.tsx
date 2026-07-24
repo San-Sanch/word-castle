@@ -257,7 +257,7 @@ export default function App() {
       {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} errorsEnabled={course.id === 'hebrew'} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
       {screen === 'settings' && (
-        <SettingsScreen state={state} dispatch={dispatch} loggedIn={auth === 'in'} onLogin={startLogin} onLogout={logout} />
+        <SettingsScreen state={state} dispatch={dispatch} words={words} loggedIn={auth === 'in'} onLogin={startLogin} onLogout={logout} />
       )}
 
       {screen !== 'session' && screen !== 'speed' && (

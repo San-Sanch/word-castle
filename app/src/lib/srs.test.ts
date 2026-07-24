@@ -125,6 +125,27 @@ test('buildSessionPlan: ignoreNewLimit keeps serving new words past the daily ca
   assert.deepEqual(plan.newWordIds, ['a', 'b', 'c']) // sessionSize still caps it
 })
 
+test('buildSessionPlan: categoryBias orders and gates new words', () => {
+  // bias 0 = strongly prefer new words from the category, 4 = introduce none
+  const words = [W('a', 'Easy'), W('b', 'Easy'), W('c', 'Hard'), W('d', 'Frozen')]
+  const plan = buildSessionPlan({
+    words, states: [], today: '2026-07-04',
+    settings: { sessionSize: 25, newWordsPerDay: 10, categoryBias: { Hard: 0, Frozen: 4 } },
+    introducedToday: 0,
+  })
+  assert.deepEqual(plan.newWordIds, ['c', 'a', 'b']) // Hard first, Frozen never
+})
+
+test('buildSessionPlan: default bias keeps dataset order', () => {
+  const words = [W('a', 'Easy'), W('b', 'Hard')]
+  const plan = buildSessionPlan({
+    words, states: [], today: '2026-07-04',
+    settings: { sessionSize: 25, newWordsPerDay: 10, categoryBias: {} },
+    introducedToday: 0,
+  })
+  assert.deepEqual(plan.newWordIds, ['a', 'b'])
+})
+
 test('buildSessionPlan: respects sessionSize and introducedToday', () => {
   const words = [W('a'), W('b'), W('c')]
   const states: ReviewState[] = [
