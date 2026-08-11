@@ -188,3 +188,103 @@ test('coins never go negative', () => {
   s = gameReducer(s, { type: 'applyAttack', kind: 'session', severity: 5, defense: 0, result: 'coin-loss', coinsDelta: -50, ruin: false, today: T })
   assert.equal(s.wallet.coins, 0)
 })
+
+// ---------- auto-listening (passive progress) ----------
+
+const hear = (s: GameState, ids: string[], day: string, reverse = false): GameState =>
+  gameReducer(s, { type: 'heard', wordIds: ids, reverse, today: day })
+
+test('heard: a new word becomes started only after reps spread over two days', () => {
+  let s = initialGameState()
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  assert.equal(s.reviews.length, 0, 'looping one day earns nothing')
+  s = hear(s, ['w1'], '2026-07-05')
+  assert.equal(s.reviews.length, 1)
+  assert.equal(s.reviews[0].direction, 'recognition')
+  assert.equal(s.reviews[0].box, 0)
+  assert.equal(s.reviews[0].passive, true)
+  assert.deepEqual(s.exposures, {}, 'the credit is spent, not kept')
+})
+
+test('heard: passive credit raises the box but never postpones the review', () => {
+  let s = withReview(initialGameState(), 'w1', 0, 'recognition')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-05')
+  const r = s.reviews[0]
+  assert.equal(r.box, 1)
+  assert.equal(r.passive, true)
+  assert.equal(r.dueAt, T, 'still due on the old schedule')
+})
+
+test('heard: recognition stops at its cap and the counter is dropped', () => {
+  let s = withReview(initialGameState(), 'w1', 1, 'recognition') // = PASSIVE_MAX_BOX.recognition
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-05')
+  s = hear(s, ['w1'], '2026-07-06')
+  assert.equal(s.reviews[0].box, 1, 'never reaches the recall-unlock box')
+  assert.deepEqual(s.exposures, {})
+  assert.equal(s.reviews.length, 1, 'and recall is not unlocked')
+})
+
+test('heard: reverse mode credits recall, and recall never graduates passively', () => {
+  let s = withReview(initialGameState(), 'w1', 2, 'recognition')
+  s = withReview(s, 'w1', 1, 'recall')
+  s = hear(s, ['w1'], '2026-07-04', true)
+  s = hear(s, ['w1'], '2026-07-04', true)
+  s = hear(s, ['w1'], '2026-07-05', true)
+  const recall = s.reviews.find((r) => r.direction === 'recall')!
+  assert.equal(recall.box, 2) // = PASSIVE_MAX_BOX.recall, one short of graduation
+  assert.equal(s.reviews.find((r) => r.direction === 'recognition')!.box, 2, 'recognition untouched')
+  s = hear(s, ['w1'], '2026-07-06', true)
+  s = hear(s, ['w1'], '2026-07-07', true)
+  s = hear(s, ['w1'], '2026-07-08', true)
+  assert.equal(s.reviews.find((r) => r.direction === 'recall')!.box, 2)
+  assert.deepEqual(s.graduatedIds, [])
+})
+
+test('heard: reverse falls back to recognition while recall is locked', () => {
+  let s = withReview(initialGameState(), 'w1', 0, 'recognition')
+  s = hear(s, ['w1'], '2026-07-04', true)
+  s = hear(s, ['w1'], '2026-07-04', true)
+  s = hear(s, ['w1'], '2026-07-05', true)
+  assert.equal(s.reviews.length, 1)
+  assert.equal(s.reviews[0].box, 1)
+})
+
+test('heard: passive introductions respect the daily new-word budget', () => {
+  let s = initialGameState()
+  s = { ...s, settings: { ...s.settings, newWordsPerDay: 1 } }
+  s = gameReducer(s, { type: 'introduce', wordId: 'session-word', today: '2026-07-05' })
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-05')
+  assert.equal(s.reviews.length, 1, 'budget spent by the session; w1 waits')
+  assert.ok(s.exposures['w1|recognition'], 'the earned credit is kept for tomorrow')
+  s = hear(s, ['w1'], '2026-07-06')
+  assert.equal(s.reviews.length, 2, 'introduced once there is room again')
+})
+
+test('heard: day log counts every pair played, credited or not', () => {
+  let s = initialGameState()
+  s = hear(s, ['w1', 'w2'], T)
+  s = hear(s, ['w3'], T)
+  assert.equal(todayLog(s, T).heard, 3)
+})
+
+test('heard: a wrong answer wipes the unverified passive level', () => {
+  let s = withReview(initialGameState(), 'w1', 0, 'recognition')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-04')
+  s = hear(s, ['w1'], '2026-07-05')
+  assert.equal(s.reviews[0].box, 1)
+  s = gameReducer(s, {
+    type: 'answer', wordId: 'w1', direction: 'recognition',
+    correct: false, firstTry: true, rewardKind: 'choice', today: '2026-07-05',
+  })
+  assert.equal(s.reviews[0].box, 0)
+  assert.equal(s.reviews[0].passive, undefined)
+})

@@ -2,15 +2,24 @@ import type { ReviewState, Sentence, Word } from './types.js'
 import { MAX_BIAS, NEUTRAL_BIAS } from './srs.js'
 import { shuffle } from './exercises.js'
 
-/** Base silence between the term and its translation. */
+/** Default silence between the term and its translation ("a" in the UI). */
 export const PAUSE_BASE_MS = 3000
-/** Silence after the translation before the next pair. */
+/** Default silence after the translation before the next pair ("b" in the UI). */
 export const GAP_AFTER_PAIR_MS = 2000
+/** Both pauses are user-tunable within this range, in seconds. */
+export const PAUSE_MIN_SEC = 1
+export const PAUSE_MAX_SEC = 20
 
-/** Longer phrases and sentences need more time to sink in. */
-export function pauseAfterMs(text: string): number {
+export function clampPauseSec(sec: number, fallback: number): number {
+  if (!Number.isFinite(sec)) return fallback
+  return Math.min(PAUSE_MAX_SEC, Math.max(PAUSE_MIN_SEC, Math.round(sec)))
+}
+
+/** Longer phrases and sentences need more time to sink in, so the chosen pause is
+ * stretched for them rather than applied flat. */
+export function pauseAfterMs(text: string, baseMs: number = PAUSE_BASE_MS): number {
   const long = text.trim().split(/\s+/).length >= 4 || text.length > 20
-  return long ? PAUSE_BASE_MS * 1.5 : PAUSE_BASE_MS
+  return long ? baseMs * 1.5 : baseMs
 }
 
 export type ListenContent = 'words' | 'both' | 'sentences'

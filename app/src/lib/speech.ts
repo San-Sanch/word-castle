@@ -35,6 +35,16 @@ export function canSpeakHebrew(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window && currentVoice() !== null
 }
 
+/** Whether a voice exists for an arbitrary language (the translation side of a
+ * course, e.g. uk-UA for English → Українська). Without one the engine falls back
+ * to some other voice and reads the text with the wrong phonetics, so callers warn
+ * instead of pretending it works. */
+export function canSpeakLang(lang: string): boolean {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return false
+  const p = lang.slice(0, 2).toLowerCase()
+  return voices.some((v) => v.lang.toLowerCase().startsWith(p))
+}
+
 /**
  * Unvocalized Hebrew is ambiguous; the system voice sometimes picks the wrong
  * reading. Manual overrides are the final authority — they win over the

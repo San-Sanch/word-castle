@@ -1,6 +1,16 @@
 import type { GameState } from './game.js'
 import { initialGameState, newPlayerState } from './game.js'
 import { isGraduated } from './srs.js'
+import { remapMergedProgress } from './mergeProgress.js'
+import type { MergedIds } from './dataParse.js'
+
+// Words the data pipeline has merged (see dedupeWords). Injected from the bundled
+// merged-ids.json by main.tsx so this module stays free of data imports and the
+// node test build doesn't need the JSON.
+let mergedIds: MergedIds = {}
+export function setMergedIds(map: MergedIds): void {
+  mergedIds = map
+}
 
 const DB_NAME = 'word-castle'
 const STORE = 'state'
@@ -27,7 +37,7 @@ export function deserializeState(json: string): GameState {
       .filter((r) => isGraduated(r) && !savedGraduated.includes(r.wordId))
       .map((r) => r.wordId),
   ]
-  return {
+  const state = {
     ...defaults,
     ...raw,
     version: 1,
@@ -49,7 +59,9 @@ export function deserializeState(json: string): GameState {
     letters: raw.letters ?? [],
     unlockedCategories: raw.unlockedCategories ?? null,
     storyScores: raw.storyScores ?? {},
+    exposures: raw.exposures ?? {},
   } as GameState
+  return remapMergedProgress(state, mergedIds)
 }
 
 // ---------- profiles ----------

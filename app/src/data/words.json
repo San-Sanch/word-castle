@@ -297,17 +297,6 @@
   "translationUa": "клас"
  },
  {
-  "id": "14glcyd",
-  "hebrew": "בית",
-  "hebrewFull": "בית (זי)בתים",
-  "gender": "m",
-  "plural": "בתים",
-  "translation": "house / home",
-  "translationLang": "en",
-  "category": "School / Ulpan",
-  "translationUa": "дім"
- },
- {
   "id": "ponlns",
   "hebrew": "בית ספר",
   "hebrewFull": "בית ספר (ז)בתי ספר",
@@ -679,7 +668,7 @@
   "translation": "egg",
   "translationLang": "en",
   "category": "Food & Drinks",
-  "translationUa": "яйце"
+  "translationUa": "яйце / скрамбл"
  },
  {
   "id": "89o5q9",
@@ -812,17 +801,6 @@
   "translationLang": "en",
   "category": "Food & Drinks",
   "translationUa": "Яйце"
- },
- {
-  "id": "t3l88z",
-  "hebrew": "ביצה",
-  "hebrewFull": "ביצה (נ') ביצים",
-  "gender": "f",
-  "plural": "ביצים",
-  "translation": "egg",
-  "translationLang": "en",
-  "category": "Food & Drinks",
-  "translationUa": "Скрамбл"
  },
  {
   "id": "1r87c2g",
@@ -3000,7 +2978,7 @@
   "translation": "week",
   "translationLang": "en",
   "category": "Numbers & Time",
-  "translationUa": "тиждень"
+  "translationUa": "тиждень / тижні"
  },
  {
   "id": "abccwm",
@@ -3091,50 +3069,6 @@
   "translationUa": "субота"
  },
  {
-  "id": "10npc0p",
-  "hebrew": "בדרך כלל",
-  "hebrewFull": "בדרך כלל",
-  "gender": null,
-  "plural": null,
-  "translation": "usually",
-  "translationLang": "en",
-  "category": "Numbers & Time",
-  "translationUa": "зазвичай"
- },
- {
-  "id": "yw229",
-  "hebrew": "לפעמים",
-  "hebrewFull": "לפעמים",
-  "gender": null,
-  "plural": null,
-  "translation": "sometimes",
-  "translationLang": "en",
-  "category": "Numbers & Time",
-  "translationUa": "іноді"
- },
- {
-  "id": "1ac1y3b",
-  "hebrew": "תמיד",
-  "hebrewFull": "תמיד",
-  "gender": null,
-  "plural": null,
-  "translation": "always",
-  "translationLang": "en",
-  "category": "Numbers & Time",
-  "translationUa": "завжди"
- },
- {
-  "id": "1f3u0bm",
-  "hebrew": "אף פעם",
-  "hebrewFull": "אף פעם",
-  "gender": null,
-  "plural": null,
-  "translation": "never",
-  "translationLang": "en",
-  "category": "Numbers & Time",
-  "translationUa": "ніколи"
- },
- {
   "id": "2awz56",
   "hebrew": "דירה",
   "hebrewFull": "דירה (נ')",
@@ -3144,17 +3078,6 @@
   "translationLang": "en",
   "category": "Home & Apartment",
   "translationUa": "Квартира"
- },
- {
-  "id": "u6s523",
-  "hebrew": "חדר",
-  "hebrewFull": "חדר (ז')",
-  "gender": "m",
-  "plural": null,
-  "translation": "room",
-  "translationLang": "en",
-  "category": "Home & Apartment",
-  "translationUa": "Кімната"
  },
  {
   "id": "1ihdvgx",
@@ -3267,17 +3190,6 @@
   "translationUa": "Дім"
  },
  {
-  "id": "8hrkp0",
-  "hebrew": "בית ספר",
-  "hebrewFull": "בית ספר",
-  "gender": null,
-  "plural": null,
-  "translation": "school",
-  "translationLang": "en",
-  "category": "Public Places",
-  "translationUa": "Школа"
- },
- {
   "id": "h6ggpt",
   "hebrew": "בית חולים",
   "hebrewFull": "בית חולים",
@@ -3298,17 +3210,6 @@
   "translationLang": "en",
   "category": "Public Places",
   "translationUa": "Кафе"
- },
- {
-  "id": "oyn87i",
-  "hebrew": "דירה",
-  "hebrewFull": "דירה (נ')",
-  "gender": "f",
-  "plural": null,
-  "translation": "apartment",
-  "translationLang": "en",
-  "category": "Public Places",
-  "translationUa": "квартира"
  },
  {
   "id": "qga61i",
@@ -4463,7 +4364,7 @@
   "translation": "language(s)",
   "translationLang": "en",
   "category": "School / Ulpan",
-  "translationUa": "мова/мови"
+  "translationUa": "мова / мови"
  },
  {
   "id": "9xyg4k",
@@ -4778,46 +4679,6 @@
   "category": "Numbers & Time"
  },
  {
-  "id": "1gqt6rv",
-  "hebrew": "יום",
-  "hebrewFull": "יום",
-  "gender": null,
-  "plural": null,
-  "translation": "day",
-  "translationLang": "en",
-  "category": "Numbers & Time"
- },
- {
-  "id": "17o3l05",
-  "hebrew": "שבוע",
-  "hebrewFull": "שבוע",
-  "gender": null,
-  "plural": null,
-  "translation": "week",
-  "translationLang": "en",
-  "category": "Numbers & Time"
- },
- {
-  "id": "19lpsge",
-  "hebrew": "חודש",
-  "hebrewFull": "חודש",
-  "gender": null,
-  "plural": null,
-  "translation": "month",
-  "translationLang": "en",
-  "category": "Numbers & Time"
- },
- {
-  "id": "1842fo",
-  "hebrew": "שנה",
-  "hebrewFull": "שנה",
-  "gender": null,
-  "plural": null,
-  "translation": "year",
-  "translationLang": "en",
-  "category": "Numbers & Time"
- },
- {
   "id": "c8v6vt",
   "hebrew": "שעה",
   "hebrewFull": "שעה",
@@ -4898,32 +4759,12 @@
   "category": "Weather"
  },
  {
-  "id": "rumycv",
-  "hebrew": "גשם",
-  "hebrewFull": "גשם",
-  "gender": null,
-  "plural": null,
-  "translation": "rain",
-  "translationLang": "en",
-  "category": "Weather"
- },
- {
   "id": "3nj5ib",
   "hebrew": "רוח",
   "hebrewFull": "רוח",
   "gender": null,
   "plural": null,
   "translation": "wind",
-  "translationLang": "en",
-  "category": "Weather"
- },
- {
-  "id": "h0s59u",
-  "hebrew": "רוח קלה",
-  "hebrewFull": "רוח קלה",
-  "gender": null,
-  "plural": null,
-  "translation": "light wind",
   "translationLang": "en",
   "category": "Weather"
  },
@@ -5098,26 +4939,6 @@
   "category": "Family"
  },
  {
-  "id": "1aqsges",
-  "hebrew": "ילד",
-  "hebrewFull": "ילד",
-  "gender": null,
-  "plural": null,
-  "translation": "child/boy",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "1kkhc81",
-  "hebrew": "ילדה",
-  "hebrewFull": "ילדה",
-  "gender": null,
-  "plural": null,
-  "translation": "girl",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
   "id": "113fxua",
   "hebrew": "ילדים",
   "hebrewFull": "ילדים",
@@ -5128,92 +4949,12 @@
   "category": "Family"
  },
  {
-  "id": "18o70n1",
-  "hebrew": "אימא",
-  "hebrewFull": "אימא",
-  "gender": null,
-  "plural": null,
-  "translation": "mother",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "6ii0z2",
-  "hebrew": "אבא",
-  "hebrewFull": "אבא",
-  "gender": null,
-  "plural": null,
-  "translation": "father",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "amcsch",
-  "hebrew": "סבא",
-  "hebrewFull": "סבא",
-  "gender": null,
-  "plural": null,
-  "translation": "grandfather",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "6z6i8e",
-  "hebrew": "סבתא",
-  "hebrewFull": "סבתא",
-  "gender": null,
-  "plural": null,
-  "translation": "grandmother",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "4kx1xr",
-  "hebrew": "בן",
-  "hebrewFull": "בן",
-  "gender": null,
-  "plural": null,
-  "translation": "son",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "h1d2l0",
-  "hebrew": "בת",
-  "hebrewFull": "בת",
-  "gender": null,
-  "plural": null,
-  "translation": "daughter",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
   "id": "1nqtwiv",
   "hebrew": "בנים",
   "hebrewFull": "בנים",
   "gender": null,
   "plural": null,
   "translation": "sons",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "y23dog",
-  "hebrew": "אח",
-  "hebrewFull": "אח",
-  "gender": null,
-  "plural": null,
-  "translation": "brother",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "1jof4wx",
-  "hebrew": "אחות",
-  "hebrewFull": "אחות",
-  "gender": null,
-  "plural": null,
-  "translation": "sister",
   "translationLang": "en",
   "category": "Family"
  },
@@ -5234,16 +4975,6 @@
   "gender": null,
   "plural": null,
   "translation": "my sister",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
-  "id": "1del5ed",
-  "hebrew": "משפחה",
-  "hebrewFull": "משפחה",
-  "gender": null,
-  "plural": null,
-  "translation": "family",
   "translationLang": "en",
   "category": "Family"
  },
@@ -5302,16 +5033,6 @@
   "translationUa": "написано"
  },
  {
-  "id": "1we65q2",
-  "hebrew": "גבר",
-  "hebrewFull": "גבר",
-  "gender": null,
-  "plural": null,
-  "translation": "man",
-  "translationLang": "en",
-  "category": "Family"
- },
- {
   "id": "uv5jmi",
   "hebrew": "גברים",
   "hebrewFull": "גברים",
@@ -5322,26 +5043,6 @@
   "category": "Family"
  },
  {
-  "id": "1hbndzl",
-  "hebrew": "תלמיד",
-  "hebrewFull": "תלמיד",
-  "gender": null,
-  "plural": null,
-  "translation": "student (m.)",
-  "translationLang": "en",
-  "category": "School / Ulpan"
- },
- {
-  "id": "p0laoe",
-  "hebrew": "תלמידה",
-  "hebrewFull": "תלמידה",
-  "gender": null,
-  "plural": null,
-  "translation": "student (f.)",
-  "translationLang": "en",
-  "category": "School / Ulpan"
- },
- {
   "id": "gin58m",
   "hebrew": "תלמידים",
   "hebrewFull": "תלמידים",
@@ -5350,16 +5051,6 @@
   "translation": "students (m.)",
   "translationLang": "en",
   "category": "School / Ulpan"
- },
- {
-  "id": "r2v94j",
-  "hebrew": "מורה",
-  "hebrewFull": "מורה",
-  "gender": null,
-  "plural": null,
-  "translation": "teacher",
-  "translationLang": "en",
-  "category": "Food & Drinks"
  },
  {
   "id": "m4u4li",
@@ -6592,32 +6283,12 @@
   "category": "Adjectives & Adverbs"
  },
  {
-  "id": "1lm4nbe",
-  "hebrew": "בית",
-  "hebrewFull": "בית",
-  "gender": null,
-  "plural": null,
-  "translation": "house/home",
-  "translationLang": "en",
-  "category": "Public Places"
- },
- {
   "id": "1o427q9",
   "hebrew": "הביתה",
   "hebrewFull": "הביתה",
   "gender": null,
   "plural": null,
   "translation": "homeward",
-  "translationLang": "en",
-  "category": "Public Places"
- },
- {
-  "id": "y3p8dy",
-  "hebrew": "רחוב",
-  "hebrewFull": "רחוב",
-  "gender": null,
-  "plural": null,
-  "translation": "street",
   "translationLang": "en",
   "category": "Public Places"
  },
@@ -6660,16 +6331,6 @@
   "translation": "university",
   "translationLang": "en",
   "category": "Public Places"
- },
- {
-  "id": "1y21cxg",
-  "hebrew": "כיתה",
-  "hebrewFull": "כיתה",
-  "gender": null,
-  "plural": null,
-  "translation": "class/classroom",
-  "translationLang": "en",
-  "category": "School / Ulpan"
  },
  {
   "id": "13j6toz",
@@ -6752,32 +6413,12 @@
   "category": "Public Places"
  },
  {
-  "id": "bm7cez",
-  "hebrew": "הר",
-  "hebrewFull": "הר",
-  "gender": null,
-  "plural": null,
-  "translation": "mountain",
-  "translationLang": "en",
-  "category": "Public Places"
- },
- {
   "id": "1udvxoc",
   "hebrew": "הרים",
   "hebrewFull": "הרים",
   "gender": null,
   "plural": null,
   "translation": "mountains",
-  "translationLang": "en",
-  "category": "Nature"
- },
- {
-  "id": "ufy6fx",
-  "hebrew": "עץ",
-  "hebrewFull": "עץ",
-  "gender": null,
-  "plural": null,
-  "translation": "tree",
   "translationLang": "en",
   "category": "Nature"
  },
@@ -6852,62 +6493,12 @@
   "category": "Public Places"
  },
  {
-  "id": "1409qn6",
-  "hebrew": "יין",
-  "hebrewFull": "יין",
-  "gender": null,
-  "plural": null,
-  "translation": "wine",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "jfphay",
-  "hebrew": "מיץ",
-  "hebrewFull": "מיץ",
-  "gender": null,
-  "plural": null,
-  "translation": "juice",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "yde32",
-  "hebrew": "לחם",
-  "hebrewFull": "לחם",
-  "gender": null,
-  "plural": null,
-  "translation": "bread",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
   "id": "1j30ufx",
   "hebrew": "לחמניה",
   "hebrewFull": "לחמניה",
   "gender": null,
   "plural": null,
   "translation": "bread roll",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "o1uet0",
-  "hebrew": "חלה",
-  "hebrewFull": "חלה",
-  "gender": null,
-  "plural": null,
-  "translation": "challah",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "ctjwof",
-  "hebrew": "גלידה",
-  "hebrewFull": "גלידה",
-  "gender": null,
-  "plural": null,
-  "translation": "ice cream",
   "translationLang": "en",
   "category": "Food & Drinks"
  },
@@ -7022,36 +6613,6 @@
   "category": "School / Ulpan"
  },
  {
-  "id": "1lsnnr2",
-  "hebrew": "מכתב",
-  "hebrewFull": "מכתב",
-  "gender": null,
-  "plural": null,
-  "translation": "letter/mail",
-  "translationLang": "en",
-  "category": "School / Ulpan"
- },
- {
-  "id": "1sq1nvi",
-  "hebrew": "שולחן",
-  "hebrewFull": "שולחן",
-  "gender": null,
-  "plural": null,
-  "translation": "table",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "1nw03oq",
-  "hebrew": "כיסא",
-  "hebrewFull": "כיסא",
-  "gender": null,
-  "plural": null,
-  "translation": "chair",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
   "id": "zord9d",
   "hebrew": "מסך",
   "hebrewFull": "מסך",
@@ -7082,16 +6643,6 @@
   "category": "Food & Drinks"
  },
  {
-  "id": "1m34g63",
-  "hebrew": "מכונית",
-  "hebrewFull": "מכונית",
-  "gender": null,
-  "plural": null,
-  "translation": "car",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
   "id": "nxa5ck",
   "hebrew": "מתנה",
   "hebrewFull": "מתנה",
@@ -7118,16 +6669,6 @@
   "gender": null,
   "plural": null,
   "translation": "pictures",
-  "translationLang": "en",
-  "category": "Food & Drinks"
- },
- {
-  "id": "r2snx5",
-  "hebrew": "דגל",
-  "hebrewFull": "דגל",
-  "gender": null,
-  "plural": null,
-  "translation": "flag",
   "translationLang": "en",
   "category": "Food & Drinks"
  },
@@ -7212,32 +6753,12 @@
   "category": "Politeness"
  },
  {
-  "id": "1xbqp52",
-  "hebrew": "תודה",
-  "hebrewFull": "תודה",
-  "gender": null,
-  "plural": null,
-  "translation": "thank you",
-  "translationLang": "en",
-  "category": "Politeness"
- },
- {
   "id": "1y4z8yo",
   "hebrew": "תודה רבה",
   "hebrewFull": "תודה רבה",
   "gender": null,
   "plural": null,
   "translation": "thank you very much",
-  "translationLang": "en",
-  "category": "Politeness"
- },
- {
-  "id": "mpiajh",
-  "hebrew": "סליחה",
-  "hebrewFull": "סליחה",
-  "gender": null,
-  "plural": null,
-  "translation": "excuse me/sorry",
   "translationLang": "en",
   "category": "Politeness"
  },
@@ -8602,16 +8123,6 @@
   "category": "Prepositions & Function"
  },
  {
-  "id": "g28id1",
-  "hebrew": "שיר",
-  "hebrewFull": "שיר",
-  "gender": null,
-  "plural": null,
-  "translation": "song",
-  "translationLang": "en",
-  "category": "School / Ulpan"
- },
- {
   "id": "1ocjia9",
   "hebrew": "שירה",
   "hebrewFull": "שירה",
@@ -8648,16 +8159,6 @@
   "gender": null,
   "plural": null,
   "translation": "languages",
-  "translationLang": "en",
-  "category": "School / Ulpan"
- },
- {
-  "id": "cgvt3n",
-  "hebrew": "שפה",
-  "hebrewFull": "שפה",
-  "gender": null,
-  "plural": null,
-  "translation": "language",
   "translationLang": "en",
   "category": "School / Ulpan"
  },
@@ -9591,16 +9092,6 @@
   "translationLang": "en",
   "category": "Public Places",
   "translationUa": "автобус"
- },
- {
-  "id": "xm90uh",
-  "hebrew": "כרית",
-  "hebrewFull": "כרית",
-  "gender": null,
-  "plural": null,
-  "translation": "pillow",
-  "translationLang": "en",
-  "category": "Home & Apartment"
  },
  {
   "id": "16701s2",
@@ -12191,7 +11682,7 @@
   "translation": "carpet / rug",
   "translationLang": "en",
   "category": "Home & Apartment",
-  "translationUa": "килим/килими"
+  "translationUa": "килим / килими"
  },
  {
   "id": "tzzt2n",
@@ -12304,17 +11795,6 @@
   "translationUa": "крісло"
  },
  {
-  "id": "1wtsd2i",
-  "hebrew": "שטיח",
-  "hebrewFull": "שטיח",
-  "gender": null,
-  "plural": null,
-  "translation": "carpet",
-  "translationLang": "en",
-  "category": "Home & Apartment",
-  "translationUa": "килим"
- },
- {
   "id": "sg8jys",
   "hebrew": "ריצפה",
   "hebrewFull": "ריצפה",
@@ -12334,7 +11814,7 @@
   "translation": "pillow",
   "translationLang": "en",
   "category": "Home & Apartment",
-  "translationUa": "подушка/подушки"
+  "translationUa": "подушка / подушки"
  },
  {
   "id": "1lpze0h",
@@ -12742,17 +12222,6 @@
   "translationLang": "en",
   "category": "Numbers & Time",
   "translationUa": "два тижні"
- },
- {
-  "id": "19rk3nt",
-  "hebrew": "שבוע",
-  "hebrewFull": "שבוע(ז׳)שבועות",
-  "gender": "m",
-  "plural": "שבועות",
-  "translation": "week",
-  "translationLang": "en",
-  "category": "Numbers & Time",
-  "translationUa": "тиждень/тижні"
  },
  {
   "id": "1ef98mz",

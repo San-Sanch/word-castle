@@ -19,6 +19,7 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
   const logs = [...state.dayLogs].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 14)
   const topics = topicInfos(words, state, today)
   const totalMinutes = state.dayLogs.reduce((n, l) => n + l.activeSeconds, 0) / 60
+  const passiveCount = state.reviews.filter((r) => r.passive).length
 
   return (
     <>
@@ -46,6 +47,12 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
           A word counts as <b>mastered</b> when you recognize it AND recall it from the translation
           across several spaced reviews (recall level 4+).
         </p>
+        {passiveCount > 0 && (
+          <p className="muted" style={{ marginTop: 4 }}>
+            🎧 {passiveCount} of those levels came from auto-listening and aren’t confirmed by an
+            answer yet — listening never unlocks recall or mastery on its own.
+          </p>
+        )}
       </div>
 
       <div className="panel">
@@ -96,7 +103,7 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
         <h2>Last days</h2>
         <table>
           <thead>
-            <tr><th>Date</th><th>Cards</th><th>Correct</th><th>Minutes</th><th>Mastered</th></tr>
+            <tr><th>Date</th><th>Cards</th><th>Correct</th><th>Minutes</th><th>Heard</th><th>Mastered</th></tr>
           </thead>
           <tbody>
             {logs.map((l) => (
@@ -105,11 +112,12 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
                 <td>{l.cardsAnswered}</td>
                 <td>{l.cardsAnswered ? Math.round((l.correct / l.cardsAnswered) * 100) : 0}%</td>
                 <td>{Math.floor(l.activeSeconds / 60)}</td>
+                <td>{l.heard || ''}</td>
                 <td>{l.graduated || ''}</td>
               </tr>
             ))}
             {logs.length === 0 && (
-              <tr><td colSpan={5} className="muted">No sessions yet.</td></tr>
+              <tr><td colSpan={6} className="muted">No sessions yet.</td></tr>
             )}
           </tbody>
         </table>

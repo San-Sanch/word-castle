@@ -15,7 +15,16 @@ existing rows), run this full pipeline from `word-castle/app/`.
 1. **Compile libs used by scripts** (they import from `.test-build/`):
    `npm test` — must be green before continuing.
 2. **Words + sentences**: `node scripts/convert-data.mjs`
-   - Prints counts: words, english overrides applied, `words still ua: N`.
+   - Prints counts: words (and how many duplicate rows were merged away), english
+     overrides applied, `words still ua: N`.
+   - `dedupeWords` collapses rows describing the same base word (the CSV merges
+     several source documents, so common words appear both curated and bare) and
+     writes `src/data/merged-ids.json`, which the app uses to fold progress from the
+     dropped twins onto the survivor. Survivor ids never change.
+   - Read the `⚠️ merged group(s) share no meaning` warning: that is the homograph
+     signature (two same-language glosses with nothing in common). Either the CSV
+     needs two distinct rows, or — more often here — it's the Food & Drinks
+     translation shift showing up again.
 3. **English overrides for new Ukrainian rows**: if `words still ua` > 0,
    find them (`node -e` over `src/data/words.json`, filter
    `translationLang === 'ua'`), translate each **from the Hebrew column**
@@ -42,7 +51,8 @@ existing rows), run this full pipeline from `word-castle/app/`.
    - a couple of the NEW words: sensible transliteration and vocalization.
 8. **Commit** the regenerated files: `src/data/words.json`,
    `src/data/sentences.json`, `src/data/vocalized.json`,
-   `src/data/translit.json`, plus `translation-overrides.json` if touched.
+   `src/data/translit.json`, `src/data/merged-ids.json`, plus
+   `translation-overrides.json` if touched.
 
 ## Pronunciation corrections
 

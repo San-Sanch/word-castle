@@ -36,6 +36,8 @@ export interface Course {
   words: Word[]
   sentences: Sentence[]
   speechLang: string
+  /** BCP-47 language of the translation side — the voice auto-listening uses for it */
+  translationSpeechLang: string
   /** the term text is right-to-left (Hebrew) */
   rtl: boolean
   /** reading-comprehension stories exist for this course (Hebrew-only for now) */
@@ -46,9 +48,9 @@ export interface Course {
 }
 
 export const COURSES: Course[] = [
-  { id: 'hebrew', label: 'Hebrew → English', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', rtl: true, stories: true, commaMeanings: false },
-  { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', rtl: false, stories: false, commaMeanings: true },
-  { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', rtl: false, stories: false, commaMeanings: true },
+  { id: 'hebrew', label: 'Hebrew → English', flag: '🇮🇱', words: WORDS, sentences: SENTENCES, speechLang: 'he-IL', translationSpeechLang: 'en-US', rtl: true, stories: true, commaMeanings: false },
+  { id: 'en-uk', label: 'English → Українська', flag: '🇬🇧', words: enUkWords as Word[], sentences: [], speechLang: 'en-US', translationSpeechLang: 'uk-UA', rtl: false, stories: false, commaMeanings: true },
+  { id: 'es-en', label: 'Español → English', flag: '🇪🇸', words: esEnWords as Word[], sentences: [], speechLang: 'es-ES', translationSpeechLang: 'en-US', rtl: false, stories: false, commaMeanings: true },
 ]
 
 const COURSE_KEY = 'wc-active-course'
@@ -263,6 +265,9 @@ export default function App() {
           sentences={sentences}
           today={today}
           dispatch={dispatch}
+          translationLang={course.translationSpeechLang}
+          rtl={course.rtl}
+          splitTranslations={course.commaMeanings}
           onExit={() => setScreen('learn')}
           onReportWord={course.id === 'hebrew' ? (w) => { reportWordError(w).catch((e) => console.error('report failed', e)) } : undefined}
         />

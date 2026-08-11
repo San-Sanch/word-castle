@@ -74,10 +74,98 @@ export interface SentenceRow {
   translation: string
 }
 
+/** Ids of rows dropped by `dedupeWords`, mapped to the row that replaced them. */
+export type MergedIds = Record<string, string>
+
+/** Meaning parts of a translation, normalized: "sorry / excuse me" -> {sorry, excuse me}. */
+export function meaningParts(translation: string): string[] {
+  return translation
+    .toLowerCase()
+    .split(/[/,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+/** How much lexical detail a row carries — the richest row of a duplicate group wins. */
+function richness(w: Word): number {
+  return (w.plural ? 2 : 0) + (w.gender ? 1 : 0)
+}
+
+/**
+ * Collapses rows that describe the same base word. The source CSV grew by merging
+ * several documents, so the same word often appears both as a curated entry
+ * ("אבא (ז')אבות") and as a bare one from a later import ("אבא") — three times for
+ * בית. Left alone they become separate cards with the same Hebrew prompt, which is
+ * unanswerable in multiple choice and double-counts progress.
+ *
+ * The survivor is the richest row (plural/gender), tie-broken by the category the
+ * group agrees on, then by row order. Its id is left untouched so saved progress
+ * still matches; `merged` maps every dropped id to its survivor so progress on the
+ * dropped twin can be folded in. Meanings are unioned ("dad" + "father" ->
+ * "dad / father"); a group whose meanings don't overlap at all is reported, since
+ * that is the signature of an actual homograph that needs splitting by hand.
+ */
+export function dedupeWords(words: Word[]): {
+  words: Word[]
+  merged: Record<string, string>
+  suspicious: Array<{ hebrew: string; meanings: string[] }>
+} {
+  const groups = new Map<string, Word[]>()
+  for (const w of words) {
+    if (!groups.has(w.hebrew)) groups.set(w.hebrew, [])
+    groups.get(w.hebrew)!.push(w)
+  }
+
+  const merged: Record<string, string> = {}
+  const suspicious: Array<{ hebrew: string; meanings: string[] }> = []
+  const survivors = new Map<string, Word>() // id -> the row to emit
+
+  for (const group of groups.values()) {
+    if (group.length === 1) {
+      survivors.set(group[0].id, group[0])
+      continue
+    }
+    const catCount = new Map<string, number>()
+    for (const w of group) catCount.set(w.category, (catCount.get(w.category) ?? 0) + 1)
+    const best = Math.max(...group.map(richness))
+    const winner = group
+      .filter((w) => richness(w) === best)
+      .sort((a, b) => (catCount.get(b.category) ?? 0) - (catCount.get(a.category) ?? 0))[0]
+
+    // Only same-language glosses are comparable: the CSV mixes curated Ukrainian
+    // rows with English ones from later imports, and the English overrides are
+    // applied further down the pipeline.
+    const sameLang = group.filter((w) => w.translationLang === winner.translationLang)
+    const parts: string[] = []
+    for (const w of sameLang) {
+      for (const p of meaningParts(w.translation)) if (!parts.includes(p)) parts.push(p)
+    }
+    // no shared meaning between two glosses of the same language = probably homographs
+    const shares = sameLang.some((a) =>
+      sameLang.some((b) => a !== b && meaningParts(a.translation).some((p) => meaningParts(b.translation).includes(p))),
+    )
+    if (sameLang.length > 1 && !shares) {
+      suspicious.push({ hebrew: winner.hebrew, meanings: sameLang.map((w) => w.translation) })
+    }
+
+    survivors.set(winner.id, {
+      ...winner,
+      translation: parts.length > 1 ? parts.join(' / ') : winner.translation,
+    })
+    for (const w of group) if (w.id !== winner.id) merged[w.id] = winner.id
+  }
+
+  // keep the original row order
+  const kept = words.map((w) => survivors.get(w.id)).filter((w): w is Word => w !== undefined)
+  return { words: kept, merged, suspicious }
+}
+
 /**
  * Turns raw CSV rows (header included) into Word entities.
  * Rows in the "Sentences" category are returned separately for the sentence pool.
- * Identical duplicate rows are all kept (source data is authoritative) with distinct ids.
+ * Identical duplicate rows are all kept here (source data is authoritative) with
+ * distinct ids; collapsing same-word rows is `dedupeWords`, a separate step so the
+ * pipeline can report what it merged.
  */
 export function buildWords(rows: string[][]): { words: Word[]; sentenceRows: SentenceRow[] } {
   const words: Word[] = []

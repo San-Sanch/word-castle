@@ -173,7 +173,9 @@ export default function LearnScreen(props: {
               ⚡ Speed round (60s)
             </button>
           )}
-          {startedTotal > 0 && (
+          {/* no started-words gate: hands-free listening is also how you first meet
+              new words, and a freshly opened course would otherwise hide it */}
+          {words.length > 0 && (
             <button
               className="ghost"
               style={{ marginTop: 10 }}

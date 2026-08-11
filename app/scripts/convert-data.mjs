@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { parseCsv, buildWords, buildSentencePool } from '../.test-build/dataParse.js'
+import { parseCsv, buildWords, buildSentencePool, dedupeWords } from '../.test-build/dataParse.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const repoRoot = join(here, '..', '..', '..')
@@ -12,7 +12,12 @@ const repoRoot = join(here, '..', '..', '..')
 const wordsCsv = readFileSync(join(repoRoot, 'hebrew_words.csv'), 'utf8')
 const sentencesCsv = readFileSync(join(repoRoot, 'source-data', 'hebrew_sentences.csv'), 'utf8')
 
-const { words, sentenceRows } = buildWords(parseCsv(wordsCsv))
+const { words: rawWords, sentenceRows } = buildWords(parseCsv(wordsCsv))
+
+// Collapse rows describing the same base word (the CSV merges several source
+// documents, so common words appear both curated and bare). Survivor ids are
+// unchanged; merged-ids.json lets the app fold progress from the dropped twins.
+const { words, merged, suspicious } = dedupeWords(rawWords)
 
 // English overrides for rows whose CSV translation is Ukrainian (translated from
 // the Hebrew side, which also corrects the one-row translation shift in the
@@ -42,9 +47,14 @@ const outDir = join(here, '..', 'src', 'data')
 mkdirSync(outDir, { recursive: true })
 writeFileSync(join(outDir, 'words.json'), JSON.stringify(words, null, 1))
 writeFileSync(join(outDir, 'sentences.json'), JSON.stringify(sentences, null, 1))
+writeFileSync(join(outDir, 'merged-ids.json'), JSON.stringify(merged, null, 1))
 
 const matched = sentences.filter((s) => s.matches.length > 0).length
-console.log(`words: ${words.length}`)
+console.log(`words: ${words.length} (merged away ${Object.keys(merged).length} duplicate rows of ${rawWords.length})`)
+if (suspicious.length) {
+  console.log(`⚠️ ${suspicious.length} merged group(s) share no meaning — check for homographs needing separate rows:`)
+  for (const s of suspicious) console.log(`   ${s.hebrew}: ${s.meanings.join(' | ')}`)
+}
 console.log(`english overrides applied: ${overridden}, words still ua: ${remainingUa}`)
 console.log(`sentences kept: ${sentences.length} (of ${sentenceRows.length + extraRows.length} candidates)`)
 console.log(`sentences with >=1 matched word: ${matched}`)

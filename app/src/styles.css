@@ -288,6 +288,8 @@ th { color: var(--muted); font-weight: 600; }
 .autolisten-card .flag-badge { font-size: 22px; }
 .autolisten-pos { color: var(--muted); margin-top: 12px; letter-spacing: 0.04em; }
 
+.al-hint { margin: 10px 0 0; min-height: 1.2em; }
+
 .transport { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .transport .tbtn {
   width: 54px; height: 50px; border-radius: 14px;
@@ -312,7 +314,8 @@ th { color: var(--muted); font-weight: 600; }
   margin: 24px auto 0; padding: 14px; max-width: 520px;
   border: 1px solid #2a3350; border-radius: 16px; background: rgba(255, 255, 255, 0.015);
 }
-.al-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.al-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 480px) { .al-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .segmented.full { display: flex; width: 100%; border: 1px solid #3a4666; border-radius: 12px; overflow: hidden; }
 .segmented.full button {
   flex: 1; padding: 11px 0; border: none; border-left: 1px solid #3a4666;
@@ -326,6 +329,8 @@ th { color: var(--muted); font-weight: 600; }
   min-width: 0; overflow: hidden;
 }
 .al-ico { font-size: 15px; opacity: 0.9; flex-shrink: 0; }
+/* the pause selects are labelled a / b rather than by an emoji */
+.al-ico.pause-key { font-weight: 700; font-style: italic; color: var(--gold); min-width: 12px; text-align: center; }
 .al-field select {
   flex: 1; width: 100%; min-width: 0; background: transparent; border: none;
   color: var(--text); font-size: 14px; cursor: pointer;
@@ -336,7 +341,7 @@ th { color: var(--muted); font-weight: 600; }
   display: flex; justify-content: space-between; align-items: center; gap: 8px;
   height: 46px; padding: 0 14px; border: 1px solid #3a4666; border-radius: 12px; background: var(--panel-2);
 }
-.al-settings .al-switch .switch-label { font-size: 14px; color: var(--text); }
+.al-settings .al-switch .switch-label { font-size: 14px; color: var(--text); white-space: nowrap; }
 .done-link { margin-top: 18px; }
 .field input[type="number"] {
   width: 90px; padding: 8px; border-radius: 8px;

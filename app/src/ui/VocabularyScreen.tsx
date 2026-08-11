@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import type { GameState } from '../lib/game'
-import type { Word } from '../lib/types'
+import type { ReviewState, Word } from '../lib/types'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
 import { errorIcon, type WordErrorStatus } from '../lib/wordErrors'
@@ -25,6 +25,8 @@ interface Row {
   lapses: number
   startedAt: string | null
   dueAt: string | null
+  /** current level was granted by listening, not yet confirmed by an answer */
+  passive: boolean
 }
 
 /** Speak button that also reports bad pronunciation on a ~1s hold. */
@@ -71,7 +73,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
   }
 
   const rows = useMemo<Row[]>(() => {
-    const byWord = new Map<string, { rec?: { box: number; dueAt: string; lapses: number; introducedAt: string }; recall?: { box: number; dueAt: string; lapses: number } }>()
+    const byWord = new Map<string, { rec?: ReviewState; recall?: ReviewState }>()
     for (const r of state.reviews) {
       const entry = byWord.get(r.wordId) ?? {}
       if (r.direction === 'recognition') entry.rec = r
@@ -97,6 +99,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
         lapses,
         startedAt: rv?.rec?.introducedAt ?? null,
         dueAt: dueDates.length ? dueDates.sort()[0] : null,
+        passive: !!(rv?.rec?.passive || rv?.recall?.passive),
       }
     })
   }, [state.reviews, state.graduatedIds, words, today])
@@ -238,6 +241,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
                       {r.status === 'mastered' && <span className="status-badge mastered">🎓</span>}
                       {r.status === 'learning' && (r.due ? <span className="status-badge due">due</span> : <span className="status-badge learning">learning</span>)}
                       {r.status === 'new' && <span className="status-badge fresh">new</span>}
+                      {r.passive && <span className="status-badge" title="level from auto-listening, not confirmed by an answer yet">🎧</span>}
                     </td>
                   </tr>
                   {isOpen && (

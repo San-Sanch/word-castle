@@ -5,13 +5,24 @@ import type {
   CastleItem,
   CastleItemType,
   DayLog,
+  Direction,
+  Exposure,
   Guardian,
   ReviewState,
   Settings,
   Wallet,
 } from './types.js'
 import { DEFAULT_SETTINGS } from './types.js'
-import { applyAnswer, isGraduated, newReviewState, shouldActivateRecall } from './srs.js'
+import {
+  addExposure,
+  applyAnswer,
+  applyPassive,
+  exposureReady,
+  isGraduated,
+  newReviewState,
+  passiveCapReached,
+  shouldActivateRecall,
+} from './srs.js'
 import {
   answerReward,
   buildItem,
@@ -59,6 +70,8 @@ export interface GameState {
   unlockedCategories: string[] | null
   /** best comprehension score per story id */
   storyScores: Record<string, number>
+  /** passive listening exposures, keyed `wordId|direction` (see srs.ts) */
+  exposures: Record<string, Exposure>
 }
 
 export function initialGameState(): GameState {
@@ -79,6 +92,7 @@ export function initialGameState(): GameState {
     letters: [],
     unlockedCategories: null,
     storyScores: {},
+    exposures: {},
   }
 }
 
@@ -100,6 +114,7 @@ const EMPTY_LOG = (date: string): DayLog => ({
   coinsEarned: 0,
   timeBonusPaidUpTo: 0,
   graduated: 0,
+  heard: 0,
 })
 
 export function todayLog(state: GameState, today: string): DayLog {
@@ -142,6 +157,9 @@ export type GameAction =
       today: string
     }
   | { type: 'practiceAnswer'; correct: boolean; today: string }
+  /** word pairs fully played in auto-listening (batched: a future background
+   * player credits a whole stretch of audio at once) */
+  | { type: 'heard'; wordIds: string[]; reverse: boolean; today: string }
   | { type: 'storyResult'; storyId: string; correct: number }
   | { type: 'bonusCoins'; amount: number; today: string }
   | { type: 'activeTime'; seconds: number; today: string }
@@ -238,6 +256,51 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         correct: log.correct + (action.correct ? 1 : 0),
         mistakes: log.mistakes + (action.correct ? 0 : 1),
       })
+    }
+
+    case 'heard': {
+      const { wordIds, reverse, today } = action
+      if (wordIds.length === 0) return state
+      const exposures = { ...state.exposures }
+      let reviews = state.reviews
+      // passive introductions share the daily new-word budget with sessions, so
+      // an hour of listening can't flood tomorrow's review queue
+      let newRoom = Math.max(0, state.settings.newWordsPerDay - introducedTodayCount(state, today))
+
+      for (const wordId of wordIds) {
+        const rec = reviews.find((r) => r.wordId === wordId && r.direction === 'recognition')
+        const recall = reviews.find((r) => r.wordId === wordId && r.direction === 'recall')
+        // reverse listening (translation → term) is what trains recall — but only
+        // for words whose recall direction is already unlocked
+        const target = reverse && recall ? recall : rec
+        const direction: Direction = target?.direction ?? 'recognition'
+        const key = `${wordId}|${direction}`
+
+        // nothing left to earn here: drop the counter instead of hoarding it
+        if (target && passiveCapReached(target)) {
+          delete exposures[key]
+          continue
+        }
+        const next = addExposure(exposures[key], today)
+        if (!exposureReady(next)) {
+          exposures[key] = next
+          continue
+        }
+        if (!target) {
+          if (newRoom <= 0) {
+            exposures[key] = next // keep the credit until there's room tomorrow
+            continue
+          }
+          newRoom--
+          reviews = [...reviews, { ...newReviewState(wordId, 'recognition', today), passive: true }]
+        } else {
+          reviews = reviews.map((r) => (r === target ? applyPassive(r) : r))
+        }
+        delete exposures[key]
+      }
+
+      const log = todayLog(state, today)
+      return upsertLog({ ...state, reviews, exposures }, { ...log, heard: (log.heard ?? 0) + wordIds.length })
     }
 
     case 'storyResult': {

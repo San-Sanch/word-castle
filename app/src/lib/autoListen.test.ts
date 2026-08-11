@@ -1,6 +1,13 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { buildAutoPlaylist, pauseAfterMs, GAP_AFTER_PAIR_MS } from './autoListen.js'
+import {
+  buildAutoPlaylist,
+  pauseAfterMs,
+  clampPauseSec,
+  GAP_AFTER_PAIR_MS,
+  PAUSE_MIN_SEC,
+  PAUSE_MAX_SEC,
+} from './autoListen.js'
 import { mulberry32 } from './exercises.js'
 import { newReviewState } from './srs.js'
 import type { ReviewState, Sentence, Word } from './types.js'
@@ -89,4 +96,14 @@ test('pause scales up for longer phrases and sentences', () => {
   assert.equal(pauseAfterMs('ילד'), 3000)
   assert.equal(pauseAfterMs('אני אוהב לשבת ולקרוא ספרים בבית'), 4500)
   assert.ok(GAP_AFTER_PAIR_MS >= 1000)
+})
+
+test('pauseAfterMs scales the chosen base, and pauses clamp to 1..20s', () => {
+  assert.equal(pauseAfterMs('ילד', 5000), 5000)
+  assert.equal(pauseAfterMs('אני אוהב לשבת ולקרוא ספרים בבית', 5000), 7500) // long: 1.5x
+  assert.equal(clampPauseSec(7, 3), 7)
+  assert.equal(clampPauseSec(0, 3), PAUSE_MIN_SEC)
+  assert.equal(clampPauseSec(99, 3), PAUSE_MAX_SEC)
+  assert.equal(clampPauseSec(NaN, 3), 3) // corrupt setting falls back
+  assert.equal(clampPauseSec(4.6, 3), 5)
 })

@@ -1,4 +1,4 @@
-import type { Direction, ReviewState, Word } from './types.js'
+import type { Direction, Exposure, ReviewState, Word } from './types.js'
 import { addDays } from './time.js'
 
 export const INTERVALS_DAYS = [0, 1, 2, 4, 8, 16, 32, 64]
@@ -13,21 +13,74 @@ export const GRADUATION_BOX = 3
 export const NEUTRAL_BIAS = 2
 export const MAX_BIAS = 4
 
+// ---------- passive progress (auto-listening) ----------
+// Listening is unverified: it earns progress on its own slower track that is
+// converted into boxes, and it can never reach the milestones that require
+// proof of knowledge.
+
+/** Exposures needed for one passive box credit. */
+export const HEARD_PER_CREDIT = 3
+/** ...and they must be spread over at least this many distinct days, so looping
+ * the same short playlist for an hour cannot buy progress. */
+export const HEARD_MIN_DAYS = 2
+
+/** The ceiling passive listening can raise each direction to. Both sit strictly
+ * below the threshold they approach: recall unlock (recognition box 2) and
+ * graduation (recall box 3) therefore always cost at least one real answer. */
+export const PASSIVE_MAX_BOX: Record<Direction, number> = {
+  recognition: RECALL_UNLOCK_BOX - 1,
+  recall: GRADUATION_BOX - 1,
+}
+
 export function newReviewState(wordId: string, direction: Direction, today: string): ReviewState {
   return { wordId, direction, box: 0, dueAt: today, lapses: 0, streak: 0, introducedAt: today }
 }
 
+/** Counts one exposure. Repeats within the same day add to `count` but not to
+ * `days`; only the days that matter for the rule are kept. */
+export function addExposure(prev: Exposure | undefined, today: string): Exposure {
+  const seen = prev?.days ?? []
+  const days = seen.includes(today) ? seen : [...seen, today].slice(-HEARD_MIN_DAYS)
+  return { count: (prev?.count ?? 0) + 1, days }
+}
+
+export function exposureReady(e: Exposure | undefined): boolean {
+  return !!e && e.count >= HEARD_PER_CREDIT && e.days.length >= HEARD_MIN_DAYS
+}
+
+export function passiveCapReached(state: ReviewState): boolean {
+  return state.box >= PASSIVE_MAX_BOX[state.direction]
+}
+
+/** One passive credit: a box step toward the direction's cap that deliberately
+ * does NOT move `dueAt` — the word stays in the review queue on its old
+ * schedule, so listening can never postpone being tested. */
+export function applyPassive(state: ReviewState): ReviewState {
+  if (passiveCapReached(state)) return state
+  return { ...state, box: state.box + 1, passive: true }
+}
+
+/** A real answer always settles the passive question, so the flag clears either
+ * way. A wrong first answer on a passively-raised word collapses the box to 0
+ * instead of the usual -2: that progress was never earned. */
 export function applyAnswer(state: ReviewState, correct: boolean, today: string): ReviewState {
   if (correct) {
     const box = Math.min(state.box + 1, MAX_BOX)
-    return { ...state, box, streak: state.streak + 1, dueAt: addDays(today, INTERVALS_DAYS[box]) }
+    return {
+      ...state,
+      box,
+      streak: state.streak + 1,
+      dueAt: addDays(today, INTERVALS_DAYS[box]),
+      passive: undefined,
+    }
   }
   return {
     ...state,
-    box: Math.max(state.box - 2, 0),
+    box: state.passive ? 0 : Math.max(state.box - 2, 0),
     lapses: state.lapses + 1,
     streak: 0,
     dueAt: today,
+    passive: undefined,
   }
 }
 

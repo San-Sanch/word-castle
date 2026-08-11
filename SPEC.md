@@ -241,3 +241,101 @@ Game engines remain in src/lib (tested, dormant); game UI files deleted (git has
 - **Settings:** SRS knobs, exercise toggles, profiles, backup. Attack setting removed.
 
 Session planning: `buildSessionPlan` gained a `topic` filter (due + new both scoped).
+
+## 16. Auto-listening counts toward progress (2026-07-26)
+
+Sanch: listening should feed `started` and `mastered` too — but slower, because it is
+unclear how much of it actually sticks. So listening earns progress on a separate,
+unverified track that converts into SRS boxes and stops short of every milestone that
+is supposed to prove knowledge.
+
+**Exposures.** `GameState.exposures` maps `wordId|direction` → `{count, days}`. One
+exposure is counted only when a pair plays all the way through (term, pause,
+translation) — skipping or pausing mid-pair earns nothing. A credit needs
+`HEARD_PER_CREDIT = 3` exposures spread over `HEARD_MIN_DAYS = 2` distinct days, so
+looping a short playlist for an hour buys nothing; only coming back another day does.
+Days are the real brake, and each further box step needs a fresh 2-day spread.
+
+**What a credit buys.**
+- No `ReviewState` yet → the word is introduced at box 0, i.e. it becomes **started**.
+  These passive introductions draw on the same `newWordsPerDay` budget as sessions, so
+  listening cannot flood tomorrow's review queue; an earned credit waits if the budget
+  is spent.
+- Already learning → box +1, capped by `PASSIVE_MAX_BOX`: recognition 1
+  (`RECALL_UNLOCK_BOX - 1`), recall 2 (`GRADUATION_BOX - 1`). Unlocking recall and
+  graduating therefore always cost at least one real answer. **Mastery is never passive.**
+- Forward listening credits `recognition`; ↔ Reverse credits `recall` (that is the
+  direction it trains), falling back to recognition while recall is still locked.
+- A credit raises the box but **never moves `dueAt`** — otherwise the more you listened,
+  the less you would be tested, which is exactly backwards.
+
+**Honesty.** A passively-raised box carries `passive: true` until an answer settles it.
+A wrong first answer collapses it to box 0 rather than the usual -2: that level was
+never earned. Stats show how many levels are unconfirmed, Vocabulary marks them 🎧, and
+`DayLog.heard` records pairs played per day.
+
+The playlist is built from a snapshot of `reviews` that only refreshes while stopped —
+crediting mid-playback would otherwise reorder the list under the running loop.
+
+### Background playback
+
+`speechSynthesis` is suspended when the screen locks (always on iOS) and the pauses run
+on `setTimeout`, which freezes in background — so live TTS can never play locked, and
+`MediaSession` (the lock-screen widget) needs a real media element it cannot provide.
+
+Shipped for now: **Screen Wake Lock** (`useWakeLock`) — the screen simply doesn't sleep
+while listening, re-acquired on becoming visible again. Not background playback.
+
+Deferred (Sanch: "потім будемо думати"): pre-render clips with `say -v Carmit` (the
+`fix-stress.mjs` pipeline already does this), concatenate ~15-20 pairs with their
+silences into one WAV blob client-side, play it through a single `<audio>` element with
+`MediaSession` handlers, and seek by offset for prev/next. That is the only route to
+real locked-screen playback, and the reason the `heard` action takes an array of word
+ids: a background player credits a whole stretch of audio at once on resume.
+
+## 17. Tunable listening pauses + duplicate collapsing (2026-07-26)
+
+**Pauses.** Auto-listening exposes both silences as dropdowns above "Done", labelled
+as Sanch named them: **a** = between the word and its translation, **b** = before the
+next word. Range 1-20 s, stored in Settings (`listenPauseSec` / `listenGapSec`), so
+they survive reloads and follow the profile. `pauseAfterMs` still stretches the chosen
+`a` by 1.5× for long phrases and sentences.
+
+**Duplicates.** The same word appeared as several cards — בית three times — because
+`buildWords` keys ids on `hebrewFull|translation|category`, and the CSV grew by merging
+several source documents: a curated row (`אבא (ז')אבות`) plus a bare row from a later
+import (`אבא`), sometimes under a different category. Two cards with the same Hebrew
+prompt are unanswerable in multiple choice and double-count topic progress.
+
+`dedupeWords` (a pipeline step, not part of `buildWords`) now collapses rows by base
+word: the survivor is the richest row (plural/gender), tie-broken by the category the
+group agrees on, then row order — which is why בית lands in Public Places (2 of its 3
+rows) rather than School / Ulpan. Same-language glosses are unioned ("sorry" +
+"excuse me/sorry" → "sorry / excuse me"); cross-language ones are left to the English
+override step. 52 of 1285 rows merged away, 1233 words remain, 0 duplicate base forms.
+
+Survivor ids are untouched, so their progress, nikud and transliteration all still
+match. `merged-ids.json` maps every dropped id to its survivor and
+`remapMergedProgress` (called from `deserializeState`, injected via `main.tsx`) folds
+progress recorded on a dropped twin into the survivor — keeping the further-along box
+per direction, preferring a verified box over a passive one, and not summing exposure
+counters. Without it, learning done on a duplicate card would vanish silently.
+
+A group whose same-language glosses share no meaning is reported as a possible
+homograph rather than merged silently. On the current data exactly one fires:
+ביצה "яйце" vs "Скрамбл" — the known Food & Drinks translation shift, not a homograph.
+
+### Auto-listening on the other courses (2026-07-26)
+
+The exercise is course-agnostic now. `Course` gained `translationSpeechLang` (the voice
+for the translation side: en-US for Hebrew, **uk-UA for English → Українська**, en-US
+for Español → English) — it used to be hard-coded to en-US, so Ukrainian translations
+were read out by an English voice. The card also stops forcing RTL for LTR courses, and
+for the Duolingo courses (`commaMeanings`) only the **first** meaning is spoken while the
+card still shows the whole list: reading "тайминг, ритмом, такт" aloud is noise.
+
+If the device has no voice for the translation language the screen says so, rather than
+letting the engine silently substitute a wrong-language voice.
+
+The started-words gate on the entry button is gone: listening is also how you first meet
+new words, so a freshly opened course would otherwise hide the exercise entirely.

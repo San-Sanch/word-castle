@@ -1,14 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Dispatch } from 'react'
-import type { GameAction, GameState } from '../lib/game'
-import type { Sentence, Word } from '../lib/types'
-import { buildAutoPlaylist, pauseAfterMs, GAP_AFTER_PAIR_MS, type ListenContent } from '../lib/autoListen'
-import { speakHebrew, speakText, canSpeakHebrew } from '../lib/speech'
+import { todayLog, type GameAction, type GameState } from '../lib/game'
+import { DEFAULT_SETTINGS, type Sentence, type Word } from '../lib/types'
+import {
+  buildAutoPlaylist,
+  pauseAfterMs,
+  clampPauseSec,
+  PAUSE_MIN_SEC,
+  PAUSE_MAX_SEC,
+  type ListenContent,
+} from '../lib/autoListen'
+import { speakHebrew, speakText, canSpeakHebrew, canSpeakLang } from '../lib/speech'
+import { translationParts } from '../lib/translations'
 import { fetchWordErrors } from '../lib/wixClient'
 import { useLongPress } from './useLongPress'
+import { useWakeLock, wakeLockSupported } from './useWakeLock'
 import { HoldRing } from './HoldRing'
 
 const TIMER_CHOICES = [0, 5, 10, 15, 30] // minutes, 0 = until stopped
+const PAUSE_CHOICES = Array.from(
+  { length: PAUSE_MAX_SEC - PAUSE_MIN_SEC + 1 },
+  (_, i) => PAUSE_MIN_SEC + i,
+)
 const CONTENT_OPTS: Array<[ListenContent, string]> = [
   ['words', 'Words'],
   ['both', 'Both'],
@@ -25,11 +38,17 @@ export default function AutoListenScreen(props: {
   sentences: Sentence[]
   today: string
   dispatch: Dispatch<GameAction>
+  /** BCP-47 language the translation side is spoken in (en-US for Hebrew, uk-UA for en-uk) */
+  translationLang: string
+  /** the term is right-to-left (Hebrew) */
+  rtl: boolean
+  /** translations are comma-separated meaning lists — speak only the first one */
+  splitTranslations: boolean
   onExit: () => void
   /** flag the current word as mispronounced (Hebrew course only) */
   onReportWord?: (word: Word) => void
 }) {
-  const { state, words, sentences, today, dispatch, onExit, onReportWord } = props
+  const { state, words, sentences, today, dispatch, translationLang, rtl, splitTranslations, onExit, onReportWord } = props
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
   const categories = useMemo(() => {
     const seen: string[] = []
@@ -43,18 +62,27 @@ export default function AutoListenScreen(props: {
   const [shuffled, setShuffled] = useState(false)
   const [shuffleNonce, setShuffleNonce] = useState(0)
 
+  const [idx, setIdx] = useState(0)
+  const [playing, setPlaying] = useState(false)
+
+  // Crediting exposures changes state.reviews mid-playback, which would reshuffle
+  // the list under the running loop (the card on screen would drift out of sync
+  // with the audio). So the playlist is built from a snapshot that only refreshes
+  // while stopped.
+  const [reviewsSnapshot, setReviewsSnapshot] = useState(state.reviews)
+  useEffect(() => {
+    if (!playing) setReviewsSnapshot(state.reviews)
+  }, [playing, state.reviews])
+
   // ordered by default (reviews first); a fresh random order only when shuffled
   const playlist = useMemo(
     () => buildAutoPlaylist({
-      words, reviews: state.reviews, sentences, content, category,
+      words, reviews: reviewsSnapshot, sentences, content, category,
       categoryBias: state.settings.categoryBias, shuffle: shuffled, rng: Math.random,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [words, sentences, state.reviews, content, category, state.settings.categoryBias, shuffled, shuffleNonce],
+    [words, sentences, reviewsSnapshot, content, category, state.settings.categoryBias, shuffled, shuffleNonce],
   )
-
-  const [idx, setIdx] = useState(0)
-  const [playing, setPlaying] = useState(false)
   const [reverse, setReverse] = useState(false)
   const [timerMin, setTimerMin] = useState(0)
   const [leftSec, setLeftSec] = useState<number | null>(null)
@@ -78,6 +106,25 @@ export default function AutoListenScreen(props: {
   playingRef.current = playing
   const playlistRef = useRef(playlist)
   playlistRef.current = playlist
+  const todayRef = useRef(today)
+  todayRef.current = today
+  const transLangRef = useRef(translationLang)
+  transLangRef.current = translationLang
+  const splitRef = useRef(splitTranslations)
+  splitRef.current = splitTranslations
+
+  // pause "a" (term → translation) and "b" (before the next word), in seconds
+  const pauseSec = clampPauseSec(state.settings.listenPauseSec, DEFAULT_SETTINGS.listenPauseSec)
+  const gapSec = clampPauseSec(state.settings.listenGapSec, DEFAULT_SETTINGS.listenGapSec)
+  const pausesRef = useRef({ pauseSec, gapSec })
+  pausesRef.current = { pauseSec, gapSec }
+  const setPause = (key: 'listenPauseSec' | 'listenGapSec', sec: number) =>
+    dispatch({ type: 'setSettings', settings: { ...state.settings, [key]: sec } })
+
+  // option B for background playback: the screen simply doesn't sleep while
+  // listening (speechSynthesis is suspended on lock, so real background audio
+  // needs pre-rendered clips — see SPEC §16)
+  const awake = useWakeLock(playing)
 
   const clearPending = () => {
     if (timeoutRef.current !== null) { window.clearTimeout(timeoutRef.current); timeoutRef.current = null }
@@ -97,19 +144,28 @@ export default function AutoListenScreen(props: {
       const n = ((j % list.length) + list.length) % list.length
       const item = list[n]
       setIdx(n)
+      // Duolingo courses list several meanings per word; reading the whole list
+      // aloud is noise, so only the first one is spoken (the card shows them all).
+      const spokenTranslation = translationParts(item.translation, splitRef.current)[0] ?? item.translation
+      const speakTranslation = (cb?: () => void) => speakText(spokenTranslation, transLangRef.current, cb)
       const first = (cb: () => void) =>
-        reverseRef.current ? speakText(item.translation, 'en-US', cb) : speakHebrew(item.hebrew, cb)
+        reverseRef.current ? speakTranslation(cb) : speakHebrew(item.hebrew, cb)
       const second = (cb: () => void) =>
-        reverseRef.current ? speakHebrew(item.hebrew, cb) : speakText(item.translation, 'en-US', cb)
+        reverseRef.current ? speakHebrew(item.hebrew, cb) : speakTranslation(cb)
       first(() => {
         if (runRef.current !== run) return
         timeoutRef.current = window.setTimeout(() => {
           if (runRef.current !== run) return
           second(() => {
             if (runRef.current !== run) return
-            timeoutRef.current = window.setTimeout(() => step(n + 1), GAP_AFTER_PAIR_MS)
+            // the pair played through: this is the only place an exposure counts,
+            // so skipping ahead or pausing mid-pair earns nothing
+            if (item.wordId) {
+              dispatch({ type: 'heard', wordIds: [item.wordId], reverse: reverseRef.current, today: todayRef.current })
+            }
+            timeoutRef.current = window.setTimeout(() => step(n + 1), pausesRef.current.gapSec * 1000)
           })
-        }, pauseAfterMs(reverseRef.current ? item.translation : item.hebrew))
+        }, pauseAfterMs(reverseRef.current ? item.translation : item.hebrew, pausesRef.current.pauseSec * 1000))
       })
     }
     step(start)
@@ -133,7 +189,11 @@ export default function AutoListenScreen(props: {
     } else {
       cancelSpeech()
       const it = list[n]
-      if (it) reverseRef.current ? speakText(it.translation, 'en-US') : speakHebrew(it.hebrew)
+      if (it) {
+        reverseRef.current
+          ? speakText(translationParts(it.translation, splitRef.current)[0] ?? it.translation, transLangRef.current)
+          : speakHebrew(it.hebrew)
+      }
     }
   }
 
@@ -182,6 +242,7 @@ export default function AutoListenScreen(props: {
   useEffect(() => () => stop(), [])
 
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
+  const heardToday = todayLog(state, today).heard ?? 0
 
   return (
     <div className="panel center autolisten">
@@ -189,6 +250,12 @@ export default function AutoListenScreen(props: {
 
       {!canSpeakHebrew() && (
         <p className="muted small">⚠️ No voice found for this course's language — install a system voice first.</p>
+      )}
+      {canSpeakHebrew() && !canSpeakLang(translationLang) && (
+        <p className="muted small">
+          ⚠️ No {translationLang} voice on this device — translations will be read by another
+          voice and sound wrong. Install one in the system speech settings.
+        </p>
       )}
 
       {playlist.length === 0 ? (
@@ -200,7 +267,7 @@ export default function AutoListenScreen(props: {
           <div className="autolisten-card">
             {cur && (
               <>
-                <div className="he big-he">
+                <div className={rtl ? 'he big-he' : 'big-he'}>
                   {cur.hebrew}
                   {cur.wordId && flaggedIds.has(cur.wordId) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
                 </div>
@@ -225,6 +292,14 @@ export default function AutoListenScreen(props: {
             <button className="tbtn" title="Next" onClick={() => goTo(1)}>›</button>
             <button className="tbtn" title="Forward 5" onClick={() => goTo(5)}>+5</button>
           </div>
+
+          <p className="muted small al-hint">
+            {heardToday > 0 && <>🎧 {heardToday} played today · </>}
+            {playing && awake && 'screen stays awake'}
+            {playing && !awake && (wakeLockSupported()
+              ? '⚠️ the screen lock was refused (battery saver / low power mode?) — playback stops when the screen locks'
+              : '⚠️ this browser can’t hold the screen awake — playback stops when the screen locks')}
+          </p>
         </>
       )}
 
@@ -262,6 +337,20 @@ export default function AutoListenScreen(props: {
             <span className="switch-label">🔀 Shuffle</span>
             <input type="checkbox" checked={shuffled} onChange={toggleShuffle} />
             <span className="slider" />
+          </label>
+        </div>
+        <div className="al-grid">
+          <label className="al-field" title="a — pause between the word and its translation (longer phrases get 1.5×)">
+            <span className="al-ico pause-key">a</span>
+            <select value={pauseSec} onChange={(e) => setPause('listenPauseSec', Number(e.target.value))}>
+              {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
+            </select>
+          </label>
+          <label className="al-field" title="b — pause after the translation, before the next word">
+            <span className="al-ico pause-key">b</span>
+            <select value={gapSec} onChange={(e) => setPause('listenGapSec', Number(e.target.value))}>
+              {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
+            </select>
           </label>
         </div>
       </div>

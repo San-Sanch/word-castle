@@ -32,6 +32,17 @@ export interface ReviewState {
   lapses: number
   streak: number
   introducedAt: string // YYYY-MM-DD
+  /** the current box was granted by passive listening and no real answer has
+   * confirmed it yet — see PASSIVE_MAX_BOX in srs.ts */
+  passive?: boolean
+}
+
+/** Passive listening exposures for one word+direction, awaiting a box credit. */
+export interface Exposure {
+  /** exposures since the last credit */
+  count: number
+  /** the distinct days those exposures happened on (trimmed, newest kept) */
+  days: string[]
 }
 
 export interface Wallet {
@@ -112,6 +123,10 @@ export interface Settings {
   reverse: boolean
   /** per-category new-word appetite: 0 = most new words … 2 = neutral … 4 = repeat only */
   categoryBias: Record<string, number>
+  /** auto-listening pause "a": seconds between the term and its translation */
+  listenPauseSec: number
+  /** auto-listening pause "b": seconds after the translation, before the next word */
+  listenGapSec: number
   exercises: {
     choice: boolean
     blank: boolean
@@ -130,6 +145,8 @@ export const DEFAULT_SETTINGS: Settings = {
   studyMode: 'mixed',
   reverse: false,
   categoryBias: {},
+  listenPauseSec: 3,
+  listenGapSec: 2,
   exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 
@@ -143,6 +160,8 @@ export interface DayLog {
   /** highest time-bonus tier minute mark already paid out (0, 20, 40, 60, 80...) */
   timeBonusPaidUpTo: number
   graduated: number
+  /** word pairs fully played in auto-listening (optional: older logs lack it) */
+  heard?: number
 }
 
 export type AttackKind = 'session' | 'raid'

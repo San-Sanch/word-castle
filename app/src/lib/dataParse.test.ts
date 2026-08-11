@@ -6,7 +6,10 @@ import {
   buildWords,
   buildSentencePool,
   matchWordsInSentence,
+  dedupeWords,
+  meaningParts,
 } from './dataParse.js'
+import type { Word } from './types.js'
 
 // --- CSV parsing (fixtures are verbatim rows from hebrew_words.csv / hebrew_sentences.csv) ---
 
@@ -137,4 +140,62 @@ test('matchWordsInSentence: exact token and prefixed token match single-token wo
   // ו/ה/ב/ל/מ/ש prefix: היין matches יין
   const m2 = matchWordsInSentence('זה היין שלי', words)
   assert.deepEqual(m2.matches, [{ tokenIndex: 1, wordId: 'w2' }])
+})
+
+// --- Duplicate collapsing ---
+
+const wordsFrom = (rows: string[][]): Word[] => buildWords([['h', 'u', 'c', 'o'], ...rows]).words
+
+test('dedupeWords: curated row wins over the bare import, ids stay stable', () => {
+  const words = wordsFrom([
+    ["אבא (ז')אבות", 'dad', 'Family', '1'],
+    ['אבא', 'father', 'Family', '1'],
+  ])
+  const curatedId = words[0].id
+  const { words: out, merged } = dedupeWords(words)
+  assert.equal(out.length, 1)
+  assert.equal(out[0].id, curatedId, 'the survivor keeps its id so progress still matches')
+  assert.equal(out[0].plural, 'אבות')
+  assert.equal(out[0].translation, 'dad / father', 'both glosses are kept')
+  assert.deepEqual(merged, { [words[1].id]: curatedId })
+})
+
+test('dedupeWords: among equally rich rows, the category the group agrees on wins', () => {
+  // בית in the real CSV: one School/Ulpan row and two Public Places rows
+  const words = wordsFrom([
+    ['בית (זי)בתים', 'house / home', 'School / Ulpan', '0'],
+    ['בית (ז) בתים', 'house / home', 'Public Places', '0'],
+    ['בית', 'house/home', 'Public Places', '0'],
+  ])
+  const { words: out, merged } = dedupeWords(words)
+  assert.equal(out.length, 1)
+  assert.equal(out[0].category, 'Public Places')
+  assert.equal(out[0].translation, 'house / home', 'reordered slash variants are one meaning')
+  assert.equal(Object.keys(merged).length, 2)
+})
+
+test('dedupeWords: different base words are never merged, order is preserved', () => {
+  const words = wordsFrom([
+    ['בית', 'house', 'Public Places', '0'],
+    ['בית ספר', 'school', 'Public Places', '0'],
+    ['בית חולים', 'hospital', 'Public Places', '0'],
+  ])
+  const { words: out, merged } = dedupeWords(words)
+  assert.deepEqual(out.map((w) => w.hebrew), ['בית', 'בית ספר', 'בית חולים'])
+  assert.deepEqual(merged, {})
+})
+
+test('dedupeWords: a group with no shared meaning is merged but reported', () => {
+  const { suspicious } = dedupeWords(wordsFrom([
+    ['ספר', 'book', 'School / Ulpan', '0'],
+    ['ספר', 'barber', 'Public Places', '0'],
+  ]))
+  assert.equal(suspicious.length, 1)
+  assert.deepEqual(suspicious[0].meanings, ['book', 'barber'])
+})
+
+test('meaningParts normalizes slash and comma lists', () => {
+  assert.deepEqual(meaningParts('sorry / excuse me'), ['sorry', 'excuse me'])
+  assert.deepEqual(meaningParts('Class/Classroom'), ['class', 'classroom'])
+  assert.deepEqual(meaningParts('mother'), ['mother'])
 })

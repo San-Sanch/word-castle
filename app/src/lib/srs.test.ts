@@ -7,6 +7,15 @@ import {
   shouldActivateRecall,
   isGraduated,
   buildSessionPlan,
+  addExposure,
+  exposureReady,
+  applyPassive,
+  passiveCapReached,
+  HEARD_PER_CREDIT,
+  HEARD_MIN_DAYS,
+  PASSIVE_MAX_BOX,
+  RECALL_UNLOCK_BOX,
+  GRADUATION_BOX,
 } from './srs.js'
 import type { ReviewState, Word } from './types.js'
 
@@ -159,4 +168,68 @@ test('buildSessionPlan: respects sessionSize and introducedToday', () => {
   })
   assert.equal(plan.dueStates.length, 2)
   assert.deepEqual(plan.newWordIds, []) // no room and daily new limit reached
+})
+
+// ---------- passive progress (auto-listening) ----------
+
+test('passive caps sit strictly below the milestones they approach', () => {
+  assert.ok(PASSIVE_MAX_BOX.recognition < RECALL_UNLOCK_BOX) // recall unlock needs a real answer
+  assert.ok(PASSIVE_MAX_BOX.recall < GRADUATION_BOX) // mastery needs a real answer
+})
+
+test('addExposure: repeats within a day count once toward the day rule', () => {
+  let e = addExposure(undefined, '2026-07-04')
+  e = addExposure(e, '2026-07-04')
+  e = addExposure(e, '2026-07-04')
+  assert.equal(e.count, 3)
+  assert.deepEqual(e.days, ['2026-07-04'])
+  assert.equal(exposureReady(e), false) // enough reps, but all on one day
+  e = addExposure(e, '2026-07-05')
+  assert.equal(exposureReady(e), true)
+})
+
+test('exposureReady needs both the rep count and the day spread', () => {
+  let e = addExposure(undefined, '2026-07-04')
+  e = addExposure(e, '2026-07-05')
+  assert.equal(e.count, 2)
+  assert.equal(exposureReady(e), false) // two days, too few reps
+  assert.ok(HEARD_PER_CREDIT > HEARD_MIN_DAYS)
+})
+
+test('applyPassive: box up, dueAt untouched, flagged unverified', () => {
+  const s = { ...newReviewState('w1', 'recognition', '2026-07-01'), dueAt: '2026-07-02' }
+  const p = applyPassive(s)
+  assert.equal(p.box, 1)
+  assert.equal(p.dueAt, '2026-07-02') // listening never postpones the review
+  assert.equal(p.passive, true)
+})
+
+test('applyPassive: stops dead at the direction cap', () => {
+  const rec = { ...newReviewState('w1', 'recognition', '2026-07-01'), box: PASSIVE_MAX_BOX.recognition }
+  assert.ok(passiveCapReached(rec))
+  assert.equal(applyPassive(rec).box, PASSIVE_MAX_BOX.recognition)
+  const rc = { ...newReviewState('w1', 'recall', '2026-07-01'), box: PASSIVE_MAX_BOX.recall }
+  assert.equal(applyPassive(rc).box, PASSIVE_MAX_BOX.recall)
+  assert.equal(isGraduated(applyPassive(rc)), false) // never graduates passively
+})
+
+test('a wrong answer collapses an unverified passive box to 0', () => {
+  const s = applyPassive({ ...newReviewState('w1', 'recall', '2026-07-01'), box: 1 })
+  assert.equal(s.box, 2)
+  const wrong = applyAnswer(s, false, '2026-07-04')
+  assert.equal(wrong.box, 0) // not the usual -2
+  assert.equal(wrong.passive, undefined)
+})
+
+test('a correct answer confirms the passive box and keeps normal scheduling', () => {
+  const s = applyPassive(newReviewState('w1', 'recognition', '2026-07-01'))
+  const ok = applyAnswer(s, true, '2026-07-04')
+  assert.equal(ok.box, 2)
+  assert.equal(ok.passive, undefined)
+  assert.equal(ok.dueAt, '2026-07-06') // +2 days, the box-2 interval
+})
+
+test('a verified word falls the usual two boxes', () => {
+  const s = { ...newReviewState('w1', 'recognition', '2026-07-01'), box: 4 }
+  assert.equal(applyAnswer(s, false, '2026-07-04').box, 2)
 })
