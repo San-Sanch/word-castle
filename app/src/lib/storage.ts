@@ -60,6 +60,7 @@ export function deserializeState(json: string): GameState {
     unlockedCategories: raw.unlockedCategories ?? null,
     storyScores: raw.storyScores ?? {},
     exposures: raw.exposures ?? {},
+    listenRatings: raw.listenRatings ?? {},
   } as GameState
   return remapMergedProgress(state, mergedIds)
 }

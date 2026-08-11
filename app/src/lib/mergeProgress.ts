@@ -25,7 +25,8 @@ export function remapMergedProgress(state: GameState, merged: MergedIds): GameSt
   const needed =
     state.reviews.some((r) => touches(r.wordId)) ||
     state.graduatedIds.some(touches) ||
-    Object.keys(state.exposures).some((k) => touches(k.split('|')[0]))
+    Object.keys(state.exposures).some((k) => touches(k.split('|')[0])) ||
+    Object.keys(state.listenRatings).some(touches)
   if (!needed) return state
 
   const to = (id: string) => merged[id] ?? id
@@ -48,10 +49,18 @@ export function remapMergedProgress(state: GameState, merged: MergedIds): GameSt
     exposures[next] = !prev || e.count > prev.count ? e : prev
   }
 
+  // a rating set on the surviving word itself outranks one from a merged twin
+  const listenRatings: Record<string, number> = {}
+  for (const [wordId, rating] of Object.entries(state.listenRatings)) {
+    const next = to(wordId)
+    if (next === wordId || listenRatings[next] === undefined) listenRatings[next] = rating
+  }
+
   return {
     ...state,
     reviews: [...byKey.values()],
     graduatedIds: [...new Set(state.graduatedIds.map(to))],
     exposures,
+    listenRatings,
   }
 }

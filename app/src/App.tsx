@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import type { Sentence, Word } from './lib/types'
-import { gameReducer, newPlayerState, todayLog, type GameState } from './lib/game'
+import { gameReducer, newPlayerState, type GameState } from './lib/game'
 import { loadState, saveState } from './lib/storage'
 import { loadCourseState, saveCourseState, migrateLocalToCloud } from './lib/cloudStore'
 import { isLoggedIn, startLogin, completeLoginIfCallback, logout, makeCloudBackend, reportWordError, clearWordError } from './lib/wixClient'
@@ -179,9 +179,6 @@ export default function App() {
   if (auth === 'checking' || !loaded) return <div className="panel">Loading…</div>
 
   const today = todayISO()
-  const log = todayLog(state, today)
-  const goalSec = state.settings.dailyGoalMinutes * 60
-  const goalPct = Math.min(100, Math.round((log.activeSeconds / goalSec) * 100))
   const streak = computeStreak(state.dayLogs, today)
 
   const startSession = (t: string | null, mode: SessionMode = 'normal') => {
@@ -193,42 +190,11 @@ export default function App() {
 
   return (
     <>
-      {screen !== 'session' && (
-        <div className="header">
-          <span className="title">{course.flag} Word Castle</span>
-          <select
-            className="profile-select"
-            value={courseId}
-            onChange={(e) => switchCourse(e.target.value)}
-            title="Course / language"
-          >
-            {COURSES.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.flag} {c.label}
-              </option>
-            ))}
-          </select>
-          {auth === 'in' ? (
-            <button className="ghost" onClick={logout} title="Signed in — click to log out">☁️ ✓</button>
-          ) : (
-            <button className="ghost" onClick={startLogin} title="Sign in to sync progress across devices">☁️ Sign in</button>
-          )}
-          <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
-          <span className="stat" title="Day streak">🔥 {streak}</span>
-          <div className="goalbar" title={`${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
-            <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
-          </div>
-          <span className="goal-label">
-            Daily goal: {Math.floor(log.activeSeconds / 60)} / {state.settings.dailyGoalMinutes} min
-            {goalPct >= 100 ? ' ✓' : ''}
-          </span>
-        </div>
-      )}
-
       {screen === 'learn' && (
         <LearnScreen
           state={state}
           words={words}
+          streak={streak}
           caps={{ sentences: sentences.length > 0, stories: course.stories }}
           today={today}
           onStartSession={startSession}
@@ -268,14 +234,23 @@ export default function App() {
           translationLang={course.translationSpeechLang}
           rtl={course.rtl}
           splitTranslations={course.commaMeanings}
-          onExit={() => setScreen('learn')}
           onReportWord={course.id === 'hebrew' ? (w) => { reportWordError(w).catch((e) => console.error('report failed', e)) } : undefined}
         />
       )}
       {screen === 'vocabulary' && <VocabularyScreen state={state} words={words} errorsEnabled={course.id === 'hebrew'} />}
       {screen === 'stats' && <StatsScreen state={state} words={words} today={today} />}
       {screen === 'settings' && (
-        <SettingsScreen state={state} dispatch={dispatch} words={words} loggedIn={auth === 'in'} onLogin={startLogin} onLogout={logout} />
+        <SettingsScreen
+          state={state}
+          dispatch={dispatch}
+          words={words}
+          loggedIn={auth === 'in'}
+          onLogin={startLogin}
+          onLogout={logout}
+          courses={COURSES.map((c) => ({ id: c.id, label: c.label, flag: c.flag }))}
+          courseId={courseId}
+          onSwitchCourse={switchCourse}
+        />
       )}
 
       {screen !== 'session' && screen !== 'speed' && (

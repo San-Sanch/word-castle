@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Dispatch } from 'react'
-import { todayLog, type GameAction, type GameState } from '../lib/game'
+import { todayLog, LISTEN_RATING_MAX, LISTEN_RATING_MIN, type GameAction, type GameState } from '../lib/game'
 import { DEFAULT_SETTINGS, type Sentence, type Word } from '../lib/types'
 import {
   buildAutoPlaylist,
@@ -27,6 +27,8 @@ const CONTENT_OPTS: Array<[ListenContent, string]> = [
   ['both', 'Both'],
   ['sentences', 'Sentences'],
 ]
+/** easy-vote (▼) advances to the next word after this much silence */
+const EASY_ADVANCE_MS = 500
 
 function haptic() {
   try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
@@ -44,11 +46,10 @@ export default function AutoListenScreen(props: {
   rtl: boolean
   /** translations are comma-separated meaning lists — speak only the first one */
   splitTranslations: boolean
-  onExit: () => void
   /** flag the current word as mispronounced (Hebrew course only) */
   onReportWord?: (word: Word) => void
 }) {
-  const { state, words, sentences, today, dispatch, translationLang, rtl, splitTranslations, onExit, onReportWord } = props
+  const { state, words, sentences, today, dispatch, translationLang, rtl, splitTranslations, onReportWord } = props
   const wordById = useMemo(() => new Map(words.map((w) => [w.id, w])), [words])
   const categories = useMemo(() => {
     const seen: string[] = []
@@ -59,11 +60,14 @@ export default function AutoListenScreen(props: {
 
   const [content, setContent] = useState<ListenContent>('words')
   const [category, setCategory] = useState<string | null>(null)
-  const [shuffled, setShuffled] = useState(false)
+  const [shuffled, setShuffled] = useState(true)
   const [shuffleNonce, setShuffleNonce] = useState(0)
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   const [idx, setIdx] = useState(0)
   const [playing, setPlaying] = useState(false)
+  // translation stays hidden until the card is tapped; hides again on the next word
+  const [revealed, setRevealed] = useState(false)
 
   // Crediting exposures changes state.reviews mid-playback, which would reshuffle
   // the list under the running loop (the card on screen would drift out of sync
@@ -74,14 +78,21 @@ export default function AutoListenScreen(props: {
     if (!playing) setReviewsSnapshot(state.reviews)
   }, [playing, state.reviews])
 
+  const ratedOrder = state.settings.listenRatedOrder ?? true
+  // difficulty votes reorder the NEXT playlist build (entering the screen,
+  // toggling shuffle/filters) — never the one currently on screen
+  const ratingsRef = useRef(state.listenRatings)
+  ratingsRef.current = state.listenRatings
+
   // ordered by default (reviews first); a fresh random order only when shuffled
   const playlist = useMemo(
     () => buildAutoPlaylist({
       words, reviews: reviewsSnapshot, sentences, content, category,
-      categoryBias: state.settings.categoryBias, shuffle: shuffled, rng: Math.random,
+      categoryBias: state.settings.categoryBias, shuffle: shuffled,
+      ratings: ratingsRef.current, ratedOrder, rng: Math.random,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [words, sentences, reviewsSnapshot, content, category, state.settings.categoryBias, shuffled, shuffleNonce],
+    [words, sentences, reviewsSnapshot, content, category, state.settings.categoryBias, shuffled, shuffleNonce, ratedOrder],
   )
   const [reverse, setReverse] = useState(false)
   const [timerMin, setTimerMin] = useState(0)
@@ -197,7 +208,28 @@ export default function AutoListenScreen(props: {
     }
   }
 
+  const cur = playlist.length > 0 ? playlist[Math.min(idx, playlist.length - 1)] : undefined
+  const curRating = cur?.wordId ? state.listenRatings[cur.wordId] ?? 0 : 0
+
+  /** ▲ harder to recognize: vote up and replay the current pair to lock it in */
+  const rateHard = () => {
+    if (!cur?.wordId) return
+    dispatch({ type: 'rateListen', wordId: cur.wordId, delta: 1 })
+    haptic()
+    goTo(0)
+  }
+  /** ▼ easy: vote down, then move on after a short beat of silence */
+  const rateEasy = () => {
+    if (!cur?.wordId) return
+    dispatch({ type: 'rateListen', wordId: cur.wordId, delta: -1 })
+    haptic()
+    cancelSpeech()
+    timeoutRef.current = window.setTimeout(() => goTo(1), EASY_ADVANCE_MS)
+  }
+
   const toggleShuffle = () => setShuffled((s) => { if (!s) setShuffleNonce((n) => n + 1); return !s })
+  const setRatedOrder = (on: boolean) =>
+    dispatch({ type: 'setSettings', settings: { ...state.settings, listenRatedOrder: on } })
 
   // changing filters / order rebuilds the list — restart cleanly from the top
   useEffect(() => {
@@ -206,9 +238,10 @@ export default function AutoListenScreen(props: {
     setIdx(0)
     idxRef.current = 0
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content, category, shuffled, shuffleNonce])
+  }, [content, category, shuffled, shuffleNonce, ratedOrder])
 
-  const cur = playlist.length > 0 ? playlist[Math.min(idx, playlist.length - 1)] : undefined
+  useEffect(() => { setRevealed(false) }, [idx])
+
   const canReport = !!onReportWord
   const flagCurrent = () => {
     if (!cur?.wordId || !onReportWord) return
@@ -246,7 +279,16 @@ export default function AutoListenScreen(props: {
 
   return (
     <div className="panel center autolisten">
-      <h2 style={{ marginTop: 0 }}>🎧 Auto listening</h2>
+      <div className="al-topbar">
+        <span className="al-title">🎧 Listening</span>
+        <span className="muted small al-topinfo">
+          {leftSec !== null && <b className="timer-left">{fmt(leftSec)} </b>}
+          {heardToday > 0 && <>{heardToday} today</>}
+        </span>
+        <button className="icon-btn" title="Listening settings" aria-label="Listening settings" onClick={() => setSheetOpen(true)}>
+          ⚙
+        </button>
+      </div>
 
       {!canSpeakHebrew() && (
         <p className="muted small">⚠️ No voice found for this course's language — install a system voice first.</p>
@@ -264,22 +306,56 @@ export default function AutoListenScreen(props: {
         </p>
       ) : (
         <>
-          <div className="autolisten-card">
+          <div
+            className="autolisten-card tappable"
+            role="button"
+            aria-label={revealed ? 'Hide translation' : 'Show translation'}
+            onClick={() => setRevealed((r) => !r)}
+          >
             {cur && (
               <>
                 <div className={rtl ? 'he big-he' : 'big-he'}>
                   {cur.hebrew}
                   {cur.wordId && flaggedIds.has(cur.wordId) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
                 </div>
-                <div className="muted">{cur.translation}</div>
+                <div className={`al-translation ${revealed ? '' : 'hidden'}`}>
+                  {revealed ? cur.translation : 'tap to reveal'}
+                </div>
               </>
             )}
-            <div className="autolisten-pos small">{idx + 1} / {playlist.length}</div>
+            <div className="autolisten-pos small">
+              <span>{idx + 1} / {playlist.length}</span>
+              {curRating !== 0 && (
+                <span className={`rating-badge ${curRating > 0 ? 'hard' : 'easy'}`}>
+                  {curRating > 0 ? `+${curRating}` : curRating}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="rate-row" role="group" aria-label="Recognition difficulty">
+            <button
+              className="rate-btn easy"
+              disabled={!cur?.wordId || curRating <= LISTEN_RATING_MIN}
+              title="Easy to recognize — plays later"
+              onClick={rateEasy}
+            >
+              <span className="rate-arrows">⌄⌄</span>
+              <span className="rate-label">easy</span>
+            </button>
+            <button
+              className="rate-btn hard"
+              disabled={!cur?.wordId || curRating >= LISTEN_RATING_MAX}
+              title="Hard to recognize — plays first"
+              onClick={rateHard}
+            >
+              <span className="rate-arrows">⌃⌃</span>
+              <span className="rate-label">hard</span>
+            </button>
           </div>
 
           <div className="transport" role="group" aria-label="Playback controls">
-            <button className="tbtn" title="Back 5" onClick={() => goTo(-5)}>−5</button>
-            <button className="tbtn" title="Previous" onClick={() => goTo(-1)}>‹</button>
+            <button className="tbtn" title="Previous" aria-label="Previous" onClick={() => goTo(-1)}>‹</button>
             <button
               className="play holdable"
               title={canReport ? 'Tap: play / pause · Hold: flag pronunciation' : 'Play / pause'}
@@ -289,12 +365,10 @@ export default function AutoListenScreen(props: {
               {playing ? '⏸' : '▶'}
               {pressing && <HoldRing ms={ms} />}
             </button>
-            <button className="tbtn" title="Next" onClick={() => goTo(1)}>›</button>
-            <button className="tbtn" title="Forward 5" onClick={() => goTo(5)}>+5</button>
+            <button className="tbtn" title="Next" aria-label="Next" onClick={() => goTo(1)}>›</button>
           </div>
 
           <p className="muted small al-hint">
-            {heardToday > 0 && <>🎧 {heardToday} played today · </>}
             {playing && awake && 'screen stays awake'}
             {playing && !awake && (wakeLockSupported()
               ? '⚠️ the screen lock was refused (battery saver / low power mode?) — playback stops when the screen locks'
@@ -303,59 +377,76 @@ export default function AutoListenScreen(props: {
         </>
       )}
 
-      <div className="al-settings">
-        {hasSentences && (
-          <div className="segmented full" role="group" aria-label="What to play">
-            {CONTENT_OPTS.map(([val, label]) => (
-              <button key={val} className={content === val ? 'on' : ''} onClick={() => setContent(val)}>{label}</button>
-            ))}
-          </div>
-        )}
-        <div className="al-grid">
-          <label className="al-field" title="Which topic to listen to">
-            <span className="al-ico">📂</span>
-            <select value={category ?? ''} onChange={(e) => setCategory(e.target.value || null)}>
-              <option value="">All topics</option>
-              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </label>
-          <label className="al-field" title="Auto-stop timer">
-            <span className="al-ico">⏱</span>
-            <select value={timerMin} onChange={(e) => setTimerMin(Number(e.target.value))}>
-              {TIMER_CHOICES.map((m) => <option key={m} value={m}>{m === 0 ? 'No timer' : `${m} min`}</option>)}
-            </select>
-            {leftSec !== null && <b className="timer-left">{fmt(leftSec)}</b>}
-          </label>
-        </div>
-        <div className="al-grid">
-          <label className="switch al-switch" title="Swap order: translation first">
-            <span className="switch-label">↔ Reverse</span>
-            <input type="checkbox" checked={reverse} onChange={() => setReverse((r) => !r)} />
-            <span className="slider" />
-          </label>
-          <label className="switch al-switch" title="Off: reviews first, in order · On: random order">
-            <span className="switch-label">🔀 Shuffle</span>
-            <input type="checkbox" checked={shuffled} onChange={toggleShuffle} />
-            <span className="slider" />
-          </label>
-        </div>
-        <div className="al-grid">
-          <label className="al-field" title="a — pause between the word and its translation (longer phrases get 1.5×)">
-            <span className="al-ico pause-key">a</span>
-            <select value={pauseSec} onChange={(e) => setPause('listenPauseSec', Number(e.target.value))}>
-              {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
-            </select>
-          </label>
-          <label className="al-field" title="b — pause after the translation, before the next word">
-            <span className="al-ico pause-key">b</span>
-            <select value={gapSec} onChange={(e) => setPause('listenGapSec', Number(e.target.value))}>
-              {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
-            </select>
-          </label>
-        </div>
-      </div>
+      {sheetOpen && (
+        <div className="sheet-backdrop" onClick={() => setSheetOpen(false)}>
+          <div className="sheet" role="dialog" aria-label="Listening settings" onClick={(e) => e.stopPropagation()}>
+            <div className="sheet-handle" />
+            <div className="sheet-head">
+              <h3>Listening settings</h3>
+              <button className="icon-btn" aria-label="Close" onClick={() => setSheetOpen(false)}>✕</button>
+            </div>
 
-      <button className="ghost done-link" onClick={() => { stop(); onExit() }}>← Done</button>
+            {hasSentences && (
+              <div className="segmented full" role="group" aria-label="What to play">
+                {CONTENT_OPTS.map(([val, label]) => (
+                  <button key={val} className={content === val ? 'on' : ''} onClick={() => setContent(val)}>{label}</button>
+                ))}
+              </div>
+            )}
+            <div className="al-grid">
+              <label className="al-field" title="Which topic to listen to">
+                <span className="al-ico">📂</span>
+                <select value={category ?? ''} onChange={(e) => setCategory(e.target.value || null)}>
+                  <option value="">All topics</option>
+                  {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </label>
+              <label className="al-field" title="Auto-stop timer">
+                <span className="al-ico">⏱</span>
+                <select value={timerMin} onChange={(e) => setTimerMin(Number(e.target.value))}>
+                  {TIMER_CHOICES.map((m) => <option key={m} value={m}>{m === 0 ? 'No timer' : `${m} min`}</option>)}
+                </select>
+              </label>
+            </div>
+            <div className="al-grid">
+              <label className="switch al-switch" title="Off: reviews first, in order · On: random order">
+                <span className="switch-label">🔀 Shuffle</span>
+                <input type="checkbox" checked={shuffled} onChange={toggleShuffle} />
+                <span className="slider" />
+              </label>
+              <label
+                className={`switch al-switch ${shuffled ? '' : 'disabled'}`}
+                title="Shuffle plays your hardest-rated words first and the easiest last"
+              >
+                <span className="switch-label">🎯 Hardest first</span>
+                <input type="checkbox" checked={ratedOrder} disabled={!shuffled} onChange={() => setRatedOrder(!ratedOrder)} />
+                <span className="slider" />
+              </label>
+            </div>
+            <div className="al-grid">
+              <label className="switch al-switch" title="Swap order: translation first">
+                <span className="switch-label">↔ Reverse</span>
+                <input type="checkbox" checked={reverse} onChange={() => setReverse((r) => !r)} />
+                <span className="slider" />
+              </label>
+            </div>
+            <div className="al-grid">
+              <label className="al-field" title="a — pause between the word and its translation (longer phrases get 1.5×)">
+                <span className="al-ico pause-key">a</span>
+                <select value={pauseSec} onChange={(e) => setPause('listenPauseSec', Number(e.target.value))}>
+                  {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
+                </select>
+              </label>
+              <label className="al-field" title="b — pause after the translation, before the next word">
+                <span className="al-ico pause-key">b</span>
+                <select value={gapSec} onChange={(e) => setPause('listenGapSec', Number(e.target.value))}>
+                  {PAUSE_CHOICES.map((n) => <option key={n} value={n}>{n}s</option>)}
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

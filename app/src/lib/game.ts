@@ -72,7 +72,12 @@ export interface GameState {
   storyScores: Record<string, number>
   /** passive listening exposures, keyed `wordId|direction` (see srs.ts) */
   exposures: Record<string, Exposure>
+  /** auto-listening recognition difficulty per word: -3 (easy) .. +3 (hard), absent = neutral */
+  listenRatings: Record<string, number>
 }
+
+export const LISTEN_RATING_MIN = -3
+export const LISTEN_RATING_MAX = 3
 
 export function initialGameState(): GameState {
   return {
@@ -93,6 +98,7 @@ export function initialGameState(): GameState {
     unlockedCategories: null,
     storyScores: {},
     exposures: {},
+    listenRatings: {},
   }
 }
 
@@ -160,6 +166,8 @@ export type GameAction =
   /** word pairs fully played in auto-listening (batched: a future background
    * player credits a whole stretch of audio at once) */
   | { type: 'heard'; wordIds: string[]; reverse: boolean; today: string }
+  /** auto-listening difficulty vote: +1 = hard to recognize, -1 = easy */
+  | { type: 'rateListen'; wordId: string; delta: 1 | -1 }
   | { type: 'storyResult'; storyId: string; correct: number }
   | { type: 'bonusCoins'; amount: number; today: string }
   | { type: 'activeTime'; seconds: number; today: string }
@@ -301,6 +309,13 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
       const log = todayLog(state, today)
       return upsertLog({ ...state, reviews, exposures }, { ...log, heard: (log.heard ?? 0) + wordIds.length })
+    }
+
+    case 'rateListen': {
+      const cur = state.listenRatings[action.wordId] ?? 0
+      const next = Math.min(LISTEN_RATING_MAX, Math.max(LISTEN_RATING_MIN, cur + action.delta))
+      if (next === cur) return state
+      return { ...state, listenRatings: { ...state.listenRatings, [action.wordId]: next } }
     }
 
     case 'storyResult': {

@@ -127,6 +127,8 @@ export interface Settings {
   listenPauseSec: number
   /** auto-listening pause "b": seconds after the translation, before the next word */
   listenGapSec: number
+  /** auto-listening shuffle plays hardest-rated words first, easiest last */
+  listenRatedOrder: boolean
   exercises: {
     choice: boolean
     blank: boolean
@@ -147,6 +149,7 @@ export const DEFAULT_SETTINGS: Settings = {
   categoryBias: {},
   listenPauseSec: 3,
   listenGapSec: 2,
+  listenRatedOrder: true,
   exercises: { choice: true, blank: true, match: true, lightning: true, sound: true },
 }
 

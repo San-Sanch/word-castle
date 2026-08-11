@@ -42,3 +42,10 @@
   decided all should speak plain Dicta nikud without respelling hacks (like
   בית) and slash entries get a period pause. Done same day; all 18 flags set
   to `fixed` — anything still wrong will come back via re-reporting.
+
+- **Hardware-button rating for auto-listening** (2026-08-11): Sanch wants
+  iPhone volume up/down to vote hard/easy. Impossible in a web app — iOS gives
+  browsers no volume-button events. Possible partial: Media Session API can
+  catch next/previous-track from AirPods/lock screen, but speechSynthesis
+  isn't a media session on iOS, so it needs a silent looping <audio> anchor —
+  fragile hack. Deferred until Sanch confirms he wants it tried.

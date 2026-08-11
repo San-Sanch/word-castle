@@ -288,3 +288,18 @@ test('heard: a wrong answer wipes the unverified passive level', () => {
   assert.equal(s.reviews[0].box, 0)
   assert.equal(s.reviews[0].passive, undefined)
 })
+
+test('rateListen: accumulates per word and clamps to the -3..+3 scale', () => {
+  let s = initialGameState()
+  assert.deepEqual(s.listenRatings, {})
+  s = gameReducer(s, { type: 'rateListen', wordId: 'w1', delta: 1 })
+  assert.equal(s.listenRatings['w1'], 1)
+  s = gameReducer(s, { type: 'rateListen', wordId: 'w1', delta: -1 })
+  assert.equal(s.listenRatings['w1'], 0)
+  for (let i = 0; i < 10; i++) s = gameReducer(s, { type: 'rateListen', wordId: 'w1', delta: 1 })
+  assert.equal(s.listenRatings['w1'], 3, 'clamped at +3')
+  for (let i = 0; i < 10; i++) s = gameReducer(s, { type: 'rateListen', wordId: 'w1', delta: -1 })
+  assert.equal(s.listenRatings['w1'], -3, 'clamped at -3')
+  s = gameReducer(s, { type: 'rateListen', wordId: 'w2', delta: -1 })
+  assert.equal(s.listenRatings['w2'], -1, 'unrated words start from 0')
+})

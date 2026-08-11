@@ -61,3 +61,17 @@ test('a state with nothing to remap is returned untouched', () => {
   assert.equal(remapMergedProgress(s, { dup: 'keep' }), s)
   assert.equal(remapMergedProgress(s, {}), s)
 })
+
+test('listen ratings are remapped; the survivor keeps its own rating over the twin', () => {
+  const base = { ...withReviews(R('dup', 1)), listenRatings: { dup: 3, keep: -1, other: 2 } }
+  const s = remapMergedProgress(base, { dup: 'keep' })
+  assert.equal(s.listenRatings['keep'], -1, 'survivor rating wins')
+  assert.equal(s.listenRatings['dup'], undefined)
+  assert.equal(s.listenRatings['other'], 2)
+})
+
+test('a merged-away rating moves when the survivor has none', () => {
+  const base = { ...withReviews(R('dup', 1)), listenRatings: { dup: 3 } }
+  const s = remapMergedProgress(base, { dup: 'keep' })
+  assert.equal(s.listenRatings['keep'], 3)
+})

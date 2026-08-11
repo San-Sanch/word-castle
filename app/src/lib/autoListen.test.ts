@@ -92,6 +92,46 @@ test('ordered (default): most-overdue reviews first, then new words in dataset o
   assert.deepEqual(out.map((i) => i.key), ['w:b', 'w:a', 'w:n1', 'w:n2'])
 })
 
+test('rated order: difficult words first, easy last, unrated in between', () => {
+  const words = ['a', 'b', 'c', 'd'].map((id) => W(id))
+  const reviews = words.map((w) => newReviewState(w.id, 'recognition', '2026-07-01'))
+  const out = buildAutoPlaylist({
+    words, reviews, content: 'words', shuffle: true, ratedOrder: true,
+    ratings: { a: -2, b: 3, d: 1 }, rng: mulberry32(5),
+  })
+  assert.deepEqual(out.map((i) => i.key), ['w:b', 'w:d', 'w:c', 'w:a'])
+})
+
+test('rated order: ties keep the shuffled order (same as plain shuffle when nothing is rated)', () => {
+  const words = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => W(id))
+  const reviews = words.map((w) => newReviewState(w.id, 'recognition', '2026-07-01'))
+  const plain = buildAutoPlaylist({ words, reviews, content: 'words', shuffle: true, rng: mulberry32(7) })
+  const rated = buildAutoPlaylist({
+    words, reviews, content: 'words', shuffle: true, ratedOrder: true, ratings: {}, rng: mulberry32(7),
+  })
+  assert.deepEqual(rated.map((i) => i.key), plain.map((i) => i.key))
+})
+
+test('rated order: sentences are unrated (neutral), so rated-hard words come before them', () => {
+  const words = [W('a')]
+  const reviews = [newReviewState('a', 'recognition', '2026-07-01')]
+  const out = buildAutoPlaylist({
+    words, reviews, sentences: [S('s1')], content: 'both', shuffle: true, ratedOrder: true,
+    ratings: { a: 2 }, rng: mulberry32(1),
+  })
+  assert.deepEqual(out.map((i) => i.key), ['w:a', 's:s1'])
+})
+
+test('rated order off: ratings are ignored in shuffle mode', () => {
+  const words = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => W(id))
+  const reviews = words.map((w) => newReviewState(w.id, 'recognition', '2026-07-01'))
+  const withRatings = buildAutoPlaylist({
+    words, reviews, content: 'words', shuffle: true, ratings: { f: 3, a: -3 }, rng: mulberry32(7),
+  })
+  const without = buildAutoPlaylist({ words, reviews, content: 'words', shuffle: true, rng: mulberry32(7) })
+  assert.deepEqual(withRatings.map((i) => i.key), without.map((i) => i.key))
+})
+
 test('pause scales up for longer phrases and sentences', () => {
   assert.equal(pauseAfterMs('ילד'), 3000)
   assert.equal(pauseAfterMs('אני אוהב לשבת ולקרוא ספרים בבית'), 4500)

@@ -46,11 +46,15 @@ export function buildAutoPlaylist(opts: {
   categoryBias?: Record<string, number>
   /** true = random order; false (default) = reviews-first, then new words in order */
   shuffle?: boolean
+  /** per-word recognition difficulty (see game.ts listenRatings), absent = 0 */
+  ratings?: Record<string, number>
+  /** in shuffle mode, play hardest-rated first and easiest last (ties stay shuffled) */
+  ratedOrder?: boolean
   rng?: () => number
 }): AutoItem[] {
   const {
-    words, reviews, sentences = [], content = 'words',
-    category = null, categoryBias = {}, shuffle: doShuffle = false, rng = Math.random,
+    words, reviews, sentences = [], content = 'words', category = null, categoryBias = {},
+    shuffle: doShuffle = false, ratings = {}, ratedOrder = false, rng = Math.random,
   } = opts
   const inCat = (c: string) => category == null || c === category
 
@@ -102,5 +106,10 @@ export function buildAutoPlaylist(opts: {
   }
 
   const all = [...wordItems, ...sentItems]
-  return doShuffle ? shuffle(all, rng) : all
+  if (!doShuffle) return all
+  const shuffled = shuffle(all, rng)
+  if (!ratedOrder) return shuffled
+  // stable sort: hardest first, easiest last; equal ratings keep the shuffled order
+  const rating = (i: AutoItem) => (i.wordId ? ratings[i.wordId] ?? 0 : 0)
+  return shuffled.sort((a, b) => rating(b) - rating(a))
 }

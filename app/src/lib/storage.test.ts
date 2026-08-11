@@ -36,3 +36,11 @@ test('deserialize fills missing optional fields with defaults', () => {
   const restored = deserializeState(JSON.stringify(raw))
   assert.equal(restored.lastRaidCheck, null)
 })
+
+test('deserialize fills missing listenRatings with an empty map', () => {
+  const s = initialGameState()
+  const raw = JSON.parse(serializeState(s))
+  delete raw.listenRatings
+  const restored = deserializeState(JSON.stringify(raw))
+  assert.deepEqual(restored.listenRatings, {})
+})

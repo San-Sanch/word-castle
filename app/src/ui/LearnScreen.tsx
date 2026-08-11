@@ -1,4 +1,4 @@
-import type { GameState } from '../lib/game'
+import { todayLog, type GameState } from '../lib/game'
 import type { StudyMode, Word } from '../lib/types'
 import { canSpeakHebrew } from '../lib/speech'
 import { REVERSIBLE_MODES, modeAvailable, type CourseCaps } from './SessionScreen'
@@ -106,15 +106,19 @@ export default function LearnScreen(props: {
   words: Word[]
   caps: CourseCaps
   today: string
+  streak: number
   onStartSession: (topic: string | null, mode?: 'normal' | 'more-new' | 'practice') => void
   onSpeedRound: () => void
   onAutoListen: () => void
   onSetStudyMode: (mode: StudyMode) => void
   onToggleReverse: () => void
 }) {
-  const { state, words, caps, today, onStartSession, onSpeedRound, onAutoListen, onSetStudyMode, onToggleReverse } = props
+  const { state, words, caps, today, streak, onStartSession, onSpeedRound, onAutoListen, onSetStudyMode, onToggleReverse } = props
   const modes = MODES.filter(([m]) => modeAvailable(m, caps))
   const topics = topicInfos(words, state, today)
+  const log = todayLog(state, today)
+  const goalSec = Math.max(60, state.settings.dailyGoalMinutes * 60)
+  const goalPct = Math.min(100, Math.round((log.activeSeconds / goalSec) * 100))
   const dueTotal = topics.reduce((n, t) => n + t.due, 0)
   const startedTotal = topics.reduce((n, t) => n + t.started, 0)
   const canSpeed = startedTotal >= 8
@@ -123,6 +127,17 @@ export default function LearnScreen(props: {
 
   return (
     <>
+      <div className="day-strip" title={`Daily goal: ${Math.floor(log.activeSeconds / 60)} / ${state.settings.dailyGoalMinutes} min`}>
+        <span className="stat" title="Words mastered">🎓 {state.graduatedIds.length}</span>
+        <span className="stat" title="Day streak">🔥 {streak}</span>
+        <div className="goalbar">
+          <div className={goalPct >= 100 ? 'done' : ''} style={{ width: `${goalPct}%` }} />
+        </div>
+        <span className="goal-label">
+          {Math.floor(log.activeSeconds / 60)}/{state.settings.dailyGoalMinutes} min{goalPct >= 100 ? ' ✓' : ''}
+        </span>
+      </div>
+
       <div className="panel center hero">
         <div className="mode-chips">
           {modes.map(([m, ico, label]) => {

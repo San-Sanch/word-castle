@@ -13,8 +13,11 @@ export default function SettingsScreen(props: {
   loggedIn: boolean
   onLogin: () => void
   onLogout: () => void
+  courses: Array<{ id: string; label: string; flag: string }>
+  courseId: string
+  onSwitchCourse: (id: string) => void
 }) {
-  const { state, dispatch, words, loggedIn, onLogin, onLogout } = props
+  const { state, dispatch, words, loggedIn, onLogin, onLogout, courses, courseId, onSwitchCourse } = props
   const s = state.settings
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -74,6 +77,21 @@ export default function SettingsScreen(props: {
 
   return (
     <>
+      <div className="panel">
+        <h2>🌍 Course</h2>
+        <div className="field">
+          <label>Language course</label>
+          <select value={courseId} onChange={(e) => onSwitchCourse(e.target.value)} title="Course / language">
+            {courses.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.flag} {c.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <p className="muted">Each course keeps its own words and progress.</p>
+      </div>
+
       <div className="panel">
         <h2>👤 Account</h2>
         {loggedIn ? (

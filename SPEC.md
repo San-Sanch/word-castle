@@ -339,3 +339,35 @@ letting the engine silently substitute a wrong-language voice.
 
 The started-words gate on the entry button is gone: listening is also how you first meet
 new words, so a freshly opened course would otherwise hide the exercise entirely.
+
+## 18. Listening redesign: difficulty rating + minimal UI (2026-08-11)
+
+Auto-listening became the primary hands-free exercise, so its screen was rebuilt
+around the two controls actually used mid-exercise, and the app chrome shrank.
+
+**Difficulty rating.** Each word carries a listening-recognition rating
+`-3 (easy) … +3 (hard)`, stored per course in `GameState.listenRatings`
+(absent = 0/neutral), synced with the rest of the progress blob and remapped by
+`remapMergedProgress` when duplicate words collapse. Two big vote buttons sit
+above the transport:
+
+- **⌄⌄ easy** = -1: speech stops, and after 0.5 s of silence playback moves to
+  the next word.
+- **⌃⌃ hard** = +1: the current pair replays immediately to lock it in.
+
+In shuffle mode (now the default) the playlist is stable-sorted hardest-first,
+easiest-last; equal ratings keep their random order. The `🎯 Hardest first`
+switch (`Settings.listenRatedOrder`, default on) turns that off. Votes reorder
+the *next* playlist build (re-entering the screen, toggling filters) — never the
+list currently playing. iPhone volume buttons cannot drive the rating from a web
+app (iOS exposes no volume-button events to browsers); a Media Session hack via
+a silent audio anchor is parked in TECH_DEBT.md.
+
+**UI.** The translation is hidden until the card is tapped (hides again on the
+next word). Transport is prev / play / next only (±5 removed; hold-to-flag stays
+on play). Every option (content, topic, timer, shuffle, hardest-first, reverse,
+pauses a/b) lives in a bottom sheet behind the ⚙ button. The app-wide header is
+gone: the daily-goal strip (🎓 🔥 progress) renders on the Learn screen only, the
+course switcher moved to Settings → Course, and the bottom nav's Learn tab is
+the way back from listening. Global CSS moved to token-based borders/radii with
+a soft radial background; all screens share the same panel/button language.
