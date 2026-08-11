@@ -371,3 +371,15 @@ gone: the daily-goal strip (🎓 🔥 progress) renders on the Learn screen only
 course switcher moved to Settings → Course, and the bottom nav's Learn tab is
 the way back from listening. Global CSS moved to token-based borders/radii with
 a soft radial background; all screens share the same panel/button language.
+
+**Playback robustness (2026-08-11, same day).** The first iPhone run of the
+redesign showed a dead player. Two causes, both fixed: `useWakeLock` reported
+"not held" while the request was still in flight, so every play flashed a false
+"screen lock was refused" warning (it now has an explicit `asking` state); and
+WebKit's speech engine stalls silently — `cancel()` on an idle engine can eat the
+next utterance, and a backgrounded page leaves it paused. Every utterance now
+goes through `prepareEngine()` (cancel only when busy, resume when paused),
+returning to the foreground restarts the current word if the engine went idle,
+and a watchdog polls for audio *actually starting* (a forever-`pending` queue
+counts as broken) and shows a plain-language banner with a Reload button after
+5 s instead of hanging silently.
