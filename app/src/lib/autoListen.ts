@@ -22,6 +22,23 @@ export function pauseAfterMs(text: string, baseMs: number = PAUSE_BASE_MS): numb
   return long ? baseMs * 1.5 : baseMs
 }
 
+/** Reading time guaranteed after the card is tapped to reveal the translation.
+ * Tapping late (just before the player would move on) must not cost the read. */
+export const READ_AFTER_REVEAL_MS = 3000
+
+/**
+ * How long to wait before moving to the next word: the configured gap, unless the
+ * translation was revealed so recently that the reading time isn't up yet. The
+ * guarantee is READ_AFTER_REVEAL_MS counted from the tap — not added to the gap —
+ * so a reveal early in the pause costs nothing.
+ *
+ * `revealedAt` is null when this word's translation was never revealed.
+ */
+export function advanceDelayMs(gapMs: number, revealedAt: number | null, now: number): number {
+  const owed = revealedAt === null ? 0 : revealedAt + READ_AFTER_REVEAL_MS - now
+  return Math.max(gapMs, owed, 0)
+}
+
 export type ListenContent = 'words' | 'both' | 'sentences'
 
 export interface AutoItem {

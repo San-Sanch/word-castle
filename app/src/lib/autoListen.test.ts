@@ -1,6 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
+  advanceDelayMs,
+  READ_AFTER_REVEAL_MS,
   buildAutoPlaylist,
   pauseAfterMs,
   clampPauseSec,
@@ -146,4 +148,21 @@ test('pauseAfterMs scales the chosen base, and pauses clamp to 1..20s', () => {
   assert.equal(clampPauseSec(99, 3), PAUSE_MAX_SEC)
   assert.equal(clampPauseSec(NaN, 3), 3) // corrupt setting falls back
   assert.equal(clampPauseSec(4.6, 3), 5)
+})
+
+test('reveal hold: the automatic advance never cuts the reading time short', () => {
+  // the guarantee is READ_AFTER_REVEAL_MS counted from the tap, not added to the gap
+  // no reveal on this word: the normal gap applies
+  assert.equal(advanceDelayMs(2000, null, 10_000), 2000)
+  // revealed 2.4s ago: only 0.6s is still owed, so the longer gap wins
+  assert.equal(advanceDelayMs(2000, 7600, 10_000), 2000)
+  // revealed just now: the full reading time is owed and outlasts the gap
+  assert.equal(advanceDelayMs(2000, 10_000, 10_000), READ_AFTER_REVEAL_MS)
+  // revealed long ago: nothing owed, plain gap
+  assert.equal(advanceDelayMs(2000, 1000, 10_000), 2000)
+  // a long gap already covers the reading time
+  assert.equal(advanceDelayMs(9000, 10_000, 10_000), 9000)
+  // the re-check the player runs while waiting: no gap, just what reading owes
+  assert.equal(advanceDelayMs(0, 9000, 10_000), 2000)
+  assert.equal(advanceDelayMs(0, 5000, 10_000), 0)
 })

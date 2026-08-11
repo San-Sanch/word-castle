@@ -4,6 +4,7 @@ import { todayLog, LISTEN_RATING_MAX, LISTEN_RATING_MIN, type GameAction, type G
 import { DEFAULT_SETTINGS, type Sentence, type Word } from '../lib/types'
 import {
   buildAutoPlaylist,
+  advanceDelayMs,
   pauseAfterMs,
   clampPauseSec,
   PAUSE_MIN_SEC,
@@ -77,6 +78,14 @@ export default function AutoListenScreen(props: {
   const [playing, setPlaying] = useState(false)
   // translation stays hidden until the card is tapped; hides again on the next word
   const [revealed, setRevealed] = useState(false)
+  // when the current word's translation was revealed (null = not on this word),
+  // so the player can hold the next word back long enough to read it
+  const revealedAtRef = useRef<number | null>(null)
+  const reveal = () =>
+    setRevealed((r) => {
+      revealedAtRef.current = r ? null : Date.now()
+      return !r
+    })
 
   // Crediting exposures changes state.reviews mid-playback, which would reshuffle
   // the list under the running loop (the card on screen would drift out of sync
@@ -216,7 +225,18 @@ export default function AutoListenScreen(props: {
             if (item.wordId) {
               dispatch({ type: 'heard', wordIds: [item.wordId], reverse: reverseRef.current, today: todayRef.current })
             }
-            timeoutRef.current = window.setTimeout(() => step(n + 1), pausesRef.current.gapSec * 1000)
+            // a tap to reveal buys reading time; re-check on each expiry so a tap
+            // made *during* this wait still gets its full read
+            const advance = () => {
+              if (runRef.current !== run) return
+              const owed = advanceDelayMs(0, revealedAtRef.current, Date.now())
+              if (owed > 0) { timeoutRef.current = window.setTimeout(advance, owed); return }
+              step(n + 1)
+            }
+            timeoutRef.current = window.setTimeout(
+              advance,
+              advanceDelayMs(pausesRef.current.gapSec * 1000, revealedAtRef.current, Date.now()),
+            )
           })
         }, pauseAfterMs(reverseRef.current ? item.translation : item.hebrew, pausesRef.current.pauseSec * 1000))
       })
@@ -287,7 +307,10 @@ export default function AutoListenScreen(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, category, shuffled, shuffleNonce, ratedOrder])
 
-  useEffect(() => { setRevealed(false) }, [idx])
+  useEffect(() => {
+    setRevealed(false)
+    revealedAtRef.current = null
+  }, [idx])
 
   const canReport = !!onReportWord
   const flagCurrent = () => {
@@ -374,7 +397,7 @@ export default function AutoListenScreen(props: {
             className="autolisten-card tappable"
             role="button"
             aria-label={revealed ? 'Hide translation' : 'Show translation'}
-            onClick={() => setRevealed((r) => !r)}
+            onClick={reveal}
           >
             {cur && (
               <>
