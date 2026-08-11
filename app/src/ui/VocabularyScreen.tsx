@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import type { GameState } from '../lib/game'
+import { wordStanding } from '../lib/wordStatus'
 import type { ReviewState, Word } from '../lib/types'
 import { todayISO } from '../lib/time'
 import { canSpeakHebrew, speakHebrew } from '../lib/speech'
@@ -11,13 +12,15 @@ import translitJson from '../data/translit.json'
 
 const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
 
-type Status = 'new' | 'learning' | 'mastered'
+type Status = 'new' | 'learning' | 'hard' | 'mastered'
 type SortKey = 'category' | 'alpha' | 'progress' | 'difficulty' | 'due' | 'recent'
 
 interface Row {
   word: Word
   translit: string
   status: Status
+  /** listening difficulty vote, -3 (easy) … +3 (hard); 0 = never rated */
+  rating: number
   due: boolean
   recBox: number
   recallBox: number
@@ -80,18 +83,23 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
       else entry.recall = r
       byWord.set(r.wordId, entry)
     }
-    const mastered = new Set(state.graduatedIds)
+    const graduated = new Set(state.graduatedIds)
+    const ratings = state.listenRatings ?? {}
     return words.map((word) => {
       const rv = byWord.get(word.id)
       const recBox = rv?.rec?.box ?? 0
       const recallBox = rv?.recall?.box ?? 0
       const lapses = (rv?.rec?.lapses ?? 0) + (rv?.recall?.lapses ?? 0)
       const dueDates = [rv?.rec?.dueAt, rv?.recall?.dueAt].filter(Boolean) as string[]
-      const st: Status = mastered.has(word.id) ? 'mastered' : rv ? 'learning' : 'new'
+      const rating = ratings[word.id] ?? 0
+      const standing = wordStanding({ rating, hasReview: !!rv, graduated: graduated.has(word.id) })
+      const st: Status =
+        standing.needsWork ? 'hard' : standing.mastered ? 'mastered' : standing.started ? 'learning' : 'new'
       return {
         word,
         translit: TRANSLIT[word.id]?.he ?? '',
         status: st,
+        rating,
         due: dueDates.some((d) => d <= today),
         recBox,
         recallBox,
@@ -102,7 +110,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
         passive: !!(rv?.rec?.passive || rv?.recall?.passive),
       }
     })
-  }, [state.reviews, state.graduatedIds, words, today])
+  }, [state.reviews, state.graduatedIds, state.listenRatings, words, today])
 
   const categories = useMemo(() => [...new Set(words.map((w) => w.category))].sort(), [words])
 
@@ -114,6 +122,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
       if (status === 'new' && r.status !== 'new') return false
       if (status === 'learning' && r.status !== 'learning') return false
       if (status === 'mastered' && r.status !== 'mastered') return false
+      if (status === 'hard' && r.status !== 'hard') return false
       if (status === 'due' && !r.due) return false
       if (status === 'difficult' && r.lapses === 0) return false
       if (q) {
@@ -136,7 +145,8 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
   const counts = useMemo(() => {
     const learning = rows.filter((r) => r.status === 'learning').length
     const mastered = rows.filter((r) => r.status === 'mastered').length
-    return { learning, mastered, total: rows.length }
+    const hard = rows.filter((r) => r.status === 'hard').length
+    return { learning, mastered, hard, total: rows.length }
   }, [rows])
 
   const errorCount = useMemo(() => Object.keys(errors).length, [errors])
@@ -150,7 +160,13 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
   )
 
   const statusLabel = (r: Row) =>
-    r.status === 'mastered' ? '🎓 mastered' : r.status === 'learning' ? (r.due ? 'learning · due for review' : 'learning') : 'not started yet'
+    r.status === 'hard'
+      ? 'hard to recognize when listening'
+      : r.status === 'mastered'
+        ? '🎓 mastered'
+        : r.status === 'learning'
+          ? (r.due ? 'learning · due for review' : 'learning')
+          : 'not started yet'
 
   return (
     <>
@@ -158,6 +174,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
         <h2>📖 Vocabulary</h2>
         <p className="muted">
           {counts.total} words · {counts.learning} learning · {counts.mastered} mastered
+          {counts.hard > 0 && ` · ${counts.hard} hard`}
           {errorsEnabled && errorCount > 0 && ` · ${errorCount} flagged`}
         </p>
         <div className="vocab-controls">
@@ -177,6 +194,7 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
             <option value="new">Not started</option>
             <option value="learning">Learning</option>
             <option value="mastered">Mastered</option>
+            <option value="hard">Hard when listening</option>
             <option value="due">Due for review</option>
             <option value="difficult">With mistakes</option>
           </select>
@@ -238,6 +256,9 @@ export default function VocabularyScreen(props: { state: GameState; words: Word[
                     <td><Box n={r.recallBox} /></td>
                     <td className={r.lapses > 2 ? 'hard' : ''}>{r.lapses || ''}</td>
                     <td>
+                      {r.status === 'hard' && (
+                        <span className="status-badge hard-status" title={`rated hard while listening (+${r.rating})`}>hard</span>
+                      )}
                       {r.status === 'mastered' && <span className="status-badge mastered">🎓</span>}
                       {r.status === 'learning' && (r.due ? <span className="status-badge due">due</span> : <span className="status-badge learning">learning</span>)}
                       {r.status === 'new' && <span className="status-badge fresh">new</span>}

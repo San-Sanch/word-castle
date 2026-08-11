@@ -19,6 +19,10 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
   const logs = [...state.dayLogs].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 14)
   const topics = topicInfos(words, state, today)
   const totalMinutes = state.dayLogs.reduce((n, l) => n + l.activeSeconds, 0) / 60
+  // the same combined standing the topic cards use: sessions plus the listening verdict
+  const mastered = topics.reduce((n, t) => n + t.mastered, 0)
+  const started = topics.reduce((n, t) => n + t.started, 0)
+  const needsWork = topics.reduce((n, t) => n + t.needsWork, 0)
   const passiveCount = state.reviews.filter((r) => r.passive).length
 
   return (
@@ -27,11 +31,11 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
         <h2>📊 Progress</h2>
         <div className="row-gap" style={{ gap: 26 }}>
           <div>
-            <div className="summary-num">{state.graduatedIds.length}</div>
+            <div className="summary-num">{mastered}</div>
             <div className="muted">words mastered 🎓</div>
           </div>
           <div>
-            <div className="summary-num">{rec.length}</div>
+            <div className="summary-num">{started}</div>
             <div className="muted">started (of {words.length})</div>
           </div>
           <div>
@@ -45,8 +49,15 @@ export default function StatsScreen(props: { state: GameState; words: Word[]; to
         </div>
         <p className="muted" style={{ marginTop: 10 }}>
           A word counts as <b>mastered</b> when you recognize it AND recall it from the translation
-          across several spaced reviews (recall level 4+).
+          across several spaced reviews (recall level 4+) — or when every ⌄⌄ vote is in while
+          listening. One ⌃⌃ vote takes mastery back: not recognizing a word by ear outranks the
+          levels.
         </p>
+        {needsWork > 0 && (
+          <p className="muted" style={{ marginTop: 4 }}>
+            ⌃⌃ {needsWork} words are marked hard when listening — they come first in your sessions.
+          </p>
+        )}
         {passiveCount > 0 && (
           <p className="muted" style={{ marginTop: 4 }}>
             🎧 {passiveCount} of those levels came from auto-listening and aren’t confirmed by an

@@ -233,3 +233,70 @@ test('a verified word falls the usual two boxes', () => {
   const s = { ...newReviewState('w1', 'recognition', '2026-07-01'), box: 4 }
   assert.equal(applyAnswer(s, false, '2026-07-04').box, 2)
 })
+
+test('session: hard-rated words come first within their direction', () => {
+  const words = ['a', 'b', 'c'].map((id) => W(id))
+  const states = words.map((w) => ({
+    ...newReviewState(w.id, 'recognition', '2026-06-01'), dueAt: '2026-07-01',
+  }))
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 10, newWordsPerDay: 0 }, introducedToday: 0,
+    ratings: { b: 3, c: 1 },
+  })
+  assert.deepEqual(plan.dueStates.map((s) => s.wordId), ['b', 'c', 'a'])
+})
+
+test('session: recall cards still outrank a hard-rated recognition card', () => {
+  const words = [W('a'), W('b')]
+  const states = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('b', 'recall', '2026-06-01'), dueAt: '2026-07-01' },
+  ]
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 10, newWordsPerDay: 0 }, introducedToday: 0,
+    ratings: { a: 3 },
+  })
+  assert.deepEqual(plan.dueStates.map((s) => s.wordId), ['b', 'a'])
+})
+
+test('session: new words heard as hard in listening are introduced first', () => {
+  const words = ['n1', 'n2', 'n3'].map((id) => W(id))
+  const plan = buildSessionPlan({
+    words, states: [], today: '2026-07-04',
+    settings: { sessionSize: 10, newWordsPerDay: 2 }, introducedToday: 0,
+    ratings: { n3: 2 },
+  })
+  assert.deepEqual(plan.newWordIds, ['n3', 'n1'])
+})
+
+test('session: leftover room practises hard-rated words that are not due yet', () => {
+  const words = ['a', 'b'].map((id) => W(id))
+  const states = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-01' }, // due
+    { ...newReviewState('b', 'recognition', '2026-06-01'), dueAt: '2026-09-01' }, // far off
+  ]
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 10, newWordsPerDay: 0 }, introducedToday: 0,
+    ratings: { b: 2 },
+  })
+  assert.deepEqual(plan.dueStates.map((s) => s.wordId), ['a', 'b'])
+})
+
+test('session: a full queue is never displaced by the hard-rated extras', () => {
+  const words = ['a', 'b', 'c'].map((id) => W(id))
+  const states = [
+    { ...newReviewState('a', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('b', 'recognition', '2026-06-01'), dueAt: '2026-07-01' },
+    { ...newReviewState('c', 'recognition', '2026-06-01'), dueAt: '2026-09-01' },
+  ]
+  const plan = buildSessionPlan({
+    words, states, today: '2026-07-04',
+    settings: { sessionSize: 2, newWordsPerDay: 0 }, introducedToday: 0,
+    ratings: { c: 3 },
+  })
+  assert.equal(plan.dueStates.length, 2)
+  assert.ok(!plan.dueStates.some((s) => s.wordId === 'c'))
+})

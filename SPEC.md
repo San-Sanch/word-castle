@@ -383,3 +383,32 @@ returning to the foreground restarts the current word if the engine went idle,
 and a watchdog polls for audio *actually starting* (a forever-`pending` queue
 counts as broken) and shows a plain-language banner with a Reload button after
 5 s instead of hanging silently.
+
+## 19. Word standing: sessions plus the listening verdict (2026-08-11)
+
+Listening became the main exercise, so a word's status can no longer come from
+the SRS boxes alone. `lib/wordStatus.ts` combines the two things known about a
+word:
+
+- **evidence** — the SRS boxes, earned by answering under test conditions;
+- **confidence** — the ⌄⌄ / ⌃⌃ verdict given while the word is spoken.
+
+The two are weighted differently on purpose, because a rating is self-assessment
+rather than a test. Easy votes accumulate towards mastery: reaching `-3` takes
+three separate "I knew it instantly" moments, since each vote moves playback on
+and the word has to come round again. A single hard vote (`> 0`) removes mastery
+outright and marks the word *needs work* — failing to recognize a word out loud
+outranks any box level — and one easy vote puts it back. `started` now means
+"met at all": a review state **or** any rating, so words met only in listening
+count.
+
+`wordStanding()` feeds the topic cards (with a `⌃ N hard` badge), Vocabulary (a
+`hard` status plus a "Hard when listening" filter) and the Stats summary, so all
+three agree.
+
+**Sessions.** `buildSessionPlan` takes `ratings` and puts hard-rated words first
+within their direction (recall cards still outrank everything), introduces
+hard-rated new words ahead of their bias group, and spends any leftover room on
+hard-rated words that are not due yet — without touching their schedule, since a
+self-assessment must never move the SRS clock. `SessionScreen` shuffles the
+queue for variety and then floats the hard-rated cards to the front.

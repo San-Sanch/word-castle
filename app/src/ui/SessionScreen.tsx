@@ -362,6 +362,7 @@ export default function SessionScreen(props: {
       introducedToday: introducedTodayCount(state, today),
       topic,
       ignoreNewLimit: mode === 'more-new',
+      ratings: state.listenRatings,
     })
     const due: QueueItem[] = plan.dueStates.map((s) => ({
       wordId: s.wordId,
@@ -373,7 +374,12 @@ export default function SessionScreen(props: {
       direction: 'recognition' as const,
       firstTry: true,
     }))
-    const queue = padQueue(shuffle([...due, ...fresh], rng), eligible)
+    // the queue is shuffled for variety, then the words flagged hard while
+    // listening float to the front — Sanch asked for them first, and the shuffle
+    // would otherwise scatter the ordering buildSessionPlan just established
+    const shuffled = shuffle([...due, ...fresh], rng)
+    const isHard = (q: QueueItem) => (state.listenRatings?.[q.wordId] ?? 0) > 0
+    const queue = padQueue([...shuffled.filter(isHard), ...shuffled.filter((q) => !isHard(q))], eligible)
     return buildSteps(queue)
   })
 

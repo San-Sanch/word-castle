@@ -107,15 +107,22 @@ export function buildSessionPlan(args: {
   topic?: string | null
   /** the daily new-word cap is a pace guide, not a wall: let the learner push past it */
   ignoreNewLimit?: boolean
+  /** listening difficulty votes per word, +1…+3 = hard (see game.ts listenRatings) */
+  ratings?: Record<string, number>
 }): SessionPlan {
-  const { words, states, today, settings, introducedToday, topic, ignoreNewLimit } = args
+  const { words, states, today, settings, introducedToday, topic, ignoreNewLimit, ratings = {} } = args
   const inTopic = topic ? new Set(words.filter((w) => w.category === topic).map((w) => w.id)) : null
+  const rating = (wordId: string) => ratings[wordId] ?? 0
+  const scoped = (wordId: string) => !inTopic || inTopic.has(wordId)
   // recall cards are the last step to mastery and are few — never let a large
-  // overdue recognition backlog crowd them out of the session
+  // overdue recognition backlog crowd them out of the session. Within a
+  // direction, words flagged hard while listening go first: that verdict is the
+  // learner saying out loud which words he cannot recognize.
   const due = states
-    .filter((s) => s.dueAt <= today && (!inTopic || inTopic.has(s.wordId)))
+    .filter((s) => s.dueAt <= today && scoped(s.wordId))
     .sort((a, b) => {
       if (a.direction !== b.direction) return a.direction === 'recall' ? -1 : 1
+      if (rating(a.wordId) !== rating(b.wordId)) return rating(b.wordId) - rating(a.wordId)
       return a.dueAt === b.dueAt ? a.box - b.box : a.dueAt < b.dueAt ? -1 : 1
     })
     .slice(0, settings.sessionSize)
@@ -124,13 +131,24 @@ export function buildSessionPlan(args: {
   const room = Math.max(0, settings.sessionSize - due.length)
   const newAllowance = ignoreNewLimit ? Infinity : Math.max(0, settings.newWordsPerDay - introducedToday)
   // per-category bias: 0 = introduce new words from here first … 2 = neutral …
-  // 4 = don't introduce new words at all (only repeat what's already learning)
+  // 4 = don't introduce new words at all (only repeat what's already learning).
+  // A word already heard and flagged hard in listening jumps its bias group.
   const bias = (w: Word) => settings.categoryBias?.[w.category] ?? NEUTRAL_BIAS
   const newWordIds = words
-    .filter((w) => !known.has(w.id) && (!inTopic || inTopic.has(w.id)) && bias(w) < MAX_BIAS)
-    .sort((a, b) => bias(a) - bias(b)) // stable: dataset order within the same bias
+    .filter((w) => !known.has(w.id) && scoped(w.id) && bias(w) < MAX_BIAS)
+    .sort((a, b) => bias(a) - bias(b) || rating(b.id) - rating(a.id)) // stable within a group
     .slice(0, Math.min(room, newAllowance))
     .map((w) => w.id)
 
-  return { dueStates: due, newWordIds }
+  // Whatever room is left over goes to hard-rated words that are not due yet.
+  // Their schedule is untouched (a self-assessment must not move the SRS clock);
+  // they simply get practised while there is space for them.
+  const inSession = new Set(due.map((s) => `${s.wordId}|${s.direction}`))
+  const extraRoom = Math.max(0, settings.sessionSize - due.length - newWordIds.length)
+  const extras = states
+    .filter((s) => rating(s.wordId) > 0 && scoped(s.wordId) && !inSession.has(`${s.wordId}|${s.direction}`))
+    .sort((a, b) => rating(b.wordId) - rating(a.wordId) || (a.dueAt < b.dueAt ? -1 : 1))
+    .slice(0, extraRoom)
+
+  return { dueStates: [...due, ...extras], newWordIds }
 }

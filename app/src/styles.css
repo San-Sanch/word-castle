@@ -482,6 +482,10 @@ button.primary.big { font-size: 19px; padding: 15px 34px; margin-bottom: 10px; }
 .topic-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .topic-emoji { font-size: 22px; }
 .topic-name { font-weight: 600; flex: 1; }
+.hard-badge {
+  background: rgba(228, 106, 106, 0.16); color: #f0a3a3; border: 1px solid rgba(228, 106, 106, 0.5);
+  font-size: 11px; padding: 2px 8px; border-radius: 12px; white-space: nowrap;
+}
 .due-badge {
   background: #3a2027; color: #eda2a2; border: 1px solid var(--red);
   font-size: 11px; padding: 2px 8px; border-radius: 12px; white-space: nowrap;
@@ -552,6 +556,7 @@ button.ghost.missed { border: 1px solid var(--red); color: var(--red); padding: 
 .status-badge.learning { background: #1d3050; color: #9db8e8; }
 .status-badge.due { background: #3a2027; color: #eda2a2; }
 .status-badge.fresh { background: var(--panel-2); color: var(--muted); }
+.status-badge.hard-status { background: rgba(228, 106, 106, 0.16); color: #f0a3a3; }
 .boxdots { display: inline-flex; gap: 2px; }
 .boxdots i {
   width: 5px; height: 10px; border-radius: 2px; background: var(--panel-2); display: inline-block;

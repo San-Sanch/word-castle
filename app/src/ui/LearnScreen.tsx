@@ -1,4 +1,5 @@
 import { todayLog, type GameState } from '../lib/game'
+import { wordStanding } from '../lib/wordStatus'
 import type { StudyMode, Word } from '../lib/types'
 import { canSpeakHebrew } from '../lib/speech'
 import { REVERSIBLE_MODES, modeAvailable, type CourseCaps } from './SessionScreen'
@@ -67,6 +68,8 @@ export interface TopicInfo {
   total: number
   started: number
   mastered: number
+  /** rated hard while listening: recognized poorly by ear */
+  needsWork: number
   due: number
 }
 
@@ -74,16 +77,25 @@ export function topicInfos(words: Word[], state: GameState, today: string): Topi
   const byTopic = new Map<string, TopicInfo>()
   const wordTopic = new Map(words.map((w) => [w.id, w.category]))
   for (const w of words) {
-    const t = byTopic.get(w.category) ?? { name: w.category, total: 0, started: 0, mastered: 0, due: 0 }
+    const t = byTopic.get(w.category) ?? { name: w.category, total: 0, started: 0, mastered: 0, needsWork: 0, due: 0 }
     t.total++
     byTopic.set(w.category, t)
   }
-  const started = new Set<string>()
-  for (const r of state.reviews) {
-    if (r.direction !== 'recognition' || started.has(r.wordId)) continue
-    started.add(r.wordId)
-    const t = byTopic.get(wordTopic.get(r.wordId) ?? '')
-    if (t) t.started++
+  // status combines session evidence with the listening verdict — see wordStatus.ts
+  const reviewed = new Set(state.reviews.map((r) => r.wordId))
+  const graduated = new Set(state.graduatedIds)
+  const ratings = state.listenRatings ?? {}
+  for (const w of words) {
+    const t = byTopic.get(w.category)
+    if (!t) continue
+    const s = wordStanding({
+      rating: ratings[w.id] ?? 0,
+      hasReview: reviewed.has(w.id),
+      graduated: graduated.has(w.id),
+    })
+    if (s.started) t.started++
+    if (s.mastered) t.mastered++
+    if (s.needsWork) t.needsWork++
   }
   const dueCounted = new Set<string>()
   for (const r of state.reviews) {
@@ -93,10 +105,6 @@ export function topicInfos(words: Word[], state: GameState, today: string): Topi
     dueCounted.add(key)
     const t = byTopic.get(wordTopic.get(r.wordId) ?? '')
     if (t) t.due++
-  }
-  for (const id of state.graduatedIds) {
-    const t = byTopic.get(wordTopic.get(id) ?? '')
-    if (t) t.mastered++
   }
   return [...byTopic.values()].sort((a, b) => b.started - a.started || b.total - a.total)
 }
@@ -214,6 +222,9 @@ export default function LearnScreen(props: {
               <div className="topic-head">
                 <span className="topic-emoji">{TOPIC_EMOJI[t.name] ?? '📖'}</span>
                 <span className="topic-name">{t.name}</span>
+                {t.needsWork > 0 && (
+                  <span className="hard-badge" title="Rated hard while listening">⌃ {t.needsWork} hard</span>
+                )}
                 {t.due > 0 && <span className="due-badge">{t.due} due</span>}
               </div>
               <div className="topic-bar">
