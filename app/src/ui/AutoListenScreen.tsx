@@ -13,6 +13,7 @@ import {
 import { speakHebrew, speakText, canSpeakHebrew, canSpeakLang, speechBusy, speechSpeaking } from '../lib/speech'
 import { translationParts } from '../lib/translations'
 import { fetchWordErrors } from '../lib/wixClient'
+import translitJson from '../data/translit.json'
 import { useLongPress } from './useLongPress'
 import { useWakeLock, wakeLockSupported } from './useWakeLock'
 import { HoldRing } from './HoldRing'
@@ -27,6 +28,10 @@ const CONTENT_OPTS: Array<[ListenContent, string]> = [
   ['both', 'Both'],
   ['sentences', 'Sentences'],
 ]
+// Latin transcription with the stressed syllable in CAPS — Hebrew-course words
+// only (the Duolingo courses have none), and only for words, not sentences.
+const TRANSLIT = translitJson as Record<string, { he: string; plural?: string }>
+
 /** easy-vote (▼) advances to the next word after this much silence */
 const EASY_ADVANCE_MS = 500
 /** how long audio may take to actually start before the screen calls it broken.
@@ -248,6 +253,10 @@ export default function AutoListenScreen(props: {
 
   const cur = playlist.length > 0 ? playlist[Math.min(idx, playlist.length - 1)] : undefined
   const curRating = cur?.wordId ? state.listenRatings[cur.wordId] ?? 0 : 0
+  // in reverse the translation is the prompt and the Hebrew is the answer, so the
+  // transcription would spell that answer out — it waits for the tap there
+  const showTranslit = !reverse || revealed
+  const curTranslit = showTranslit && cur?.wordId ? TRANSLIT[cur.wordId]?.he ?? '' : ''
 
   /** ▲ harder to recognize: vote up and replay the current pair to lock it in */
   const rateHard = () => {
@@ -373,6 +382,7 @@ export default function AutoListenScreen(props: {
                   {cur.hebrew}
                   {cur.wordId && flaggedIds.has(cur.wordId) && <span className="flag-badge" title="Flagged for fix"> ❗</span>}
                 </div>
+                {curTranslit && <div className="translit al-translit">{curTranslit}</div>}
                 <div className={`al-translation ${revealed ? '' : 'hidden'}`}>
                   {revealed ? cur.translation : 'tap to reveal'}
                 </div>

@@ -320,6 +320,8 @@ th { color: var(--muted); font-weight: 600; }
   overflow-wrap: anywhere; word-break: break-word; max-width: 100%;
 }
 .autolisten-card .flag-badge { font-size: 22px; }
+.al-translit { margin: -4px 0 10px; font-size: 16px; }
+
 /* translation is hidden until the card is tapped */
 .al-translation { min-height: 1.5em; font-size: 17px; color: var(--text); overflow-wrap: anywhere; }
 .al-translation.hidden {
@@ -362,8 +364,16 @@ th { color: var(--muted); font-weight: 600; }
 .rate-btn:disabled { opacity: 0.35; cursor: default; }
 .rate-btn .rate-arrows { font-size: 24px; font-weight: 800; line-height: 0.75; letter-spacing: 2px; }
 .rate-btn .rate-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.rate-btn.easy {
+  background: rgba(85, 185, 138, 0.14); border-color: rgba(85, 185, 138, 0.45);
+}
+.rate-btn.hard {
+  background: rgba(228, 106, 106, 0.14); border-color: rgba(228, 106, 106, 0.45);
+}
 .rate-btn.easy .rate-arrows { color: var(--green); }
 .rate-btn.hard .rate-arrows { color: var(--red); }
+.rate-btn.easy .rate-label { color: rgba(85, 185, 138, 0.85); }
+.rate-btn.hard .rate-label { color: rgba(228, 106, 106, 0.85); }
 
 .transport { display: flex; align-items: center; justify-content: center; gap: 14px; }
 .transport .tbtn {
