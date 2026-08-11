@@ -10,7 +10,7 @@ import {
   PAUSE_MAX_SEC,
   type ListenContent,
 } from '../lib/autoListen'
-import { speakHebrew, speakText, canSpeakHebrew, canSpeakLang } from '../lib/speech'
+import { speakHebrew, speakText, canSpeakHebrew, canSpeakLang, speechBusy, speechSpeaking } from '../lib/speech'
 import { translationParts } from '../lib/translations'
 import { fetchWordErrors } from '../lib/wixClient'
 import { useLongPress } from './useLongPress'
@@ -29,6 +29,10 @@ const CONTENT_OPTS: Array<[ListenContent, string]> = [
 ]
 /** easy-vote (▼) advances to the next word after this much silence */
 const EASY_ADVANCE_MS = 500
+/** how long audio may take to actually start before the screen calls it broken.
+ * Generous: a queued utterance can take a couple of seconds to reach the speaker
+ * on a busy phone, and a false alarm is worse than a late one. */
+const SPEECH_WATCHDOG_MS = 5000
 
 function haptic() {
   try { (navigator as unknown as { vibrate?: (n: number) => void }).vibrate?.(40) } catch { /* no haptics */ }
@@ -135,7 +139,33 @@ export default function AutoListenScreen(props: {
   // option B for background playback: the screen simply doesn't sleep while
   // listening (speechSynthesis is suspended on lock, so real background audio
   // needs pre-rendered clips — see SPEC §16)
-  const awake = useWakeLock(playing)
+  const wake = useWakeLock(playing)
+
+  // WebKit sometimes accepts an utterance and never speaks it (engine left in a
+  // bad state by a backgrounded page, phone on silent). Playback would then just
+  // sit there looking broken, so the screen says what happened instead.
+  const [audioStuck, setAudioStuck] = useState(false)
+  const watchdogRef = useRef<number | null>(null)
+  /** Watches for audio that never reaches the speaker: an utterance the engine
+   * accepted but never started (`speaking` never turns true), which is how iOS
+   * fails. Polling beats a plain timeout — a queue that stays `pending` forever
+   * looks busy but is just as broken. */
+  const armWatchdog = () => {
+    clearWatchdog()
+    setAudioStuck(false) // every new attempt (play, skip, replay) gets a clean slate
+    const startedAt = Date.now()
+    watchdogRef.current = window.setInterval(() => {
+      if (!playingRef.current) return clearWatchdog()
+      if (speechSpeaking()) return clearWatchdog() // audio is really out
+      if (Date.now() - startedAt >= SPEECH_WATCHDOG_MS) {
+        clearWatchdog()
+        setAudioStuck(true)
+      }
+    }, 250)
+  }
+  const clearWatchdog = () => {
+    if (watchdogRef.current !== null) { window.clearInterval(watchdogRef.current); watchdogRef.current = null }
+  }
 
   const clearPending = () => {
     if (timeoutRef.current !== null) { window.clearTimeout(timeoutRef.current); timeoutRef.current = null }
@@ -145,7 +175,12 @@ export default function AutoListenScreen(props: {
     clearPending()
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel()
   }
-  const stop = () => { cancelSpeech(); setPlaying(false) }
+  const stop = () => {
+    cancelSpeech()
+    clearWatchdog()
+    setPlaying(false)
+    playingRef.current = false // as in start(): the ref must lead the committed state
+  }
 
   const playFrom = (start: number) => {
     const list = playlistRef.current
@@ -163,8 +198,10 @@ export default function AutoListenScreen(props: {
         reverseRef.current ? speakTranslation(cb) : speakHebrew(item.hebrew, cb)
       const second = (cb: () => void) =>
         reverseRef.current ? speakHebrew(item.hebrew, cb) : speakTranslation(cb)
+      armWatchdog()
       first(() => {
         if (runRef.current !== run) return
+        clearWatchdog()
         timeoutRef.current = window.setTimeout(() => {
           if (runRef.current !== run) return
           second(() => {
@@ -185,6 +222,7 @@ export default function AutoListenScreen(props: {
   const start = () => {
     if (playlistRef.current.length === 0) return
     setPlaying(true)
+    playingRef.current = true // the watchdog runs before React commits the state
     playFrom(idxRef.current)
   }
   const toggle = () => (playingRef.current ? stop() : start())
@@ -270,6 +308,23 @@ export default function AutoListenScreen(props: {
     const iv = window.setInterval(() => dispatch({ type: 'activeTime', seconds: 30, today }), 30_000)
     return () => window.clearInterval(iv)
   }, [playing, today, dispatch])
+
+  // Coming back from the background: iOS suspends the speech engine and never
+  // resumes it, so the loop would sit silent on the word it was reading. Restart
+  // that word — only when the engine really is idle, so a healthy browser that
+  // kept speaking isn't interrupted.
+  useEffect(() => {
+    if (!playing) return
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible' || !playingRef.current) return
+      window.setTimeout(() => {
+        if (playingRef.current && !speechBusy()) playFrom(idxRef.current)
+      }, 300)
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => stop(), [])
@@ -368,9 +423,18 @@ export default function AutoListenScreen(props: {
             <button className="tbtn" title="Next" aria-label="Next" onClick={() => goTo(1)}>›</button>
           </div>
 
+          {audioStuck && (
+            <div className="audio-stuck">
+              <b>No sound is coming out.</b> Check the phone isn’t on silent, then tap ▶ again.
+              If it stays quiet, reload the page — Safari sometimes stops speaking after the
+              app has been in the background.
+              <button className="ghost" onClick={() => window.location.reload()}>↻ Reload</button>
+            </div>
+          )}
+
           <p className="muted small al-hint">
-            {playing && awake && 'screen stays awake'}
-            {playing && !awake && (wakeLockSupported()
+            {playing && wake === 'held' && 'screen stays awake'}
+            {playing && wake === 'refused' && (wakeLockSupported()
               ? '⚠️ the screen lock was refused (battery saver / low power mode?) — playback stops when the screen locks'
               : '⚠️ this browser can’t hold the screen awake — playback stops when the screen locks')}
           </p>

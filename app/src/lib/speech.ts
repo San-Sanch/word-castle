@@ -12,6 +12,30 @@ export function initSpeech(): void {
   window.speechSynthesis.onvoiceschanged = refreshVoices
 }
 
+/**
+ * WebKit (iOS Safari especially) drops the next utterance when `speak` follows a
+ * `cancel` on an idle engine, and silently stalls when the engine was left in a
+ * paused state by a backgrounded page. Both are cheap to avoid, so every speak
+ * goes through here first.
+ */
+function prepareEngine(): void {
+  const s = window.speechSynthesis
+  if (s.speaking || s.pending) s.cancel()
+  if (s.paused) s.resume()
+}
+
+/** Whether the engine currently has audio playing or queued. */
+export function speechBusy(): boolean {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return false
+  return window.speechSynthesis.speaking || window.speechSynthesis.pending
+}
+
+/** Whether audio is actually being produced right now (queued doesn't count). */
+export function speechSpeaking(): boolean {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return false
+  return window.speechSynthesis.speaking
+}
+
 // BCP-47 lang of the word being learned in the active course. The speak/can-speak
 // helpers keep their `Hebrew` names for call-site stability, but dispatch on this:
 // Hebrew goes through the nikud pipeline, other languages speak their text as-is.
@@ -201,7 +225,7 @@ export function speakText(text: string, lang: string, onEnd?: () => void): boole
   if (voice) utterance.voice = voice
   utterance.lang = lang
   utterance.rate = 0.9
-  window.speechSynthesis.cancel()
+  prepareEngine()
   window.speechSynthesis.speak(utterance)
   return true
 }
@@ -229,7 +253,7 @@ export function speakHebrew(text: string, onEnd?: () => void): boolean {
   if (voice) utterance.voice = voice
   utterance.lang = currentLang
   utterance.rate = hebrew ? 0.85 : 0.9
-  window.speechSynthesis.cancel()
+  prepareEngine()
   window.speechSynthesis.speak(utterance)
   return true
 }

@@ -339,6 +339,14 @@ th { color: var(--muted); font-weight: 600; }
 
 .al-hint { margin: 10px 0 0; min-height: 1.2em; }
 
+/* speech engine accepted the word but produced no audio */
+.audio-stuck {
+  margin: 14px auto 0; max-width: 420px; padding: 12px 14px; border-radius: var(--radius-sm);
+  background: #3a2027; border: 1px solid var(--red); color: var(--text);
+  font-size: 13px; line-height: 1.5; text-align: left;
+}
+.audio-stuck button { display: block; margin-top: 10px; }
+
 /* difficulty vote row — a primary control, sized for thumbs */
 .rate-row {
   display: flex; justify-content: center; gap: 14px; margin: 0 auto 14px; max-width: 420px;
